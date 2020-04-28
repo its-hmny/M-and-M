@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "name": "mnm",
+  "version": "0.1.0",
+  "contributors": [
+    "Eduard Marchidan",
+    "Enea Guid",
+    "Mattia Guazzaloca",
+    "Paolo Marzolo"
+  ],
+  "scripts": {
+    "start": "concurrently --kill-others \"yarn start:client\" \"yarn start:server\"",
+    "start:server": "yarn workspace @mnm/server start",
+    "start:client": "yarn workspace @mnm/client start"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "concurrently": "^5.2.0"
+  }
+}

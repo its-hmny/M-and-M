@@ -1,0 +1,18 @@
+{
+  "name": "@mnm/server",
+  "version": "0.1.0",
+  "description": "Backend services for M&M web app",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon --watch src src/index.js",
+    "test": "test"
+  },
+  "author": "Enea Guidi",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
