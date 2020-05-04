@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import NodeCanvas from './NodeCanvas';
+import GraphCanvas from './GraphCanvas';
 function App() {
   return (
     <div className="App">
-      <NodeCanvas></NodeCanvas>
+      <GraphCanvas />
     </div>
   );
 }
