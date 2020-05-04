@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 
+const Timer = ({ value, paused = false, onTimeout }) => {
+  const [seconds, setSeconds] = useState(value);
+  const onTimeoutRef = useRef();
 
-const Timer = ({ value, onTimeout }) => {
-    const [seconds, setSeconds] = useState(value)
+  useEffect(() => {
+    onTimeoutRef.current = onTimeout;
+  });
 
-    useEffect(() => {
-        if (seconds !== 0) {
-            setTimeout(() => {
-                setSeconds((prevstate) => prevstate - 1)
-            }, 1000)
-        }
-        else {
-            onTimeout(value)
-        }
-    }, [seconds])
+  useEffect(() => {
+    if (seconds === 0) {
+      onTimeoutRef.current();
+    } else {
+      if (!paused) {
+        const timeout = setTimeout(() => setSeconds(seconds - 1), 1000);
+        return () => clearTimeout(timeout);
+      }
+    }
+  }, [seconds, paused]);
 
-    return (
-        <div className="Timer">
-            <div className="Timer-minutes">
-                {Math.floor(seconds / 60)}
-            </div>
-            <div className="Timer-seconds">
-                {seconds % 60}
-            </div>
-        </div >
-    )
-}
-export default Timer
+  return (
+    <div className="Timer">
+      <div className="Timer-minutes">{Math.floor(seconds / 60)}</div>
+      <div className="Timer-seconds">{seconds % 60}</div>
+    </div>
+  );
+};
+export default Timer;
