@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
-import GraphCanvas from './GraphCanvas';
+import Editor from './Editor';
+
 function App() {
   return (
     <div className="App">
-      <GraphCanvas />
+      <Editor />
     </div>
   );
 }
