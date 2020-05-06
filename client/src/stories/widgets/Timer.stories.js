@@ -15,6 +15,7 @@ export default {
 export const timerData = {
   minutes: number('minutes', 2),
   seconds: number('seconds', 30),
+  paused: true,
 };
 
 export const timerActions = {
