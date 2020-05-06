@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Timer = ({ value, paused = false, onTimeout }) => {
-  const [seconds, setSeconds] = useState(value);
+const toTicks = (min, sec) => min * 60 + sec;
+
+const Timer = ({ minutes, seconds, onTimeout, paused = false }) => {
+  const [ticks, setTicks] = useState(toTicks(minutes, seconds));
   const onTimeoutRef = useRef();
 
   useEffect(() => {
@@ -9,21 +11,22 @@ const Timer = ({ value, paused = false, onTimeout }) => {
   });
 
   useEffect(() => {
-    if (seconds === 0) {
+    if (ticks === 0) {
       onTimeoutRef.current();
     } else {
       if (!paused) {
-        const timeout = setTimeout(() => setSeconds(seconds - 1), 1000);
+        const timeout = setTimeout(() => setTicks(ticks - 1), 1000);
         return () => clearTimeout(timeout);
       }
     }
-  }, [seconds, paused]);
+  }, [ticks, paused]);
 
   return (
     <div className="Timer">
-      <div className="Timer-minutes">{Math.floor(seconds / 60)}</div>
-      <div className="Timer-seconds">{seconds % 60}</div>
+      <div className="Timer-minutes">{Math.floor(ticks / 60)}</div>
+      <div className="Timer-seconds">{ticks % 60}</div>
     </div>
   );
 };
+
 export default Timer;
