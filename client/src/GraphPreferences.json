@@ -1,0 +1,16 @@
+{
+    "autoResize": true,
+    "layout": {
+        "hierarchical": true
+    },
+    "edges": {
+        "color": "#000000"
+    },
+    "manipulation": {
+        "enabled": false
+    },
+    "physics": {
+        "enabled": false
+    },
+    "height": "500px"
+}
