@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+import './styles.css';
+
 const toTicks = (min, sec) => min * 60 + sec;
 
 const Timer = ({ minutes, seconds, onTimeout, paused = false }) => {
