@@ -1,10 +1,11 @@
 import React from 'react';
 import NumberField from './widgets/NumberField';
+import Pin from './widgets/Pin';
 
 function App() {
   return (
     <div className="App">
-      <NumberField />
+      < Pin digits={3} />
     </div>
   );
 }
