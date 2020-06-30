@@ -1,12 +1,10 @@
 import React from 'react';
-import Camera from './widgets/Camera';
+import NumberField from './widgets/NumberField';
 
 function App() {
-
-
   return (
     <div className="App">
-      <Camera />
+      <NumberField />
     </div>
   );
 }
