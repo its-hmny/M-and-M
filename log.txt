@@ -1,0 +1,172 @@
+tipi:
+    individuale
+    piccolo gruppo (2-5)
+    classe (in gruppi paralleli in competizione)
+
+struttura:
+    individuale -> 15-18 -> alone in space (flashlight? che figata che sarebbe)
+    piccolo gruppo/classe -> 11-14 -> 
+        viaggiatore nel tempo ai tempi dell'antica roma (es: come si chiama il vestito dei senatori romani, cosa vuol dire in italiano "veni", che scarpe usavano...)
+    classe/piccolo gruppo -> 8-11 -> la pimpa o una storia di un omino di carta (2-3 dimensioni, introduzione alla dimensionalità) ("giorgino cercava la sua ruota, ma non riconosceva più nulla da quando si era alzato dal foglio. Quale di questi era la sua ruota?")
+
+Mentalità realizzativa: sapere dove ci si trova, in quale posizione, muoversi in un ambiente, manipolare oggetti:
+    - oggetti e qualità:
+        colore, consistenza, dimensione (base)
+    - numeri:
+        contare oggetti, minime abilità aritmetiche, contare passi? suoni?
+    - orientarsi:
+        cercare una certa stanza, oppure riconoscere in quale stanza ci si trova
+
+Mentalità iconica: riconoscere, confrontare, configurare, concretizzare:
+    - oggetti e qualità:
+        somiglianza (quale colore è più simile a questo, quale oggetto è il più vicino concettualmente, quale elemento non appartiene)
+        trovare una rappresentazione all'interno di un'immagine
+    - numeri:
+        conteggio + aritmetica
+
+Mentalità simbolica: astrarre, concatenare catene di passi logici, dedurre:
+    - quesiti (di matematica, logica, *conoscenze di base di materie varie* i dont like)
+    - indovinelli
+
+fasce d'età:
+    7-10 (realizzative-iconiche, no simboliche)
+    11-14(iconiche-simboliche, poco realizzativo)
+    15-18(molte simboliche)
+
+Cose da ricordarsi (mettz):
+    - possibile aggiungere una schermata iniziale pre-storia con informazioni di carattere generale o suggerimenti per godere a pieno dell'esperienza (e.g. (1))
+player wakes
+
+START[StoryNode]:
+    (1) conditional start: depending on locale, it asks to start when it's dark, and to turn off all lights except the room you're starting in. this can be bypassed.
+    big description: amnesia, basic spatial explanation (what you can "see"), current objective: find stuff out.
+    paths:
+        [3 "radio button"]
+        READTABLET: look into the tablet
+        SEARCH: look around
+        LEAVE: get out
+
+LEAVE(light on)[StoryNode]:
+    someone sees you, they shoot you, you're dead. back to last checkpoint START
+
+READTABLET[StoryNode]:
+    history: find out you're on a spaceship, some lore or whatever. useful info
+    tablet asks you to set a password
+    paths:
+        SETPASS
+        IGNOREPASS
+
+IGNOREPASS[StoryNode]:
+    you don't set any password. after all, who's going to look into your tablet? you have it on you, right?
+    paths:
+        KEEP READING:  --
+        SEARCH: look around
+        LEAVE: get out. depending on light status, LEAVE(light on) or LEAVE(light off)
+
+SETPASS[QuestNode]:
+    asks for input, only numbers
+    paths:
+        success:
+            self.pass = code; KEEP READING: --
+        failure:
+            IGNOREPASS: you press cancel and go back to previous screen
+
+SEARCH[StoryNode]:
+    brief history: some clues as to where you are. an electrical panel
+    paths:
+        TURN OFF ALL:
+        LEAVE:
+
+TURN OFF ALL:
+    cifrario o che ne so. something to solve to turn off the light
+    paths:
+        SUCCESS: choice:
+            READTABLET
+            LEAVE(light off)
+        FAILURE: choice:
+            TRY AGAIN (TURN OFF)
+            LEAVE(light on)
+
+LEAVE(light off):
+    can't see anything. hear sounds
+
+KEEP READING[]:
+    you realize your phone has a flashlight function, but it asks to verify you're human and to solve an unreasonably difficult captcha
+    paths:
+        SUCCESS: self.light = enabled;
+            TURNONLIGHT
+        FAILURE: choice:
+            NOTURNONLIGHT
+
+TURNONLIGHT:
+    you turned on the light!
+    paths:
+        STAY ON PHONE
+        LEAVE(light off)
+
+NOTURNONLIGHT:
+    you didn't quite solve it...
+    paths:
+        TRY AGAIN -> (KEEP READING)
+        LEAVE(light off)
+
+STAY ON PHONE:
+    someone walks in and shoots you. you're dead
+    paths: last checkpoint(START)
+
+LEAVE(light off):
+    you slowly open the door. explanation: small room, glowing thing in the center. you feel drawn to it. once you touch it, it feels as if a rake is going through your mind
+    CHECKPOINT
+    
+    
+
+todo: LEAVE(light off)
+
+requests:
+    20 nodes
+    minimum 2 choices per node (cassata, regola di merda)
+    at least 6 quizNodes
+    death? restart? checkpoint! you upload you consciousness and you go through a couple questions to "verify you're ready" or whatever
+
+
+
+
+
+
+
+
+ordine del giorno: organizzare lo sviluppo (con percorsi individuali) del progetto di tec web. in particolare, ricordarsi di come eravamo d'accordo l'altra volta, hold the others accountable e rivedere l'organizzazione in luce dei nuovi sviluppi
+
+Informazioni sul progetto
+Ogni informazione sul progetto riporterà sempre i destinatari (tutti, 9CFU+6CFUold, solo 9CFU) e la data a partire dalla quale l'informazione diventerà vincolante (e.g. diventa un requisito obbligatorio per il progetto)
+
+Q: Dato che ogni attività ha la possibilità di portare ad attività diverse in base alla risposta, dobbiamo permettere anche che una missione porti a missioni diverse in base alle attività svolte o possiamo considerare che le attività di una missione portino sempre allo stesso risultato?
+A: Una storia è composta di missioni che sono composte di attività. Le missioni POSSONO essere parallele (ad esempio la mia squadra fa missione 1, 2 e 3, la tua fa 3, 2 4, ecc.) Questo significa che la sequenza delle missioni deve poter essere decisa in qualche maniera (ad esempio attraverso una proprietà nextMission statica oppure una funzione nextMission che sulla base dell'andamento della storia decide quale sarà la prossima missione (e quindi porta alla prima attività di quella missione).
+
+​Q: E' possibile che per lo stesso gruppo ci siano missioni parallele, ad esempio la missione 2 è disponibile senza finire la missione 1 o sono per forza sequenziali? stessa domanda per le attività
+​A: Mi sembra una complicazione inutile. Il gruppo esegue un'attività alla volta. e l'attività appartiene ad una missione. Se avessi due missioni attive contemporaneamente, vorrebbe dire che la stessa attività appartiene a due missioni, oppure che ho due attività da svolgere allo stesso tempo? Diventerebbe troppo complicato.
+
+Q: Cosa intende (nella slide 34)con la frase "almeno un una (storia) per ogni tipo di gioco e per ogni fascia di età"
+​Q: In tutto gli esempi devono essere 9 vero? 3 fasce di età diverse per ogni gruppo ( che sono 3 gruppi ). 
+Q: È corretto creare un tipo di gioco (individuale, piccoli gruppi, classe) per ogni fascia d'età, oppure dobbiamo creare tutti i tipi di gioco per ciascuna fascia d'età? (9 in tutto).
+A: Questa è una cosa che evidentemente non ho chiarito a sufficienza nelle slide e/o a voce. Ci sono tre tipi di gioco, e tre classi di età. Il numero d combinazioni dunque è nove. Di queste nove, voi dovete farne tre. Almeno tre, ovviamente. Scegliete voi cosa fare e vome metterle, ma una storia per ogni tipo di gioco e una storia per ogni tipo di età. Quindi ogni colonna e ogni riga della matrice tipo x età deve avere una casella occupata. Quale, lo scegliete voi.
+tip/età  range 1 | range 2 | range 3
+ind         [ ]      [x]      [ ]   
+grup        [x]      [ ]      [ ]   
+clas        [ ]      [ ]      [x]   
+
+Q: che differenza c'è tra classe e gruppo, si possono unire i due gruppi in uno non individuale?
+A: Quando l'abbiamo pensato, abbiamo ipotizzato la visita di ragazzi ad un museo. Quindi i ragazzi sono da soli, oppure in piccoli gruppi (tre/quattro ragazzi, anche di età diverse), oppure una classe (20-25 ragazzi della stessa età e un chiaro fine educativo). La vera differenza secondo me è che una classe non può muoversi tutta in blocco per realizzare le esperienze proposte dalla storia, per cui è necessario spezzare la storia in sequenze separate ed indipendenti che vengono attribuite a piccoli gruppi. Qui si possono far sorgere cose come competizione tra gruppi, gare di velocità o precisione, ecc. che rendono il gioco più interessante. 
+
+Q: Ci sono vincoli riguardo le storie? Dobbiamo creare n storie diverse o possiamo riutilizzarne una per diversi tipi di gioco/fasce d'età? (Sarebbe in ogni caso nostra responsabilità il rendere la storia compatibile con gruppi di diverse dimensioni).
+A: Le tre fasce di età si differenziano tra loro non solo per la vastità e sofisticazione dei contenuti delle storie, ma anche e soprattutto per il tipo di sfide che debbono essere loro proposte, sulla base dei modelli di ragionamento di Piaget e Bruner. Se riuscite a creare storia diverse all'interno della stessa trama, questo è ottimo. Sono un po' più scettico all'idea di riciclare attività e teesti.
+
+
+
+
+
+
+
+
+
+
