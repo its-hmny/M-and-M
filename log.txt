@@ -116,11 +116,20 @@ STAY ON PHONE:
 
 LEAVE(light off):
     you slowly open the door. explanation: small room, glowing thing in the center. you feel drawn to it. once you touch it, it feels as if a rake is going through your mind
-    CHECKPOINT
+    CHECKPOINT1
 
-    
+CHECKPOINT1:
+    something about inhabiting a new body or whatever
+
+
+
+basic planning:
+    start room (you die if light) -> checkpoint -> room 2 (die if don't hide or hide too long) -> checkpoint -> communication room -> escape to the interwebz
 
 todo: LEAVE(light off)
+state:
+    self.pass  (a password was set)
+    self.light (flashlight function enabled)
 
 thoughts and requests on space story:
     20 nodes
