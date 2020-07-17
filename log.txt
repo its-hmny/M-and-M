@@ -117,17 +117,22 @@ STAY ON PHONE:
 LEAVE(light off):
     you slowly open the door. explanation: small room, glowing thing in the center. you feel drawn to it. once you touch it, it feels as if a rake is going through your mind
     CHECKPOINT
-    
+
     
 
 todo: LEAVE(light off)
 
-requests:
+thoughts and requests on space story:
     20 nodes
     minimum 2 choices per node (cassata, regola di merda)
     at least 6 quizNodes
     death? restart? checkpoint! you upload you consciousness and you go through a couple questions to "verify you're ready" or whatever
-
+    "Innessuncasouninputsbagliatofaprecipitare la storia verso una conclusione negativa. Questo non è un quiz, ma un modo per apprendere dei concetti.", rebuttal:
+        1. per imparare, si rifanno le cose. i checkpoint sono un buon modo per imparare senza diventare noiosi
+        2. 15-18 è più importante mantenere l'interesse. al museo non ne avranno mezza. ritenzione >>> apprendimento, perché l'apprendimento sarà successivo
+        3. we need stakes. otherwise it will feel like a pointless excercise
+    
+    "Ognigioco deveavereunobiettivodidatticochiaroepreciso(adesempio,Napoleone Bonaparte, le equivalenze tra unità di misura, la struttura della cellula, l'analisi logica, ecc". this applies to us, as this story introduces thoughts about consciousness and identity, and the possible reality of alternative minds. we could include some more obvious references: nave di teseo, how complex behavior arises from simple rules, l'arbitrarietà del cosa è intelligente.
 
 
 
