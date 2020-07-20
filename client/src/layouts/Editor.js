@@ -1,13 +1,9 @@
-import ActivitiesMenu from './ActivitiesMenu';
 import React, { useState } from "react";
 import Graph from "react-graph-vis";
-import options from "./GraphPreferences.json";
+import ActivitiesMenu from '../components/ActivitiesMenu';
+import { GraphOptions, GraphEvents } from "../constants/GraphPreferences";
 
-const events = {
-  select: function (event) {
-    //let { nodes, edges } = event;
-  },
-};
+
 
 let graph_uuid = 1;
 
@@ -32,7 +28,7 @@ function Editor() {
   return (
     <div>
       <ActivitiesMenu />
-      <Graph key={graph_uuid} graph={{ nodes: graphNodes, edges: graphEdges }} options={options} events={events} />
+      <Graph key={graph_uuid} graph={{ nodes: graphNodes, edges: graphEdges }} options={GraphOptions} events={GraphEvents} />
       <button onClick={addNode}>Add a node</button>
       <button onClick={addEdge}>Add an edge</button>
     </div>
