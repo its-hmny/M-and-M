@@ -1,11 +1,20 @@
-import React from 'react';
-import NumberField from './widgets/NumberField';
-import Pin from './widgets/Pin';
+import React, { useState, useEffect } from 'react';
 
 function App() {
+  const [story, setStory] = useState(null);
+
+  useEffect(() => {
+    async function loadStory() {
+      const data = await fetch('/stories/mockstory.json');
+      const story = await data.json();
+      setStory(story);
+    }
+
+    loadStory();
+  }, []);
+
   return (
     <div className="App">
-      < Pin digits={3} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ requirement individuati, temporanei:
     layout domanda:
         - header/footer: possono contenere più o meno gli stessi componenti (e.g. timer, informazioni di paginazione o contesto ecc...), NO elementi legati al contenuto specifico
         - content:
-            contiene la domanda, le possibili risposte
+            contiene IL WIDGET della domanda e le relative prop (le possibili risposte ecc..)
     paths:
         - i possibili valori per path sono:
             1. una label di un altro nodo

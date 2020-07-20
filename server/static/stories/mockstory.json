@@ -87,7 +87,17 @@
             }
           }
         ],
-        "content": {},
+        "content": {
+          "component": "Choice",
+          "props": {
+            "correctAnswer": 1,
+            "answers": [
+              "pippo",
+              "pluto",
+              "paperino"
+            ]
+          }
+        },
         "footer": null
       },
       "paths": {
