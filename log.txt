@@ -1,3 +1,20 @@
+requirement individuati, temporanei:
+    item:
+        - gli item esistono
+        - l'acquisizione di un item È il passaggio per un nodo
+        - per memorizzare la verifica di un item, si usa il tag "condition", che è UN ARRAY DI NODI per cui si dovrebbe passare (or sui nodi)
+        - è possibile che non faremo in nessun modo così e useremo uno storage locale e tanti saluti
+    layout domanda:
+        - header/footer: possono contenere più o meno gli stessi componenti (e.g. timer, informazioni di paginazione o contesto ecc...), NO elementi legati al contenuto specifico
+        - content:
+            contiene la domanda, le possibili risposte
+    paths:
+        - i possibili valori per path sono:
+            1. una label di un altro nodo
+            2. un oggetto contenente una condizione:
+                { condition: "SOME_LABEL", paths: { TRUE: "SOME_LABEL_TRUE", FALSE: "SOME_LABEL_FALSE" } }
+
+
 tipi:
     individuale
     piccolo gruppo (2-5)
@@ -42,79 +59,90 @@ START[StoryNode]:
     big description: amnesia, basic spatial explanation (what you can "see"), current objective: find stuff out.
     paths:
         [3 "radio button"]
-        READTABLET: look into the tablet
+        READ_TABLET: look into the tablet
         SEARCH: look around
-        LEAVE: get out
+        LEAVE_LIGHT_ON: get out
 
-LEAVE(light on)[StoryNode]:
+LEAVE_LIGHT_ON[StoryNode]:
     someone sees you, they shoot you, you're dead. back to last checkpoint START
 
-READTABLET[StoryNode]:
+READ_TABLET[StoryNode]:
     history: find out you're on a spaceship, some lore or whatever. useful info
-    tablet asks you to set a password
+    tablet asks you if you want to set a password
     paths:
-        SETPASS
-        IGNOREPASS
+        SET_PASS
+        IGNORE_PASS
 
-IGNOREPASS[StoryNode]:
+IGNORE_PASS[StoryNode]:
     you don't set any password. after all, who's going to look into your tablet? you have it on you, right?
     paths:
-        KEEP READING:  --
+        KEEP_READING:  --
         SEARCH: look around
-        LEAVE: get out. depending on light status, LEAVE(light on) or LEAVE(light off)
+        LEAVE: get out. depending on light status, LEAVE_LIGHT_ON or LEAVE_LIGHT_OFF
 
-SETPASS[QuestNode]:
+SET_PASS[QuestNode]:
     asks for input, only numbers
     paths:
         success:
-            self.pass = code; KEEP READING: --
+            ENABLE_PASS
         failure:
-            IGNOREPASS: you press cancel and go back to previous screen
+            IGNORE_PASS: you press cancel and go back to previous screen
+
+ENABLE_PASS:
+    pass enabled!
+    self.pass = true
+    paths:
+        KEEP_READING
 
 SEARCH[StoryNode]:
     brief history: some clues as to where you are. an electrical panel
     paths:
-        TURN OFF ALL:
-        LEAVE:
+        TURN_OFF_ALL
+        LEAVE
 
-TURN OFF ALL:
+TURN_OFF_ALL:
     cifrario o che ne so. something to solve to turn off the light
     paths:
-        SUCCESS: choice:
-            READTABLET
-            LEAVE(light off)
-        FAILURE: choice:
-            TRY AGAIN (TURN OFF)
-            LEAVE(light on)
+        solved: TURNED_OFF_LIGHTS
+        wrong: WRONG_OFF_LIGHTS
 
-LEAVE(light off):
-    can't see anything. hear sounds
+TURNED_OFF_LIGHTS;
+    Lights were turned off! what should you do now?
+    paths:
+        READ_TABLET
+        LEAVE_LIGHT_OFF
 
-KEEP READING[]:
+WRONG_OFF_LIGHTS:
+    wrong answer... what should you do now?
+    paths:
+        TURN_OFF_ALL
+        LEAVE_LIGHT_ON
+
+KEEP_READING[]:
     you realize your phone has a flashlight function, but it asks to verify you're human and to solve an unreasonably difficult captcha
     paths:
-        SUCCESS: self.light = enabled;
-            TURNONLIGHT
-        FAILURE: choice:
-            NOTURNONLIGHT
+        solved: self.light = enabled;
+            TURN_ON_LIGHT
+        wrong: choice:
+            NO_TURN_ON_LIGHT
 
-TURNONLIGHT:
+TURN_ON_LIGHT:
     you turned on the light!
     paths:
-        STAY ON PHONE
-        LEAVE(light off)
+        STAY_ON_PHONE
+        LEAVE_LIGHT_OFF
 
-NOTURNONLIGHT:
-    you didn't quite solve it...
-    paths:
-        TRY AGAIN -> (KEEP READING)
-        LEAVE(light off)
-
-STAY ON PHONE:
+STAY_ON_PHONE:
     someone walks in and shoots you. you're dead
     paths: last checkpoint(START)
 
-LEAVE(light off):
+NO_TURN_ON_LIGHT:
+    you didn't quite solve it...
+    paths:
+        TRY AGAIN -> (KEEP_READING)
+        LEAVE_LIGHT_OFF
+
+LEAVE_LIGHT_OFF:
     you slowly open the door. explanation: small room, glowing thing in the center. you feel drawn to it. once you touch it, it feels as if a rake is going through your mind
     CHECKPOINT1
 
@@ -126,82 +154,93 @@ CHECKPOINT1:
 ROOM2:
     maybe a little description. you have to hide. where?
     paths:
-        UNDERTABLE
-        INCLOSET
+        UNDER_TABLE
+        IN_CLOSET
 
-UNDERTABLE
-    dead
+UNDER_TABLE
+    oh no you died the human found you
+    CHECKPOINT1
 
-INCLOSET:
+IN_CLOSET:
     timed quest coming up
     self.inclosettime = 0
     if self.light:
-        OPENCLOSET
+        OPEN_CLOSET
     else:
-        SOLVETIMEDCLOSET
+        SOLVE_TIMED_CLOSET
 
-SOLVETIMEDCLOSET:
+SOLVE_TIMED_CLOSET:
     timed quest
     paths:
-        solved: OPENCLOSET
+        solved: OPEN_CLOSET
         wrong: FAILED
         timeout: FAILED
 
 FAILED:
-    dead
+    oh no you came out in front of the guy you're dead
+    CHECKPOINT1
 
-OPENCLOSET:
+OPEN_CLOSET:
     hide for a while. not sure how to deal with time. for now will just use a small counter
     paths:
-        stay inside: self.inclosettime++; OPENCLOSET
-        EXITCLOSET
+        WAIT_IN_CLOSET
+        EXIT_CLOSET
 
-EXITCLOSET:
+WAIT_IN_CLOSET:
+    you're hiding...
+    self.incloset = true
+    paths:
+        OPEN_CLOSET
+
+EXIT_CLOSET:
     if(self.inclosettime > 0):
-        EXITROOM
+        EXIT_ROOM
     else:
-        EXITDEAD
+        EXIT_DEAD
 
-EXITDEAD:
+EXIT_DEAD:
     take a guess what happens.
+    CHECKPOINT1
 
-EXITROOM:
+EXIT_ROOM:
     nobody seems around anymore.. you see a floor plan: there's a communication room and a pod launcher
     paths:
-        PICKCOMMUN
-        PICKPOD
+        PICK_COMM
+        PICK_POD
 
-PICKCOMMUN:
+PICK_COMM:
     you're in the communication room. do you want to leave throught the interwebz?
     paths:
-        FINISHINTERWEBZ
-        EXITROOM
+        FINISH_INTERWEBZ
+        EXIT_ROOM
 
-FINISHINTERWEBZ:
+FINISH_INTERWEBZ:
     timedquest
     paths:
-        solved: DONEINTERWEBZ
-        timedout: DEAD
+        solved: DONE_INTERWEBZ
+        timeout: DEAD
         failed: DEAD
 
-PICKPOD:
+PICK_POD:
     you're in the pod room. do you want to leave with your current body?
     paths:
-        FINISHPOD
-        EXITROOM
+        FINISH_POD
+        EXIT_ROOM
 
-FINISHPOD:
+FINISH_POD:
     timedquest
     paths:
-        solved: DONEPOD
-        timedout: DEAD
+        solved: DONE_POD
+        timeout: DEAD
         failed: DEAD
 
 DONEINTERWEBZ:
-    done!
+    congratulations you escaped to the interweb
+    FINISH
 
 DONEPOD:
-    done!
+    you left toward the planet! hope you'll find a better life
+    FINISH
 
 esiste uno state della conversazione. è possibile convertirlo a path diversi se necessario, semplicemente moltiplicando il numero di nodi. lo state per cosa può essere usato? solo selezionare nodi diversi? o anche presentare rami diversi?
 
