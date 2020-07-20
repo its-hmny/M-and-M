@@ -5,7 +5,7 @@ import ActivitiesMenu from "../components/ActivitiesMenu";
 
 const Editor = () => {
   return (
-    <Grid>
+    <Grid container spacing={3} >
       <ActivitiesMenu />
       <GraphCanvas />
     </Grid>

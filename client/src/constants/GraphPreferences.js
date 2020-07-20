@@ -21,7 +21,7 @@ export const GraphOptions = {
         selectionWidth: 2.5,
 
         // Smoothness option of the edges
-        smooth: { enabled: true, type: "dynamic", roundness: 0.7 }
+        smooth: { enabled: false, type: "dynamic", roundness: 0.7 }
     },
 
     nodes: {
@@ -44,7 +44,7 @@ export const GraphOptions = {
         improvedLayout: false,
         
         hierarchical: { 
-            enabled: true,
+            enabled: false,
             levelSeparation: 100,
             nodeSpacing: 100,
             edgeMinimization: true,
