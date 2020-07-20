@@ -5,9 +5,10 @@ import ActivitiesMenu from "../components/ActivitiesMenu";
 
 const Editor = () => {
   return (
-    <div>
+    <Grid>
+      <ActivitiesMenu />
       <GraphCanvas />
-    </div>
+    </Grid>
   );
 };
 
