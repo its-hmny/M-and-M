@@ -119,14 +119,118 @@ LEAVE(light off):
     CHECKPOINT1
 
 CHECKPOINT1:
-    something about inhabiting a new body or whatever
+    something about inhabiting a new body or whatever. has to be the same text everytime you die and respawn. maybe something about consciousness or something
+    paths:
+        ROOM2
+
+ROOM2:
+    maybe a little description. you have to hide. where?
+    paths:
+        UNDERTABLE
+        INCLOSET
+
+UNDERTABLE
+    dead
+
+INCLOSET:
+    timed quest coming up
+    self.inclosettime = 0
+    if self.light:
+        OPENCLOSET
+    else:
+        SOLVETIMEDCLOSET
+
+SOLVETIMEDCLOSET:
+    timed quest
+    paths:
+        solved: OPENCLOSET
+        wrong: FAILED
+        timeout: FAILED
+
+FAILED:
+    dead
+
+OPENCLOSET:
+    hide for a while. not sure how to deal with time. for now will just use a small counter
+    paths:
+        stay inside: self.inclosettime++; OPENCLOSET
+        EXITCLOSET
+
+EXITCLOSET:
+    if(self.inclosettime > 0):
+        EXITROOM
+    else:
+        EXITDEAD
+
+EXITDEAD:
+    take a guess what happens.
+
+EXITROOM:
+    nobody seems around anymore.. you see a floor plan: there's a communication room and a pod launcher
+    paths:
+        PICKCOMMUN
+        PICKPOD
+
+PICKCOMMUN:
+    you're in the communication room. do you want to leave throught the interwebz?
+    paths:
+        FINISHINTERWEBZ
+        EXITROOM
+
+FINISHINTERWEBZ:
+    timedquest
+    paths:
+        solved: DONEINTERWEBZ
+        timedout: DEAD
+        failed: DEAD
+
+PICKPOD:
+    you're in the pod room. do you want to leave with your current body?
+    paths:
+        FINISHPOD
+        EXITROOM
+
+FINISHPOD:
+    timedquest
+    paths:
+        solved: DONEPOD
+        timedout: DEAD
+        failed: DEAD
+
+DONEINTERWEBZ:
+    done!
+
+DONEPOD:
+    done!
+
+esiste uno state della conversazione. è possibile convertirlo a path diversi se necessario, semplicemente moltiplicando il numero di nodi. lo state per cosa può essere usato? solo selezionare nodi diversi? o anche presentare rami diversi?
+
+es selezionare nodi diversi:
+NODOSCELTA:
+    values:
+        if self.var:
+            NODORISULTATO1
+        else:
+            NODORISULTATO2
+
+es presentare rami diversi:
+NODOSCELTA:
+    if self.var:
+        paths:
+            GIOVANNI
+            GIORGIO
+            ANTONIO
+    else:
+        paths:
+            ANTONIO
+            GIACOMO
 
 
 
 basic planning:
     start room (you die if light) -> checkpoint -> room 2 (die if don't hide or hide too long) -> checkpoint -> communication room -> escape to the interwebz
 
-todo: LEAVE(light off)
+
 state:
     self.pass  (a password was set)
     self.light (flashlight function enabled)
