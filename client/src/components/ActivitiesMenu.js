@@ -2,10 +2,11 @@ import React from 'react';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
 
 function ActivitiesMenu() {
   return (
-    <div>
+    <Grid container item xs={4}>
       <ExpansionPanel>
         <ExpansionPanelSummary>
           <Typography>Activities</Typography>
@@ -22,7 +23,7 @@ function ActivitiesMenu() {
         </div>
 
       </ExpansionPanel>
-    </div>
+    </Grid>
   );
 }
 

@@ -1,38 +1,14 @@
-import React, { useState } from "react";
-import Graph from "react-graph-vis";
-import ActivitiesMenu from '../components/ActivitiesMenu';
-import { GraphOptions, GraphEvents } from "../constants/GraphPreferences";
+import React from "react";
+import { Grid } from "@material-ui/core";
+import GraphCanvas from "../components/GraphCanvas";
+import ActivitiesMenu from "../components/ActivitiesMenu";
 
-
-
-let graph_uuid = 1;
-
-function Editor() {
-  const [graphNodes, setNodes] = useState([]);
-  const [graphEdges, setEdges] = useState([]);
-
-  const addNode = () => {
-    graph_uuid += 1;
-    let last_id = graphNodes.length
-    setNodes([...graphNodes, { id: last_id, label: "Added", title: "Title"}]);
-  };
-
-  const addEdge = () => {
-    let start_node = 1;
-    let dest_node = 0;
-    graph_uuid += 1;
-    setEdges([...graphEdges, { from: start_node, to: dest_node }])
-  };
-
-
+const Editor = () => {
   return (
     <div>
-      <ActivitiesMenu />
-      <Graph key={graph_uuid} graph={{ nodes: graphNodes, edges: graphEdges }} options={GraphOptions} events={GraphEvents} />
-      <button onClick={addNode}>Add a node</button>
-      <button onClick={addEdge}>Add an edge</button>
+      <GraphCanvas />
     </div>
   );
-}
+};
 
 export default Editor;
