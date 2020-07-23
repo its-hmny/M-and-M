@@ -15,6 +15,59 @@ requirement individuati, temporanei:
                 { condition: "SOME_LABEL", paths: { TRUE: "SOME_LABEL_TRUE", FALSE: "SOME_LABEL_FALSE" } }
 
 
+
+ogni nodo deve valutare gli eventi che lo coinvolgono e, quando ha finito, chiamare una funzione "proceed" che sposti il nodo corrente a un altro. Per esempio:
+
+es. nodo Choice:
+_________________________________________________
+|nome del nodo                                   |
+|descrizione                                     |
+|risposte:                                       |
+|    ___________________    ____                 |
+|    |giovanni -> nodo 3 | | -> |                |
+|    |___________________| |____|                |
+|    |antonio -> nodo 4  |                       |
+|    |___________________|                       |
+|    |roberto -> nodo 2  |                       |
+|    |___________________|                       |
+|    ______                                      |
+|    |  +  |                                     |
+|    |_____|                                     |
+|    ________   ____                             |
+|    |timeout| | -> |                            |
+|    |_______| |____|                            |
+|________________________________________________|
+
+    multiple choice/storia:
+        componente:
+            alla scelta di una risposta, la risposta viene valutata e chiamo proceed(risposta) o proceed(risposta.conseguenza)
+        editor:
+            per n risposte, ci sono n+1 eventi: la scelta di ogni risposta e il timeout. tutte modificano il nodo corrente. durante l'editing, a ogni risposta sarà collegato un arco che sposta il nodo corrente, più un quadratino aggiuntivo per il timeout.
+        player:
+            solo n risposte compaiono. al timeout (che può non succedere mai) il giocatore sarà automaticamente spostato
+        valutatore:
+            la visualizzazione è come quella dell'editor, ma centrata su quel nodo. ci penseremo poi dopo
+    timer:
+        componente:
+            al timeout, viene chiamata proceed(timeout.conseguenza). cleanup necessario per non attivare il timeout quando non sarà più renderizzato
+        editor:
+            un quadratino chiede cosa fare all'evento, PER ORA SOLO SPOSTARE IL NODO
+        player:
+            un timer viene visualizzato
+        valutatore:
+            come il player, ma può vedere anche la conseguenza
+    camera:
+        componente:
+            pulsante per scattare la foto, e confermare l'invio. alla conferma dell'invio, o la conclusione dell'invio, viene chiamata proceed(sent.conseguenza). possibile timeout
+        editor:
+            boh
+        player:
+            boh
+        valutatore:
+            boh
+    
+
+
 tipi:
     individuale
     piccolo gruppo (2-5)
