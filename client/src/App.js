@@ -1,27 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import Screen from './Screen';
+import React, { useState } from 'react';
 
-import story from './stories/mockstory.json';
+import { StoryProvider } from './story-context';
+import Choice from './components/Choice';
+
+const story = {
+  nodes: [
+    {
+      id: 0,
+      answers: { next: 1, stay: 0 },
+      question: 'sono sul nodo 0. dove vado?',
+    },
+    {
+      id: 1,
+      answers: { next: 2, stay: 1 },
+      question: 'sono sul nodo 1. dove vado?',
+    },
+    {
+      id: 2,
+      answers: { next: 0, stay: 2 },
+      question: 'sono sul nodo 2. dove vado?',
+    },
+  ],
+};
 
 function App() {
-  const { nodes } = story;
-  const { layout } = nodes[7];
-  //const [story, setStory] = useState(null);
-
-  //useEffect(() => {
-  //  async function loadStory() {
-  //    const data = await fetch('/stories/mockstory.json');
-  //    const story = await data.json();
-  //    setStory(story);
-  //  }
-
-  //  loadStory();
-  //}, []);
-
   return (
-    <div className="App">
-      <Screen layout={layout} />
-    </div>
+    <StoryProvider story={story}>
+      <div className="App">
+        <Choice />
+      </div>
+    </StoryProvider>
   );
 }
 
