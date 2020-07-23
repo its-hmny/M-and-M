@@ -1,12 +1,22 @@
 import React from 'react';
+import { useStory } from '../story-context';
 
-function Choice({ question, correctAnswer, answers }) {
+//answers is an object key:value, where keys are the possible answers
+//                    and values are the nodes to go to for that answer
+function Choice({ question, answers }) {
+  const { nodeData, proceed } = useStory();
+
   return (
     <div>
-      <h3>{question}</h3>
+      <h3>{nodeData.question}</h3>
       <div>
-        {answers.map(answer => (
-          <button key={answer}>{answer}</button>
+        {Object.keys(nodeData.answers).map(answer => (
+          <button
+            key={answer}
+            onClick={() => proceed(nodeData.answers[answer])}
+          >
+            {answer}
+          </button>
         ))}
       </div>
     </div>

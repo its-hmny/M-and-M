@@ -14,7 +14,20 @@
     {
       "id": 0,
       "label": "START",
-      "paths": ["READ_TABLET", "SEARCH", "LEAVE_LIGHT_ON"]
+      "paths": ["READ_TABLET", "SEARCH", "LEAVE_LIGHT_ON"],
+      "layout": {
+        "header": [
+          {
+            "component": "Title",
+            "text": "Introduction"
+          }
+        ],
+        "content": {
+          "component": "Cutscene",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel nibh id libero viverra imperdiet. Proin ultricies porta arcu, ac."
+        },
+        "footer": null
+      }
     },
     {
       "id": 1,
