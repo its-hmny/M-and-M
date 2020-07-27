@@ -1,3 +1,15 @@
+
+
+
+
+var lastClusterZoomLevel = 0;
+var clusterFactor = 0.9;
+var network = null;
+
+//TODO unisci le seguenti variabili in un unico oggetto
+var colors = [];
+var groups = ["event1","event2","event3"];
+var clusters = [];
 export const GraphOptions = {
     autoResize: true,
     height: '500',
@@ -7,7 +19,7 @@ export const GraphOptions = {
         enabled: false,
         filter: "manipulation",
         /* nodes, edges, layout, interaction, manipulation, physics, selection, renderer */
-        showButton: true
+        showButton: false
     },
     
     edges: {
@@ -16,9 +28,9 @@ export const GraphOptions = {
         color: { color:'black', highlight:'red' },
 
         // Width for every sistuations
-        width: 2,
-        hoverWidth: 2.5,
-        selectionWidth: 2.5,
+        width: 1,
+        hoverWidth: 1.5,
+        selectionWidth: 1.5,
 
         // Smoothness option of the edges
         smooth: { enabled: false, type: "dynamic", roundness: 0.7 }
@@ -28,27 +40,48 @@ export const GraphOptions = {
         borderWidth: 2,
         borderWidthSelected: 2.5,
         
-        color: {
-            border: "darkorange",
-            background: "orange",
-            highlight: { border: "black", background: "orange" }
-        },
+        
 
         font: { size: 15, color: "black", background: "none", align: "center"},
         
         shape: "dot",
         size: 20,
     },
+    groups: {
+        event1: {
+          color: {
+            border: "darkorange",
+            background: "orange",
+            highlight: { border: "black", background: "orange" }
+          },
+        },
+        event2: {
+          color: {
+            border: "darkblue",
+            background: "blue",
+            highlight: { border: "black", background: "blue" }
+          },
+        },
+        event3: {
+          color: {
+            border: "darkgreen",
+            background: "green",
+            highlight: { border: "black", background: "green" }
+          },
+        }
+    },
 
     layout: {
         improvedLayout: false,
         
         hierarchical: { 
-            enabled: false,
+            enabled: true,
+            direction: "LR",
             levelSeparation: 100,
-            nodeSpacing: 100,
-            edgeMinimization: true,
-            parentCentralization: true,
+            nodeSpacing: 200,
+            edgeMinimization: false,
+            parentCentralization: false,
+            //shakeTowards: "roots"
         }
     },
     
@@ -59,15 +92,16 @@ export const GraphOptions = {
         keyboard: {enabled: true, bindToWindow: false},
         selectable:true,
         multiselect: true,
-        navigationButtons: true,
+        navigationButtons: false,
         zoomView: true
     },
 
     // Must write functions to haandle events
-    manipulation: { enabled: true, initiallyActive: true},
+    manipulation: { enabled: false, initiallyActive: false},
     
     physics: { enabled: false }
 };
+
 
 
 export const GraphEvents = {
@@ -91,6 +125,7 @@ export const GraphEvents = {
         params.event = "[original event]";
         console.log("dragStart Event:", params);
         console.log("dragStart event, getNodeAt returns: ");
+        
       },
 
       dragging: (params) => {
@@ -112,7 +147,18 @@ export const GraphEvents = {
         console.log("controlNodeDragEnd Event:", params);
       },
 
-      zoom: (params) => {},
+      zoom: (params) => {
+        //Stiamo allontanando la visuale
+        if (params.direction == '-') {
+          if (params.scale < lastClusterZoomLevel*clusterFactor) {
+              makeClusters(params.scale);
+              lastClusterZoomLevel = params.scale;
+          }
+        }
+        else {
+            openClusters(params.scale);
+        }
+      },
 
       showPopup: (params) => {},
 
@@ -122,6 +168,7 @@ export const GraphEvents = {
 
       select: (params) => {
         console.log("select Event:", params);
+        
       },
 
       selectNode: (params) => {
@@ -160,17 +207,90 @@ export const GraphEvents = {
 
   export const DummyData = {
     nodes: [
-      { id: 1, label: "Node 1" },
-      { id: 2, label: "Node 2" },
-      { id: 3, label: "Node 3" },
-      { id: 4, label: "Node 4" },
-      { id: 5, label: "Node 5" },
+      { id: 1, label: "Evento 1", group: groups[0] },
+      { id: 2, label: "Domanda", group: groups[0], shape: "square"},
+      { id: 3, label: "Domanda", group: groups[0], shape: "square" },
+      { id: 4, label: "Domanda", group: groups[0], shape: "square"  },
+      { id: 5, label: "Evento 2", group: groups[1] },
+      { id: 6, label: "Domanda", group: groups[1], shape: "square" },
+      { id: 7, label: "Domanda", group: groups[1], shape: "square" },
+      { id: 8, label: "Evento 3", group: groups[2]},
+      { id: 9, label: "Domanda", group: groups[2], shape: "square"  },
+      { id: 10, label: "Domanda",group: groups[2], shape: "square"  },
+      { id: 11, label: "Domanda", group: groups[2], shape: "square" },
+      { id: 12, label: "Domanda", group: groups[2], shape: "square"  },
     ],
     edges: [
-      { from: 1, to: 3 },
       { from: 1, to: 2 },
-      { from: 2, to: 4 },
+      { from: 1, to: 3 },
+      { from: 1, to: 4 },
+      { from: 5, to: 6 },
+      { from: 5, to: 7 },
+      { from: 8, to: 9 },
+      { from: 8, to: 10 },
+      { from: 8, to: 11 },
+      { from: 8, to: 12 },
       { from: 2, to: 5 },
-      { from: 3, to: 3 },
+      { from: 4, to: 5 },
+      { from: 3, to: 8 },
     ],
+  
   };
+
+
+
+
+
+/*Funzione che permette di accedere al network interno della componente react
+  attraverso la prop (non documentata) getNetwork */
+export const additionalOptions = (currentnetwork) => {
+
+    //Impostiamo lo zoomlevel iniziale
+    currentnetwork.once('initRedraw', function() {
+        if (lastClusterZoomLevel === 0) {
+            lastClusterZoomLevel = currentnetwork.getScale();
+        }
+    });
+    network = currentnetwork;
+
+    //Popoliamo automaticamente le variabili globali
+    //TODO scrivere le opzioni a partire dalle variabili globali e non viceversa
+    for (let group in GraphOptions.groups){
+      colors.push(GraphOptions.groups[group].color);
+    }
+    
+};
+
+function makeClusters(scale){
+    
+    for (let i in groups){
+        
+        clusters[i] = ({id:'cluster:' + i, scale:scale});
+        var clusterOption = {
+            joinCondition: (childOptions) => {
+                return childOptions.group == groups[i];
+            },
+            clusterNodeProperties: {id: 'cluster:' + i, borderWidth: 4, shape: 'database', color:colors[i], label: groups[i]}
+        };
+        network.clustering.cluster(clusterOption);
+    }
+    
+}
+
+function openClusters(scale) {
+  var newClusters = [];
+  var declustered = false;
+  for (var i = 0; i < clusters.length; i++) {
+      if (clusters[i].scale < scale) {
+          
+          network.openCluster(clusters[i].id);
+          lastClusterZoomLevel = scale;
+          declustered = true;
+      }
+      else {
+          newClusters.push(clusters[i]);
+      }
+  }
+  clusters = newClusters;
+  
+}

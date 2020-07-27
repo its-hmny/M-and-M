@@ -4,6 +4,7 @@ import GraphCanvas from "../components/GraphCanvas";
 import ActivitiesMenu from "../components/ActivitiesMenu";
 
 const Editor = () => {
+  
   return (
     <Grid container spacing={3} >
       <ActivitiesMenu />
