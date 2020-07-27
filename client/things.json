@@ -40,7 +40,7 @@
           }
         ],
         "footer": null
-      },
+      }
     },
     {
       "id": 1,
@@ -96,7 +96,7 @@
           }
         ],
         "footer": null
-      }
+      },
       "paths": {
         "SOLVED": "ENABLE_PASS", <--- that's a big problem man because we should take this path only if the user sets a pwd (i.e. input field isn't empty) but this requires logic so we have to provide a specific component to the editor
         "WRONG": "IGNORE_PASS"
