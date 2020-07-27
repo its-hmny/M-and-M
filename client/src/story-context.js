@@ -1,7 +1,4 @@
 import React, { useContext, useState } from 'react';
-import Link from './components/atoms/Link';
-import Text from './components/Text';
-import View from './components/View';
 
 const story = {
   nodes: [
@@ -12,11 +9,11 @@ const story = {
         component: 'View',
         children: [
           {
-            component: 'Text',
+            component: 'Elements/Text',
             children: 'Benvenuto nella nostra prova',
           },
           {
-            component: 'atoms/Link',
+            component: 'Atoms/Link',
             to: 1,
             children: 'Inizia!',
           },
@@ -30,16 +27,16 @@ const story = {
         component: 'View',
         children: [
           {
-            component: 'Text',
+            component: 'Elements/Text',
             children: 'Di che colore è il cavallo bianco di Napoleone?',
           },
           {
-            component: 'atoms/Link',
+            component: 'Atoms/Link',
             to: 2,
             children: 'Bianco',
           },
           {
-            component: 'atoms/Link',
+            component: 'Atoms/Link',
             to: 3,
             children: 'Nero',
           },
@@ -48,11 +45,12 @@ const story = {
     },
     {
       id: 2,
+      name: 'VICTORY',
       view: {
         component: 'View',
         children: [
           {
-            component: 'Text',
+            component: 'Elements/Text',
             children: 'bravo!',
           },
         ],
@@ -60,21 +58,27 @@ const story = {
     },
     {
       id: 3,
+      name: 'WRONG_ANSWER',
       view: {
         component: 'View',
         children: [
           {
-            component: 'Text',
+            component: 'Elements/Text',
             children: 'Sbagliato!',
           },
           {
-            component: 'ButtonGroup',
+            component: 'Layout/Footer',
             children: [
-              { component: 'atoms/Link', to: 1, children: 'Ritenta' },
               {
-                component: 'atoms/Link',
-                to: 4,
-                children: 'Abbandona',
+                component: 'Elements/ButtonGroup',
+                children: [
+                  { component: 'Atoms/Link', to: 1, children: 'Ritenta' },
+                  {
+                    component: 'Atoms/Link',
+                    to: 4,
+                    children: 'Abbandona',
+                  },
+                ],
               },
             ],
           },
@@ -83,11 +87,12 @@ const story = {
     },
     {
       id: 4,
+      name: 'DEFEAT',
       view: {
         component: 'View',
         children: [
           {
-            component: 'Text',
+            component: 'Elements/Text',
             children: 'Peccato!',
           },
         ],

@@ -1,7 +1,12 @@
 import React from 'react';
 
 function View({ children }) {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <h1>Main View</h1>
+      {children}
+    </div>
+  );
 }
 
 export default View;

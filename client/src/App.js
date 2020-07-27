@@ -4,15 +4,20 @@ import shortid from 'shortid';
 import { useStory } from './story-context';
 
 const importComponent = component =>
-  React.lazy(() =>
-    import(`./components/${component}`).catch(() =>
+  React.lazy(() => {
+    console.log(`Importing ./components/${component}`);
+    return import(`./components/${component}`).catch(() =>
       console.log(`Unable to load ${component}`)
     )
-  );
+  });
 
 const cachedComponents = [];
 
-const loadViewHierarchy = async ({ componentName, children, ...props }) => {
+const loadViewHierarchy = async ({ 
+  component: componentName, 
+  children, 
+  ...props 
+}) => {
   if (children && typeof children === 'object' && Array.isArray(children)) {
     children = await Promise.all(
       children.map(component => loadViewHierarchy(component))
