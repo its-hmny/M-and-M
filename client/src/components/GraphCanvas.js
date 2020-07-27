@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Graph from "vis-network-react";
 import { Grid } from "@material-ui/core/"
-import { GraphOptions, GraphEvents, DummyData, additionalOptions } from "../constants/GraphPreferences";
+import { GraphOptions, GraphEvents, additionalOptions, DummyData } from "../constants/GraphPreferences";
 
 
 const GraphCanvas = () => {

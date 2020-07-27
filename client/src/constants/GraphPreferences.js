@@ -21,86 +21,77 @@ export const GraphOptions = {
         /* nodes, edges, layout, interaction, manipulation, physics, selection, renderer */
         showButton: false
     },
-    
-    edges: {
-        arrows: { to: {enabled: true}},
-
-        color: { color:'black', highlight:'red' },
-
-        // Width for every sistuations
-        width: 1,
-        hoverWidth: 1.5,
-        selectionWidth: 1.5,
-
-        // Smoothness option of the edges
-        smooth: { enabled: false, type: "dynamic", roundness: 0.7 }
+    oncontext: (params) => {
+      console.log("oncontext Event:", params);
+      params.event = "[original event]";
     },
-
-    nodes: {
-        borderWidth: 2,
-        borderWidthSelected: 2.5,
-        
-        
-
-        font: { size: 15, color: "black", background: "none", align: "center"},
-        
-        shape: "dot",
-        size: 20,
-    },
-    groups: {
-        event1: {
-          color: {
-            border: "darkorange",
-            background: "orange",
-            highlight: { border: "black", background: "orange" }
+  
+      nodes: {
+          borderWidth: 2,
+          borderWidthSelected: 2.5,
+  
+          font: { size: 15, color: "black", background: "none", align: "center"},
+          
+          shape: "dot",
+          size: 20,
+      },
+      groups: {
+          event1: {
+            color: {
+              border: "darkorange",
+              background: "orange",
+              highlight: { border: "black", background: "orange" }
+            },
           },
-        },
-        event2: {
-          color: {
-            border: "darkblue",
-            background: "blue",
-            highlight: { border: "black", background: "blue" }
+          event2: {
+            color: {
+              border: "darkblue",
+              background: "blue",
+              highlight: { border: "black", background: "blue" }
+            },
           },
-        },
-        event3: {
-          color: {
-            border: "darkgreen",
-            background: "green",
-            highlight: { border: "black", background: "green" }
-          },
-        }
-    },
-
-    layout: {
-        improvedLayout: false,
-        
-        hierarchical: { 
-            enabled: true,
-            direction: "LR",
-            levelSeparation: 100,
-            nodeSpacing: 200,
-            edgeMinimization: false,
-            parentCentralization: false,
-            //shakeTowards: "roots"
-        }
-    },
+          event3: {
+            color: {
+              border: "darkgreen",
+              background: "green",
+              highlight: { border: "black", background: "green" }
+            },
+          }
+      },
+  
+      layout: {
+          improvedLayout: false,
+          
+          hierarchical: { 
+              enabled: true,
+              direction: "LR",
+              levelSeparation: 100,
+              nodeSpacing: 200,
+              edgeMinimization: false,
+              parentCentralization: false,
+              //shakeTowards: "roots"
+          }
+      },
     
-    interaction: {
-        dragNodes: true,
-        dragView: true,
-        hover: false,
-        keyboard: {enabled: true, bindToWindow: false},
-        selectable:true,
-        multiselect: true,
-        navigationButtons: false,
-        zoomView: true
-    },
 
-    // Must write functions to haandle events
-    manipulation: { enabled: false, initiallyActive: false},
-    
-    physics: { enabled: false }
+  interaction: {
+    dragNodes: true,
+    dragView: true,
+    hover: false,
+    keyboard: { enabled: true, bindToWindow: false },
+    selectable: true,
+    multiselect: true,
+    navigationButtons: false,
+    zoomView: true
+  },
+
+  // Must write functions to handle events
+  manipulation: { enabled: false, initiallyActive: false },
+
+  physics: { enabled: false }
 };
+
+      
 
 
 
@@ -238,7 +229,44 @@ export const GraphEvents = {
   };
 
 
-
+  export const GraphManipulation = {
+    addNode: (oldGraph, newNode) => {
+      // Need better uuid generation
+      newNode.id = oldGraph.nodes.length;
+      
+      const newGraph = {
+        nodes:  [...oldGraph.nodes, newNode],
+        edges: [...oldGraph.edges]
+      };
+      return (newGraph);
+    },
+  
+    removeNode: (oldGraph, removedID) => {
+      const newGraph = {
+        nodes: oldGraph.nodes.filter(current => current.id !== removedID),
+        // Removes all the edges with destination or start the removed node
+        edges: oldGraph.edges.filter(current => current.from  !== removedID && current.to  !== removedID)
+      }
+      return (newGraph);
+    }, 
+  
+    addEdge: (oldGraph, newEdge) => {
+      const newGraph = {
+        nodes:  [...oldGraph.nodes],
+        edges: [...oldGraph.edges, newEdge]
+      };
+      return (newGraph);
+    }, 
+  
+    removeEdge: (oldGraph, removedEdge) => {
+      const newGraph = {
+        nodes:  [...oldGraph.nodes],
+        edges: oldGraph.edges.filter(current => current !== removedEdge)
+      }
+      return (newGraph);
+    }
+  }
+  
 
 
 /*Funzione che permette di accedere al network interno della componente react
