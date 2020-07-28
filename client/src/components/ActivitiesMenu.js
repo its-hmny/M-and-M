@@ -4,7 +4,6 @@ import EditorContext from "../context/EditorContext"
 
 const  ActivitiesMenu = () => {
   const {story, saveStory} = useContext(EditorContext);
-  console.log(story, saveStory);
 
   return (
     <Grid item xs={3}>
