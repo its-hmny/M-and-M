@@ -1,5 +1,5 @@
 import React from 'react';
-import Editor from './layouts/Editor';
+import Editor from './Editor';
 
 function App() {
 

@@ -15,7 +15,8 @@ const  ActivitiesMenu = () => {
         </AccordionSummary>
         
         <AccordionDetails>
-          <button onClick={()=> saveStory({title: "Pressed"})}>Test</button>
+          <button onClick={()=> saveStory({title: "Pressed"})}>Diocan
+          </button>
         </AccordionDetails>
       
       </Accordion>
