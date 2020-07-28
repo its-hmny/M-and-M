@@ -140,7 +140,7 @@ export const GraphEvents = {
 
       zoom: (params) => {
         //Stiamo allontanando la visuale
-        if (params.direction == '-') {
+        if (params.direction === '-') {
           if (params.scale < lastClusterZoomLevel*clusterFactor) {
               makeClusters(params.scale);
               lastClusterZoomLevel = params.scale;
@@ -296,7 +296,7 @@ function makeClusters(scale){
         clusters[i] = ({id:'cluster:' + i, scale:scale});
         var clusterOption = {
             joinCondition: (childOptions) => {
-                return childOptions.group == groups[i];
+                return childOptions.group === groups[i];
             },
             clusterNodeProperties: {id: 'cluster:' + i, borderWidth: 4, shape: 'database', color:colors[i], label: groups[i]}
         };

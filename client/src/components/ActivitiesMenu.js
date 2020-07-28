@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Grid, Accordion, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
-import { GraphManipulation } from "../constants/GraphPreferences";
+import { EditorContext } from "../context/EditorContext"
 
-const  ActivitiesMenu = (props) => {
-  const { renderNewState } = props;
-  const { addNode } = GraphManipulation;
+const  ActivitiesMenu = () => {
+  const context = useContext(EditorContext);
+
   return (
     <Grid item xs={3}>
+      <h1>{context.title}</h1>
       <Accordion>
         
         <AccordionSummary>
@@ -14,14 +15,9 @@ const  ActivitiesMenu = (props) => {
         </AccordionSummary>
         
         <AccordionDetails>
-          <button 
-            onClick={() => renderNewState(addNode, {label: "hmnyNode", group: "hmnyGroup"})} >
-              Click on this to add a node
-          </button>
         </AccordionDetails>
       
       </Accordion>
-      <p>This is a paragraph</p>
     </Grid>
   );
 }

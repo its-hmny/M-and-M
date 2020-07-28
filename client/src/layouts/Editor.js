@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid } from "@material-ui/core";
 import GraphCanvas from "../components/GraphCanvas";
 import ActivitiesMenu from "../components/ActivitiesMenu";
+import { EditorContextProvider } from "../context/EditorContext"
+import mockstory from "../stories/mockstory.json"
 
 const Editor = () => {
-  const [GraphData, setGraphData] = useState( {nodes: [], edges: []} );
-
-  const updateGraph = (updateFunction, arg) => {
-    const updatedGraph = updateFunction(GraphData, arg);
-    setGraphData(updatedGraph);
-  };
-
   return (
-    <Grid container spacing={2} >
-      <ActivitiesMenu renderNewState={updateGraph} />
-      <GraphCanvas graph={GraphData} />
-    </Grid>
+    <EditorContextProvider value={mockstory} >
+      <Grid container spacing={2} >
+        <ActivitiesMenu />
+        <GraphCanvas />
+      </Grid>
+    </EditorContextProvider>
   );
 };
 
