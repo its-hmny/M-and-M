@@ -7,7 +7,7 @@ import mockstory from "../stories/mockstory.json"
 
 const Editor = () => {
   return (
-    <EditorContextProvider value={mockstory} >
+    <EditorContextProvider userStory={mockstory} >
       <Grid container spacing={2} >
         <ActivitiesMenu />
         <GraphCanvas />

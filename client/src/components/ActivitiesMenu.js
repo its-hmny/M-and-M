@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { Grid, Accordion, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
-import { EditorContext } from "../context/EditorContext"
+import EditorContext from "../context/EditorContext"
 
 const  ActivitiesMenu = () => {
-  const context = useContext(EditorContext);
+  const {story, saveStory} = useContext(EditorContext);
+  console.log(story, saveStory);
 
   return (
     <Grid item xs={3}>
-      <h1>{context.title}</h1>
+      <h1>{story.title}</h1>
       <Accordion>
         
         <AccordionSummary>
@@ -15,6 +16,7 @@ const  ActivitiesMenu = () => {
         </AccordionSummary>
         
         <AccordionDetails>
+          <button onClick={()=> saveStory({title: "Pressed"})}>Test</button>
         </AccordionDetails>
       
       </Accordion>
