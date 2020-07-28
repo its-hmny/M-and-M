@@ -265,7 +265,7 @@ export const additionalOptions = (currentNetwork) => {
   //Impostiamo lo zoomlevel iniziale
   currentNetwork.once("initRedraw", () => {
     if (lastClusterZoomLevel === 0) 
-      lastClusterZoomLevel = currentnetwork.getScale();
+      lastClusterZoomLevel = currentNetwork.getScale();
   });
 
   network = currentNetwork;
