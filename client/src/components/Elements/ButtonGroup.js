@@ -1,8 +1,19 @@
-import React from 'react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 
 function ButtonGroup({ children }) {
   return (
-    <div style={{ width: '200px', border: '2px solid red' }}>{children}</div>
+    <div
+      css={css`
+        @media (max-width: 420px) {
+          width: 100%;
+          display: flex;
+          justify-content: space-evenly;
+        }
+      `}
+    >
+      {children}
+    </div>
   );
 }
 

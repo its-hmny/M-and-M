@@ -13,7 +13,7 @@ const story = {
             children: 'Benvenuto nella nostra prova',
           },
           {
-            component: 'Atoms/Link',
+            component: 'Elements/Button',
             to: 1,
             children: 'Inizia!',
           },
@@ -31,14 +31,19 @@ const story = {
             children: 'Di che colore è il cavallo bianco di Napoleone?',
           },
           {
-            component: 'Atoms/Link',
-            to: 2,
-            children: 'Bianco',
-          },
-          {
-            component: 'Atoms/Link',
-            to: 3,
-            children: 'Nero',
+            component: 'Elements/ButtonGroup',
+            children: [
+              {
+                component: 'Elements/Button',
+                to: 2,
+                children: 'Bianco',
+              },
+              {
+                component: 'Elements/Button',
+                to: 3,
+                children: 'Nero',
+              },
+            ],
           },
         ],
       },
@@ -72,9 +77,9 @@ const story = {
               {
                 component: 'Elements/ButtonGroup',
                 children: [
-                  { component: 'Atoms/Link', to: 1, children: 'Ritenta' },
+                  { component: 'Elements/Button', to: 1, children: 'Ritenta' },
                   {
-                    component: 'Atoms/Link',
+                    component: 'Elements/Button',
                     to: 4,
                     children: 'Abbandona',
                   },

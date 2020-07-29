@@ -3,14 +3,14 @@ import shortid from 'shortid';
 
 import { useStory } from './story-context';
 
-const importComponent = component =>
-  React.lazy(() => {
-    console.log(`Importing ./components/${component}`);
-    return import(`./components/${component}`).catch(() =>
+const importComponent = async component =>
+  React.lazy(() =>
+    import(`./components/${component}`).catch(() =>
       console.log(`Unable to load ${component}`)
     )
-  });
+  );
 
+// import actually uses browser cache, so...
 const cachedComponents = [];
 
 const loadViewHierarchy = async ({ 

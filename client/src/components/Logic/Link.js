@@ -4,7 +4,7 @@ import { useStory } from '../../story-context';
 function Link({ to, children }) {
   const { moveTo } = useStory();
   const onClick = e => {
-    e.preventDefault();
+    e.stopPropagation();
     console.log(`Goto ${to}`);
     moveTo(to);
   };
