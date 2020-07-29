@@ -19,3 +19,20 @@
         ABBANDONA: goto 4
 4:
     text: "peccato!"
+
+/* 
+  {
+    component: 'Logic/Choices,
+    answers: [
+      {
+        text: 'paolino'
+        value: 'correct' | 'wrong',
+      }
+    ],
+    to: {
+      correct: 1,
+      wrong: 2 
+    },
+    withSubmit: true | false
+  }
+*/

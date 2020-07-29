@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
 
+import { ANSWER_VALUE } from './constants';
+
 const story = {
   nodes: [
     {
@@ -31,19 +33,30 @@ const story = {
             children: 'Di che colore è il cavallo bianco di Napoleone?',
           },
           {
-            component: 'Elements/ButtonGroup',
-            children: [
+            component: 'Logic/Choices',
+            answers: [
               {
-                component: 'Elements/Button',
-                to: 2,
-                children: 'Bianco',
+                text: 'Bianco',
+                value: ANSWER_VALUE.WRONG,
               },
               {
-                component: 'Elements/Button',
-                to: 3,
-                children: 'Nero',
+                text: 'Verde',
+                value: ANSWER_VALUE.CORRECT,
+              },
+              {
+                text: 'Blue',
+                value: ANSWER_VALUE.WRONG,
+              },
+              {
+                text: 'Nero',
+                value: ANSWER_VALUE.WRONG,
               },
             ],
+            routes: {
+              [ANSWER_VALUE.CORRECT]: 2,
+              [ANSWER_VALUE.WRONG]: 3,
+            },
+            withSubmit: true,
           },
         ],
       },
