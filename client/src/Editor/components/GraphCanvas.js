@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Graph from "vis-network-react";
 import { Grid } from "@material-ui/core/"
-import { GraphOptions, GraphEvents, additionalOptions, DummyData } from "../constants/GraphPreferences";
-
+import { GraphOptions, GraphEvents, additionalOptions, GraphManipulation } from "../constants/GraphPreferences";
+import EditorContext from "../context/EditorContext"
 
 const GraphCanvas = () => {
-    return (
-        <Grid item xs={6}>
-          <Graph id="network" data={DummyData} options={GraphOptions} events={GraphEvents} getNetwork={additionalOptions}/>
-        </Grid>
-    );
-}
+  const { story } = useContext(EditorContext);
+  const { convertFromStory } = GraphManipulation;
+
+  return (
+    <Grid item xs={6}>
+      <Graph data={convertFromStory.parseStory(story)} options={GraphOptions} events={GraphEvents} getNetwork={additionalOptions} />
+    </Grid>
+  );
+};
 
 export default GraphCanvas;

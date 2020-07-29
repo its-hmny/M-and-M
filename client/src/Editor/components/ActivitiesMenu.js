@@ -1,27 +1,26 @@
-import React, { useContext } from 'react';
-import { Grid, Accordion, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
-import EditorContext from "../context/EditorContext"
+import React, { useState } from 'react';
+import { Grid, SwipeableDrawer, Button } from '@material-ui/core';
+
 
 const  ActivitiesMenu = () => {
-  const {story, saveStory} = useContext(EditorContext);
+  const [isOpen, setOpen] = useState(false);
 
   return (
     <Grid item xs={3}>
-      <h1>{story.title}</h1>
-      <Accordion>
-        
-        <AccordionSummary>
-          <Typography variant="h6">Choose a new activity </Typography>
-        </AccordionSummary>
-        
-        <AccordionDetails>
-          <button onClick={()=> saveStory({title: "Pressed"})}>Diocan
-          </button>
-        </AccordionDetails>
       
-      </Accordion>
     </Grid>
   );
 }
 
 export default ActivitiesMenu;
+/* EXPERIMENTAL
+<Button onClick={() => setOpen(true)}>Choose new activity</Button>
+      <SwipeableDrawer
+        anchor={"left"}
+        open={isOpen}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+      >
+        {[<h1>Test</h1>, <h1>Test</h1>, <h1>Test</h1>]}
+      </SwipeableDrawer>
+*/

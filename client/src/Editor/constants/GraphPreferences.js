@@ -33,6 +33,9 @@ export const GraphOptions = {
     shape: "dot",
     size: 20,
   },
+
+  edges: { arrows: { to: {enabled: true}} },
+
   groups: {
     event1: {
       color: {
@@ -220,6 +223,33 @@ export const DummyData = {
 
 
 export const GraphManipulation = {
+  convertFromStory: {
+    parseStory: function (story) {
+      const graph = { nodes: [], edges: [] };
+      
+      story.nodes.forEach(node => {
+        graph.nodes = [...graph.nodes, {id: node.id, label: node.name}];
+        this.setEdgesFromChildren(node.view.children, node.id, graph);
+      });
+
+      console.log(graph);
+      return (graph);
+    },
+
+    setEdgesFromChildren: function(root, root_id, graph) {
+      root.forEach(child => {
+        if (child.to !== undefined)
+          graph.edges = [...graph.edges, { from: root_id, to: child.to }];
+        
+        else if (child.children instanceof Array)
+          this.setEdgesFromChildren(child.children, root_id, graph)
+
+        else 
+          console.log("Is something else");
+      });
+    },
+  },
+
   addNode: (oldGraph, newNode) => {
     // Need better uuid generation
     newNode.id = oldGraph.nodes.length;
