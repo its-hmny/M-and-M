@@ -1,38 +1,7 @@
-
-0:
-    text: "benvenuto nella nostra prova"
-    buttons:
-        NEXT: goto 1
-        STAY: goto 0
-1:
-    text: "di che colore è il cavallo bianco di napoleone?"
-    buttons:
-        BIANCO: goto 2
-        NERO: goto 4
-2:
-    text: "bravo!"
-
-3:
-    text: "sbagliato!"
-    buttons:
-        RITENTA: goto 1
-        ABBANDONA: goto 4
-4:
-    text: "peccato!"
-
-/* 
-  {
-    component: 'Logic/Choices,
-    answers: [
-      {
-        text: 'paolino'
-        value: 'correct' | 'wrong',
-      }
-    ],
-    to: {
-      correct: 1,
-      wrong: 2 
-    },
-    withSubmit: true | false
-  }
-*/
+cosa dobbiamo fare le prossime volte:
+- styling degli input
+  - span nascosto che cambia a seconda di checked o no
+  - singoli choice personalizzabili (storia per bambini, colori)
+  - gestione immagini...?
+  - no compilazione css -> emotion?
+- altri componenti

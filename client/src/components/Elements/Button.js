@@ -1,20 +1,27 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import Link from '../Logic/Link';
+import { useStory } from '../../context/story';
+import { useStyles } from '../../context/styles';
 
-function Button({ to, children }) {
+const base = css`
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: #8cceb3;
+  cursor: pointer;
+`;
+
+function Button({ route, styleName, children }) {
+  const styles = useStyles(styleName);
+  const { moveTo } = useStory();
+  const onClick = () => moveTo(route);
+
   return (
-    <div //TODO: padding makes a piece of button useless. remove link, only keep button
-      css={css`
-        display: inline-block;
-        padding: 10px 20px;
-        border-radius: 4px;
-        background-color: #8cceb3;
-        cursor: pointer;
-      `}
-    >
-      <Link to={to}>{children}</Link>
+    <div>
+      <button css={[base, styles]} onClick={onClick}>
+        {children}
+      </button>
     </div>
   );
 }

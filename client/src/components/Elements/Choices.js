@@ -2,16 +2,26 @@
 import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
 import shortid from 'shortid';
-import { Checkbox, Radio } from '../Elements/Choice';
-import Button from '../Elements/Button';
-import { useStory } from '../../story-context';
+import { Checkbox, Radio } from './Choice';
+import Button from './Button';
+import { useStory } from '../../context/story';
+import { useStyles } from '../../context/styles';
 import { ANSWER_VALUE } from '../../constants';
 
 /** renders a multiple choice component: if there is only
  * one correct answer radiobutton will be used, otherwise checkbox
+ * PARTS:
+ *  - Choice -> input radio | input checkbox;
+ *  - Button (submit);
+ *
+ * STYLE SECTIONS:
+ *  - Radio
+ *  - Checkbox
+ *  - Button
  */
 
-function Choices({ answers, routes, withSubmit }) {
+function Choices({ answers, routes, withSubmit, styleName }) {
+  const styles = useStyles(styleName);
   const { currentNode, moveTo } = useStory();
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [route, setRoute] = useState(null);
@@ -70,7 +80,11 @@ function Choices({ answers, routes, withSubmit }) {
   }, [correctAnswers, selectedAnswers, moveTo, routes, withSubmit]);
 
   return (
-    <div css={css``}>
+    <div
+      css={css`
+        padding-left: 20px;
+      `}
+    >
       {answers.map(({ text }) => (
         <Component
           key={`Choice-${shortid.generate()}`}
@@ -78,11 +92,14 @@ function Choices({ answers, routes, withSubmit }) {
           label={text}
           selected={selectedAnswers.find(selected => selected === text)}
           onSelected={onSelected}
+          styles={styles[Component.displayName]}
         />
       ))}
 
       {withSubmit && selectedAnswers.length > 0 && (
-        <Button to={route}>Conferma</Button>
+        <Button route={route} styleName={styles.Button}>
+          Conferma
+        </Button>
       )}
     </div>
   );

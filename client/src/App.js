@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import shortid from 'shortid';
 
-import { useStory } from './story-context';
+import { useStory } from './context/story';
 
 const importComponent = async component =>
   React.lazy(() =>
@@ -13,10 +13,10 @@ const importComponent = async component =>
 // import actually uses browser cache, so...
 const cachedComponents = [];
 
-const loadViewHierarchy = async ({ 
-  component: componentName, 
-  children, 
-  ...props 
+const loadViewHierarchy = async ({
+  component: componentName,
+  children,
+  ...props
 }) => {
   if (children && typeof children === 'object' && Array.isArray(children)) {
     children = await Promise.all(

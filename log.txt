@@ -1,3 +1,8 @@
+per editor:
+    tutti gli stili non default SONO CUSTOM, e come tali saranno salvati (se non con un nome esplicito con un id generato casualmente) nel json di elementi custom.
+
+
+
 requirement individuati, temporanei:
     item:
         - gli item esistono

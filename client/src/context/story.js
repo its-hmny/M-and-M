@@ -1,6 +1,6 @@
 import React, { useContext, useState, useCallback } from 'react';
 
-import { ANSWER_VALUE } from './constants';
+import { ANSWER_VALUE } from '../constants';
 
 const story = {
   nodes: [
@@ -16,8 +16,9 @@ const story = {
           },
           {
             component: 'Elements/Button',
-            to: 1,
+            route: 1,
             children: 'Inizia!',
+            styleName: 'SpaceButton',
           },
         ],
       },
@@ -33,7 +34,7 @@ const story = {
             children: 'Di che colore è il cavallo bianco di Napoleone?',
           },
           {
-            component: 'Logic/Choices',
+            component: 'Elements/Choices',
             answers: [
               {
                 text: 'Bianco',
@@ -56,7 +57,8 @@ const story = {
               [ANSWER_VALUE.CORRECT]: 2,
               [ANSWER_VALUE.WRONG]: 3,
             },
-            withSubmit: false,
+            withSubmit: true,
+            styleName: 'SpaceChoices',
           },
         ],
       },
@@ -90,10 +92,14 @@ const story = {
               {
                 component: 'Elements/ButtonGroup',
                 children: [
-                  { component: 'Elements/Button', to: 1, children: 'Ritenta' },
                   {
                     component: 'Elements/Button',
-                    to: 4,
+                    route: 1,
+                    children: 'Ritenta',
+                  },
+                  {
+                    component: 'Elements/Button',
+                    route: 4,
                     children: 'Abbandona',
                   },
                 ],
@@ -128,10 +134,7 @@ const StoryContext = React.createContext();
 function StoryProvider({ children }) {
   const [currentNode, setCurrentNode] = useState(story.nodes[0]);
 
-  const moveTo = useCallback(id => {
-    setCurrentNode(story.nodes[id]);
-    console.log(`Moving to ${story.nodes[id].name}`);
-  }, []);
+  const moveTo = useCallback(id => setCurrentNode(story.nodes[id]), []);
 
   return (
     <StoryContext.Provider value={{ currentNode, moveTo }}>

@@ -1,21 +1,32 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 
-function Choice({ type, name, label, selected, onSelected }) {
+import shortid from 'shortid';
+
+function Choice({ type, name, label, selected, onSelected, styles }) {
+  const id = shortid.generate();
+
   return (
     <div>
-      <label>
+      <input
+        id={id}
+        type={type}
+        name={name}
+        value={label}
+        checked={selected}
+        onChange={onSelected}
+      />
+      <label htmlFor={id} css={styles}>
         {label}
-        <input
-          type={type}
-          name={name}
-          value={label}
-          checked={selected}
-          onChange={onSelected}
-        />
       </label>
     </div>
   );
 }
 
-export const Radio = props => <Choice type="radio" {...props} />;
-export const Checkbox = props => <Choice type="checkbox" {...props} />;
+const Radio = props => <Choice type="radio" {...props} />;
+Radio.displayName = 'Radio';
+
+const Checkbox = props => <Choice type="checkbox" {...props} />;
+Checkbox.displayName = 'Checkbox';
+
+export { Radio, Checkbox };
