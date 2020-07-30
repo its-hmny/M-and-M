@@ -7,8 +7,12 @@ import Button from '../Elements/Button';
 import { useStory } from '../../story-context';
 import { ANSWER_VALUE } from '../../constants';
 
+/** renders a multiple choice component: if there is only
+ * one correct answer radiobutton will be used, otherwise checkbox
+ */
+
 function Choices({ answers, routes, withSubmit }) {
-  const { currentNode } = useStory();
+  const { currentNode, moveTo } = useStory();
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [route, setRoute] = useState(null);
 
@@ -33,11 +37,19 @@ function Choices({ answers, routes, withSubmit }) {
   );
 
   const onSelected = event => {
-    setSelectedAnswers(
-      event.target.checked
-        ? [...selectedAnswers, event.target.value]
-        : selectedAnswers.filter(answer => answer !== event.target.value)
-    );
+    // if it's radio button, selected answer is only one.
+    // Otherwise, update selectedAnswers accordingly
+    const inputType = event.target.type;
+
+    if (inputType === 'radio') {
+      setSelectedAnswers([event.target.value]);
+    } else {
+      setSelectedAnswers(
+        event.target.checked
+          ? [...selectedAnswers, event.target.value]
+          : selectedAnswers.filter(answer => answer !== event.target.value)
+      );
+    }
   };
 
   useEffect(() => {
@@ -51,8 +63,11 @@ function Choices({ answers, routes, withSubmit }) {
       ? routes[ANSWER_VALUE.CORRECT]
       : routes[ANSWER_VALUE.WRONG];
 
+    if (!withSubmit && correctAnswers.length === selectedAnswers.length)
+      moveTo(newRoute);
+
     setRoute(newRoute);
-  }, [correctAnswers, selectedAnswers, routes]);
+  }, [correctAnswers, selectedAnswers, moveTo, routes, withSubmit]);
 
   return (
     <div css={css``}>

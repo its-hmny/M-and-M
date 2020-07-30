@@ -5,7 +5,7 @@ import Link from '../Logic/Link';
 
 function Button({ to, children }) {
   return (
-    <div //TODO: padding makes a piece of button useless
+    <div //TODO: padding makes a piece of button useless. remove link, only keep button
       css={css`
         display: inline-block;
         padding: 10px 20px;

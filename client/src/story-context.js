@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 
 import { ANSWER_VALUE } from './constants';
 
@@ -37,11 +37,11 @@ const story = {
             answers: [
               {
                 text: 'Bianco',
-                value: ANSWER_VALUE.WRONG,
+                value: ANSWER_VALUE.CORRECT,
               },
               {
                 text: 'Verde',
-                value: ANSWER_VALUE.CORRECT,
+                value: ANSWER_VALUE.WRONG,
               },
               {
                 text: 'Blue',
@@ -56,7 +56,7 @@ const story = {
               [ANSWER_VALUE.CORRECT]: 2,
               [ANSWER_VALUE.WRONG]: 3,
             },
-            withSubmit: true,
+            withSubmit: false,
           },
         ],
       },
@@ -128,10 +128,10 @@ const StoryContext = React.createContext();
 function StoryProvider({ children }) {
   const [currentNode, setCurrentNode] = useState(story.nodes[0]);
 
-  const moveTo = id => {
+  const moveTo = useCallback(id => {
     setCurrentNode(story.nodes[id]);
     console.log(`Moving to ${story.nodes[id].name}`);
-  };
+  }, []);
 
   return (
     <StoryContext.Provider value={{ currentNode, moveTo }}>
