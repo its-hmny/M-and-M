@@ -6,6 +6,12 @@ function View({ children }) {
     <div>
       <Global
         styles={css`
+          *,
+          *::before,
+          *::after {
+            box-sizing: border-box;
+          }
+
           html,
           body {
             margin: 0;
@@ -13,6 +19,7 @@ function View({ children }) {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
               Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
               sans-serif;
+            font-size: 24px;
           }
         `}
       />

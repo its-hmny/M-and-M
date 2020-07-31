@@ -1,4 +1,5 @@
 import React, { useContext, useState, useCallback } from 'react';
+import shortid from 'shortid';
 
 import { ANSWER_VALUE } from '../constants';
 
@@ -37,18 +38,22 @@ const story = {
             component: 'Elements/Choices',
             answers: [
               {
+                id: shortid.generate(),
                 text: 'Bianco',
                 value: ANSWER_VALUE.CORRECT,
               },
               {
+                id: shortid.generate(),
                 text: 'Verde',
                 value: ANSWER_VALUE.WRONG,
               },
               {
+                id: shortid.generate(),
                 text: 'Blue',
                 value: ANSWER_VALUE.WRONG,
               },
               {
+                id: shortid.generate(),
                 text: 'Nero',
                 value: ANSWER_VALUE.WRONG,
               },
@@ -58,7 +63,7 @@ const story = {
               [ANSWER_VALUE.WRONG]: 3,
             },
             withSubmit: true,
-            styleName: 'SpaceChoices',
+            styleName: '',
           },
         ],
       },

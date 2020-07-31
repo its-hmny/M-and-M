@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
-import shortid from 'shortid';
 import { Checkbox, Radio } from './Choice';
 import Button from './Button';
 import { useStory } from '../../context/story';
@@ -30,7 +29,7 @@ function Choices({ answers, routes, withSubmit, styleName }) {
     () =>
       answers
         .filter(answer => answer.value === ANSWER_VALUE.CORRECT)
-        .map(answer => answer.text)
+        .map(answer => answer.id)
         .sort(),
     [answers]
   );
@@ -49,15 +48,15 @@ function Choices({ answers, routes, withSubmit, styleName }) {
   const onSelected = event => {
     // if it's radio button, selected answer is only one.
     // Otherwise, update selectedAnswers accordingly
-    const inputType = event.target.type;
+    const { type, id } = event.target;
 
-    if (inputType === 'radio') {
-      setSelectedAnswers([event.target.value]);
+    if (type === 'radio') {
+      setSelectedAnswers([id]);
     } else {
       setSelectedAnswers(
         event.target.checked
-          ? [...selectedAnswers, event.target.value]
-          : selectedAnswers.filter(answer => answer !== event.target.value)
+          ? [...selectedAnswers, id]
+          : selectedAnswers.filter(answerId => answerId !== id)
       );
     }
   };
@@ -67,7 +66,7 @@ function Choices({ answers, routes, withSubmit, styleName }) {
       correctAnswers.length === selectedAnswers.length &&
       selectedAnswers
         .sort()
-        .every((selected, index) => selected === correctAnswers[index]);
+        .every((answerId, index) => answerId === correctAnswers[index]);
 
     const newRoute = isCorrect
       ? routes[ANSWER_VALUE.CORRECT]
@@ -82,19 +81,30 @@ function Choices({ answers, routes, withSubmit, styleName }) {
   return (
     <div
       css={css`
-        padding-left: 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       `}
     >
-      {answers.map(({ text }) => (
-        <Component
-          key={`Choice-${shortid.generate()}`}
-          name={currentNode.name}
-          label={text}
-          selected={selectedAnswers.find(selected => selected === text)}
-          onSelected={onSelected}
-          styles={styles[Component.displayName]}
-        />
-      ))}
+      <div
+        css={css`
+          margin-bottom: 1rem;
+          width: 100%;
+        `}
+      >
+        {answers.map(({ id, text }) => (
+          <Component
+            key={id}
+            id={id}
+            name={currentNode.name}
+            label={text}
+            selected={!!selectedAnswers.find(answerId => answerId === id)}
+            onSelected={onSelected}
+            styles={styles[Component.displayName]}
+          />
+        ))}
+      </div>
 
       {withSubmit && selectedAnswers.length > 0 && (
         <Button route={route} styleName={styles.Button}>

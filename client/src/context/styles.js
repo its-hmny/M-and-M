@@ -16,7 +16,7 @@ function useStyles(key) {
     throw new Error('useStyles must be used inside a StylesProvider');
   }
 
-  return styles[key];
+  return styles[key] || {};
 }
 
 export { StylesProvider, useStyles };

@@ -5,10 +5,11 @@ import { useStory } from '../../context/story';
 import { useStyles } from '../../context/styles';
 
 const base = css`
-  padding: 10px 20px;
-  border: 1px solid transparent;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
   background-color: #8cceb3;
+  font-size: 1rem;
   cursor: pointer;
 `;
 
