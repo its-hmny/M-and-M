@@ -1,17 +1,86 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Graph from "vis-network-react";
-import { Grid } from "@material-ui/core/"
+import {  IconButton, Paper, Collapse } from "@material-ui/core/"
 import { GraphOptions, GraphEvents, additionalOptions, GraphManipulation,colorizeNodes } from "../constants/GraphPreferences";
 import EditorContext from "../context/EditorContext"
+import ActivitiesMenu from "./ActivitiesMenu";
+import { makeStyles } from "@material-ui/core/styles";
+
+import MenuIcon from '@material-ui/icons/Menu';
+
+const useStyles = makeStyles({
+  
+  MenuButtonOpen: {
+    borderRadius: 50,
+    border: 0
+  },
+  MenuButtonClose: {
+    border: 2,
+    borderColor: "#e0e0e0",
+    borderRadius: 50,
+    borderStyle: "solid",
+    
+    
+  },
+  ActivityMenuContainerShow: {
+    zIndex: 2,
+    padding: 5,
+    position: "absolute",
+    border: 1,
+    borderStyle: "solid",
+    borderColor: "#e0e0e0",
+    
+  },
+  ActivityMenuContainerHidden: {
+    zIndex: 2,
+    padding: 5,
+    position: "absolute",
+    
+  },
+  GraphCanvasContainer: {
+    marginTop: 20,
+    height: 500,
+    width: 500
+  },
+  
+  graph: {
+    
+  }
+});
+
 
 const GraphCanvas = () => {
   const { story } = useContext(EditorContext);
   const { convertFromStory } = GraphManipulation;
+  const classes = useStyles();
+
+  const [open,setOpen] = useState(false);
   
+
+  const MenuClick = (event) => {
+    setOpen(!open);
+    
+    
+  };
+
   return (
-    <Grid item xs={6}>
-      <Graph data={colorizeNodes(convertFromStory.parseStory(story))} options={GraphOptions} events={GraphEvents} getNetwork={additionalOptions} />
-    </Grid>
+    <div className={classes.GraphCanvasContainer}>
+      <Paper className={open ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden } elevation={open ? 5 : 0}>
+        
+          <IconButton className={open ? classes.MenuButtonOpen : classes.MenuButtonClose}onClick={MenuClick}>
+            <MenuIcon />
+          </IconButton>
+        
+        <Collapse in={open} >
+         <ActivitiesMenu views={["View1","View2","View3","View4","View5"]}/>
+        </Collapse>
+        
+      </Paper>
+      <div className={classes.graph}>
+        <Graph  data={colorizeNodes(convertFromStory.parseStory(story))} options={GraphOptions} events={GraphEvents} getNetwork={additionalOptions} />
+      </div>
+      
+    </div>
   );
 };
 

@@ -14,8 +14,9 @@ const HUE_TOLERANCE = 40;
 var randomColor = require('randomcolor');
 export const GraphOptions = {
   autoResize: true,
-  height: "500",
-  width: "100%",
+  //TODO change to sensible values
+  height: "800px",
+  width: "2000px",
 
   configure: {
     enabled: false,

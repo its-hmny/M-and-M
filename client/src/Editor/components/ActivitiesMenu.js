@@ -1,42 +1,34 @@
 import React from 'react';
 import { Grid,  List, ListItem, ListItemText } from '@material-ui/core';
-import { makeStyles } from "@material-ui/core/styles";
+
 import shortid from 'shortid';
 
-const useStyles = makeStyles({
-  list: {
-    marginTop: 20,
-    padding: 5,
-    border: 1,
-    borderStyle: "solid",
-    borderColor: "#e0e0e0"
-  }
-});
+
 
 
 const  ActivitiesMenu = (props) => {
-  let widgets = [];
+  let views = [];
 
   //Inserire codice per creare nodo sul grafo con relativi campi e aggiungerlo alla storia
-  const addActivityToGraph = (widget,e) => {
-    console.log(widget);
+  const addActivityToGraph = (views,e) => {
+    console.log(views);
   };
   //Popolo la lista
-  for(let i=0;i<props.widgets.length;i++){
-    widgets.push(
+  for(let i=0;i<props.views.length;i++){
+    views.push(
         <ListItem button divider key={shortid.generate()}>
-          <ListItemText primary={props.widgets[i]} onClick={(e) => addActivityToGraph(props.widgets[i],e)}></ListItemText>
+          <ListItemText primary={props.views[i]} onClick={(e) => addActivityToGraph(props.views[i],e)}></ListItemText>
         </ListItem>
       );
   }
+
   
-  const classes = useStyles();
   return (
-    <Grid item xs={3}>
-      <List className={classes.list}>
-        {widgets}
+    
+      <List >
+        {views}
       </List>
-    </Grid>
+   
   );
 }
 
