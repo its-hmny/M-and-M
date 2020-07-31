@@ -9,7 +9,7 @@ const Editor = () => {
   return (
     <EditorContextProvider userStory={ExampleStory} >
       <Grid container spacing={2} >
-        <ActivitiesMenu />
+        <ActivitiesMenu widgets={["widget1","widget2","widget3","widget4","widget5"]}/>
         <GraphCanvas />
       </Grid>
     </EditorContextProvider>
