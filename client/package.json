@@ -17,7 +17,8 @@
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "shortid": "^2.2.15"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,5 +41,8 @@
       "last 1 safari version"
     ]
   },
-  "license": "GPL-3.0-or-later"
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "@welldone-software/why-did-you-render": "^4.2.7"
+  }
 }

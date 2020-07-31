@@ -1,0 +1,7 @@
+cosa dobbiamo fare le prossime volte:
+- styling degli input
+  - span nascosto che cambia a seconda di checked o no
+  - singoli choice personalizzabili (storia per bambini, colori)
+  - gestione immagini...?
+  - no compilazione css -> emotion?
+- altri componenti
