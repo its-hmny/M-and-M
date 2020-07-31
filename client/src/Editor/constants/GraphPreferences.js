@@ -7,7 +7,7 @@ let colors = [];
 let groups = ["event1", "event2", "event3"];
 let clusters = [];
 
-export const GraphOptions = {
+export const Options = {
   autoResize: true,
   height: "500",
   width: "100%",
@@ -92,7 +92,7 @@ export const GraphOptions = {
 };
 
 
-export const GraphEvents = {
+export let EventHandlers = {
   click: (params) => {
     params.event = "[original event]";
     console.log("click event, getNodeAt returns: ");
@@ -156,8 +156,9 @@ export const GraphEvents = {
     console.log("select Event:", params);
   },
 
-  selectNode: (params) => {
+  selectNode: function (params) {
     console.log("selectNode Event:", params);
+    console.log(this);
   },
 
   selectEdge: (params) => {
@@ -222,32 +223,32 @@ export const DummyData = {
 };
 
 
-export const GraphManipulation = {
-  convertFromStory: {
-    parseStory: function (story) {
+export const Utility = {
+  converter: {
+    getGraphFromStory: function (story) {
       const graph = { nodes: [], edges: [] };
       
       story.nodes.forEach(node => {
         graph.nodes = [...graph.nodes, {id: node.id, label: node.name}];
-        this.setEdgesFromChildren(node.view.children, node.id, graph);
+        this.setEdgesFromChildrens(node.view.children, node.id, graph);
       });
 
       console.log(graph);
       return (graph);
     },
 
-    setEdgesFromChildren: function(root, root_id, graph) {
+    setEdgesFromChildrens: function(root, root_id, graph) {
       root.forEach(child => {
         if (child.to !== undefined)
           graph.edges = [...graph.edges, { from: root_id, to: child.to }];
         
         else if (child.children instanceof Array)
-          this.setEdgesFromChildren(child.children, root_id, graph)
+          this.setEdgesFromChildrens(child.children, root_id, graph)
 
         else 
-          console.log("Is something else");
+          console.log("Is something else"); // Debug only for now
       });
-    },
+    }
   },
 
   addNode: (oldGraph, newNode) => {
@@ -302,8 +303,8 @@ export const additionalOptions = (currentNetwork) => {
 
   //Popoliamo automaticamente le variabili globali
   //TODO scrivere le opzioni a partire dalle variabili globali e non viceversa
-  for (let group in GraphOptions.groups) 
-    colors.push(GraphOptions.groups[group].color);
+  for (let group in Options.groups) 
+    colors.push(Options.groups[group].color);
 };
 
 function makeClusters(scale) {
