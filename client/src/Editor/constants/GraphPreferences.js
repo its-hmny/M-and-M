@@ -92,7 +92,7 @@ export const Options = {
 };
 
 
-export let EventHandlers = {
+export const EventHandlers = {
   click: (params) => {
     params.event = "[original event]";
     console.log("click event, getNodeAt returns: ");
@@ -157,8 +157,9 @@ export let EventHandlers = {
   },
 
   selectNode: function (params) {
-    console.log("selectNode Event:", params);
+    //console.log("selectNode Event:", params);
     console.log(this);
+    this.setFocusedNode(params.nodes[0]);
   },
 
   selectEdge: (params) => {
@@ -232,8 +233,7 @@ export const Utility = {
         graph.nodes = [...graph.nodes, {id: node.id, label: node.name}];
         this.setEdgesFromChildrens(node.view.children, node.id, graph);
       });
-
-      console.log(graph);
+      
       return (graph);
     },
 

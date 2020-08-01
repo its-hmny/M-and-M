@@ -13,7 +13,7 @@ const defaultStory = {
 
 export const EditorContextProvider = ({ children, userStory }) => {
     const [currentStory, setStory] = useState(userStory || defaultStory);
-    const [currentActivityID, setCurrentActivity] = useState(-1);
+    const [currentActivityID, setCurrentActivity] = useState(undefined);
 
     const toProvide = {
         story: currentStory,
