@@ -1,3 +1,5 @@
+
+
 let lastClusterZoomLevel = 0;
 let clusterFactor = 0.9;
 let network = null;
@@ -7,10 +9,14 @@ let colors = [];
 let groups = ["event1", "event2", "event3"];
 let clusters = [];
 
+var randomizedColors = [];
+const HUE_TOLERANCE = 40;
+var randomColor = require('randomcolor');
 export const Options = {
   autoResize: true,
-  height: "500",
-  width: "100%",
+  //TODO change to sensible values
+  height: "800px",
+  width: "2000px",
 
   configure: {
     enabled: false,
@@ -305,6 +311,7 @@ export const additionalOptions = (currentNetwork) => {
   //TODO scrivere le opzioni a partire dalle variabili globali e non viceversa
   for (let group in Options.groups) 
     colors.push(Options.groups[group].color);
+  //generateNodeColor();
 };
 
 function makeClusters(scale) {
@@ -342,4 +349,42 @@ function openClusters(scale) {
   }
   
   clusters = newClusters;
+}
+
+export function colorizeNodes(graph){
+  let nodes = graph.nodes;
+  let color,redex,greenex,blueex,red,green,blue;
+  for(let i=0;i<nodes.length;i++){
+    let flag;
+    do{
+      flag = false;
+      color = randomColor();
+      redex = color.substr(1,2);
+      greenex = color.substr(3,2);
+      blueex = color.substr(5,2);
+      red = parseInt(redex,16);
+      green = parseInt(greenex,16);
+      blueex = parseInt(blueex,16);
+      for(let j=0;j<randomizedColors && !flag;j++){
+        if(checkHueTolerance() && checkBackgroundTolerance()){
+              flag = true;
+            }
+      }
+    }while(flag);
+    
+    nodes[i]['color'] = color;
+    
+  }
+  return graph;
+}
+
+//Ritorna true se il colore passato si trova nel range corretto
+function checkHueTolerance(red,green,blue){
+  return red > randomizedColors.r - HUE_TOLERANCE && red < randomizedColors.r + HUE_TOLERANCE 
+          && green > randomizedColors.g - HUE_TOLERANCE && green < randomizedColors.g + HUE_TOLERANCE
+          && blue > randomizedColors.b - HUE_TOLERANCE && blue < randomizedColors.b + HUE_TOLERANCE;
+}
+
+function checkBackgroundTolerance(red,green,blue){
+  return true;
 }
