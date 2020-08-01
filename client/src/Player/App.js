@@ -42,12 +42,13 @@ function App() {
 
   useEffect(() => {
     const loadView = async viewObject => {
+      console.log(viewObject);
       try {
         const viewHierarchy = await loadViewHierarchy(viewObject);
         setView(viewHierarchy);
       } catch (err) {
         console.error(
-          `An error occured while loading view for ${currentNode.name}: ${err}`
+          `An error occured while loading for ${currentNode.name}: ${err}`
         );
       }
     };
