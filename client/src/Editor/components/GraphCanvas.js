@@ -52,22 +52,21 @@ const GraphCanvas = () => {
   const { converter } = Utility;
   const classes = useStyles();
 
-  const [open,setOpen] = useState(false);
-  const MenuClick = event => setOpen(!open);
+  const [isMenuOpen,setMenuOpen] = useState(false);
 
   const selectNode = event => setWorkingActivity(event.nodes[0]);
   const deselectNode = event => setWorkingActivity(undefined);
 
   return (
     <div className={classes.GraphCanvasContainer}>
-      <Paper className={open ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden } elevation={open ? 5 : 0}>
+      <Paper className={isMenuOpen ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden } elevation={isMenuOpen ? 5 : 0}>
         
-        <IconButton className={open ? classes.MenuButtonOpen : classes.MenuButtonClose}onClick={MenuClick}>
+        <IconButton className={isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose} onClick={event => setMenuOpen(!isMenuOpen)}>
           <MenuIcon />
         </IconButton>
         
-        <Collapse in={open} >
-         <ActivitiesMenu views={["View1","View2","View3","View4","View5"]}/>
+        <Collapse in={isMenuOpen} >
+          <ActivitiesMenu openState={{isMenuOpen, setMenuOpen}} renderList={["View1","View2","View3","View4","View5"]}/>
         </Collapse>
         
       </Paper>

@@ -12,11 +12,12 @@ let clusters = [];
 var randomizedColors = [];
 const HUE_TOLERANCE = 40;
 var randomColor = require('randomcolor');
+
 export const Options = {
   autoResize: true,
   //TODO change to sensible values
   height: "800px",
-  width: "2000px",
+  width: "1000px",
 
   configure: {
     enabled: false,
@@ -251,8 +252,8 @@ export const Utility = {
         else if (child.children instanceof Array)
           this.setEdgesFromChildrens(child.children, root_id, graph)
 
-        else 
-          console.log("Is something else"); // Debug only for now
+        //else 
+          //console.log("Is something else"); // Debug only for now
       });
     }
   },

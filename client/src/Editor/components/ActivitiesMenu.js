@@ -1,34 +1,78 @@
-import React from 'react';
-import { Grid,  List, ListItem, ListItemText } from '@material-ui/core';
-
+import React, { useState } from 'react';
+import { Drawer,  Tabs, Tab, Card, CardContent, Grid, Typography, makeStyles } from '@material-ui/core';
 import shortid from 'shortid';
 
 
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
 
+  return (
+    <div hidden={value !== index} >
+      {value === index && (
+        <Card>
+          <CardContent>
+            <Typography>{children}</Typography>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+    display: 'block',
+    height: 224,
+  },
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`,
+  },
+}));
 
 const  ActivitiesMenu = (props) => {
-  let views = [];
+  const classes = {}
+  const { renderList } = props;
+  const { isMenuOpen, setMenuOpen } = props.openState;
+  const [ currentTab, setTab ] = useState(0);
 
-  //Inserire codice per creare nodo sul grafo con relativi campi e aggiungerlo alla storia
-  const addActivityToGraph = (views,e) => {
-    console.log(views);
+  const initializeTabs = () => {
+    return (renderList.map(elem => <Tab label={elem} />));
   };
-  //Popolo la lista
-  for(let i=0;i<props.views.length;i++){
-    views.push(
-        <ListItem button divider key={shortid.generate()}>
-          <ListItemText primary={props.views[i]} onClick={(e) => addActivityToGraph(props.views[i],e)}></ListItemText>
-        </ListItem>
-      );
-  }
 
-  
+  const initializeTabPanels = () => {
+     return (renderList.map((elem, index) => 
+      <TabPanel index={index} value={currentTab} >{elem}</TabPanel>
+  ))};
+
   return (
-    
-      <List >
-        {views}
-      </List>
-   
+    <Drawer
+      className={classes.root}
+      anchor={'left'}
+      open={isMenuOpen}
+      onClose={() => setMenuOpen(!isMenuOpen)}
+    >
+      <Typography variant="h4">Choose a new template</Typography>
+      
+      <Grid container>
+        <Grid item xs={4}>
+          <Tabs
+            className={classes.tabs}
+            orientation="vertical"
+            variant="scrollable"
+            value={currentTab}
+            onChange={(event, newValue) => setTab(newValue)}
+          >
+            {initializeTabs()}
+          </Tabs>
+        </Grid>
+        
+        <Grid item xs={8}>
+          {initializeTabPanels()}
+        </Grid>
+      </Grid>
+    </Drawer>
   );
 }
 
@@ -39,12 +83,4 @@ export default ActivitiesMenu;
 
 /* EXPERIMENTAL
 <Button onClick={() => setOpen(true)}>Choose new activity</Button>
-      <SwipeableDrawer
-        anchor={"left"}
-        open={isOpen}
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-      >
-        {[<h1>Test</h1>, <h1>Test</h1>, <h1>Test</h1>]}
-      </SwipeableDrawer>
 */
