@@ -1,7 +1,18 @@
-cosa dobbiamo fare le prossime volte:
-- styling degli input
-  - span nascosto che cambia a seconda di checked o no
-  - singoli choice personalizzabili (storia per bambini, colori)
-  - gestione immagini...?
-  - no compilazione css -> emotion?
-- altri componenti
+
+components can be added at will. window will scroll if too long. prrt
+
+_______________________________________
+|                                      |
+|           INSPECTOR                  |
+|______________________________________|
+|                                      |
+| v Title                           🗑 |
+|   |   font_family:                   |
+|   |   font_weight:                   |
+|   |   ....                           |
+| > component 1                        |
+| > component 2                        |
+|  _______                             |
+| |   +   |                            |
+| |_______|                            |
+|______________________________________|

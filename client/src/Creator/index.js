@@ -3,7 +3,7 @@ import React from 'react';
 import App from './App';
 import Providers from './Providers';
 
-function Player() {
+function Creator() {
   return (
     <Providers>
       <App />
@@ -11,4 +11,4 @@ function Player() {
   );
 }
 
-export default Player;
+export default Creator;

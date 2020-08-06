@@ -42,7 +42,6 @@ function App() {
 
   useEffect(() => {
     const loadView = async viewObject => {
-      console.log(viewObject);
       try {
         const viewHierarchy = await loadViewHierarchy(viewObject);
         setView(viewHierarchy);
