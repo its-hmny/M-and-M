@@ -1,22 +1,32 @@
 import React, { useContext } from 'react';
 import { Card, CardContent, Typography, Button } from '@material-ui/core';
+import EditorContext from '../context/EditorContext'
 import RenderSandbox from './RenderSandbox'
-import EditorContext from '../context/EditorContext';
 import ReadOnly from './ReadOnly';
 
 const DescriptiveCard = (props) => {
-    const { description, toRender, ...others } = props;
-    const { story } = useContext(EditorContext);
-  
+    const { toPreview } = props;
+    const { story, saveStory } = useContext(EditorContext);
+
+    const addToStory = () => { 
+      const updatedStory = { ...story.nodes.push(toPreview), ...story };
+      saveStory(updatedStory);
+    };
+
     return (
       <div>
           <Card variant="outlined">
             <CardContent>
+            <Typography variant="h6">{toPreview.name}</Typography>
+              
               <ReadOnly>
-                <RenderSandbox component={story.nodes[0]} />
+                <RenderSandbox component={toPreview} />
               </ReadOnly>
-              <Typography variant="subtitle1">{description}</Typography>
-              <Button onClick={() => console.log("Clicked card")}>Add new question</Button>
+              
+              <Typography variant="body1">{toPreview.description}</Typography>
+              
+              <Button onClick={addToStory}>Add new question</Button>
+
             </CardContent>
           </Card>
       </div>

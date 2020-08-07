@@ -48,7 +48,6 @@ const RenderSanbox = (props) => {
       }
     };
 
-    console.log(component.view);
     loadView(component.view);
   }, [component]);
 

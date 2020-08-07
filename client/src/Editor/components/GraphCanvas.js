@@ -66,7 +66,7 @@ const GraphCanvas = () => {
         </IconButton>
         
         <Collapse in={isMenuOpen} >
-          <ActivitiesMenu openState={{isMenuOpen, setMenuOpen}} renderList={["View1","View2","View3","View4","View5"]}/>
+          <ActivitiesMenu binding={{isMenuOpen, setMenuOpen}} />
         </Collapse>
         
       </Paper>

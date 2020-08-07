@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { Drawer,  Tabs, Tab, Grid, Typography } from '@material-ui/core';
-import DescriptiveCard from './DescriptiveCard.js'
+import DescriptiveCard from './DescriptiveCard.js';
+import QuestionTemplate from '../constants/QuestionTemplate.js';
 
 const  ActivitiesMenu = (props) => {
-  const classes = {}
-  const { renderList } = props;
-  const { isMenuOpen, setMenuOpen } = props.openState;
+  const { isMenuOpen, setMenuOpen } = props.binding;
   const [ currentTab, setTab ] = useState(0);
 
   const initializeTabs = () => {
-    return (renderList.map(elem => <Tab label={elem} />));
+    return (QuestionTemplate.map(item => <Tab label={item.name} />));
   };
 
   return (
     <Drawer
-      className={classes.root}
       anchor={'left'}
       open={isMenuOpen}
       onClose={() => setMenuOpen(!isMenuOpen)}
@@ -22,7 +20,7 @@ const  ActivitiesMenu = (props) => {
       <Typography variant="h4">Choose a new template</Typography>
       
       <Grid container spacing={1}>
-        <Grid item xs={5}>
+        <Grid item xs={3}>
           <Tabs
             orientation="vertical"
             variant="scrollable"
@@ -33,8 +31,8 @@ const  ActivitiesMenu = (props) => {
           </Tabs>
         </Grid>
         
-        <Grid item xs={7}>
-          <DescriptiveCard description={renderList[currentTab]}/>
+        <Grid item xs={8}>
+          <DescriptiveCard toPreview={QuestionTemplate[currentTab]}/>
         </Grid>
       </Grid>
     </Drawer>
