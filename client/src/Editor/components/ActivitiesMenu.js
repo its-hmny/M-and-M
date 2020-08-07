@@ -19,7 +19,7 @@ const  ActivitiesMenu = (props) => {
       open={isMenuOpen}
       onClose={() => setMenuOpen(!isMenuOpen)}
     >
-      <Typography variant="h1">Choose a new template</Typography>
+      <Typography variant="h4">Choose a new template</Typography>
       
       <Grid container spacing={1}>
         <Grid item xs={5}>
