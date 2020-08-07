@@ -336,13 +336,11 @@ function makeClusters(scale) {
 
 function openClusters(scale) {
   let newClusters = [];
-  let declustered = false;
   for (let i = 0; i < clusters.length; i++) {
     
     if (clusters[i].scale < scale) {
       network.openCluster(clusters[i].id);
       lastClusterZoomLevel = scale;
-      declustered = true;
     } 
     
     else 

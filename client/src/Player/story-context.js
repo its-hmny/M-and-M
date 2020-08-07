@@ -105,7 +105,7 @@ const story = {
 //          all'interno dei componenti E PROPAGARLO nell'albero
 // provider: una proprietà con un valore qualunque
 // consumer: accede al provider
-const StoryContext = React.createContext();
+const StoryContext = React.createContext({});
 
 function StoryProvider({ children }) {
   const [currentNode, setCurrentNode] = useState(story.nodes[0]);

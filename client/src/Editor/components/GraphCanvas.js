@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Graph from "vis-network-react";
 import {  IconButton, Paper, Collapse } from "@material-ui/core/"
-import { Options, EventHandlers, additionalOptions, Utility, colorizeNodes } from "../constants/GraphPreferences";
+import { Options, additionalOptions, Utility, colorizeNodes } from "../constants/GraphPreferences";
 import EditorContext from "../context/EditorContext"
 import ActivitiesMenu from "./ActivitiesMenu";
 import { makeStyles } from "@material-ui/core/styles";
@@ -72,7 +72,7 @@ const GraphCanvas = () => {
       </Paper>
 
       <div className={classes.graph}>
-        <Graph  data={colorizeNodes(converter.getGraphFromStory(story))} options={Options} events={{selectNode, deselectNode}} getNetwork={additionalOptions} />
+        <Graph  data={converter.getGraphFromStory(story)} options={Options} events={{selectNode, deselectNode}} getNetwork={additionalOptions} />
       </div>
       
     </div>

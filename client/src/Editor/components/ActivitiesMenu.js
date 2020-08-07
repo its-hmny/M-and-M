@@ -1,35 +1,6 @@
 import React, { useState } from 'react';
-import { Drawer,  Tabs, Tab, Card, CardContent, Grid, Typography, makeStyles } from '@material-ui/core';
-import shortid from 'shortid';
-
-
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div hidden={value !== index} >
-      {value === index && (
-        <Card>
-          <CardContent>
-            <Typography>{children}</Typography>
-          </CardContent>
-        </Card>
-      )}
-    </div>
-  );
-}
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    display: 'block',
-    height: 224,
-  },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-  },
-}));
+import { Drawer,  Tabs, Tab, Grid, Typography } from '@material-ui/core';
+import DescriptiveCard from './DescriptiveCard.js'
 
 const  ActivitiesMenu = (props) => {
   const classes = {}
@@ -41,11 +12,6 @@ const  ActivitiesMenu = (props) => {
     return (renderList.map(elem => <Tab label={elem} />));
   };
 
-  const initializeTabPanels = () => {
-     return (renderList.map((elem, index) => 
-      <TabPanel index={index} value={currentTab} >{elem}</TabPanel>
-  ))};
-
   return (
     <Drawer
       className={classes.root}
@@ -53,12 +19,11 @@ const  ActivitiesMenu = (props) => {
       open={isMenuOpen}
       onClose={() => setMenuOpen(!isMenuOpen)}
     >
-      <Typography variant="h4">Choose a new template</Typography>
+      <Typography variant="h1">Choose a new template</Typography>
       
-      <Grid container>
-        <Grid item xs={4}>
+      <Grid container spacing={1}>
+        <Grid item xs={5}>
           <Tabs
-            className={classes.tabs}
             orientation="vertical"
             variant="scrollable"
             value={currentTab}
@@ -68,8 +33,8 @@ const  ActivitiesMenu = (props) => {
           </Tabs>
         </Grid>
         
-        <Grid item xs={8}>
-          {initializeTabPanels()}
+        <Grid item xs={7}>
+          <DescriptiveCard description={renderList[currentTab]}/>
         </Grid>
       </Grid>
     </Drawer>
@@ -77,10 +42,3 @@ const  ActivitiesMenu = (props) => {
 }
 
 export default ActivitiesMenu;
-
-
-
-
-/* EXPERIMENTAL
-<Button onClick={() => setOpen(true)}>Choose new activity</Button>
-*/
