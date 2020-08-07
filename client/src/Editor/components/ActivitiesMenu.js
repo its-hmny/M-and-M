@@ -12,19 +12,13 @@ const  ActivitiesMenu = (props) => {
   };
 
   return (
-    <Drawer
-      anchor={'left'}
-      open={isMenuOpen}
-      onClose={() => setMenuOpen(!isMenuOpen)}
-    >
+    <Drawer anchor='left' open={isMenuOpen} onClose={() => setMenuOpen(!isMenuOpen)} >
+      
       <Typography variant="h4">Choose a new template</Typography>
       
       <Grid container spacing={1}>
         <Grid item xs={3}>
-          <Tabs
-            orientation="vertical"
-            variant="scrollable"
-            value={currentTab}
+          <Tabs orientation="vertical" variant="scrollable" value={currentTab}
             onChange={(event, newValue) => setTab(newValue)}
           >
             {initializeTabs()}
@@ -34,6 +28,7 @@ const  ActivitiesMenu = (props) => {
         <Grid item xs={8}>
           <DescriptiveCard toPreview={QuestionTemplate[currentTab]}/>
         </Grid>
+
       </Grid>
     </Drawer>
   );

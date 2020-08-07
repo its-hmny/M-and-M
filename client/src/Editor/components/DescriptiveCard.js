@@ -3,14 +3,15 @@ import { Card, CardContent, Typography, Button } from '@material-ui/core';
 import EditorContext from '../context/EditorContext'
 import RenderSandbox from './RenderSandbox'
 import ReadOnly from './ReadOnly';
+import shortid from 'shortid';
 
 const DescriptiveCard = (props) => {
     const { toPreview } = props;
     const { story, saveStory } = useContext(EditorContext);
 
     const addToStory = () => { 
-      const updatedStory = { ...story.nodes.push(toPreview), ...story };
-      saveStory(updatedStory);
+      const { nodes, ...others } = story;
+      saveStory({ nodes: [...nodes, { id: shortid(), ...toPreview }], others});
     };
 
     return (
