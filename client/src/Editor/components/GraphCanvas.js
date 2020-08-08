@@ -57,23 +57,13 @@ const GraphCanvas = () => {
 
   const selectNode = event => setWorkingActivity(event.nodes[0]);
   const deselectNode = event => setWorkingActivity(undefined);
-
+  
   return (
     <div className={classes.GraphCanvasContainer}>
-      <Paper className={open ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden } elevation={open ? 5 : 0}>
-        
-        <IconButton className={open ? classes.MenuButtonOpen : classes.MenuButtonClose}onClick={MenuClick}>
-          <MenuIcon />
-        </IconButton>
-        
-        <Collapse in={open} >
-         <ActivitiesMenu views={["View1","View2","View3","View4","View5"]}/>
-        </Collapse>
-        
-      </Paper>
+      
 
       <div className={classes.graph}>
-        <Graph  data={colorizeNodes(converter.getGraphFromStory(story))} options={Options} events={{selectNode, deselectNode}} getNetwork={additionalOptions} />
+        <Graph  data={converter.getGraphFromStory(story)} options={Options} events={{selectNode, deselectNode}} getNetwork={additionalOptions} />
       </div>
       
     </div>
