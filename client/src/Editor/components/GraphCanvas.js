@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Graph from "vis-network-react";
 import {  IconButton, Paper, Collapse } from "@material-ui/core/"
-import { Options, EventHandlers, additionalOptions, Utility, colorizeNodes } from "../constants/GraphPreferences";
+import { Options, additionalOptions, Utility, colorizeNodes } from "../constants/GraphPreferences";
 import EditorContext from "../context/EditorContext"
 import ActivitiesMenu from "./ActivitiesMenu";
 import { makeStyles } from "@material-ui/core/styles";
@@ -52,15 +52,28 @@ const GraphCanvas = () => {
   const { converter } = Utility;
   const classes = useStyles();
 
-  const [open,setOpen] = useState(false);
-  const MenuClick = event => setOpen(!open);
+  const [isMenuOpen,setMenuOpen] = useState(false);
 
   const selectNode = event => setWorkingActivity(event.nodes[0]);
   const deselectNode = event => setWorkingActivity(undefined);
   
   return (
     <div className={classes.GraphCanvasContainer}>
+<<<<<<< HEAD
       
+=======
+      <Paper className={isMenuOpen ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden } elevation={isMenuOpen ? 5 : 0}>
+        
+        <IconButton className={isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose} onClick={event => setMenuOpen(!isMenuOpen)}>
+          <MenuIcon />
+        </IconButton>
+        
+        <Collapse in={isMenuOpen} >
+          <ActivitiesMenu binding={{isMenuOpen, setMenuOpen}} />
+        </Collapse>
+        
+      </Paper>
+>>>>>>> f73dfafe615e7d82abb3c674ee05af0279bea89d
 
       <div className={classes.graph}>
         <Graph  data={converter.getGraphFromStory(story)} options={Options} events={{selectNode, deselectNode}} getNetwork={additionalOptions} />
