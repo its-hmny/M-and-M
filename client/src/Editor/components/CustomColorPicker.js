@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import {Popover, Button } from '@material-ui/core';
+import React from 'react';
+import {Popover } from '@material-ui/core';
 import { ChromePicker } from 'react-color';
-import shortid from 'shortid';
+
 import { makeStyles } from "@material-ui/core/styles";
 /*  
     props:{
@@ -46,9 +46,15 @@ const CustomColorPicker = (props) => {
     
     });
     var classes = useStyles();
-    const handleColor = (node, name, color) => {
+
+    if(props.saveData){
+        /* Aggiungere un file data aggiuntivo per la storia????? */
+        //props.changeState(props.nodeid, props.componentcount , "children", textState);
+    }
+
+    const handleColor = (color) => {
         setColorState(color);
-        //props.changeState(node,name,color);
+        
     };
     
     
@@ -70,7 +76,7 @@ const CustomColorPicker = (props) => {
                 }}
             >
                 <ChromePicker  name={props.name} color={colorState}
-                    onChange={ (color) => handleColor(props.nodeid,props.name,color.hex) }/>
+                    onChange={ (color) => handleColor(color.hex) }/>
             </Popover>
     </div>);
 }

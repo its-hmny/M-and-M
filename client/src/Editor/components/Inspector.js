@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from 'react';
-import { Grid, Paper,Box, Typography} from '@material-ui/core';
+import {Paper,Box, Typography} from '@material-ui/core';
 import EditorContext from '../context/EditorContext';
 import properties from '../../ComponentProperties.json';
 import shortid from 'shortid';
 
 import { makeStyles } from "@material-ui/core/styles";
 import InspectorElement from "./InspectorElement";
+
 const ComponentNameRegexp = new RegExp('[/](\\w+)$');
 
 const useStyles = makeStyles({
@@ -26,26 +27,46 @@ const useStyles = makeStyles({
 
 const Inspector = () => {
   const { story, workingActivity } = useContext(EditorContext);
+
   const classes = useStyles();
-  const [data, setData] = React.useState({});
-  const counterRef = React.useRef({});
-  
+
+  const [viewInspector, setViewInspector] = React.useState(workingActivity === undefined);
+  const [tempstory,setTempStory] = React.useState(story);
+
+  /*ATTENZIONE questo campo non serve davvero, è solo un trigger per il il salvataggio
+    nelle sottocomponenti ESISTE SICURAMENTE UN MODO MIGLIORE */
+  const [saveData, setSaveData] = React.useState(false);
+
+  const viewerRef = React.useRef(undefined);
   
 
-  const handleChange = (node,propname,value) => {
   
-    setData(data => { return({...data, [node]: {...data[node],[propname] : value}});});
+
+  const handleChange = (id, componentcount, field ,value) => {
+    
+    //Temp node to modify and reinsert
+    let node = tempstory.nodes[id];
+    
+    //Get reference to field value of the component in the story
+    node.view.children[componentcount][field] = value;
+    
+    setTempStory({...tempstory, [tempstory.nodes[id]] : {
+                        ...tempstory.nodes[id],
+                        node 
+                    }
+                  });
     
   };
+  
+ 
+
 
   const populateInspector = () => {
-      const currentNode = story.nodes.filter(node => node.id === workingActivity)[0];
+      const currentNode = tempstory.nodes.filter(node => node.id === workingActivity)[0];
       var inspectorFields = [];
-      counterRef.current[currentNode.id] ={
-        "to": 0,
-        "color": 0,
-        "text": 0
-      };
+      //Counter for the current component
+      var componentcount = 0;
+      
       currentNode.view.children.forEach(element => {
         
         var currentGroup = [];
@@ -62,17 +83,15 @@ const Inspector = () => {
           
           currentProperties.mandatory.forEach(property => {
                 
-                name = property + counterRef.current[currentNode.id][property];
-                
-                let next = counterRef.current[currentNode.id][property] + 1;
-                
-                counterRef.current = {...counterRef.current, [currentNode.id] : {...counterRef.current[currentNode.id],[property] : next}};
-                
+                //Name for each inspector element 
+                name = property;
+
                 currentGroup.push(
-                  <InspectorElement type={property} name={name} nodes={story.nodes} nodeid={currentNode.id} element={element}
-                    data={data} handleChange={handleChange} key={shortid.generate()}
+                  <InspectorElement saveData={saveData} type={property} name={name} nodes={story.nodes} nodeid={currentNode.id} element={element}
+                     componentcount={componentcount} handleChange={handleChange} key={shortid.generate()} story={tempstory}/>
+                );
                 
-                />)
+                
           });
           
           //Optional properties
@@ -81,13 +100,17 @@ const Inspector = () => {
               
             }
           });
+          
+          componentcount++;
         }
         
+        //Regex to remove component path
         const match = String(element.component).match(ComponentNameRegexp);
         let componentname;
         if( match !== undefined ){
           componentname = match[1];
         }
+
         inspectorFields.push(
           <Box border={1} key={shortid.generate()} className={classes.InspectorElement}>
             <Typography variant="h4" component="h4" className={classes.InspectorElement}>
@@ -99,16 +122,28 @@ const Inspector = () => {
       });
       
       return (
-        <div>
+        <div key={shortid.generate()}>
           {inspectorFields}
         </div>);
   };
-  //
-  return (
-   
-      <Paper className={classes.InspectorPaper} elevation={3}>
+
+  /* ATTENZIONE meccanismo per il salvataggio dati da rivedere */
+  if(workingActivity === undefined && viewInspector) {
+    setSaveData(true);
+    setViewInspector(false);
+    
+    viewerRef.current = (<h1>Select an element</h1>);
+  }else if(workingActivity !== undefined && !viewInspector){
+    
+    setViewInspector(true);
+    viewerRef.current = populateInspector();
+    
+  }   
         
-        {workingActivity === undefined ? <h1>Select an element</h1> : populateInspector()}
+  
+  return (
+      <Paper className={classes.InspectorPaper} elevation={3}>
+        {viewerRef.current}
       </Paper>
     
   );

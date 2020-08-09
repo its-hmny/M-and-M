@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 const Editor = () => {
   const classes = useStyles();
-
+  
   return (
     <EditorContextProvider userStory={ExampleStory} >
       <Grid container className={classes.EditorContainer}>

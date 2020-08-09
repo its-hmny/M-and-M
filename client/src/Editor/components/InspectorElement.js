@@ -1,11 +1,11 @@
 import React from 'react';
-import { Grid, TextField, Paper,Box, Typography, Select, FormControl, MenuItem ,InputLabel, Popover, Button } from '@material-ui/core';
-import shortid from 'shortid';
+
+
 import { makeStyles } from "@material-ui/core/styles";
 
 import CustomColorPicker from './CustomColorPicker';
-
 import ControlledTextField from './ControlledTextField';
+import ControlledSelect from './ControlledSelect';
 
 const useStyles = makeStyles({
     InspectorPaper:{
@@ -36,55 +36,33 @@ const useStyles = makeStyles({
 const InspectorElement = (props) => {
 
     const classes = useStyles();
-
+    
     switch(props.type){
         case "text":
           
           return (
             <div className={classes.InspectorElement}>
-              <ControlledTextField  multiline={props.element.component == "Elements/Text"} 
-                changeState={props.handleChange} nodeid={props.nodeid} name={props.name}/>
+              <ControlledTextField  multiline={props.element.component == "Elements/Text"} defaultValue={props.element.children}
+                  changeState={props.handleChange} saveData={props.saveData}
+                  name={props.name} nodeid={props.nodeid} componentcount={props.componentcount} />
             </div>);
         
         case "to":
-            let destinationNodes = [];
-            
-            props.nodes.forEach(node => {
-              destinationNodes.push(
-                <MenuItem key={shortid.generate()} value={node.name}>{node.name}</MenuItem>
-              );
-            }); 
-            
-            let selectvalue;
-            if(props.data[props.nodeid] === undefined){
-                selectvalue = "None";
-                
-            }else{
-                if(props.data[props.nodeid][props.name] === undefined){
-                    selectvalue = "None";
-                }else{
-                    selectvalue = props.data[props.nodeid][props.name];
-                }
-            }
-            return(
-              <div className={classes.InspectorElement}>
-                <FormControl className={classes.FormControl}>
-                <InputLabel>Destination</InputLabel>
-                <Select value={selectvalue} name={props.name} id={props.name} 
-                    onChange={event => props.handleChange(props.nodeid,props.name,event.target.value)}>
-                  <MenuItem value="None"></MenuItem>
-                  {destinationNodes}
-                </Select>
-                </FormControl>
-              </div>
-            );
+
+            //Get default value from current story
+            let defaultValue = props.story.nodes[props.nodeid].view.children[props.componentcount]["to"];
+          
+            return (
+              <ControlledSelect nodeid={props.nodeid} name={props.name} componentcount={props.componentcount} 
+                nodes={props.nodes} changeState={props.handleChange} defaultValue={defaultValue} saveData={props.saveData}/>
+            )
         
         case "color":
             
-            
           return(
-            <CustomColorPicker className={classes.InspectorElement} name={props.name} nodeid={props.nodeid} changeState={props.handleChange} />
-      
+            <CustomColorPicker className={classes.InspectorElement} name={props.name} nodeid={props.nodeid} 
+              changeState={props.handleChange} componentcount={props.componentcount} saveData={props.saveData}/>
+            
           );
           
         

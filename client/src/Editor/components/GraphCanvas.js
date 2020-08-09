@@ -43,7 +43,6 @@ const useStyles = makeStyles({
     width: 500
   },
   
-  graph: {}
 });
 
 
@@ -59,9 +58,6 @@ const GraphCanvas = () => {
   
   return (
     <div className={classes.GraphCanvasContainer}>
-<<<<<<< HEAD
-      
-=======
       <Paper className={isMenuOpen ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden } elevation={isMenuOpen ? 5 : 0}>
         
         <IconButton className={isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose} onClick={event => setMenuOpen(!isMenuOpen)}>
@@ -73,7 +69,6 @@ const GraphCanvas = () => {
         </Collapse>
         
       </Paper>
->>>>>>> f73dfafe615e7d82abb3c674ee05af0279bea89d
 
       <div className={classes.graph}>
         <Graph  data={converter.getGraphFromStory(story)} options={Options} events={{selectNode, deselectNode}} getNetwork={additionalOptions} />
