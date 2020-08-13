@@ -1,6 +1,7 @@
 import React from 'react';
 
-const ReadOnly = props => {
+
+const ReadOnly = (props) => {
   const blockingHandler = event => event.stopPropagation();
 
   return (

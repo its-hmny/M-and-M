@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+import { Typography } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 
 import CustomColorPicker from './CustomColorPicker';
@@ -21,52 +21,38 @@ const useStyles = makeStyles({
     FormControl: {
       minWidth: 150
     }
-  });
-/*
-  Props = {
-      name : ... ,
-      type : ... ,
-      nodes: ... ,
-      nodeid: ... ,
-      element: ... ,
-      data: ... ,
-      handleChange ...
-  }
-*/
-const InspectorElement = (props) => {
+});
 
+
+const InspectorElement = (props) => {
+    const { fieldList } = props;
     const classes = useStyles();
     
-    switch(props.type){
+    return (fieldList.map(property => {
+      switch(property) {
+          
         case "text":
-          
           return (
-            <div className={classes.InspectorElement}>
-              <ControlledTextField  multiline={props.element.component == "Elements/Text"} defaultValue={props.element.children}
-                  changeState={props.handleChange} saveData={props.saveData}
-                  name={props.name} nodeid={props.nodeid} componentcount={props.componentcount} />
-            </div>);
-        
-        case "to":
-
-            //Get default value from current story
-            let defaultValue = props.story.nodes[props.nodeid].view.children[props.componentcount]["to"];
+            <ControlledTextField isMultiline={true} className={classes.InspectorElement} />
+          );
           
-            return (
-              <ControlledSelect nodeid={props.nodeid} name={props.name} componentcount={props.componentcount} 
-                nodes={props.nodes} changeState={props.handleChange} defaultValue={defaultValue} saveData={props.saveData}/>
-            )
-        
+        case "to":
+          return (
+            <ControlledSelect classNames={classes} />
+          );
+          
         case "color":
-            
           return(
             <CustomColorPicker className={classes.InspectorElement} name={props.name} nodeid={props.nodeid} 
               changeState={props.handleChange} componentcount={props.componentcount} saveData={props.saveData}/>
-            
           );
-          
-        
-    }
+  
+          default:
+            return (<Typography variant="h6">{`Properties ${property} not known!`}</Typography>);
+      }
+
+    }));
 }
+
 
 export default InspectorElement;

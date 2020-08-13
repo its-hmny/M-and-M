@@ -1,24 +1,20 @@
 import React, {useState, useEffect} from 'react';
 import shortid from 'shortid';
 
+
 const cachedComponents = [];
+
 const importComponent = async component =>
   React.lazy(() =>
-    import(`../../Player/components/${component}`).catch(() =>
-      console.log(`Unable to load ${component}`)
-    )
+    import(`../../Player/components/${component}`)
+      .catch(() => console.log(`Unable to load ${component}`))
   );
 
-const loadViewHierarchy = async ({
-  component: componentName,
-  children,
-  ...props
-}) => {
-  if (children && typeof children === 'object' && Array.isArray(children)) {
+const loadViewHierarchy = async ({ component: componentName, children, ...props }) => {
+  if (children && typeof children === 'object' && Array.isArray(children)) 
     children = await Promise.all(
       children.map(component => loadViewHierarchy(component))
     );
-  }
 
   if (!cachedComponents[componentName])
     cachedComponents[componentName] = await importComponent(componentName);
@@ -32,6 +28,7 @@ const loadViewHierarchy = async ({
   );
 };
 
+
 const RenderSanbox = (props) => {
   const { component } = props;
   const [view, setView] = useState(null);
@@ -42,13 +39,12 @@ const RenderSanbox = (props) => {
         const viewHierarchy = await loadViewHierarchy(viewObject);
         setView(viewHierarchy);
       } catch (err) {
-        console.error(
-          `An error occured while loading view for ${component.name}: ${err}`
-        );
+        console.error(`An error occured while loading view for ${component.name}: ${err}`);
       }
     };
 
     loadView(component.view);
+  
   }, [component]);
 
   return (
@@ -57,5 +53,6 @@ const RenderSanbox = (props) => {
     </React.Suspense>
   );
 };
+
 
 export default RenderSanbox;

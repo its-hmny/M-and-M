@@ -22,7 +22,6 @@ function View({ children }) {
           }
         `}
       />
-      <h1>Main View</h1>
       {children}
     </div>
   );

@@ -1,42 +1,13 @@
-import React, { useContext, useState } from "react";
-import Graph from "vis-network-react";
-import {  IconButton, Paper, Collapse } from "@material-ui/core/"
-import { Options, additionalOptions, Utility, colorizeNodes } from "../constants/GraphPreferences";
-import EditorContext from "../context/EditorContext"
-import ActivitiesMenu from "./ActivitiesMenu";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useContext } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Graph from 'vis-network-react';
+import { Options, additionalOptions, Utility } from '../constants/GraphPreferences';
+import EditorContext from '../context/EditorContext'
+import { ActivitiesMenuButton } from './ActivitiesMenu';
 
-import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles({
   
-  MenuButtonOpen: {
-    borderRadius: 50,
-    border: 0
-  },
-
-  MenuButtonClose: {
-    border: 2,
-    borderColor: "#e0e0e0",
-    borderRadius: 50,
-    borderStyle: "solid",
-  },
-
-  ActivityMenuContainerShow: {
-    zIndex: 2,
-    padding: 5,
-    position: "absolute",
-    border: 1,
-    borderStyle: "solid",
-    borderColor: "#e0e0e0",
-  },
-
-  ActivityMenuContainerHidden: {
-    zIndex: 2,
-    padding: 5,
-    position: "absolute",  
-  },
-
   GraphCanvasContainer: {
     marginTop: 20,
     height: 500,
@@ -51,31 +22,18 @@ const GraphCanvas = () => {
   const { converter } = Utility;
   const classes = useStyles();
 
-  const [isMenuOpen,setMenuOpen] = useState(false);
-
   const selectNode = event => setWorkingActivity(event.nodes[0]);
   const deselectNode = event => setWorkingActivity(undefined);
   
   return (
     <div className={classes.GraphCanvasContainer}>
-      <Paper className={isMenuOpen ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden } elevation={isMenuOpen ? 5 : 0}>
-        
-        <IconButton className={isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose} onClick={event => setMenuOpen(!isMenuOpen)}>
-          <MenuIcon />
-        </IconButton>
-        
-        <Collapse in={isMenuOpen} >
-          <ActivitiesMenu binding={{isMenuOpen, setMenuOpen}} />
-        </Collapse>
-        
-      </Paper>
-
+      <ActivitiesMenuButton />
       <div className={classes.graph}>
         <Graph  data={converter.getGraphFromStory(story)} options={Options} events={{selectNode, deselectNode}} getNetwork={additionalOptions} />
-      </div>
-      
+      </div> 
     </div>
   );
 };
+
 
 export default GraphCanvas;

@@ -1,26 +1,17 @@
 {
-    "mandatory":[
-        "hmargin",
-        "vmargin"
-    ],
-    "components":{
-        "Atoms/Link":{
-            "mandatory": [
-                "text",
-                "to"
-            ],
-            "optional":[
-                
-            ]
-        },
-        "Elements/Text":{
-            "mandatory":[
-                "text",
-                "color"
-            ],
-            "optional":[
+  "mandatory": ["hmargin", "vmargin"],
 
-            ]
-        }
-    }
+  "components": {
+    "Atoms/Link": {
+      "mandatory": ["text", "to"],
+      "optional": []
+    },
+
+    "Elements/Text": {
+      "mandatory": ["text", "color"],
+      "optional": []
+    },
+
+    "Layout/Footer": {}
+  }
 }
