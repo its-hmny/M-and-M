@@ -3,9 +3,9 @@ import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import EditorContext from '../context/EditorContext';
 
 
-const ControlledSelect = ({ classNames }) => {
-  const { story } = useContext(EditorContext);
-  const [selectValue, setSelectValue] = useState(undefined);
+const ControlledSelect = ({ classNames, pathToFragment }) => {
+  const { story, getFromPath, setPathToValue } = useContext(EditorContext);
+  const [selectValue, setSelectValue] = useState();
 
   const destinationOption = story.nodes.map(node => (
     <MenuItem key={node.id} value={node.id}>
@@ -17,8 +17,11 @@ const ControlledSelect = ({ classNames }) => {
     <div className={classNames.InspectorElement}>
       <FormControl className={classNames.FormControl}>
         <InputLabel>Destination</InputLabel>
-        <Select value={selectValue} onChange={event => setSelectValue(event.target.value)} >
+        <Select value={getFromPath(pathToFragment).to} onChange={event => setPathToValue(pathToFragment, "to", event.target.value)} >
           {destinationOption}
+          <MenuItem key={story.nodes.lenght} value={undefined}>
+            Blank
+          </MenuItem>
         </Select>
       </FormControl>
     </div>

@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import EditorContext, { EditorContextProvider } from '../context/EditorContext';
 import shortid from 'shortid';
 
 
@@ -29,11 +30,17 @@ const loadViewHierarchy = async ({ component: componentName, children, ...props 
 };
 
 
-const RenderSanbox = (props) => {
-  const { component } = props;
+const RenderSanbox = ({ component }) => {
+  const { story, workingActivity } = useContext(EditorContext);
+  component = component || story.nodes[workingActivity];
   const [view, setView] = useState(null);
 
   useEffect(() => {
+    if (component === undefined) {
+      setView(<h1>Select an element and here will appear the preview</h1>);
+      return ;
+    }
+
     const loadView = async viewObject => {
       try {
         const viewHierarchy = await loadViewHierarchy(viewObject);
