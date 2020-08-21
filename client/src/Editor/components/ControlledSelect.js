@@ -3,8 +3,7 @@ import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import EditorContext from '../context/EditorContext';
 
 
-const ControlledSelect = props => {
-  const { classNames } = props;
+const ControlledSelect = ({ classNames }) => {
   const { story } = useContext(EditorContext);
   const [selectValue, setSelectValue] = useState(undefined);
 

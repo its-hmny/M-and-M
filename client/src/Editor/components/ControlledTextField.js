@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { TextField } from '@material-ui/core';
+import EditorContext from '../context/EditorContext';
 
-const ControlledTextField = props => {
-  const { isMultiline, assignedClassName } = props;
-  const [textState, setTextState] = React.useState(props.defaultValue);
- 
-  const handleChange = event => {
-    setTextState(event.target.value);
-  };
+const ControlledTextField = ({ classNames, pathToFragment }) => {
+  const { getFromPath, setPathToValue } = useContext(EditorContext);
 
   return (
-    <div className={assignedClassName}>
-      <TextField label="Text" value={textState} multiline={isMultiline} onChange={handleChange} />
+    <div className={classNames.InspectorElement}>
+      <TextField 
+        label="Text" value={getFromPath(pathToFragment).children} multiline={true} 
+        onChange={event => setPathToValue(pathToFragment, "children", event.target.value)}
+      />
     </div>
   );
 };
