@@ -7,6 +7,7 @@ function App() {
   const [components, setComponents] = useState([
     {
       name: 'Text',
+      id: 'Text01',
       properties: {
         fontFamily: 'serif',
         fontWeight: 'bold',
@@ -16,6 +17,7 @@ function App() {
     },
     {
       name: 'Button',
+      id: 'Button01',
       properties: {
         fontFamily: 'sans-serif',
         backgroundColor: 'red',
@@ -28,12 +30,17 @@ function App() {
     setComponents([...components, component]);
   };
 
+  const handleRemoveComponent = id => {
+    setComponents([...components.filter(component => component.id != id)]);
+  }
+
   return (
     <Grid container>
       <Grid item xs={6}>
         <Inspector
           components={components}
           onAddComponent={handleAddComponent}
+          onRemoveComponent={handleRemoveComponent}
         />
       </Grid>
       <Grid item xs={6}>

@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ComponentItem({ name, properties }) {
+function ComponentItem({ name, id, properties, onRemove }) {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
 
@@ -49,7 +49,7 @@ function ComponentItem({ name, properties }) {
       <ListItem>
         <ListItemText primary={name} />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="delete">
+          <IconButton edge="end" aria-label="delete" onClick={() => onRemove(id)}>
             <DeleteIcon />
           </IconButton>
           <IconButton
@@ -65,6 +65,7 @@ function ComponentItem({ name, properties }) {
         <List>
           {Object.keys(properties).map(property => {
             const labelId = `${name}-${property}-${shortid.generate()}`;
+            console.log(labelId);
             return (
               <ListItem className={classes.nested}>
                 <FormControl className={classes.formControl}>
@@ -95,8 +96,12 @@ function Inspector({ components, onAddComponent, onRemoveComponent }) {
         </Typography>
 
         <List>
-          {components.map(({ name, properties }) => (
-            <ComponentItem name={name} properties={properties} />
+          {components.map(({ name, id, properties }) => (
+            <ComponentItem
+              name={name}
+              id={id}
+              properties={properties}
+              onRemove={onRemoveComponent} />
           ))}
         </List>
 
