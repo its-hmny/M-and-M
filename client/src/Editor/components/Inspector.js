@@ -28,13 +28,6 @@ const Inspector = () => {
 
   const isVisible = workingActivity !== undefined;
 
-  const handleChange = (componentCount, field ,value) => { 
-    //Temp node to modify and reinsert
-    let currentNode = story.nodes[workingActivity];
-    //Get reference to field value of the component in the story
-    currentNode.view.children[componentCount][field] = value;
-  };
-
   const getComponentName = (node) => { 
     const tokens = node.component.split('/');
     return (tokens[tokens.length - 1])
