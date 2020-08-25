@@ -1,6 +1,6 @@
 const QuestionTemplate = [
   {
-    name: 'Introduzione',
+    label: 'Introduzione',
     description:
       "Semplice componente di introuzione per immergere l'utente nella storia",
     view: {
@@ -20,7 +20,7 @@ const QuestionTemplate = [
   },
 
   {
-    name: 'Scelta multipla',
+    label: 'Scelta multipla',
     description:
       'Possibili scelte ognuna con un proprio pulsante cliccabile, ogni scelta puó portare ad una strada diversa',
     view: {
@@ -45,7 +45,7 @@ const QuestionTemplate = [
   },
 
   {
-    name: 'Epilogo',
+    label: 'Epilogo',
     description:
       'Un componente che permette di chiudere la storia in maniera narrativa',
     view: {

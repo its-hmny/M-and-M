@@ -2,7 +2,7 @@ const ExampleStory = {
     nodes: [
       {
         id: 0,
-        name: 'INTRO',
+        label: 'INTRO',
         view: {
           component: 'View',
           children: [
@@ -20,7 +20,7 @@ const ExampleStory = {
       },
       {
         id: 1,
-        name: 'QUESTION',
+        label: 'QUESTION',
         view: {
           component: 'View',
           children: [
@@ -43,7 +43,7 @@ const ExampleStory = {
       },
       {
         id: 2,
-        name: 'VICTORY',
+        label: 'VICTORY',
         view: {
           component: 'View',
           children: [
@@ -56,7 +56,7 @@ const ExampleStory = {
       },
       {
         id: 3,
-        name: 'WRONG_ANSWER',
+        label: 'WRONG_ANSWER',
         view: {
           component: 'View',
           children: [
@@ -85,7 +85,7 @@ const ExampleStory = {
       },
       {
         id: 4,
-        name: 'DEFEAT',
+        label: 'DEFEAT',
         view: {
           component: 'View',
           children: [

@@ -8,7 +8,7 @@ const ControlledSelect = ({ classNames, pathToFragment }) => {
 
   const destinationOption = story.nodes.map(node => (
     <MenuItem key={node.id} value={node.id}>
-      {node.name}
+      {node.label}
     </MenuItem>
   ));
 
