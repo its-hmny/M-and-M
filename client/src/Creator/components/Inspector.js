@@ -28,6 +28,7 @@ import {
   ExpandMore as ExpandMoreIcon,
 } from '@material-ui/icons';
 import shortid from 'shortid';
+import TextSettings from '../../common/components/setting_components/TextSettings';
 
 const options = {
   fontFamily: ['serif', 'sans-serif'],
@@ -85,6 +86,9 @@ function ComponentItem({ name, id, properties, onRemove }) {
               </ListItem>
             );
           })}
+          <ListItem className={classes.nested}>
+            <TextSettings id={id}/>
+            </ListItem> 
         </List>
       </Collapse>
     </>
@@ -137,7 +141,7 @@ function Inspector({ components, onAddComponent, onRemoveComponent }) {
           ))}
         </List>
 
-        <Fab color="primary" onclick={handleToggle}>
+        <Fab color="primary" onClick={handleToggle}>
           <AddIcon ref={anchorRef}
             aria-controls={open ? 'menu-list-grow' : undefined}
             aria-haspopup="true"
