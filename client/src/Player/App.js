@@ -5,7 +5,7 @@ import { useStory } from './context/story';
 
 const importComponent = async component =>
   React.lazy(() =>
-    import(`./components/${component}`).catch(() =>
+    import(`../common/components/${component}`).catch(() =>
       console.log(`Unable to load ${component}`)
     )
   );

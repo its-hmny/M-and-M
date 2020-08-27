@@ -13,12 +13,12 @@ const story = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Benvenuto nella nostra prova',
+            text: 'Benvenuto nella nostra prova',
           },
           {
             component: 'Elements/Button',
             route: 1,
-            children: 'Inizia!',
+            text: 'Inizia!',
             styleName: 'SpaceButton',
           },
         ],
@@ -32,7 +32,7 @@ const story = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Di che colore è il cavallo bianco di Napoleone?',
+            text: 'Di che colore è il cavallo bianco di Napoleone?',
           },
           {
             component: 'Elements/Choices',
@@ -76,7 +76,7 @@ const story = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'bravo!',
+            text: 'bravo!',
           },
         ],
       },
@@ -89,7 +89,7 @@ const story = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Sbagliato!',
+            text: 'Sbagliato!',
           },
           {
             component: 'Layout/Footer',
@@ -100,12 +100,12 @@ const story = {
                   {
                     component: 'Elements/Button',
                     route: 1,
-                    children: 'Ritenta',
+                    text: 'Ritenta',
                   },
                   {
                     component: 'Elements/Button',
                     route: 4,
-                    children: 'Abbandona',
+                    text: 'Abbandona',
                   },
                 ],
               },
@@ -122,7 +122,7 @@ const story = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Peccato!',
+            text: 'Peccato!',
           },
         ],
       },

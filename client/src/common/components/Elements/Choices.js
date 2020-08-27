@@ -1,11 +1,13 @@
 /** @jsx jsx */
+// i get it, this is trash. maybe make a 
+// directories file from which we pull out what we need? this sounds like a mattia problem :)
 import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
 import { Checkbox, Radio } from './Choice';
 import Button from './Button';
-import { useStory } from '../../context/story';
-import { useStyles } from '../../context/styles';
-import { ANSWER_VALUE } from '../../constants';
+import { useStory } from '../../../Player/context/story';
+import { useStyles } from '../../../Player/context/styles';
+import { ANSWER_VALUE } from '../../../Player/constants';
 
 /** renders a multiple choice component: if there is only
  * one correct answer radiobutton will be used, otherwise checkbox
@@ -107,9 +109,7 @@ function Choices({ answers, routes, withSubmit, styleName }) {
       </div>
 
       {withSubmit && selectedAnswers.length > 0 && (
-        <Button route={route} styleName={styles.Button}>
-          Conferma
-        </Button>
+        <Button route={route} styleName={styles.Button} text="Conferma"/>
       )}
     </div>
   );
