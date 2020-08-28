@@ -4,20 +4,20 @@ import { view } from '@material-ui/icons';
 import { useInputChange } from './useInputChange';
 import Button from '../Elements/Button';
 import TextPropInput from './atoms/TextPropInput';
+import ColorPickerInput from './atoms/ColorPickerInput';
 
 function TextSettings({ id }) {
     const [view, addComponent, removeComponent] = useView();
     const textComponent = view.find(component => component.id === id);
     // if it's not there you might as well explode
     const [input, handleInputChange] = useInputChange();
-    const handleSubmit = event => {
-    }
 
     return (
         <form>
-            <TextPropInput onChange={handleInputChange}/>
+            <TextPropInput onChange={handleInputChange} value={input} />
+            <ColorPickerInput onChange={handleInputChange} value={input} />
             <label> i dunno name maybe?
-            <input type="text" name="textInput" onChange={handleInputChange}/>
+            <input type="text" name="textInput" onChange={handleInputChange} />
             </label>
         </form>
     );

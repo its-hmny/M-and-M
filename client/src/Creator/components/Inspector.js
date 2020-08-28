@@ -87,8 +87,8 @@ function ComponentItem({ name, id, properties, onRemove }) {
             );
           })}
           <ListItem className={classes.nested}>
-            <TextSettings id={id}/>
-            </ListItem> 
+            <TextSettings id={id} />
+          </ListItem>
         </List>
       </Collapse>
     </>
