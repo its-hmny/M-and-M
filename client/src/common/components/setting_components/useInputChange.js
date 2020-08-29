@@ -1,25 +1,29 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 // https://dev.to/stanleyjovel/simplify-controlled-components-with-react-hooks-23nn
 // pretty cool no?
 
 export const useInputChange = () => {
   const [input, setInput] = useState({})
 
-  const handleInputChange = (e,v) => {
+  const handleInputChange = useCallback((e, v) => {
     // not very clean, i'll admit. fucking js i want my types backkk
-    if (e && v){
-      setInput({
-        ...input,
-        [e] : v
-      })
+    if (v) {
+      setInput(prevState => {
+        return {
+          ...prevState,
+          [e]: v
+        }
+      });
     }
     else {
-      setInput({
-        ...input,
-        [e.currentTarget.name]: e.currentTarget.value
-        });
-      }
-  }
+      setInput(prevState => {
+        return {
+          ...prevState,
+          [e.currentTarget.name]: e.currentTarget.value
+        }
+      });
+    }
+  }, []);
 
   return [input, handleInputChange]
 }

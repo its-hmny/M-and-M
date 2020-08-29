@@ -3,8 +3,10 @@ import { useView } from '../../../Creator/context/view';
 import { view } from '@material-ui/icons';
 import { useInputChange } from './useInputChange';
 import Button from '../Elements/Button';
-import TextPropInput from './atoms/TextPropInput';
+import FontFamilyInput from './atoms/FontFamilyInput';
 import ColorPickerInput from './atoms/ColorPickerInput';
+import FontSizeInput from './atoms/FontSizeInput';
+import ImagePropInput from './atoms/ImagePropInput';
 
 function TextSettings({ id }) {
     const [view, addComponent, removeComponent] = useView();
@@ -14,11 +16,11 @@ function TextSettings({ id }) {
 
     return (
         <form>
-            <TextPropInput onChange={handleInputChange} value={input} />
+            <FontFamilyInput onChange={handleInputChange} value={input} />
             <ColorPickerInput onChange={handleInputChange} value={input} />
-            <label> i dunno name maybe?
-            <input type="text" name="textInput" onChange={handleInputChange} />
-            </label>
+            <FontSizeInput onChange={handleInputChange} value={input} />
+            <ImagePropInput onChange={handleInputChange} value={input} />
+
         </form>
     );
 }

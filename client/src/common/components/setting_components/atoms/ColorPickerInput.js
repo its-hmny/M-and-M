@@ -25,7 +25,6 @@ const properties = [
 function ColorPickerInput({ onChange, value }) {
   const classes = useStyles();
   const handleChangeColor = (event) => {
-    console.log(event);
     onChange(event);
   }
   const inputId = shortid.generate();

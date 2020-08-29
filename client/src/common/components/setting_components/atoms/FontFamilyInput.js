@@ -1,9 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  TextField
+  TextField,
+  InputLabel
 } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import shortid from 'shortid';
 
 
 const filter = createFilterOptions();
@@ -18,53 +20,61 @@ const useStyles = makeStyles((theme) => ({
   },
 }));*/
 
-function TextPropInput({ onChange, value }) {
+function FontFamilyInput({ onChange, value }) {
   //const classes = useStyles();
   const propertyName = "font-family";
+  const autoInput = shortid.generate();
+  const label = "Font family";
   return (
-    <Autocomplete
-      name={propertyName}
-      onChange={(event, newValue) => {
-        if (typeof newValue === 'string') {
-          // enter a string and press enter
-          // maybe we want to add dialog.. https://material-ui.com/components/autocomplete/#creatable
-          // if you want to implement adding new input, REMEMBER freeSolo as an option
-        } else if (newValue && newValue.inputValue) {
-          // Create a new value from the user input (clicking add)
-          // same shit as before. for now, you HAVE to select one of the options
-        } else if (newValue) {
-          // if i pressed one of the options
-          onChange(propertyName, newValue.name);
-        }
-      }}
-      filterOptions={(options, params) => {
-        const filtered = filter(options, params);
-        /*
-        // Suggest the creation of a new value
-        if (params.inputValue !== '') {
-          filtered.push({
-            inputValue: params.inputValue,
-            title: `Add "${params.inputValue}"`,
-          });
-        }
-        */
-        return filtered;
-      }}
-      selectOnFocus
-      clearOnBlur
-      handleHomeEndKeys
-      required
-      value={value.propertyName}
-      id="autoselect-font-family"
-      options={possibleFonts.sort()}
-      getOptionLabel={(option) => option.name}
-      groupBy={(option) => option.type}
-      renderOption={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => (
-        <TextField {...params} label="Font family" variant="outlined" />
-      )}
-    />
+    <>
+      {/* clearly unnecessary, BUT check for accessibility!!!*/}
+      <InputLabel htmlFor={autoInput}>{label}</InputLabel>
+
+      <Autocomplete
+        id={autoInput}
+        name={propertyName}
+        onChange={(event, newValue) => {
+          if (typeof newValue === 'string') {
+            // enter a string and press enter
+            // maybe we want to add dialog.. https://material-ui.com/components/autocomplete/#creatable
+            // if you want to implement adding new input, REMEMBER freeSolo as an option
+          } else if (newValue && newValue.inputValue) {
+            // Create a new value from the user input (clicking add)
+            // same shit as before. for now, you HAVE to select one of the options
+          } else if (newValue) {
+            // if i pressed one of the options
+            onChange(propertyName, newValue.name);
+          }
+        }}
+        filterOptions={(options, params) => {
+          const filtered = filter(options, params);
+          /*
+          // Suggest the creation of a new value
+          if (params.inputValue !== '') {
+            filtered.push({
+              inputValue: params.inputValue,
+              title: `Add "${params.inputValue}"`,
+            });
+          }
+          */
+          return filtered;
+        }}
+        selectOnFocus
+        clearOnBlur
+        handleHomeEndKeys
+        required
+        value={value.propertyName}
+        id="autoselect-font-family"
+        options={possibleFonts.sort()}
+        getOptionLabel={(option) => option.name}
+        groupBy={(option) => option.type}
+        renderOption={(option) => option.name}
+        style={{ width: 300 }}
+        renderInput={(params) => (
+          <TextField {...params} label={label} variant="outlined" />
+        )}
+      />
+    </>
   )
 }
 /*<FormControl className={classes.FormControl}>
@@ -90,7 +100,7 @@ function TextPropInput({ onChange, value }) {
           // Regular option
           return option.title;
         }}*/
-export default TextPropInput;
+export default FontFamilyInput;
 
 const possibleFonts = [
   { name: "sans-serif", type: "sans-serif" },
