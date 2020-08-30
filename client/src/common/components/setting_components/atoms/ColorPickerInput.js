@@ -27,14 +27,15 @@ function ColorPickerInput({ onChange, value }) {
   const handleChangeColor = (event) => {
     onChange(event);
   }
-  const inputId = shortid.generate();
 
   return (
     <>
       {
         properties.map(({ prop, label }) => {
+          const inputId = shortid.generate();
+          // div key stops strictMode from harassing me
           return (
-            <>
+            <div key={`${inputId}-div`}>
               <InputLabel htmlFor={inputId}>{label}</InputLabel>
               <input
                 type="color"
@@ -43,7 +44,7 @@ function ColorPickerInput({ onChange, value }) {
                 onChange={handleChangeColor}
                 name={prop}
                 value={value.prop} />
-            </>
+            </div>
           )
         }
         )

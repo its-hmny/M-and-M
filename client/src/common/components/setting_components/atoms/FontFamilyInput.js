@@ -64,7 +64,6 @@ function FontFamilyInput({ onChange, value }) {
         handleHomeEndKeys
         required
         value={value.propertyName}
-        id="autoselect-font-family"
         options={possibleFonts.sort()}
         getOptionLabel={(option) => option.name}
         groupBy={(option) => option.type}

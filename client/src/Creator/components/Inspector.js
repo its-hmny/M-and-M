@@ -72,7 +72,6 @@ function ComponentItem({ name, id, properties, onRemove }) {
         <List>
           {Object.keys(properties).map(property => {
             const labelId = `${name}-${property}-${shortid.generate()}`;
-            console.log(labelId);
             return (
               <ListItem className={classes.nested}>
                 <FormControl className={classes.formControl}>
