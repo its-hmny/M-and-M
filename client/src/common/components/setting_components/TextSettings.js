@@ -7,6 +7,7 @@ import FontFamilyInput from './atoms/FontFamilyInput';
 import ColorPickerInput from './atoms/ColorPickerInput';
 import FontSizeInput from './atoms/FontSizeInput';
 import ImagePropInput from './atoms/ImagePropInput';
+import FontVarInput from './atoms/FontVarInput';
 
 function TextSettings({ id }) {
     const [view, addComponent, removeComponent] = useView();
@@ -20,6 +21,7 @@ function TextSettings({ id }) {
             <ColorPickerInput onChange={handleInputChange} value={input} />
             <FontSizeInput onChange={handleInputChange} value={input} />
             <ImagePropInput onChange={handleInputChange} value={input} />
+            <FontVarInput onChange={handleInputChange} value={input} />
 
         </form>
     );

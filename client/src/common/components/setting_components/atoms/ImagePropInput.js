@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Slider,
     Checkbox,
@@ -10,7 +10,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 function getText(value) {
-    return `${value}px`;
+    return `${value}%`;
 }
 
 
@@ -21,8 +21,8 @@ const propNames = {
 };
 
 const propDefaults = {
-    width: "100px",
-    height: "100px",
+    width: "50%",
+    height: "50%",
 };
 
 const autoSettings = {
@@ -30,6 +30,8 @@ const autoSettings = {
     "margin-left": "auto",
     "margin-right": "auto",
     "max-width": "100%",
+    "width": "50%",
+    "height": "50%",
     "padding": "5 5px"
 }
 const defaultSettings = {
@@ -37,19 +39,22 @@ const defaultSettings = {
     "margin-left": "auto",
     "margin-right": "auto",
     "max-width": "500%",
+    "width": "100%",
+    "height": "100%",
     "padding": "0px"
 }
 
 function ImagePropInput({ onChange, value }) {
     const [auto, setAuto] = useState(true);
-    const toggleId = shortid.generate();
+    const ids = {};
+    Object.keys(propNames).map((element) => ids[element] = shortid.generate());
 
     function getValue(propName) {
         let returned;
         if (value[propName] !== undefined)
-            returned = value[propName].replace("px", "");
+            returned = value[propName].replace("%", "");
         else
-            returned = propDefaults[propName].replace("px", "");
+            returned = propDefaults[propName].replace("%", "");
         return (+returned); // so that it returns the int
     }
 
@@ -70,35 +75,39 @@ function ImagePropInput({ onChange, value }) {
 
     return (
         <>
-            <InputLabel htmlFor={toggleId}>Default</InputLabel>
+            <InputLabel htmlFor={ids[propNames.auto]}> Default</InputLabel>
+            {/* i wasn't sure, now i am. i was supposed to use FormControlLabel, not InputLabel... TODO!*/}
             <Switch
                 name={propNames.auto}
-                id={toggleId}
+                id={ids[propNames.auto]}
                 checked={auto}
                 aria-label="auto-image"
                 onChange={toggleAuto} />
+            <InputLabel htmlFor={ids[propNames.width]}>Width</InputLabel>
             <Slider
                 disabled={auto}
-                id="giorgio"
+                id={ids[propNames.width]}
                 name={propNames.width}
                 value={getValue(propNames.width)}
                 getAriaValueText={getText}
                 aria-labelledby="width-image-slider"
-                min={20}
-                max={700}
+                min={0}
+                max={100}
                 valueLabelDisplay="on"
                 onChange={(event, newValue) => handleSlider(event, newValue, propNames.width)}
             />
 
+            <InputLabel htmlFor={ids[propNames.height]}>Height</InputLabel>
             <Slider
                 disabled={auto}
+                id={ids[propNames.height]}
                 name={propNames.height}
                 orientation="vertical"
                 value={getValue(propNames.height)}
                 getAriaValueText={getText}
                 aria-labelledby="height-image-slider"
-                min={20}
-                max={700}
+                min={0}
+                max={100}
                 valueLabelDisplay="on"
                 onChange={(event, newValue) => handleSlider(event, newValue, propNames.height)}
                 style={{ height: "300px" }}
