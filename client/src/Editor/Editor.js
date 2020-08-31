@@ -29,7 +29,7 @@ const Editor = () => {
   const classes = useStyles();
   
   return (
-    <EditorContextProvider userStory={ExampleStory} >
+    <EditorContextProvider  userStory={ExampleStory} >
       <Grid container className={classes.EditorContainer}>
         
         {/*<Grid item xs={3}>

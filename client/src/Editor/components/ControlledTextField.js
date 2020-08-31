@@ -4,11 +4,12 @@ import EditorContext from '../context/EditorContext';
 
 const ControlledTextField = ({ classNames, pathToFragment }) => {
   const { getFromPath, setPathToValue } = useContext(EditorContext);
-
+  
+  
   return (
     <div className={classNames.InspectorElement}>
       <TextField 
-        label="Text" value={getFromPath(pathToFragment).children} multiline={true} 
+        label="Text"  multiline={true} value={getFromPath(pathToFragment).children} 
         onChange={event => setPathToValue(pathToFragment, "children", event.target.value)}
       />
     </div>

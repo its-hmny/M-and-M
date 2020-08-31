@@ -69,7 +69,7 @@ const  ActivitiesMenu = (props) => {
   const [ currentTab, setTab ] = useState(0);
 
   const initializeTabs = () => {
-    return (QuestionTemplate.map(item => <Tab label={item.name} />));
+    return (QuestionTemplate.map((item, index) => <Tab label={item.label} key={index}/>));
   };
 
   return (

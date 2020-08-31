@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Graph from 'vis-network-react';
-import { Options, additionalOptions, Utility } from '../constants/GraphPreferences';
+import { Options, Utility } from '../constants/GraphPreferences';
 import EditorContext from '../context/EditorContext'
 import { ActivitiesMenuButton } from './ActivitiesMenu';
 
@@ -26,10 +26,13 @@ const GraphCanvas = () => {
   const deselectNode = event => setWorkingActivity(undefined);
   
   return (
-    <div className={classes.GraphCanvasContainer}>
+    <div className={classes.GraphCanvasContainer} >
       <ActivitiesMenuButton />
       <div className={classes.graph}>
-        <Graph  data={converter.getGraphFromStory(story)} options={Options} events={{selectNode, deselectNode}} getNetwork={additionalOptions} />
+        <Graph 
+          data={converter.getGraphFromStory(story)} options={Options} 
+          events={{selectNode, deselectNode}} getNetwork={obj => console.log(obj)}
+        />
       </div> 
     </div>
   );

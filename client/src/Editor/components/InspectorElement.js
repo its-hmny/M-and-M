@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CustomColorPicker from './CustomColorPicker';
 import ControlledTextField from './ControlledTextField';
 import ControlledSelect from './ControlledSelect';
-
+import shortid from "shortid";
 const useStyles = makeStyles({
   InspectorPaper: {
     padding: 10,
@@ -24,9 +24,9 @@ const useStyles = makeStyles({
     marginLeft: 15,
     width: 60,
     height: 30,
-    border: 1,
-    borderStyle: 'solid',
-    borderColor: '#000',
+    border: 'none',
+    background: 'none'
+    
   },
   colorLabel: {
     margin: 10,
@@ -44,21 +44,18 @@ const InspectorElement = ({ fieldList, pathToComponent }) => {
           
         case "text":
           return (
-            <ControlledTextField classNames={classes} pathToFragment={pathToComponent}/>
+            <ControlledTextField   classNames={classes} pathToFragment={pathToComponent}/>
           );
           
         case "to":
           return (
-            <ControlledSelect classNames={classes} pathToFragment={pathToComponent}/>
+            <ControlledSelect  classNames={classes} pathToFragment={pathToComponent}/>
           );
           
-        case "color":
-          return(
-            <CustomColorPicker classNames={classes} pathToFragment={pathToComponent}/>
-          );
+        
   
         default:
-          return (<Typography variant="h6">{`Properties ${property} not known!`}</Typography>);
+          return (<Typography  className={classes.InspectorElement} variant="h6">{`Properties ${property} not known!`}</Typography>);
       }
 
     }));

@@ -1,22 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import EditorContext from '../context/EditorContext';
 
 
 const ControlledSelect = ({ classNames, pathToFragment }) => {
   const { story, getFromPath, setPathToValue } = useContext(EditorContext);
-  const [selectValue, setSelectValue] = useState();
 
   const destinationOption = story.nodes.map(node => (
     <MenuItem key={node.id} value={node.id}>
-      {node.name}
+      {node.label}
     </MenuItem>
   ));
 
   return (
     <div className={classNames.InspectorElement}>
       <FormControl className={classNames.FormControl}>
-        <InputLabel>Destination</InputLabel>
+      <InputLabel >Age</InputLabel>
         <Select value={getFromPath(pathToFragment).to} onChange={event => setPathToValue(pathToFragment, "to", event.target.value)} >
           {destinationOption}
           <MenuItem key={story.nodes.lenght} value={undefined}>

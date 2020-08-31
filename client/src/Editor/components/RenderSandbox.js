@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import EditorContext, { EditorContextProvider } from '../context/EditorContext';
+import EditorContext from '../context/EditorContext';
 import shortid from 'shortid';
 
 

@@ -22,17 +22,13 @@ export const EditorContextProvider = ({ children, userStory }) => {
         setWorkingActivity: (activityID) => setFocusedNode(activityID),
         
         getFromPath: (path) => {
-            
-            let current;
-            inProgressStory.nodes.forEach(node => node.id === focusedNode ? current = node : null);
-            
-
+            let current = inProgressStory.nodes.filter(node => node.id === focusedNode)[0];
             path.forEach(key => current = current[key]);
             return (current);
         },
         
         setPathToValue: (path, field, value) => { 
-            let current = inProgressStory.nodes[focusedNode];
+            let current = inProgressStory.nodes.filter(node => node.id === focusedNode)[0];
             path.forEach(key => current = current[key]);
             current[field] = value;
             setStory({ ...inProgressStory });

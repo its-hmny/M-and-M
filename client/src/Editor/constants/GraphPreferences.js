@@ -39,6 +39,7 @@ export const Options = {
 
     shape: "dot",
     size: 20,
+    color: "orange"
   },
 
   edges: { arrows: { to: {enabled: true}} },
@@ -237,7 +238,7 @@ export const Utility = {
       const graph = { nodes: [], edges: [] };
       
       story.nodes.forEach(node => {
-        graph.nodes = [...graph.nodes, {id: node.id, label: node.name}];
+        graph.nodes = [...graph.nodes, node];
         this.setEdgesFromChildrens(node.view.children, node.id, graph);
       });
       
