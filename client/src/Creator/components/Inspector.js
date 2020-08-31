@@ -73,19 +73,19 @@ function ComponentItem({ name, id, properties, onRemove }) {
           {Object.keys(properties).map(property => {
             const labelId = `${name}-${property}-${shortid.generate()}`;
             return (
-              <ListItem className={classes.nested}>
+              <ListItem className={classes.nested} key={shortid.generate()}>
                 <FormControl className={classes.formControl}>
-                  <InputLabel id={labelId}>{property}</InputLabel>
+                  <InputLabel id={labelId} key={shortid.generate()}>{property}</InputLabel>
                   <Select labelId={labelId} value={properties[property]}>
                     {options[property].map(option => (
-                      <MenuItem value={option}>{option}</MenuItem>
+                      <MenuItem value={option} key={shortid.generate()}>{option}</MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               </ListItem>
             );
           })}
-          <ListItem className={classes.nested}>
+          <ListItem className={classes.nested} >
             <TextSettings id={id} />
           </ListItem>
         </List>
@@ -136,7 +136,8 @@ function Inspector({ components, onAddComponent, onRemoveComponent }) {
               name={name}
               id={id}
               properties={properties}
-              onRemove={onRemoveComponent} />
+              onRemove={onRemoveComponent}
+              key={shortid.generate()} />
           ))}
         </List>
 
