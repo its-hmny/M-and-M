@@ -15,7 +15,7 @@ const ControlledSelect = ({ classNames, pathToFragment }) => {
   return (
     <div className={classNames.InspectorElement}>
       <FormControl className={classNames.FormControl}>
-      <InputLabel >Age</InputLabel>
+      <InputLabel>Age</InputLabel>
         <Select value={getFromPath(pathToFragment).to} onChange={event => setPathToValue(pathToFragment, "to", event.target.value)} >
           {destinationOption}
           <MenuItem key={story.nodes.lenght} value={undefined}>

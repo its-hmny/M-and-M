@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CustomColorPicker from './CustomColorPicker';
 import ControlledTextField from './ControlledTextField';
 import ControlledSelect from './ControlledSelect';
-import shortid from "shortid";
+
 const useStyles = makeStyles({
   InspectorPaper: {
     padding: 10,
