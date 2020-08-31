@@ -18,17 +18,25 @@ const useStyles = makeStyles({
 
 
 const GraphCanvas = () => {
-  const { story, setWorkingActivity } = useContext(EditorContext);
+  const { story, saveStory, setWorkingActivity } = useContext(EditorContext);
   const { converter } = Utility;
   const classes = useStyles();
 
   const selectNode = event => setWorkingActivity(event.nodes[0]);
   const deselectNode = event => setWorkingActivity(undefined);
+
+  const onDropAddNode = event => {
+    event.preventDefault();
+    const newNode = JSON.parse(event.dataTransfer.getData("text"));
+    newNode.id = newNode.id || undefined;
+    const { nodes, ...others } = story;
+    saveStory({ nodes: [...nodes, newNode], others});
+  }
   
   return (
     <div className={classes.GraphCanvasContainer} >
       <ActivitiesMenuButton />
-      <div className={classes.graph}>
+      <div className={classes.graph} onDrop={event => onDropAddNode(event)} onDragOver={event => event.preventDefault()}>
         <Graph 
           data={converter.getGraphFromStory(story)} options={Options} 
           events={{selectNode, deselectNode}} getNetwork={obj => console.log(obj)}
