@@ -23,7 +23,6 @@ export const EditorContextProvider = ({ children, userStory }) => {
         
         getFromPath: (path) => {
             
-            
             let current;
             inProgressStory.nodes.forEach(node => node.id === focusedNode ? current = node : null);
             
