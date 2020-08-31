@@ -65,7 +65,7 @@ const Inspector = () => {
           />);
 
         return (
-          <Box className={classes.InspectorElement}>
+          <Box key={getComponentName(element) + index} className={classes.InspectorElement}>
             
             <List className={classes.InspectorElement} >
               <ListItem button onClick={ (event) => handleClick(event,getComponentName(element)+'-'+iterator+'-'+index)}>

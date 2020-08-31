@@ -39,20 +39,23 @@ const useStyles = makeStyles({
 const InspectorElement = ({ fieldList, pathToComponent }) => {
     const classes = useStyles();
 
-    return (fieldList.map(property => {
+    return (fieldList.map((property, index) => {
       switch(property) {
           
         case "text":
           return (
-            <ControlledTextField   classNames={classes} pathToFragment={pathToComponent}/>
+            <ControlledTextField key={index} classNames={classes} pathToFragment={pathToComponent}/>
           );
           
         case "to":
           return (
-            <ControlledSelect  classNames={classes} pathToFragment={pathToComponent}/>
+            <ControlledSelect key={index} classNames={classes} pathToFragment={pathToComponent}/>
           );
           
-        
+        case "color":
+          return(
+            <CustomColorPicker key={index} classNames={classes} pathToFragment={pathToComponent}/>
+          );
   
         default:
           return (<Typography  className={classes.InspectorElement} variant="h6">{`Properties ${property} not known!`}</Typography>);
