@@ -5,6 +5,8 @@ import { useState, useCallback } from 'react'
 export const useInputChange = () => {
   const [input, setInput] = useState({})
 
+  // handleInputChange can safely be added to arrays of dependencies
+  // thanks to useCallback. Nice!
   const handleInputChange = useCallback((e, v) => {
     // not very clean, i'll admit. fucking js i want my types backkk
     if (v) {

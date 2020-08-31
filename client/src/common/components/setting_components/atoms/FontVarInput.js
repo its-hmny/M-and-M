@@ -3,7 +3,8 @@ import {
     Slider,
     Checkbox,
     InputLabel,
-    Switch
+    Switch,
+    Divider
 } from '@material-ui/core';
 import shortid from 'shortid';
 import {
@@ -21,97 +22,114 @@ import {
 } from '@material-ui/icons';
 
 // the name was supposed to be reminiscent of text-variant without being too long... 
-// i dont think that worked. obv, should be moved to separate file.
+// i dont think that worked. obv, should be moved to different file.
+
+// also, i know i used two different structures for the two groups of properties. :(
 const varNameIcon = {
     bold: {
-        name: "bold",
+        name: "text-bold", // aria-label and maybe tooltip
         IconComponent: FormatBoldIcon,
-        prop: {
-            "font-weight": "bold"
-        },
-        default: {
-            "font-weight": "normal"
-        },
+        prop: "font-weight",
+        active: "bold",
+        defaultValue: "normal"
     },
     italic: {
-        name: "italic",
+        name: "text-italic",
         IconComponent: FormatItalicIcon,
-        prop: {
-            "font-style": "italic"
-        },
-        default: {
-            "font-style": "normal"
-        },
+        prop: "font-style",
+        active: "italic",
+        defaultValue: "normal"
     },
-    underlined: {
-        name: "underlined",
+    underline: {
+        name: "text-underline",
         IconComponent: FormatUnderlinedIcon,
-        prop: {
-            "text-decoration": "underline"
-        },
-        default: {
-            "text-decoration": "none"
-        },
+        prop: "text-decoration",
+        active: "underline",
+        defaultValue: "none"
     }
 };
 
 const alignProp = {
     propName: "text-align",
-    default: "left",
+    defaultValue: "left",
 };
 
 const alignNameIcon = {
-    alignRight: {
-        name: "text-align-right",
-        IconComponent: FormatBoldIcon,
-        value: "right"
-    },
     alignLeft: {
         name: "text-align-left",
-        IconComponent: FormatItalicIcon,
+        IconComponent: FormatAlignLeftIcon,
         value: "left"
+    },
+    alignRight: {
+        name: "text-align-right",
+        IconComponent: FormatAlignRightIcon,
+        value: "right"
     },
     alignCenter: {
         name: "text-align-center",
-        IconComponent: FormatUnderlinedIcon,
+        IconComponent: FormatAlignCenterIcon,
         value: "center"
     },
     justify: {
-        name: "justify",
-        IconComponent: FormatItalicIcon,
+        name: "text-justify",
+        IconComponent: FormatAlignJustifyIcon,
         value: "justify"
     },
 };
+
+function getFormats(value) {
+    // needed because of the weird way ToggleButtonGroup expects state
+    // i think they made it like that to support a direct setState operation,
+    // but it kinda makes handling values separately very annoying. I'm guessing
+    // they imagined a different workflow.
+    let formats = [];
+    Object.values(varNameIcon).map(({ prop }) => formats.push(value[prop]));
+    return formats;
+}
 
 function FontVarInput({ onChange, value }) {
 
     const id = shortid.generate();
 
-    const [formats, setFormats] = useState(() => ['bold', 'italic', 'underline']);
-
-    const handleFormat = (event, newFormats) => {
-        console.log(`received ${event} with formats ${newFormats}`);
-        setFormats(newFormats);
-    };
-
+    // assigning default values...
     useEffect(() => {
-        Object.values(varNameIcon).map((val) => {
-            const [propName, propValue] = Object.entries(val.default)[0]; // i get it, it sucks.
-            onChange(propName, propValue);
-        })
-        onChange(alignProp.propName, alignProp.default);
+        Object.values(varNameIcon).map(({ prop, defaultValue }) => onChange(prop, defaultValue));
+        onChange(alignProp.propName, alignProp.defaultValue);
     }, [onChange])
 
-    if (value[alignProp.propName] === undefined) return <p>Loading default values...</p>;
+    const handleFormat = (event, newFormats) => {
+        Object.entries(varNameIcon).map(([key, { prop, active, defaultValue }]) => {
+            onChange(prop, (newFormats.includes(active)) ? active : defaultValue);
+        })
+    };
+
+    const handleAlignment = (event, newAlignment, propName) => {
+        onChange(propName, newAlignment);
+    };
+
+
+    if (value[alignProp.propName] === undefined) return <p>Loading defaultValue values...</p>;
 
     return (
         <div key={id}>{/*just shutting up react */}
-            <ToggleButtonGroup value={formats} onChange={handleFormat}>
-                {Object.values(varNameIcon).map(({ name, IconComponent, prop: value }) => {
-                    const [propName, propValue] = Object.entries(value)[0];
-                    const key = shortid.generate();
+            <ToggleButtonGroup value={getFormats(value)} onChange={handleFormat} aria-label={"font decorations"}>
+                {Object.values(varNameIcon).map(({ name, IconComponent, prop, active }) => {
                     return (
-                        <ToggleButton value={propValue} aria-label={name} key={key}>
+                        <ToggleButton value={active} aria-label={name} key={`${name} -button${shortid.generate()} `}>
+                            <IconComponent />
+                        </ToggleButton>
+                    );
+                })}
+            </ToggleButtonGroup>
+            <Divider flexItem orientation="vertical" />
+            <ToggleButtonGroup
+                exclusive
+                value={value[alignProp.propName]}
+                onChange={(event, newValue) => handleAlignment(event, newValue, alignProp.propName)}
+                aria-label={alignProp.propName}>
+                {Object.values(alignNameIcon).map(({ name, IconComponent, value }) => {
+                    return (
+                        <ToggleButton value={value} aria-label={name} key={`${name} -button${shortid.generate()} `}>
                             <IconComponent />
                         </ToggleButton>
                     );
@@ -119,14 +137,5 @@ function FontVarInput({ onChange, value }) {
             </ToggleButtonGroup>
         </div>
     )
-    /*bold: {
-        name: "bold",
-        icon: FormatBoldIcon,
-        prop: {
-            "font-weight": "bold"
-        },
-        default: {
-            "font-weight": "normal"
-        },*/
 }
 export default FontVarInput;
