@@ -81,11 +81,11 @@ const  ActivitiesMenu = (props) => {
   const classes = useStyles();
 
   const initializeTabs = () => {
-    return (QuestionTemplate.map((item, index) => <Tab label={item.label} key={index} disableRipple/>));
+    return (QuestionTemplate.map((item, index) => <Tab label={item.label} key={index} disableRipple />));
   };
 
   return (
-    <Drawer anchor='left' open={isMenuOpen} onClose={() => setMenuOpen(!isMenuOpen)} >
+    <Drawer variant="temporary" anchor='left' open={isMenuOpen} onClose={() => setMenuOpen(!isMenuOpen)} >
       
       <Typography variant="h5" align="center">Choose a new template</Typography>
       

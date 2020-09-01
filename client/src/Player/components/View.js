@@ -1,10 +1,9 @@
 import { css, jsx, Global } from '@emotion/core';
 import React from 'react';
 
-function View({ children }) {
-  return (
-    <div>
-      <Global
+/*Da mettere dentro al div di view
+Non so perchè ci fosse, ATTENZIONE se inserito rompe il css di tutto
+<Global
         styles={css`
           *,
           *::before,
@@ -21,7 +20,12 @@ function View({ children }) {
             font-size: 24px;
           }
         `}
-      />
+      />*/
+
+function View({ children }) {
+  return (
+    <div>
+      
       {children}
     </div>
   );

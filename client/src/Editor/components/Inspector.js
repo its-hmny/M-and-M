@@ -5,12 +5,13 @@ import properties from '../../ComponentProperties.json';
 
 import { makeStyles } from "@material-ui/core/styles";
 import InspectorElement from "./InspectorElement";
-import shortid from "shortid";
+
 const useStyles = makeStyles({
   
   InspectorPaper:{
     padding: 10,
-    paddingBottom: 20
+    paddingBottom: 20,
+    
    
   },
 
@@ -20,8 +21,6 @@ const useStyles = makeStyles({
   },
   
 });
-
-
 
 const Inspector = () => {
   const { story, workingActivity } = useContext(EditorContext);
