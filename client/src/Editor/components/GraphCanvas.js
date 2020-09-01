@@ -28,7 +28,7 @@ const GraphCanvas = () => {
   const onDropAddNode = event => {
     event.preventDefault();
     const newNode = JSON.parse(event.dataTransfer.getData("text"));
-    newNode.id = newNode.id || undefined;
+    event.dataTransfer.clearData("text");
     const { nodes, ...others } = story;
     saveStory({ nodes: [...nodes, newNode], others});
   }

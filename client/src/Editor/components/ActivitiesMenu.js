@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from '@material-ui/icons/Menu';
 import DescriptiveCard from './DescriptiveCard.js';
 
-//Will become an API call to fetch the data stored server-side
+//TODO: Will become an API call to fetch the data stored server-side
 import QuestionTemplate from '../constants/QuestionTemplate.js'; 
 
 
@@ -51,7 +51,7 @@ export const ActivitiesMenuButton = () => {
     >
       <IconButton
         className={ isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose }
-        onClick={event => setMenuOpen(!isMenuOpen)}
+        onClick={() => setMenuOpen(!isMenuOpen)}
       >
         <MenuIcon />
       </IconButton>
@@ -70,18 +70,18 @@ const  ActivitiesMenu = (props) => {
   const [ currentTab, setTab ] = useState(0);
   const classes = useStyles();
   const initializeTabs = () => {
-    return (QuestionTemplate.map((item, index) => <Tab label={item.label} key={index}/>));
+    return (QuestionTemplate.map((item, index) => <Tab label={item.label} key={index} disableRipple/>));
   };
 
   return (
     <Drawer variant="temporary" anchor='left' open={isMenuOpen} onClose={() => setMenuOpen(!isMenuOpen)} >
       
-      <Typography variant="h4">Choose a new template</Typography>
+      <Typography variant="h5" align="center">Choose a new template</Typography>
       
-      <Grid container spacing={1}>
+      <Grid container>
         <Grid item xs={3}>
           <Tabs orientation="vertical" variant="scrollable" value={currentTab}
-            onChange={(event, newValue) => setTab(newValue)}
+            indicatorColor="primary" onChange={(event, newValue) => setTab(newValue)}
           >
             {initializeTabs()}
           </Tabs>

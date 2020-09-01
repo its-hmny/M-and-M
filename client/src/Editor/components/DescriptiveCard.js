@@ -20,7 +20,7 @@ const DescriptiveCard = (props) => {
             <CardContent>
 
               <Typography variant="h6">{toPreview.label}</Typography>
-              <Typography variant="body2">{toPreview.description}</Typography>
+              <Typography variant="subtitle1">{toPreview.description}</Typography>
 
               <Box border={1} >
                 <ReadOnly id="card-container" draggable={true} 
