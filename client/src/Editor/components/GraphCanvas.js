@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Graph from 'vis-network-react';
-import { Options, Utility } from '../constants/GraphPreferences';
+import { Options, Converter, colorizeNewNodes } from '../constants/GraphPreferences';
 import EditorContext from '../context/EditorContext'
 import { ActivitiesMenuButton } from './ActivitiesMenu';
 
+import './styles.css';
 
 const useStyles = makeStyles({
   
@@ -19,8 +20,9 @@ const useStyles = makeStyles({
 
 const GraphCanvas = () => {
   const { story, saveStory, setWorkingActivity } = useContext(EditorContext);
-  const { converter } = Utility;
   const classes = useStyles();
+
+  colorizeNewNodes(story.nodes);
 
   const selectNode = event => setWorkingActivity(event.nodes[0]);
   const deselectNode = event => setWorkingActivity(undefined);
@@ -38,7 +40,7 @@ const GraphCanvas = () => {
       <ActivitiesMenuButton />
       <div className={classes.graph} onDrop={event => onDropAddNode(event)} onDragOver={event => event.preventDefault()}>
         <Graph 
-          data={converter.getGraphFromStory(story)} options={Options} 
+          data={Converter.getGraphFromStory(story)} options={Options} 
           events={{selectNode, deselectNode}} getNetwork={obj => console.log(obj)}
         />
       </div> 

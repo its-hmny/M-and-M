@@ -30,7 +30,8 @@ const loadViewHierarchy = async ({ component: componentName, children, ...props 
 };
 
 
-const RenderSanbox = ({ component }) => {
+const RenderSanbox = (props) => {
+  let { component } = props;
   const { story, workingActivity } = useContext(EditorContext);
   component = component || story.nodes[workingActivity];
   const [view, setView] = useState(null);
@@ -55,7 +56,7 @@ const RenderSanbox = ({ component }) => {
   }, [component]);
 
   return (
-    <React.Suspense fallback="Loading components...">
+    <React.Suspense fallback={() => <h5>Loading components...</h5>}>
       <div>{view}</div>
     </React.Suspense>
   );
