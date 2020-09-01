@@ -15,6 +15,7 @@ const useStyles = makeStyles({
   InspectorElement: {
     margin: 10,
     marginLeft: 15,
+    boxSizing: "content-box"
   },
   FormControl: {
     minWidth: 150,

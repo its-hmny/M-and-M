@@ -35,7 +35,8 @@ const useStyles = makeStyles({
     zIndex: 2,
     padding: 5,
     position: "absolute",  
-  }
+  },
+  
 });
 
 
@@ -67,13 +68,13 @@ export const ActivitiesMenuButton = () => {
 const  ActivitiesMenu = (props) => {
   const { isMenuOpen, setMenuOpen } = props.binding;
   const [ currentTab, setTab ] = useState(0);
-
+  const classes = useStyles();
   const initializeTabs = () => {
     return (QuestionTemplate.map((item, index) => <Tab label={item.label} key={index}/>));
   };
 
   return (
-    <Drawer anchor='left' open={isMenuOpen} onClose={() => setMenuOpen(!isMenuOpen)} >
+    <Drawer variant="temporary" anchor='left' open={isMenuOpen} onClose={() => setMenuOpen(!isMenuOpen)} >
       
       <Typography variant="h4">Choose a new template</Typography>
       

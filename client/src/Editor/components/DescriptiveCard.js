@@ -15,7 +15,7 @@ const DescriptiveCard = (props) => {
     };
 
     return (
-      <>
+      <div>
           <Card variant="outlined" onDragOver={() => setParent(false)}>
             <CardContent>
 
@@ -34,7 +34,7 @@ const DescriptiveCard = (props) => {
 
             </CardContent>
           </Card>
-      </>
+      </div>
     );
 };
 
