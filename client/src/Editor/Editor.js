@@ -14,13 +14,7 @@ const useStyles = makeStyles({
     backgroundColor: "white",
     height:"25%"
   },
-  GraphContainer:{
-   
-  },
-  EditorContainer: {
-    
-    
-  },
+ 
   
   
 });
@@ -32,11 +26,7 @@ const Editor = () => {
     <EditorContextProvider  userStory={ExampleStory} >
       <Grid container className={classes.EditorContainer}>
         
-        {/*<Grid item xs={3}>
-          <ReadOnly>
-            <RenderSanbox />
-          </ReadOnly>
-          </Grid>*/}
+       
 
         <Grid item xs={9}>
           <GraphCanvas className={classes.GraphContainer}/>
