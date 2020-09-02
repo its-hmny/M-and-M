@@ -99,6 +99,8 @@ function FontVarInput({ onChange, value }) {
 
     const handleFormat = (event, newFormats) => {
         Object.entries(varNameIcon).map(([key, { prop, active, defaultValue }]) => {
+            // I know this looks different from the other handlers, but ToggleButtonGroup
+            // is kinda weird. sorry.
             onChange(prop, (newFormats.includes(active)) ? active : defaultValue);
         })
     };

@@ -29,6 +29,7 @@ import {
 } from '@material-ui/icons';
 import shortid from 'shortid';
 import TextSettings from '../../common/components/setting_components/TextSettings';
+import ComponentMenu from './ComponentMenu';
 
 const options = {
   fontFamily: ['serif', 'sans-serif'],
@@ -96,32 +97,6 @@ function ComponentItem({ name, id, properties, onRemove }) {
 
 function Inspector({ components, onAddComponent, onRemoveComponent }) {
   const classes = useStyles();
-  // maybe i should use clearer names
-  const [open, setOpen] = useState(false);
-  const anchorRef = React.useRef(null);
-
-  const handleToggle = () => {
-    setOpen(value => !value);
-  };
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  // return focus to the button when we transitioned from !open -> open
-  // straight up copied from mUI wiki... genius!
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-    prevOpen.current = open;
-  }, [open]);
-
 
   return (
     <Container>
@@ -141,30 +116,7 @@ function Inspector({ components, onAddComponent, onRemoveComponent }) {
           ))}
         </List>
 
-        <Fab color="primary" onClick={handleToggle}>
-          <AddIcon ref={anchorRef}
-            aria-controls={open ? 'menu-list-grow' : undefined}
-            aria-haspopup="true"
-            onClick={handleToggle} />
-          <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-              >
-                <Paper> {/* actually smart! handles background and keeps ui consistent */}
-                  <ClickAwayListener onClickAway={handleClose}>
-                    <MenuList autoFocusItem={open} id="menu-list-grow" >
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
-                      <MenuItem onClick={handleClose}>Logout</MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </Fab>
+        <ComponentMenu onAddComponent={onAddComponent} />
       </div>
     </Container >
   );
