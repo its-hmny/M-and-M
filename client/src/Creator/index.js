@@ -1,13 +1,17 @@
 import React from 'react';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import App from './App';
-import Providers from './Providers';
+
+import theme from './theme';
 
 function Creator() {
   return (
-    <Providers>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <App />
-    </Providers>
+    </ThemeProvider>
   );
 }
 

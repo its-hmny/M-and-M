@@ -7,12 +7,10 @@ import theme from './theme';
 
 function Providers({ children }) {
   return (
-    <ViewProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
-    </ViewProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {children}
+    </ThemeProvider>
   );
 }
 

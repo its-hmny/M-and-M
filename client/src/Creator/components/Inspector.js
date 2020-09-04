@@ -3,23 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   Container,
   Collapse,
-  Fab,
   IconButton,
   Typography,
   List,
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Popper,
-  Button,
-  ClickAwayListener,
-  MenuList,
-  Grow,
-  Paper,
 } from '@material-ui/core';
 import {
   Add as AddIcon,
@@ -27,16 +16,8 @@ import {
   ExpandLess as ExpandLessIcon,
   ExpandMore as ExpandMoreIcon,
 } from '@material-ui/icons';
-import shortid from 'shortid';
-import TextSettings from '../../common/components/setting_components/TextSettings';
 import ComponentMenu from './ComponentMenu';
-
-const options = {
-  fontFamily: ['serif', 'sans-serif'],
-  fontWeight: ['bold', 'normal'],
-  backgroundColor: ['white', 'black', 'pink', 'red', 'violet', 'blue'],
-  color: ['white', 'black', 'pink', 'red', 'violet', 'blue'],
-};
+import SettingsComponents from '../../common/StyleSettings';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -48,16 +29,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ComponentItem({ name, id, properties, onRemove }) {
-  const classes = useStyles();
+function SettingsItem({ component, onRemove }) {
+  const { component: componentName, id: componentId, ...rest } = component;
   const [open, setOpen] = useState(true);
+  const SettingsComponent = SettingsComponents[componentName];
 
   return (
     <>
       <ListItem>
-        <ListItemText primary={name} />
+        <ListItemText primary={componentName} />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="delete" onClick={() => onRemove(id)}>
+          <IconButton
+            edge="end"
+            aria-label="delete"
+            onClick={() => onRemove(componentId)}
+          >
             <DeleteIcon />
           </IconButton>
           <IconButton
@@ -70,32 +56,29 @@ function ComponentItem({ name, id, properties, onRemove }) {
         </ListItemSecondaryAction>
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List>
-          {Object.keys(properties).map(property => {
-            const labelId = `${name}-${property}-${shortid.generate()}`;
-            return (
-              <ListItem className={classes.nested} key={shortid.generate()}>
-                <FormControl className={classes.formControl}>
-                  <InputLabel id={labelId} key={shortid.generate()}>{property}</InputLabel>
-                  <Select labelId={labelId} value={properties[property]}>
-                    {options[property].map(option => (
-                      <MenuItem value={option} key={shortid.generate()}>{option}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </ListItem>
-            );
-          })}
-          <ListItem className={classes.nested} >
-            <TextSettings id={id} />
-          </ListItem>
-        </List>
+        <SettingsComponent componentId={componentId} {...rest} />
       </Collapse>
     </>
   );
 }
 
-function Inspector({ components, onAddComponent, onRemoveComponent }) {
+const ViewSettings = ({ view }) => {
+  return (
+    <div>
+      <Typography variant="subtitle1" color="primary">
+        View Settings
+      </Typography>
+
+      <List>
+        {view.children.map(child => (
+          <SettingsItem key={child.id} component={child} />
+        ))}
+      </List>
+    </div>
+  );
+};
+
+function Inspector({ view, styles, onAddComponent, onRemoveComponent }) {
   const classes = useStyles();
 
   return (
@@ -105,21 +88,12 @@ function Inspector({ components, onAddComponent, onRemoveComponent }) {
           Inspector
         </Typography>
 
-        <List>
-          {components.map(({ name, id, properties }) => (
-            <ComponentItem
-              name={name}
-              id={id}
-              properties={properties}
-              onRemove={onRemoveComponent}
-              key={shortid.generate()} />
-          ))}
-        </List>
+        <ViewSettings view={view} />
 
         <ComponentMenu onAddComponent={onAddComponent} />
       </div>
-    </Container >
+    </Container>
   );
 }
-/*onKeyDown={handleListKeyDown}*/
+
 export default Inspector;

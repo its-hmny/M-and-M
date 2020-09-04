@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import { useStory } from '../../../Player/context/story';
-import { useStyles } from '../../../Player/context/styles';
+import { useStory } from '../../Player/context/story';
+import { useStyles } from '../../Player/context/styles';
 
 const base = css`
   padding: 0.5rem 1rem;
@@ -13,10 +13,10 @@ const base = css`
   cursor: pointer;
 `;
 
-function Button({ route, styleName, text }) {
+function Button({ text, onClick, styleName }) {
   const styles = useStyles(styleName);
-  const { moveTo } = useStory();
-  const onClick = () => moveTo(route);
+  // const { moveTo } = useStory();
+  //const onClick = () => moveTo(route);
 
   return (
     <div>

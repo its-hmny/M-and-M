@@ -1,13 +1,13 @@
 /** @jsx jsx */
-// i get it, this is trash. maybe make a 
+// i get it, this is trash. maybe make a
 // directories file from which we pull out what we need? this sounds like a mattia problem :)
 import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
 import { Checkbox, Radio } from './Choice';
 import Button from './Button';
-import { useStory } from '../../../Player/context/story';
-import { useStyles } from '../../../Player/context/styles';
-import { ANSWER_VALUE } from '../../../Player/constants';
+import { useStory } from '../../Player/context/story';
+import { useStyles } from '../../Player/context/styles';
+import { ANSWER_VALUE } from '../../Player/constants';
 
 /** renders a multiple choice component: if there is only
  * one correct answer radiobutton will be used, otherwise checkbox
@@ -21,11 +21,17 @@ import { ANSWER_VALUE } from '../../../Player/constants';
  *  - Button
  */
 
-function Choices({ answers, routes, withSubmit, styleName }) {
+function Choices({
+  name,
+  answers,
+  /*routes, */ withSubmit,
+  styleName,
+  onSubmit,
+}) {
   const styles = useStyles(styleName);
-  const { currentNode, moveTo } = useStory();
+  //const { currentNode, moveTo } = useStory();
   const [selectedAnswers, setSelectedAnswers] = useState([]);
-  const [route, setRoute] = useState(null);
+  /*const [route, setRoute] = useState(null);*/
 
   const correctAnswers = useMemo(
     () =>
@@ -47,6 +53,15 @@ function Choices({ answers, routes, withSubmit, styleName }) {
     [answers]
   );
 
+  const isCorrect = useMemo(
+    () =>
+      correctAnswers.length === selectedAnswers.length &&
+      selectedAnswers
+        .sort()
+        .every((answerId, index) => answerId === correctAnswers[index]),
+    [correctAnswers, selectedAnswers]
+  );
+
   const onSelected = event => {
     // if it's radio button, selected answer is only one.
     // Otherwise, update selectedAnswers accordingly
@@ -64,21 +79,18 @@ function Choices({ answers, routes, withSubmit, styleName }) {
   };
 
   useEffect(() => {
-    const isCorrect =
-      correctAnswers.length === selectedAnswers.length &&
-      selectedAnswers
-        .sort()
-        .every((answerId, index) => answerId === correctAnswers[index]);
+    //TODO: spostare fuori dal componente e nella funzione di handling
+    // const newRoute = isCorrect
+    //   ? routes[ANSWER_VALUE.CORRECT]
+    //   : routes[ANSWER_VALUE.WRONG];
 
-    const newRoute = isCorrect
-      ? routes[ANSWER_VALUE.CORRECT]
-      : routes[ANSWER_VALUE.WRONG];
+    // if (!withSubmit && correctAnswers.length === selectedAnswers.length)
+    //   moveTo(newRoute);
 
+    // setRoute(newRoute);
     if (!withSubmit && correctAnswers.length === selectedAnswers.length)
-      moveTo(newRoute);
-
-    setRoute(newRoute);
-  }, [correctAnswers, selectedAnswers, moveTo, routes, withSubmit]);
+      onSubmit(isCorrect);
+  }, [withSubmit, onSubmit, isCorrect]);
 
   return (
     <div
@@ -99,7 +111,7 @@ function Choices({ answers, routes, withSubmit, styleName }) {
           <Component
             key={id}
             id={id}
-            name={currentNode.name}
+            name={name}
             label={text}
             selected={!!selectedAnswers.find(answerId => answerId === id)}
             onSelected={onSelected}
@@ -109,7 +121,11 @@ function Choices({ answers, routes, withSubmit, styleName }) {
       </div>
 
       {withSubmit && selectedAnswers.length > 0 && (
-        <Button route={route} styleName={styles.Button} text="Conferma"/>
+        <Button
+          onClick={() => onSubmit && onSubmit(isCorrect)}
+          styleName={styles.Button}
+          text="Conferma"
+        />
       )}
     </div>
   );

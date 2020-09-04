@@ -1,9 +1,9 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react';
 // https://dev.to/stanleyjovel/simplify-controlled-components-with-react-hooks-23nn
 // pretty cool no?
 
 export const useInputChange = () => {
-  const [input, setInput] = useState({})
+  const [input, setInput] = useState({});
 
   // handleInputChange can safely be added to arrays of dependencies
   // thanks to useCallback. Nice!
@@ -13,19 +13,18 @@ export const useInputChange = () => {
       setInput(prevState => {
         return {
           ...prevState,
-          [e]: v
-        }
+          [e]: v,
+        };
       });
-    }
-    else {
+    } else {
       setInput(prevState => {
         return {
           ...prevState,
-          [e.currentTarget.name]: e.currentTarget.value
-        }
+          [e.currentTarget.name]: e.currentTarget.value,
+        };
       });
     }
   }, []);
 
-  return [input, handleInputChange]
-}
+  return [input, handleInputChange, addStyle];
+};
