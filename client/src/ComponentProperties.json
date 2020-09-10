@@ -1,6 +1,4 @@
 {
-  "mandatory": [],
-
   "components": {
     "Atoms/Link": {
       "mandatory": ["text", "to"],
