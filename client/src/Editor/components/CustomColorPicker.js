@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Typography } from '@material-ui/core';
+import EditorContext from '../context/EditorContext';
 
-
-const CustomColorPicker = ({ classNames }) => {
-  const [colorState, setColorState] = React.useState("#000000");
+const CustomColorPicker = (props) => {
+  const { classNames, pathToFragment } = props;
+  const {getFromPath, setPathToValue } = useContext(EditorContext);
     
   return (
     <div>
-      <label className={classNames.colorLabel} htmlFor="colorpicker">Color: </label> 
+      <Typography variant="subtile" className={classNames.colorLabel} htmlFor="colorpicker">Color:</Typography> 
       <input 
         className={classNames.colorButton} id="colorpicker" 
-        type="color" value={colorState} onChange={(e) => setColorState(e.target.value)} 
+        type="color" value={getFromPath(pathToFragment || [])[pathToFragment ? "bho" : "color"]} 
+        onChange={event => setPathToValue((pathToFragment || []), (pathToFragment ? "bho" : "color"), event.target.value)}
       />   
     </div>);
 };

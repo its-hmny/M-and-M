@@ -19,6 +19,7 @@ const useStyles = makeStyles({
   
 });
 
+
 const Inspector = () => {
   const { story, workingActivity } = useContext(EditorContext);
   const {InspectorPaperStyle, InspectorElementStyle } = useStyles();
@@ -36,15 +37,37 @@ const Inspector = () => {
 
   const getComponentName = (node) => { 
     const tokens = node.component.split('/');
-    return (tokens[tokens.length - 1])
+    return (tokens[tokens.length - 1]);
   };
 
   
-  
+  const globalOptions = () => {
+    return (
+      <Box key={"Global"} className={InspectorElementStyle}>
+        <List className={InspectorElementStyle} >
+            
+          <ListItem button onClick={() => handleClick("Global")}>
+            <Typography variant="h5" component="h5">{"Global"}</Typography>
+          </ListItem>
+
+          <Collapse in={open["Global"]} unmountOnExit>  
+            <Box borderLeft={1} borderColor="primary.main">
+              <InspectorElement fieldList={properties.global} />
+            </Box>
+          </Collapse>
+
+        </List>
+        <Divider/>
+      </Box>
+   );
+  };
+
+
   const populateInspector = (iterator, previousPath) => {
     const absPath = previousPath || ["view", "children"];
+    const globalInspector = globalOptions();
 
-    return (iterator.map((element, index) => {
+    return ([globalInspector, iterator.map((element, index) => {
       const { mandatory, optional } = properties.components[element.component];
       const InspectorSection = (
         <InspectorElement  fieldList={[...mandatory, ...optional]} pathToComponent={[...absPath, index]} />
@@ -54,7 +77,7 @@ const Inspector = () => {
         <Box key={getComponentName(element) + index} className={InspectorElementStyle}>
           <List className={InspectorElementStyle} >
               
-            <ListItem button onClick={(event) => handleClick(getComponentName(element)+'-'+iterator+'-'+index)}>
+            <ListItem button onClick={(event) => handleClick(`${getComponentName(element)}-${iterator}-${index}`)}>
               <Typography variant="h5" component="h5">{getComponentName(element)}</Typography>
             </ListItem>
 
@@ -69,7 +92,7 @@ const Inspector = () => {
           <Divider/>
         </Box>
      );
-    }));
+    })]);
   };
   
   return (

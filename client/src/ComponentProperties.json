@@ -1,4 +1,6 @@
 {
+  "global": ["text", "color"],
+
   "components": {
     "Atoms/Link": {
       "mandatory": ["text", "to"],
@@ -6,7 +8,7 @@
     },
 
     "Elements/Text": {
-      "mandatory": ["text", "color"],
+      "mandatory": ["text"],
       "optional": []
     },
 

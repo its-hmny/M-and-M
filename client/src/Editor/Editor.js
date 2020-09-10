@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   InspectorContainerStyle: {
     zIndex: 2,
     position: "absolute",
-    marginLeft: "80vw",
+    marginLeft: "75vw",
     marginTop: 3
   }
 });
@@ -21,7 +21,7 @@ const Editor = () => {
   return (
     <EditorContextProvider userStory={ExampleStory}>
 
-      <Grid item xs={4} className={InspectorContainerStyle}>
+      <Grid item xs={5} className={InspectorContainerStyle}>
         <Inspector />
       </Grid>
 

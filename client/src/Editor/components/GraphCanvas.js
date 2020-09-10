@@ -13,6 +13,7 @@ const GraphCanvas = () => {
   colorizeNewNodes(story.nodes);
 
   const selectNode = event => setWorkingActivity(event.nodes[0]);
+  const dragEnd = event => setWorkingActivity(event.nodes[0]);
   const deselectNode = event => setWorkingActivity(undefined);
   const onDropAddNode = event => {
     event.preventDefault();
@@ -29,7 +30,7 @@ const GraphCanvas = () => {
       <div onDrop={event => onDropAddNode(event)} onDragOver={event => event.preventDefault()} >
         <Graph 
           data={Converter.getGraphFromStory(story)} options={Options} 
-          events={{selectNode, deselectNode}} getNetwork={obj => console.log(obj)}
+          events={{ selectNode, deselectNode, dragEnd }} getNetwork={obj => console.log(obj)}
         />
       </div> 
     </div>

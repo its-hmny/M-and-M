@@ -12,23 +12,26 @@ const useStyles = makeStyles({
     padding: 10,
     paddingBottom: 20,
   },
+
   InspectorElement: {
     margin: 10,
     marginLeft: 15,
     boxSizing: "content-box"
   },
+  
   FormControl: {
     minWidth: 150,
   },
+  
   colorButton: {
     margin: 10,
     marginLeft: 15,
     width: 60,
     height: 30,
     border: 'none',
-    background: 'none'
-    
+    background: 'none'  
   },
+  
   colorLabel: {
     margin: 10,
     marginLeft: 15,
@@ -37,32 +40,32 @@ const useStyles = makeStyles({
 });
 
 
-const InspectorElement = ({ fieldList, pathToComponent }) => {
-    const classes = useStyles();
+const InspectorElement = (props) => {
+  const { fieldList, pathToComponent } = props;
+  const classes = useStyles();
 
-    return (fieldList.map((property, index) => {
-      switch(property) {
+  return (fieldList.map((property, index) => {
+    switch(property) {
           
-        case "text":
-          return (
-            <ControlledTextField key={index} classNames={classes} pathToFragment={pathToComponent}/>
-          );
+      case "text":
+        return (
+          <ControlledTextField key={index} classNames={classes} pathToFragment={pathToComponent}/>
+        );
           
-        case "to":
-          return (
-            <ControlledSelect key={index} classNames={classes} pathToFragment={pathToComponent}/>
-          );
+      case "to":
+        return (
+          <ControlledSelect key={index} classNames={classes} pathToFragment={pathToComponent}/>
+        );
           
-        case "color":
-          return(
-            <CustomColorPicker key={index} classNames={classes} pathToFragment={pathToComponent}/>
-          );
+      case "color":
+        return(
+          <CustomColorPicker key={index} classNames={classes} pathToFragment={pathToComponent}/>
+        );
   
-        default:
-          return (<Typography  className={classes.InspectorElement} variant="h6">{`Properties ${property} not known!`}</Typography>);
-      }
-
-    }));
+      default:
+        return (<Typography  className={classes.InspectorElement} variant="h6">{`Properties ${property} not known!`}</Typography>);
+    }
+  }));
 }
 
 
