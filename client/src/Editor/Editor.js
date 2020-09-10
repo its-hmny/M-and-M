@@ -5,41 +5,30 @@ import { EditorContextProvider } from "./context/EditorContext";
 import ExampleStory from "./constants/ExampleStory";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from '@material-ui/core';
-import ReadOnly from "./components/ReadOnly";
-import RenderSanbox from "./components/RenderSandbox";
 
 const useStyles = makeStyles({
-  InspectorContainer:{
-    zIndex: 4,
-    backgroundColor: "white",
-    height:"25%"
-  },
- 
-  
-  
+  InspectorContainerStyle: {
+    zIndex: 2,
+    position: "absolute",
+    marginLeft: "80vw",
+    marginTop: 3
+  }
 });
 
 const Editor = () => {
-  const classes = useStyles();
+  const { InspectorContainerStyle } = useStyles();
   
   return (
-    <EditorContextProvider  userStory={ExampleStory} >
-      <Grid container className={classes.EditorContainer}>
-        
-       
+    <EditorContextProvider userStory={ExampleStory}>
 
-        <Grid item xs={9}>
-          <GraphCanvas className={classes.GraphContainer}/>
-        </Grid>
-
-        <Grid className={classes.InspectorContainer} item xs={3} >
-          <Inspector  />
-        </Grid>
-        
+      <Grid item xs={4} className={InspectorContainerStyle}>
+        <Inspector />
       </Grid>
-      
-      
-      
+
+      <div id="graphcanvas-container">
+        <GraphCanvas />
+      </div>
+    
     </EditorContextProvider>
   );
 };

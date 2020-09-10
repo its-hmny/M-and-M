@@ -56,7 +56,7 @@ const RenderSanbox = (props) => {
   }, [component]);
 
   return (
-    <React.Suspense fallback={() => <h5>Loading components...</h5>}>
+    <React.Suspense fallback={<h5>Loading components...</h5>}>
       <div>{view}</div>
     </React.Suspense>
   );

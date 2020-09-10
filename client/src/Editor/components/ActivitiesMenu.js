@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Drawer,  Tabs, Tab, Grid, Typography, IconButton, Paper, Collapse } from '@material-ui/core';
 import { makeStyles,  } from "@material-ui/core/styles";
-import MenuIcon from '@material-ui/icons/Menu';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DescriptiveCard from './DescriptiveCard.js';
 
-//TODO: Will become an API call to fetch the data stored server-side
+// TODO: Will become an API call to fetch the data stored server-side
 import QuestionTemplate from '../constants/QuestionTemplate.js'; 
 
 
@@ -63,7 +63,7 @@ export const ActivitiesMenuButton = () => {
         className={ isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose }
         onClick={() => setMenuOpen(!isMenuOpen)}
       >
-        <MenuIcon />
+        <AddCircleIcon />
       </IconButton>
 
       <Collapse in={isMenuOpen}>

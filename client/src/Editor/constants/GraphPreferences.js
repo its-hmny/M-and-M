@@ -2,10 +2,8 @@ import randomColor from 'randomcolor';
 
 export const Options = {
   autoResize: true,
-
-  //TODO change to sensible values
-  height: '800px',
-  width: '1000px',
+  height: '100vh',
+  width: '100vw',
 
   configure: {
     enabled: false,
@@ -34,8 +32,6 @@ export const Options = {
     arrows: { to: { enabled: true } },
     color: { color: 'white', highlight: 'white' },
   },
-
-  groups: {},
 
   layout: {
     improvedLayout: true,
