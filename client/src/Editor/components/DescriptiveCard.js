@@ -4,7 +4,6 @@ import EditorContext from '../context/EditorContext'
 import RenderSandbox from './RenderSandbox'
 import ReadOnly from './ReadOnly';
 import { makeStyles } from "@material-ui/core/styles";
-import ExtensionIcon from '@material-ui/icons/Extension';
 
 const useStyles = makeStyles(theme => ({
   
@@ -29,7 +28,7 @@ const DescriptiveCard = (props) => {
     const addToStory = () => { 
       setParent(false);
       const { nodes, ...others } = story;
-      saveStory({ nodes: [...nodes, { id: undefined, ...toPreview }], others});
+      saveStory({ nodes: [...nodes, { id: undefined, x: -400, y: -400, ...toPreview }], others});
     };
     
     return (

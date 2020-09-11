@@ -4,7 +4,9 @@ import Inspector from "./components/Inspector";
 import { EditorContextProvider } from "./context/EditorContext";
 import ExampleStory from "./constants/ExampleStory";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from '@material-ui/core';
+import { Grid, Typography, Card, CardContent } from '@material-ui/core';
+import ReadOnly from "./components/ReadOnly";
+import RenderSandbox from "./components/RenderSandbox";
 
 const useStyles = makeStyles({
   InspectorContainerStyle: {
@@ -12,17 +14,35 @@ const useStyles = makeStyles({
     position: "absolute",
     marginLeft: "75vw",
     marginTop: 3
+  },
+
+  SimulatorContainerStyle: {
+    zIndex: 2,
+    position: "absolute",
+    marginLeft: 15,
+    marginTop: 100
   }
 });
 
 const Editor = () => {
-  const { InspectorContainerStyle } = useStyles();
+  const { InspectorContainerStyle, SimulatorContainerStyle } = useStyles();
   
   return (
     <EditorContextProvider userStory={ExampleStory}>
 
-      <Grid item xs={5} className={InspectorContainerStyle}>
+      <Grid item xs={6} className={InspectorContainerStyle}>
         <Inspector />
+      </Grid>
+
+      <Grid item xs={3} className={SimulatorContainerStyle}>
+        <Card>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">This is still a work in progress...</Typography>
+            <ReadOnly>
+              <RenderSandbox />
+            </ReadOnly>
+          </CardContent>
+        </Card>
       </Grid>
 
       <div id="graphcanvas-container">

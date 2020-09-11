@@ -11,11 +11,13 @@ const GraphCanvas = () => {
   const { story, saveStory, setWorkingActivity } = useContext(EditorContext);
 
   const selectNode = event => setWorkingActivity(event.nodes[0]);
+  const deselectNode = () => setWorkingActivity(undefined);
   const dragEnd = event => setWorkingActivity(event.nodes[0]);
-  const deselectNode = event => setWorkingActivity(undefined);
+
   const onDropAddNode = event => {
     event.preventDefault();
     const newNode = JSON.parse(event.dataTransfer.getData("text"));
+    newNode.x = -400; newNode.y = -400;
     const { nodes, ...others } = story;
     saveStory({ nodes: [...nodes, newNode], others});
   }
