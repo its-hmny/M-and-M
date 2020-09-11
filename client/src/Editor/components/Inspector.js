@@ -10,7 +10,8 @@ const useStyles = makeStyles({
   
   InspectorPaperStyle:{
     padding: 15,
-    zIndex: 2
+    zIndex: 2,
+    marginTop: 15,
   },
 
   InspectorElementStyle:{

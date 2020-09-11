@@ -10,7 +10,7 @@ const CustomColorPicker = (props) => {
     
   return (
     <div>
-      <Typography variant="subtile" className={classNames.colorLabel} htmlFor="colorpicker">Color:</Typography> 
+      <Typography variant="caption" className={classNames.colorLabel} htmlFor="colorpicker">Color:</Typography> 
       <input 
         className={classNames.colorButton} id="colorpicker" 
         type="color" value={colorValue} 

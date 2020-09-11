@@ -4,6 +4,7 @@ import EditorContext from '../context/EditorContext'
 import RenderSandbox from './RenderSandbox'
 import ReadOnly from './ReadOnly';
 import { makeStyles } from "@material-ui/core/styles";
+import ExtensionIcon from '@material-ui/icons/Extension';
 
 const useStyles = makeStyles(theme => ({
   
@@ -39,7 +40,11 @@ const DescriptiveCard = (props) => {
           <Typography variant="subtitle1">{toPreview.description}</Typography>
 
           <ReadOnly draggable={true} style={{border: "2px solid white"}}
-            onDragStart={event => event.dataTransfer.setData('text', JSON.stringify({ id: undefined, ...toPreview }))}
+            onDragStart={event => {
+              event.dataTransfer.clearData("text");
+              event.dataTransfer.setData('text', JSON.stringify({ id: undefined, ...toPreview }));
+              event.dataTransfer.setDragImage(new Image(), 0, 0);
+            }}
           >
             <RenderSandbox component={toPreview} />
           </ReadOnly>

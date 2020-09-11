@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     position: "absolute",
     border: 1,
     borderStyle: "solid",
-    borderColor: "#e0e0e0",
+    borderColor: "#e0e0e0"
   },
 
   ActivityMenuContainerHidden: {
@@ -36,24 +36,24 @@ const useStyles = makeStyles(theme => ({
     padding: 5,
     position: "absolute",
     marginLeft: 15,
-    marginTop: 15,
+    marginTop: 15
   },
 
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
-    height: 224,
+    height: 224
   },
 
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`
-    
   },
   
   PaperOverride: {
     width: "45%"
   }
+
 }));
 
 
