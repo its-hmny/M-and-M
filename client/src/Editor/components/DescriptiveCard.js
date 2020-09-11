@@ -1,8 +1,18 @@
 import React, { useContext } from 'react';
-import { Card, CardContent, Typography, Button } from '@material-ui/core';
+import { Card, CardContent, Typography, Button, Grid } from '@material-ui/core';
 import EditorContext from '../context/EditorContext'
 import RenderSandbox from './RenderSandbox'
 import ReadOnly from './ReadOnly';
+import { makeStyles,  } from "@material-ui/core/styles";
+const useStyles = makeStyles(theme => ({
+  
+  AddButton: {
+    float: "right",
+    marginTop: 15
+  }
+
+}));
+
 
 const DescriptiveCard = (props) => {
     const { toPreview, setParent } = props;
@@ -13,8 +23,9 @@ const DescriptiveCard = (props) => {
       const { nodes, ...others } = story;
       saveStory({ nodes: [...nodes, { id: undefined, ...toPreview }], others});
     };
-
+    const classes = useStyles();
     return (
+      <>
       <Card variant="outlined" onDragOver={() => setParent(false)}>
         <CardContent>
           <Typography variant="h6">{toPreview.label}</Typography>
@@ -26,9 +37,13 @@ const DescriptiveCard = (props) => {
             <RenderSandbox component={toPreview} />
           </ReadOnly>
 
-          <Button onClick={addToStory}>Add new question</Button>
+          
         </CardContent>
       </Card>
+      
+      <Button className={classes.AddButton} onClick={addToStory}>Add new question</Button>
+      
+      </>
     );
 };
 

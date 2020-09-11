@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer,  Tabs, Tab, Grid, Typography, IconButton, Paper, Collapse } from '@material-ui/core';
+import { Drawer,  Tabs, Tab, Grid, Typography, IconButton, Paper, Collapse, Button } from '@material-ui/core';
 import { makeStyles,  } from "@material-ui/core/styles";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DescriptiveCard from './DescriptiveCard.js';
@@ -46,6 +46,12 @@ const useStyles = makeStyles(theme => ({
 
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`
+    
+  },
+  
+  
+  PaperOverride: {
+    width: "45%"
   }
 }));
 
@@ -85,7 +91,12 @@ const  ActivitiesMenu = (props) => {
   };
 
   return (
-    <Drawer variant="temporary" anchor='left' open={isMenuOpen} onClose={() => setMenuOpen(!isMenuOpen)} >
+    <Drawer variant="temporary" anchor='left' open={isMenuOpen} onClose={() => setMenuOpen(!isMenuOpen)} 
+      //Mantiene la width la stessa cambiando scelta
+      classes={{
+        paper: classes.PaperOverride,
+      }}
+    >
       
       <Typography variant="h5" align="center">Choose a new template</Typography>
       
