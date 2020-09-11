@@ -5,7 +5,6 @@ import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
 import { Checkbox, Radio } from './Choice';
 import Button from './Button';
-import { useStory } from '../../Player/context/story';
 import { useStyles } from '../../Player/context/styles';
 import { ANSWER_VALUE } from '../../Player/constants';
 
@@ -90,7 +89,7 @@ function Choices({
     // setRoute(newRoute);
     if (!withSubmit && correctAnswers.length === selectedAnswers.length)
       onSubmit(isCorrect);
-  }, [withSubmit, onSubmit, isCorrect]);
+  }, [withSubmit, onSubmit, isCorrect, correctAnswers, selectedAnswers]);
 
   return (
     <div

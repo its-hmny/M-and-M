@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import shortid from 'shortid';
 
 const importComponent = async component =>
@@ -27,6 +27,8 @@ const loadViewHierarchy = async ({
 
   const Component = cachedComponents[componentName];
 
+  if (componentName === 'Elements/Text') console.log(props);
+
   return (
     <Component key={`${componentName}-${shortid.generate()}`} {...props}>
       {children}
@@ -34,10 +36,24 @@ const loadViewHierarchy = async ({
   );
 };
 
+//let oldView = null;
+
 function Preview({ view }) {
+  // if (oldView === view) {
+  //   console.log('view equals');
+  // } else {
+  //   console.log('view differs');
+  //   oldView = view;
+  // }
+  console.log('preview initial', view.children);
   const [hierarchy, setHierarchy] = useState(null);
+  const oldView = useRef();
+
+  const isLoading = oldView.current !== view;
 
   useEffect(() => {
+    oldView.current = view;
+    console.log('preview effect', view.children);
     const loadView = async viewObject => {
       try {
         const viewHierarchy = await loadViewHierarchy(viewObject);
@@ -50,11 +66,11 @@ function Preview({ view }) {
     loadView(view);
   }, [view]);
 
-  return (
-    <React.Suspense fallback="Loading components...">
-      {hierarchy}
-    </React.Suspense>
-  );
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  return <React.Suspense fallback="Loading...">{hierarchy}</React.Suspense>;
 }
 
 export default Preview;

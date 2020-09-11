@@ -3,9 +3,4 @@ import ReactDOM from 'react-dom';
 
 import Creator from './Creator';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Creator />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+ReactDOM.render(<Creator />, document.getElementById('root'));

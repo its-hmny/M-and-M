@@ -1,26 +1,24 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import { useStory } from '../../Player/context/story';
-import { useStyles } from '../../Player/context/styles';
+import { useStyle } from '../../Creator/context/style';
 
 const base = css`
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 0.25rem;
-  background-color: #8cceb3;
   font-size: 1rem;
   cursor: pointer;
 `;
 
 function Button({ text, onClick, styleName }) {
-  const styles = useStyles(styleName);
+  const { style } = useStyle('Elements/Button', styleName);
   // const { moveTo } = useStory();
   //const onClick = () => moveTo(route);
 
   return (
     <div>
-      <button css={[base, styles]} onClick={onClick}>
+      <button css={[base, style]} onClick={onClick}>
         {text}
       </button>
     </div>

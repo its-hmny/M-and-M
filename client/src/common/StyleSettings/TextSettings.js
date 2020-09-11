@@ -1,57 +1,28 @@
-import React, { useState } from 'react';
-import { useView } from '../../Creator/context/view';
-import { view } from '@material-ui/icons';
-import { useInputChange } from './useInputChange';
-import Button from '../Elements/Button';
-import FontFamilyInput from './atoms/FontFamilyInput';
-import ColorPickerInput from './atoms/ColorPickerInput';
-import FontSizeInput from './atoms/FontSizeInput';
-import ImagePropInput from './atoms/ImagePropInput';
-import FontVarInput from './atoms/FontVarInput';
+import React from 'react';
+import FontFamily from './atoms/FontFamily';
+import ColorPicker from './atoms/ColorPicker';
+import FontSize from './atoms/FontSize';
+// import ImageProp from './atoms/ImageProp';
+import TextFormat from './atoms/TextFormat';
+import TextAlignment from './atoms/TextAlignment';
+import { useStyle } from '../../Creator/context/style';
 
-const TextContent = ({ content, onChange }) => {
-  return (
-    <div>
-      <textarea
-        value={content}
-        onChange={onChange}
-        style={{ minHeight: 100 }}
-      />
-    </div>
-  );
-};
-
-function TextSettings({ componentId, styleName, text }) {
-  const [input, handleInputChange] = useInputChange(styleName);
-  const { style, dispatch } = useStyle(styleName);
+function TextSettings({ styleName }) {
+  const { style, updateStyle } = useStyle('Elements/Text', styleName);
+  const onChange = subStyle => {
+    updateStyle({ ...subStyle });
+  };
 
   return (
     <div>
-      <FontFamilyInput value={input} onChange={handleInputChange} />
-      <TextDecoration />
-      <ColorPickerInput onChange={handleInputChange} value={input} />
-      <FontSizeInput onChange={handleInputChange} value={input} />
-      <ImagePropInput onChange={handleInputChange} value={input} />
-      <FontVarInput onChange={handleInputChange} value={input} />
+      <FontFamily onChange={onChange} value={style} />
+      <ColorPicker onChange={onChange} value={style} />
+      <FontSize onChange={onChange} value={style} />
+      {/*<ImageProp onChange={onChange} value={style} />*/}
+      <TextFormat onChange={onChange} value={style} />
+      <TextAlignment onChange={onChange} value={style} />
     </div>
   );
 }
 
 export default TextSettings;
-
-/*
-
-<ButtonSettings 
-  onChange={(updatedStyle) => setStyles({ ...styles, [styleName]: updatedStyle })} 
-  value={styles[styleName]} />
-
-styles: {
-  SpaceButton: {
-
-  },
-  UnderwaterButton: {
-
-  }
-}
-
-*/

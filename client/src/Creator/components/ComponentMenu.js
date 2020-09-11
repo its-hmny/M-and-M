@@ -1,59 +1,53 @@
-import React, { useState, useRef } from 'react';
-import {
-  Button,
-  Menu,
-  MenuItem
-} from '@material-ui/core';
-import {
-  Add as AddIcon,
-} from '@material-ui/icons';
+import React, { useState } from 'react';
+import { Button, Menu, MenuItem } from '@material-ui/core';
+import { Add as AddIcon } from '@material-ui/icons';
 import shortid from 'shortid';
 
 function getComponentList() {
-  return ['Button', 'Text'];
+  return ['Elements/Button', 'Elements/Text'];
 }
 
 function ComponentMenu({ onAddComponent }) {
   const possibleComponents = getComponentList();
   const [anchorEl, setAnchorEl] = useState(null);
-  const transRef = useRef(null);
 
-  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClick = event => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const handleSelection = (event, component) => {
     onAddComponent(component);
     handleClose();
-  }
+  };
 
   return (
     <div>
-      <Button aria-controls="component-selection-menu" aria-haspopup="true" onClick={handleClick}>
+      <Button
+        aria-controls="component-selection-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
         <AddIcon />
       </Button>
       <Menu
-        ref={transRef}
-        TransitionProps={{ nodeRef: transRef }}
-
         id="component-selection-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}>
-        {possibleComponents.map((component) => {
+        onClose={handleClose}
+      >
+        {possibleComponents.map(component => {
           const key = shortid.generate();
           return (
             <MenuItem
               key={`comp-select-item-${key}`}
-              onClick={(event) => handleSelection(event, component)}>
+              onClick={event => handleSelection(event, component)}
+            >
               {component}
             </MenuItem>
-          )
-        }
-        )}
+          );
+        })}
       </Menu>
     </div>
-  )
+  );
 }
-
 
 export default ComponentMenu;

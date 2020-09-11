@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import { useView } from '../../Creator/context/view';
-import { view } from '@material-ui/icons';
-import { useInputChange } from './useInputChange';
-import Button from '../Elements/Button';
-import ColorPickerInput from './atoms/ColorPickerInput';
+import React from 'react';
+import ColorPickerInput from './atoms/ColorPicker';
+import { useStyle } from '../../Creator/context/style';
 
-function ButtonSettings({ componentId, style, handleChangeStyle }) {
-  const { color, backgroundColor } = style;
-  const [input, handleInputChange] = useInputChange();
+function ButtonSettings({ styleName }) {
+  const { style, updateStyle } = useStyle('Elements/Button', styleName);
+  const onChange = subStyle => updateStyle({ ...style, ...subStyle });
 
   return (
     <div>
-      <ColorPickerInput onChange={handleChangeStyle} value={input} />
+      <ColorPickerInput onChange={onChange} value={style} />
     </div>
   );
 }
+
 export default ButtonSettings;

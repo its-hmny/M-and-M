@@ -1,7 +1,15 @@
-import React from 'react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 
-function Text({ text }) {
-  return <p>{text}</p>;
+import { useStyle } from '../../Creator/context/style';
+
+const base = css`
+  padding: 0.5rem 0;
+`;
+
+function Text({ text, styleName }) {
+  const { style } = useStyle('Elements/Text', styleName);
+  return <p css={[base, style]}>{text}</p>;
 }
 
 export default Text;

@@ -9,17 +9,21 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
+  TextField,
+  MenuItem,
 } from '@material-ui/core';
 import {
-  Add as AddIcon,
+  Close as CloseIcon,
+  Done as DoneIcon,
   Delete as DeleteIcon,
-  ExpandLess as ExpandLessIcon,
-  ExpandMore as ExpandMoreIcon,
+  Edit as EditIcon,
 } from '@material-ui/icons';
 import ComponentMenu from './ComponentMenu';
 import SettingsComponents from '../../common/StyleSettings';
+import { useStyle } from '../context/style';
+import shortid from 'shortid';
 
-const useStyles = makeStyles(theme => ({
+const useInspectorStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 200,
@@ -29,40 +33,140 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function SettingsItem({ component, onRemove }) {
-  const { component: componentName, id: componentId, ...rest } = component;
-  const [open, setOpen] = useState(true);
-  const SettingsComponent = SettingsComponents[componentName];
+const useSettingStyles = makeStyles(() => ({
+  componentName: {
+    display: 'inline-block',
+    marginRight: '30px',
+  },
+}));
 
+const defaultStyles = {
+  'Elements/Text': 'DefaultText',
+  'Elements/Button': 'DefaultButton',
+};
+
+function SettingsItem({ component, onRemoveComponent, updateComponent }) {
+  const classes = useSettingStyles();
+  // open refers to Collapse state
+  const [open, setOpen] = useState(false);
+  const [newStyle, setNewStyle] = useState('');
+  // const tempName = shortid.generate();
+
+  const {
+    component: componentName,
+    id: componentId,
+    styleName,
+    ...rest
+  } = component;
+
+  const { styleNames, addStyle, updateStyleName, removeStyle } = useStyle(
+    componentName,
+    styleName
+  );
+
+  const onSelectStyle = styleName => {
+    updateComponent(componentId, { styleName: styleName });
+  };
+
+  const editStyle = () => {
+    if (newStyle === '') {
+      const tempName = shortid.generate();
+      addStyle(tempName);
+      setNewStyle(tempName);
+      updateComponent(componentId, { styleName: tempName });
+    }
+    setOpen(true);
+  };
+
+  const saveChanges = () => {
+    const name = window.prompt('Enter name for your new amazing style :)');
+    if (name) {
+      updateStyleName(newStyle, name);
+      updateComponent(componentId, { styleName: name });
+      setOpen(false);
+    }
+  };
+
+  const discardChanges = () => {
+    removeStyle(newStyle);
+    updateComponent(componentId, { styleName: defaultStyles[componentName] });
+    setNewStyle('');
+    setOpen(false);
+  };
+
+  // find correct component
+  const SettingsComponent = SettingsComponents[componentName];
   return (
     <>
       <ListItem>
-        <ListItemText primary={componentName} />
+        <ListItemText
+          primary={
+            <>
+              <Typography variant="subtitle2" className={classes.componentName}>
+                {componentName}
+              </Typography>
+              <TextField
+                disabled={open}
+                select
+                label="Select"
+                value={styleName}
+                onChange={event => onSelectStyle(event.target.value)}
+                variant="outlined"
+                size="small"
+              >
+                {styleNames.map(style => (
+                  <MenuItem key={style} value={style}>
+                    {style}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </>
+          }
+        />
         <ListItemSecondaryAction>
           <IconButton
             edge="end"
-            aria-label="delete"
-            onClick={() => onRemove(componentId)}
+            aria-label="delete-component"
+            onClick={() => onRemoveComponent(componentId)}
           >
             <DeleteIcon />
           </IconButton>
-          <IconButton
-            edge="end"
-            aria-label="delete"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </IconButton>
+          {open ? (
+            <>
+              <IconButton
+                edge="end"
+                aria-label="discard-changes"
+                onClick={discardChanges}
+              >
+                <CloseIcon />
+              </IconButton>
+              <IconButton
+                edge="end"
+                aria-label="save-changes"
+                onClick={saveChanges}
+              >
+                <DoneIcon />
+              </IconButton>
+            </>
+          ) : (
+            <IconButton edge="end" aria-label="edit-style" onClick={editStyle}>
+              <EditIcon />
+            </IconButton>
+          )}
         </ListItemSecondaryAction>
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <SettingsComponent componentId={componentId} {...rest} />
+        <SettingsComponent
+          componentId={componentId}
+          styleName={styleName}
+          {...rest}
+        />
       </Collapse>
     </>
   );
 }
 
-const ViewSettings = ({ view }) => {
+const ViewSettings = ({ view, updateComponent, onRemoveComponent }) => {
   return (
     <div>
       <Typography variant="subtitle1" color="primary">
@@ -71,15 +175,26 @@ const ViewSettings = ({ view }) => {
 
       <List>
         {view.children.map(child => (
-          <SettingsItem key={child.id} component={child} />
+          <SettingsItem
+            key={child.id}
+            component={child}
+            updateComponent={updateComponent}
+            onRemoveComponent={onRemoveComponent}
+          />
         ))}
       </List>
     </div>
   );
 };
 
-function Inspector({ view, styles, onAddComponent, onRemoveComponent }) {
-  const classes = useStyles();
+function Inspector({
+  view,
+  styles,
+  onAddComponent,
+  onRemoveComponent,
+  updateComponent,
+}) {
+  const classes = useInspectorStyles();
 
   return (
     <Container>
@@ -88,7 +203,11 @@ function Inspector({ view, styles, onAddComponent, onRemoveComponent }) {
           Inspector
         </Typography>
 
-        <ViewSettings view={view} />
+        <ViewSettings
+          view={view}
+          updateComponent={updateComponent}
+          onRemoveComponent={onRemoveComponent}
+        />
 
         <ComponentMenu onAddComponent={onAddComponent} />
       </div>
