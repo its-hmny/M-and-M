@@ -1,14 +1,20 @@
 import React, { useContext } from 'react';
-import { Card, CardContent, Typography, Button, Grid } from '@material-ui/core';
+import { Card, CardContent, Typography, Button } from '@material-ui/core';
 import EditorContext from '../context/EditorContext'
 import RenderSandbox from './RenderSandbox'
 import ReadOnly from './ReadOnly';
-import { makeStyles,  } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
+
 const useStyles = makeStyles(theme => ({
   
-  AddButton: {
+  CardStyle: {
+    marginLeft: 10
+  },
+
+  AddButtonStyle: {
     float: "right",
-    marginTop: 15
+    marginTop: 15,
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
   }
 
 }));
@@ -17,16 +23,17 @@ const useStyles = makeStyles(theme => ({
 const DescriptiveCard = (props) => {
     const { toPreview, setParent } = props;
     const { story, saveStory } = useContext(EditorContext);
-
+    const { CardStyle, AddButtonStyle } = useStyles();
+    
     const addToStory = () => { 
       setParent(false);
       const { nodes, ...others } = story;
       saveStory({ nodes: [...nodes, { id: undefined, ...toPreview }], others});
     };
-    const classes = useStyles();
+    
     return (
       <>
-      <Card variant="outlined" onDragOver={() => setParent(false)}>
+      <Card variant="outlined" onDragOver={() => setParent(false)} className={CardStyle}>
         <CardContent>
           <Typography variant="h6">{toPreview.label}</Typography>
           <Typography variant="subtitle1">{toPreview.description}</Typography>
@@ -41,7 +48,7 @@ const DescriptiveCard = (props) => {
         </CardContent>
       </Card>
       
-      <Button className={classes.AddButton} onClick={addToStory}>Add new question</Button>
+      <Button className={AddButtonStyle} onClick={addToStory}>Add new question</Button>
       
       </>
     );

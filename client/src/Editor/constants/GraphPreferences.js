@@ -1,4 +1,3 @@
-import randomColor from 'randomcolor';
 
 export const Options = {
   autoResize: true,
@@ -85,9 +84,4 @@ export const Converter = {
         this.setEdgesFromChildrens(child.children, root_id, graph);
     });
   },
-};
-
-export const colorizeNewNodes = nodeList => {
-  const newNodes = nodeList.filter(node => node.id === undefined);
-  newNodes.forEach(node => (node.color = randomColor()));
 };

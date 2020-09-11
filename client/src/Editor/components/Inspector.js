@@ -15,6 +15,11 @@ const useStyles = makeStyles({
 
   InspectorElementStyle:{
     margin: 10
+  },
+
+  DefaultTitleStyle: {
+    paddingLeft: 15,
+    paddingRight: 15
   }
   
 });
@@ -22,7 +27,7 @@ const useStyles = makeStyles({
 
 const Inspector = () => {
   const { story, workingActivity } = useContext(EditorContext);
-  const {InspectorPaperStyle, InspectorElementStyle } = useStyles();
+  const { InspectorPaperStyle, InspectorElementStyle, DefaultTitleStyle } = useStyles();
   const [open, setOpen] = useState({});
   const isVisible = workingActivity !== undefined;
   
@@ -65,7 +70,8 @@ const Inspector = () => {
 
   const populateInspector = (iterator, previousPath) => {
     const absPath = previousPath || ["view", "children"];
-    const globalInspector = globalOptions();
+    // This must be genrated only once at the first recursive call (when previousPath is undefined)
+    const globalInspector = previousPath ? undefined : globalOptions();
 
     return ([globalInspector, iterator.map((element, index) => {
       const { mandatory, optional } = properties.components[element.component];
@@ -99,7 +105,7 @@ const Inspector = () => {
       <Paper className={InspectorPaperStyle} elevation={3}>
         { 
           (!isVisible) ? 
-            <Typography variant="h5" component="h5">Select an element</Typography> :
+            <Typography variant="h5" component="h5" className={DefaultTitleStyle}>Select an element</Typography> :
             populateInspector(story.nodes.filter(node => node.id === workingActivity)[0].view.children)
         }
       </Paper>

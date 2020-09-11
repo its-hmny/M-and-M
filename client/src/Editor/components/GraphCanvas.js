@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Graph from 'vis-network-react';
-import { Options, Converter, colorizeNewNodes } from '../constants/GraphPreferences';
+import { Options, Converter } from '../constants/GraphPreferences';
 import EditorContext from '../context/EditorContext'
 import { ActivitiesMenuButton } from './ActivitiesMenu';
 
@@ -9,8 +9,6 @@ import './styles.css';
 
 const GraphCanvas = () => {
   const { story, saveStory, setWorkingActivity } = useContext(EditorContext);
-
-  colorizeNewNodes(story.nodes);
 
   const selectNode = event => setWorkingActivity(event.nodes[0]);
   const dragEnd = event => setWorkingActivity(event.nodes[0]);

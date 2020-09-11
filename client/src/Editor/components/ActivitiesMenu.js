@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Drawer,  Tabs, Tab, Grid, Typography, IconButton, Paper, Collapse, Button } from '@material-ui/core';
-import { makeStyles,  } from "@material-ui/core/styles";
+import { Drawer,  Tabs, Tab, Grid, Typography, IconButton, Paper, Collapse } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DescriptiveCard from './DescriptiveCard.js';
 
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     border: 2,
     borderColor: "#e0e0e0",
     borderRadius: 50,
-    borderStyle: "solid",
+    borderStyle: "solid"
   },
 
   ActivityMenuContainerShow: {
@@ -34,7 +34,9 @@ const useStyles = makeStyles(theme => ({
   ActivityMenuContainerHidden: {
     zIndex: 2,
     padding: 5,
-    position: "absolute",  
+    position: "absolute",
+    marginLeft: 15,
+    marginTop: 15,
   },
 
   root: {
@@ -48,7 +50,6 @@ const useStyles = makeStyles(theme => ({
     borderRight: `1px solid ${theme.palette.divider}`
     
   },
-  
   
   PaperOverride: {
     width: "45%"
@@ -100,7 +101,7 @@ const  ActivitiesMenu = (props) => {
       
       <Typography variant="h5" align="center">Choose a new template</Typography>
       
-      <Grid container spacing={1}>
+      <Grid container>
         <Grid item xs={3}>
           <Tabs orientation="vertical" variant="scrollable" value={currentTab} className={classes.tabs}
             indicatorColor="primary" onChange={(event, newValue) => setTab(newValue)}
