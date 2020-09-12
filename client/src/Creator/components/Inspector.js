@@ -11,17 +11,25 @@ import {
   ListItemSecondaryAction,
   TextField,
   MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
 } from '@material-ui/core';
 import {
   Close as CloseIcon,
   Done as DoneIcon,
   Delete as DeleteIcon,
   Edit as EditIcon,
+  SettingsOutlined,
 } from '@material-ui/icons';
 import ComponentMenu from './ComponentMenu';
 import SettingsComponents from '../../common/StyleSettings';
 import { useStyle } from '../context/style';
 import shortid from 'shortid';
+import DialogStyleName from './DialogStyleName';
 
 const useInspectorStyles = makeStyles(theme => ({
   formControl: {
@@ -50,6 +58,8 @@ function SettingsItem({ component, onRemoveComponent, updateComponent }) {
   // open refers to Collapse state
   const [open, setOpen] = useState(false);
   const [newStyle, setNewStyle] = useState('');
+  const [newName, setNewName] = useState('');
+  const [dialogOpen, setDialogOpen] = useState(false);
   // const tempName = shortid.generate();
 
   const {
@@ -79,10 +89,9 @@ function SettingsItem({ component, onRemoveComponent, updateComponent }) {
   };
 
   const saveChanges = () => {
-    const name = window.prompt('Enter name for your new amazing style :)');
-    if (name) {
-      updateStyleName(newStyle, name);
-      updateComponent(componentId, { styleName: name });
+    if (newName !== '') {
+      updateStyleName(newStyle, newName);
+      updateComponent(componentId, { styleName: newName });
       setOpen(false);
     }
   };
@@ -143,18 +152,28 @@ function SettingsItem({ component, onRemoveComponent, updateComponent }) {
               <IconButton
                 edge="end"
                 aria-label="save-changes"
-                onClick={saveChanges}
+                onClick={() => setDialogOpen(true)}
               >
                 <DoneIcon />
               </IconButton>
             </>
           ) : (
-            <IconButton edge="end" aria-label="edit-style" onClick={editStyle}>
-              <EditIcon />
-            </IconButton>
-          )}
+              <IconButton edge="end" aria-label="edit-style" onClick={editStyle}>
+                <EditIcon />
+              </IconButton>
+            )}
         </ListItemSecondaryAction>
       </ListItem>
+      <DialogStyleName
+        open={dialogOpen}
+        onCancel={() => setDialogOpen(false)}
+        value={newName}
+        onChange={(newValue) => setNewName(newValue)}
+        onSave={() => {
+          setDialogOpen(false);
+          saveChanges();
+        }}
+        onExit={() => setOpen(false)} />
       <Collapse in={open} timeout="auto" unmountOnExit>
         <SettingsComponent
           componentId={componentId}
