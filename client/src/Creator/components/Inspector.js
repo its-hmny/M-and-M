@@ -26,7 +26,7 @@ import {
   SettingsOutlined,
 } from '@material-ui/icons';
 import ComponentMenu from './ComponentMenu';
-import SettingsComponents from '../../common/StyleSettings';
+import SettingsComponents from '../StyleSettings';
 import { useStyle } from '../context/style';
 import shortid from 'shortid';
 import DialogStyleName from './DialogStyleName';
@@ -218,6 +218,7 @@ function Inspector({
   onAddComponent,
   onRemoveComponent,
   updateComponent,
+  onSave,
 }) {
   const classes = useInspectorStyles();
 
@@ -234,7 +235,7 @@ function Inspector({
           onRemoveComponent={onRemoveComponent}
         />
 
-        <ComponentMenu onAddComponent={onAddComponent} />
+        <ComponentMenu onAddComponent={onAddComponent} onSave={onSave} />
       </div>
     </Container>
   );

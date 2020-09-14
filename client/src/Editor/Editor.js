@@ -1,35 +1,34 @@
-import React from "react";
-import GraphCanvas from "./components/GraphCanvas";
-import Inspector from "./components/Inspector";
-import { EditorContextProvider } from "./context/EditorContext";
-import ExampleStory from "./constants/ExampleStory";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import GraphCanvas from './components/GraphCanvas';
+import Inspector from './components/Inspector';
+import { EditorContextProvider } from './context/EditorContext';
+import ExampleStory from './constants/ExampleStory';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Card, CardContent } from '@material-ui/core';
-import ReadOnly from "./components/ReadOnly";
-import RenderSandbox from "./components/RenderSandbox";
+import ReadOnly from './components/ReadOnly';
+import RenderSandbox from './components/RenderSandbox';
 
 const useStyles = makeStyles({
   InspectorContainerStyle: {
     zIndex: 2,
-    position: "absolute",
-    marginLeft: "75vw",
-    marginTop: 3
+    position: 'absolute',
+    marginLeft: '75vw',
+    marginTop: 3,
   },
 
   SimulatorContainerStyle: {
     zIndex: 2,
-    position: "absolute",
+    position: 'absolute',
     marginLeft: 15,
-    marginTop: 100
-  }
+    marginTop: 100,
+  },
 });
 
 const Editor = () => {
   const { InspectorContainerStyle, SimulatorContainerStyle } = useStyles();
-  
+
   return (
     <EditorContextProvider userStory={ExampleStory}>
-
       <Grid item xs={6} className={InspectorContainerStyle}>
         <Inspector />
       </Grid>
@@ -37,10 +36,10 @@ const Editor = () => {
       <Grid item xs={3} className={SimulatorContainerStyle}>
         <Card>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">This is still a work in progress...</Typography>
-            <ReadOnly>
-              <RenderSandbox />
-            </ReadOnly>
+            <Typography gutterBottom variant="h5" component="h2">
+              This is still a work in progress...
+            </Typography>
+            <ReadOnly>{/* {<RenderSandbox />} */}</ReadOnly>
           </CardContent>
         </Card>
       </Grid>
@@ -48,7 +47,6 @@ const Editor = () => {
       <div id="graphcanvas-container">
         <GraphCanvas />
       </div>
-    
     </EditorContextProvider>
   );
 };

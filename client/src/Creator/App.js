@@ -68,6 +68,10 @@ function App() {
     });
   };
 
+  const onSave = () => {
+    console.log(view);
+  };
+
   return (
     <StylesProvider>
       <Grid container>
@@ -78,6 +82,7 @@ function App() {
             onAddComponent={addComponent}
             onRemoveComponent={removeComponent}
             updateComponent={updateComponent}
+            onSave={onSave}
           />
         </Grid>
         <Grid item xs={6}>

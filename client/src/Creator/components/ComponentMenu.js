@@ -7,7 +7,7 @@ function getComponentList() {
   return ['Elements/Button', 'Elements/Text'];
 }
 
-function ComponentMenu({ onAddComponent }) {
+function ComponentMenu({ onAddComponent, onSave }) {
   const possibleComponents = getComponentList();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -46,6 +46,13 @@ function ComponentMenu({ onAddComponent }) {
           );
         })}
       </Menu>
+      <Button
+        aria-controls="component-selection-menu"
+        aria-haspopup="true"
+        onClick={onSave}
+      >
+        Save
+      </Button>
     </div>
   );
 }

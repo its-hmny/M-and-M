@@ -2,7 +2,7 @@
   "global": ["text", "color"],
 
   "components": {
-    "Atoms/Link": {
+    "Elements/Button": {
       "mandatory": ["text", "to"],
       "optional": []
     },

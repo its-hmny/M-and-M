@@ -1,18 +1,23 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import EditorContext from '../context/EditorContext';
 import shortid from 'shortid';
-
 
 const cachedComponents = [];
 
 const importComponent = async component =>
   React.lazy(() =>
-    import(`../../Player/components/${component}`)
-      .catch(() => console.log(`Unable to load ${component}`))
+    import(`../../common/${component}`).catch(() =>
+      console.log(`Unable to load ${component}`)
+    )
   );
 
-const loadViewHierarchy = async ({ component: componentName, children, ...props }) => {
-  if (children && typeof children === 'object' && Array.isArray(children)) 
+const loadViewHierarchy = async ({
+  component: componentName,
+  children,
+  ...props
+}) => {
+  console.log(componentName);
+  if (children && typeof children === 'object' && Array.isArray(children))
     children = await Promise.all(
       children.map(component => loadViewHierarchy(component))
     );
@@ -29,8 +34,7 @@ const loadViewHierarchy = async ({ component: componentName, children, ...props 
   );
 };
 
-
-const RenderSanbox = (props) => {
+const RenderSanbox = props => {
   let { component } = props;
   const { story, workingActivity } = useContext(EditorContext);
   component = component || story.nodes[workingActivity];
@@ -39,7 +43,7 @@ const RenderSanbox = (props) => {
   useEffect(() => {
     if (component === undefined) {
       setView(<h1>Select an element and here will appear the preview</h1>);
-      return ;
+      return;
     }
 
     const loadView = async viewObject => {
@@ -47,12 +51,13 @@ const RenderSanbox = (props) => {
         const viewHierarchy = await loadViewHierarchy(viewObject);
         setView(viewHierarchy);
       } catch (err) {
-        console.error(`An error occured while loading view for ${component.name}: ${err}`);
+        console.error(
+          `An error occured while loading view for ${component.name}: ${err}`
+        );
       }
     };
 
     loadView(component.view);
-  
   }, [component]);
 
   return (
@@ -61,6 +66,5 @@ const RenderSanbox = (props) => {
     </React.Suspense>
   );
 };
-
 
 export default RenderSanbox;

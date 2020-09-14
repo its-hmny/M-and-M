@@ -12,7 +12,8 @@ const base = css`
 `;
 
 function Button({ text, onClick, styleName }) {
-  const { style } = useStyle('Elements/Button', styleName);
+  const style = null;
+  //const { style } = useStyle('Elements/Button', styleName);
   // const { moveTo } = useStory();
   //const onClick = () => moveTo(route);
 

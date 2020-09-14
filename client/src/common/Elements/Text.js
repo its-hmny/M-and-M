@@ -8,7 +8,8 @@ const base = css`
 `;
 
 function Text({ text, styleName }) {
-  const { style } = useStyle('Elements/Text', styleName);
+  const style = null;
+  //const { style } = useStyle('Elements/Text', styleName);
   return <p css={[base, style]}>{text}</p>;
 }
 
