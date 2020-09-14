@@ -1,0 +1,17 @@
+{
+  "Global": [
+    { "fragment": "CustomTextField", "valToChange": "label" },
+    { "fragment": "CustomColorPicker", "valToChange": "color" }
+  ],
+
+  "Elements/Button": [
+    { "fragment": "CustomTextField", "valToChange": "text" },
+    { "fragment": "CustomSelect", "valToChange": "to" }
+  ],
+
+  "Elements/Text": [{ "fragment": "CustomTextField", "valToChange": "text" }],
+
+  "Elements/ButtonGroup": [],
+
+  "Layout/Footer": []
+}
