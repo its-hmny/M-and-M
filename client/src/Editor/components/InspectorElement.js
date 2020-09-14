@@ -1,11 +1,5 @@
-import React from 'react';
-
-import { Typography } from '@material-ui/core';
-import { makeStyles } from "@material-ui/core/styles";
-
-import CustomColorPicker from './CustomColorPicker';
-import ControlledTextField from './ControlledTextField';
-import ControlledSelect from './ControlledSelect';
+import React, { Suspense } from 'react';
+import { Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   InspectorPaper: {
@@ -16,22 +10,22 @@ const useStyles = makeStyles({
   InspectorElement: {
     margin: 10,
     marginLeft: 15,
-    boxSizing: "content-box"
+    boxSizing: 'content-box',
   },
-  
+
   FormControl: {
     minWidth: 150,
   },
-  
+
   colorButton: {
     margin: 10,
     marginLeft: 15,
     width: 60,
     height: 30,
     border: 'none',
-    background: 'none'  
+    background: 'none',
   },
-  
+
   colorLabel: {
     margin: 10,
     marginLeft: 15,
@@ -39,34 +33,20 @@ const useStyles = makeStyles({
   },
 });
 
-
-const InspectorElement = (props) => {
-  const { fieldList, pathToComponent } = props;
+const InspectorElement = props => {
+  const { fieldsToSet, pathToVal } = props;
   const classes = useStyles();
+  console.log(pathToVal);
 
-  return (fieldList.map((property, index) => {
-    switch(property) {
-          
-      case "text":
-        return (
-          <ControlledTextField key={index} classNames={classes} pathToFragment={pathToComponent}/>
-        );
-          
-      case "to":
-        return (
-          <ControlledSelect key={index} classNames={classes} pathToFragment={pathToComponent}/>
-        );
-          
-      case "color":
-        return(
-          <CustomColorPicker key={index} classNames={classes} pathToFragment={pathToComponent}/>
-        );
-  
-      default:
-        return (<Typography  className={classes.InspectorElement} variant="h6">{`Properties ${property} not known!`}</Typography>);
-    }
-  }));
-}
-
+  return fieldsToSet.map((item, index) => {
+    const InspectorFragment = React.lazy(() => import(`./EditorFragments/${item.fragment}`));
+    console.log(pathToVal);
+    return (
+      <Suspense fallback={<Typography variant="subtitle2">{`Loading ${item.fragment}`}</Typography>}>
+        <InspectorFragment key={index} path={pathToVal} classNames={classes} />
+      </Suspense>
+    );
+  });
+};
 
 export default InspectorElement;
