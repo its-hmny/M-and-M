@@ -1,58 +1,123 @@
-import React from 'react';
-import { Grid,  List, ListItem, ListItemText } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Drawer,  Tabs, Tab, Grid, Typography, IconButton, Paper, Collapse } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
-import shortid from 'shortid';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import DescriptiveCard from './DescriptiveCard.js';
 
-const useStyles = makeStyles({
-  list: {
-    marginTop: 20,
+// TODO: Will become an API call to fetch the data stored server-side
+import QuestionTemplate from '../constants/QuestionTemplate.js'; 
+
+
+const useStyles = makeStyles(theme => ({
+  
+  MenuButtonOpen: {
+    borderRadius: 50,
+    border: 0
+  },
+
+  MenuButtonClose: {
+    border: 2,
+    borderColor: "#e0e0e0",
+    borderRadius: 50,
+    borderStyle: "solid"
+  },
+
+  ActivityMenuContainerShow: {
+    zIndex: 2,
     padding: 5,
+    position: "absolute",
     border: 1,
     borderStyle: "solid",
     borderColor: "#e0e0e0"
-  }
-});
+  },
 
+  ActivityMenuContainerHidden: {
+    zIndex: 2,
+    padding: 5,
+    position: "absolute",
+    marginLeft: 15,
+    marginTop: 15
+  },
 
-const  ActivitiesMenu = (props) => {
-  let widgets = [];
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+    display: 'flex',
+    height: 224
+  },
 
-  //Inserire codice per creare nodo sul grafo con relativi campi e aggiungerlo alla storia
-  const addActivityToGraph = (widget,e) => {
-    console.log(widget);
-  };
-  //Popolo la lista
-  for(let i=0;i<props.widgets.length;i++){
-    widgets.push(
-        <ListItem button divider key={shortid.generate()}>
-          <ListItemText primary={props.widgets[i]} onClick={(e) => addActivityToGraph(props.widgets[i],e)}></ListItemText>
-        </ListItem>
-      );
-  }
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`
+  },
   
+  PaperOverride: {
+    width: "45%"
+  }
+
+}));
+
+
+export const ActivitiesMenuButton = () => {
+  const [isMenuOpen,setMenuOpen] = useState(false);
   const classes = useStyles();
+
   return (
-    <Grid item xs={3}>
-      <List className={classes.list}>
-        {widgets}
-      </List>
-    </Grid>
+    <Paper
+      className={ isMenuOpen ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden }
+      elevation={isMenuOpen ? 5 : 0}
+    >
+      <IconButton
+        className={ isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose }
+        onClick={() => setMenuOpen(!isMenuOpen)}
+      >
+        <AddCircleIcon />
+      </IconButton>
+
+      <Collapse in={isMenuOpen}>
+        <ActivitiesMenu binding={{ isMenuOpen, setMenuOpen }} />
+      </Collapse>
+
+    </Paper>
   );
 }
 
+
+const  ActivitiesMenu = (props) => {
+  const { isMenuOpen, setMenuOpen } = props.binding;
+  const [ currentTab, setTab ] = useState(0);
+  const classes = useStyles();
+
+  const initializeTabs = () => {
+    return (QuestionTemplate.map((item, index) => <Tab label={item.label} key={index} disableRipple />));
+  };
+
+  return (
+    <Drawer variant="temporary" anchor='left' open={isMenuOpen} onClose={() => setMenuOpen(!isMenuOpen)} 
+      //Mantiene la width la stessa cambiando scelta
+      classes={{
+        paper: classes.PaperOverride,
+      }}
+    >
+      
+      <Typography variant="h5" align="center">Choose a new template</Typography>
+      
+      <Grid container>
+        <Grid item xs={3}>
+          <Tabs orientation="vertical" variant="scrollable" value={currentTab} className={classes.tabs}
+            indicatorColor="primary" onChange={(event, newValue) => setTab(newValue)}
+          >
+            {initializeTabs()}
+          </Tabs>
+        </Grid>
+        
+        <Grid item xs={8}>
+          <DescriptiveCard toPreview={QuestionTemplate[currentTab]} setParent={setMenuOpen}/>
+        </Grid>
+
+      </Grid>
+    </Drawer>
+  );
+}
+
+
 export default ActivitiesMenu;
-
-
-
-
-/* EXPERIMENTAL
-<Button onClick={() => setOpen(true)}>Choose new activity</Button>
-      <SwipeableDrawer
-        anchor={"left"}
-        open={isOpen}
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-      >
-        {[<h1>Test</h1>, <h1>Test</h1>, <h1>Test</h1>]}
-      </SwipeableDrawer>
-*/

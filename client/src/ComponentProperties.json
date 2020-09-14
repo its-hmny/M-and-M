@@ -1,0 +1,25 @@
+{
+  "global": ["text", "color"],
+
+  "components": {
+    "Atoms/Link": {
+      "mandatory": ["text", "to"],
+      "optional": []
+    },
+
+    "Elements/Text": {
+      "mandatory": ["text"],
+      "optional": []
+    },
+
+    "Elements/ButtonGroup": {
+      "mandatory": [],
+      "optional": []
+    },
+
+    "Layout/Footer": {
+      "mandatory": [],
+      "optional": []
+    }
+  }
+}

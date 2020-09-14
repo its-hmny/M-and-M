@@ -12,11 +12,27 @@ const defaultStory = {
 };
 
 export const EditorContextProvider = ({ children, userStory }) => {
-    const [currentStory, setStory] = useState(userStory || defaultStory);
-
+    const [inProgressStory, setStory] = useState(userStory || defaultStory);
+    const [focusedNode, setFocusedNode] = useState(undefined);
+    
     const toProvide = {
-        story: currentStory,
-        saveStory: (updatedStory) => setStory(updatedStory)
+        story: inProgressStory,
+        workingActivity: focusedNode,
+        saveStory: (updatedStory) => setStory(updatedStory),
+        setWorkingActivity: (activityID) => setFocusedNode(activityID),
+        
+        getFromPath: (path) => {
+            let current = inProgressStory.nodes.filter(node => node.id === focusedNode)[0];
+            path.forEach(key => current = current[key]);
+            return (current);
+        },
+        
+        setPathToValue: (path, field, value) => { 
+            let current = inProgressStory.nodes.filter(node => node.id === focusedNode)[0];
+            path.forEach(key => current = current[key]);
+            current[field] = value;
+            setStory({ ...inProgressStory });
+        }
     };
     
     return (

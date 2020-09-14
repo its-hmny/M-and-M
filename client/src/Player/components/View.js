@@ -1,17 +1,15 @@
-/** @jsx jsx */
 import { css, jsx, Global } from '@emotion/core';
+import React from 'react';
 
-function View({ children }) {
-  return (
-    <div>
-      <Global
+/*Da mettere dentro al div di view
+Non so perchè ci fosse, ATTENZIONE se inserito rompe il css di tutto
+<Global
         styles={css`
           *,
           *::before,
           *::after {
             box-sizing: border-box;
           }
-
           html,
           body {
             margin: 0;
@@ -22,8 +20,12 @@ function View({ children }) {
             font-size: 24px;
           }
         `}
-      />
-      <h1>Main View</h1>
+      />*/
+
+function View({ children }) {
+  return (
+    <div>
+      
       {children}
     </div>
   );
