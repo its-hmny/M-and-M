@@ -60,6 +60,7 @@ function SettingsItem({ component, onRemoveComponent, updateComponent }) {
   const [newStyle, setNewStyle] = useState('');
   const [newName, setNewName] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [lastStyle, setLastStyle] = useState('');
   // const tempName = shortid.generate();
 
   const {
@@ -85,6 +86,8 @@ function SettingsItem({ component, onRemoveComponent, updateComponent }) {
       setNewStyle(tempName);
       updateComponent(componentId, { styleName: tempName });
     }
+    console.log(`setting last style: ${styleName}`);
+    setLastStyle(styleName);
     setOpen(true);
   };
 
@@ -93,12 +96,14 @@ function SettingsItem({ component, onRemoveComponent, updateComponent }) {
       updateStyleName(newStyle, newName);
       updateComponent(componentId, { styleName: newName });
       setOpen(false);
+      setNewName('');
+      setNewStyle('');
     }
   };
 
   const discardChanges = () => {
     removeStyle(newStyle);
-    updateComponent(componentId, { styleName: defaultStyles[componentName] });
+    updateComponent(componentId, { styleName: lastStyle });
     setNewStyle('');
     setOpen(false);
   };
@@ -158,22 +163,23 @@ function SettingsItem({ component, onRemoveComponent, updateComponent }) {
               </IconButton>
             </>
           ) : (
-              <IconButton edge="end" aria-label="edit-style" onClick={editStyle}>
-                <EditIcon />
-              </IconButton>
-            )}
+            <IconButton edge="end" aria-label="edit-style" onClick={editStyle}>
+              <EditIcon />
+            </IconButton>
+          )}
         </ListItemSecondaryAction>
       </ListItem>
       <DialogStyleName
         open={dialogOpen}
         onCancel={() => setDialogOpen(false)}
         value={newName}
-        onChange={(newValue) => setNewName(newValue)}
+        onChange={newValue => setNewName(newValue)}
         onSave={() => {
           setDialogOpen(false);
           saveChanges();
         }}
-        onExit={() => setOpen(false)} />
+        onExit={() => setOpen(false)}
+      />
       <Collapse in={open} timeout="auto" unmountOnExit>
         <SettingsComponent
           componentId={componentId}

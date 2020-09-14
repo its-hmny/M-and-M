@@ -11,7 +11,6 @@ const defaultStyles = {
 };
 
 function App() {
-  console.log('app renders');
   const [view, setView] = useState({
     component: 'View',
     children: [
@@ -60,7 +59,6 @@ function App() {
         child.id === component.id ? component : child
       ),
     });
-    console.log('update component');
   };
 
   const removeComponent = id => {

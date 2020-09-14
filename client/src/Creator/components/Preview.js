@@ -27,8 +27,6 @@ const loadViewHierarchy = async ({
 
   const Component = cachedComponents[componentName];
 
-  if (componentName === 'Elements/Text') console.log(props);
-
   return (
     <Component key={`${componentName}-${shortid.generate()}`} {...props}>
       {children}
@@ -36,16 +34,7 @@ const loadViewHierarchy = async ({
   );
 };
 
-//let oldView = null;
-
 function Preview({ view }) {
-  // if (oldView === view) {
-  //   console.log('view equals');
-  // } else {
-  //   console.log('view differs');
-  //   oldView = view;
-  // }
-  console.log('preview initial', view.children);
   const [hierarchy, setHierarchy] = useState(null);
   const oldView = useRef();
 
@@ -53,7 +42,6 @@ function Preview({ view }) {
 
   useEffect(() => {
     oldView.current = view;
-    console.log('preview effect', view.children);
     const loadView = async viewObject => {
       try {
         const viewHierarchy = await loadViewHierarchy(viewObject);
