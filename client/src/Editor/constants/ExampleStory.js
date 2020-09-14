@@ -8,12 +8,12 @@ const ExampleStory = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Benvenuto nella nostra prova',
+            text: 'Benvenuto nella nostra prova',
           },
           {
             component: 'Elements/Button',
             to: 1,
-            children: 'Inizia!',
+            text: 'Inizia!',
           },
         ],
       },
@@ -26,17 +26,17 @@ const ExampleStory = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Di che colore è il cavallo bianco di Napoleone?',
+            text: 'Di che colore è il cavallo bianco di Napoleone?',
           },
           {
             component: 'Elements/Button',
             to: 2,
-            children: 'Bianco',
+            text: 'Bianco',
           },
           {
             component: 'Elements/Button',
             to: 3,
-            children: 'Nero',
+            text: 'Nero',
           },
         ],
       },
@@ -49,7 +49,7 @@ const ExampleStory = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'bravo!',
+            text: 'Bravo!',
           },
         ],
       },
@@ -62,7 +62,7 @@ const ExampleStory = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Sbagliato!',
+            text: 'Sbagliato!',
           },
           {
             component: 'Layout/Footer',
@@ -70,7 +70,7 @@ const ExampleStory = {
               {
                 component: 'Elements/ButtonGroup',
                 children: [
-                  { component: 'Elements/Button', to: 1, children: 'Ritenta' },
+                  { component: 'Elements/Button', to: 1, text: 'Ritenta' },
                   {
                     component: 'Elements/Button',
                     to: 4,
@@ -91,7 +91,7 @@ const ExampleStory = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Peccato!',
+            text: 'Peccato!',
           },
         ],
       },

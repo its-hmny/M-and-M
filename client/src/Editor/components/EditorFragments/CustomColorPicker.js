@@ -6,19 +6,18 @@ const CustomColorPicker = props => {
   const { classNames, path } = props;
   const { getFromPath, setPathToValue } = useContext(EditorContext);
   // If undefined then it defaults to orange
-  const colorValue = getFromPath(path || [])[path ? 'bho' : 'color'] || '#eb8231';
+  const colorValue = getFromPath(path || [])[path || 'color'] || '#eb8231';
 
   return (
-    <div>
+    <div className={classNames.InspectorElement}>
       <Typography variant="caption" className={classNames.colorLabel} htmlFor="colorpicker">
         Color:
       </Typography>
       <input
         className={classNames.colorButton}
-        id="colorpicker"
         type="color"
         value={colorValue}
-        onChange={event => setPathToValue(path || [], path ? 'bho' : 'color', event.target.value)}
+        onChange={event => setPathToValue(path || [], path || 'color', event.target.value)}
       />
     </div>
   );

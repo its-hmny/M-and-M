@@ -66,7 +66,13 @@ const Inspector = () => {
     const absPath = previousPath || ['view', 'children'];
     // This must be genrated only once at the first recursive call (when previousPath is undefined)
     const global = previousPath ? undefined : (
-      <CollapsableBox uuid={`Global-${iterator}`} name="Global" isOpen={openElements} handler={setCollapsed} fieldsToSet={properties['Global']} />
+      <CollapsableBox
+        uuid={`Global-${workingActivity}`}
+        name="Global"
+        isOpen={openElements}
+        handler={setCollapsed}
+        fieldsToSet={properties['Global']}
+      />
     );
 
     return [
@@ -75,14 +81,16 @@ const Inspector = () => {
         const boxName = getComponentName(element);
         return (
           <CollapsableBox
-            uuid={`${boxName}-${iterator}-${index}`}
+            uuid={`${boxName}-${iterator}-${index}-${workingActivity}`}
             name={boxName}
             isOpen={openElements}
             handler={setCollapsed}
             fieldsToSet={properties[element.component]}
             pathToVal={[...absPath, index]}
           >
-            {Array.isArray(element.children) ? populateInspector(element.children, [...absPath, index, 'children']) : undefined}
+            {Array.isArray(element.children)
+              ? populateInspector(element.children, [...absPath, index, 'children'])
+              : undefined}
           </CollapsableBox>
         );
       }),

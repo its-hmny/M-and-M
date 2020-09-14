@@ -36,14 +36,13 @@ const useStyles = makeStyles({
 const InspectorElement = props => {
   const { fieldsToSet, pathToVal } = props;
   const classes = useStyles();
-  console.log(pathToVal);
 
   return fieldsToSet.map((item, index) => {
     const InspectorFragment = React.lazy(() => import(`./EditorFragments/${item.fragment}`));
     console.log(pathToVal);
     return (
       <Suspense fallback={<Typography variant="subtitle2">{`Loading ${item.fragment}`}</Typography>}>
-        <InspectorFragment key={index} path={pathToVal} classNames={classes} />
+        <InspectorFragment key={`${item.fragment}${index}`} path={pathToVal} classNames={classes} />
       </Suspense>
     );
   });

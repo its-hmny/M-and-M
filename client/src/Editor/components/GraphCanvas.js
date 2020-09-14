@@ -15,26 +15,27 @@ const GraphCanvas = () => {
 
   const onDropAddNode = event => {
     event.preventDefault();
-    const newNode = JSON.parse(event.dataTransfer.getData('text'));
-    newNode.x = -400;
-    newNode.y = -400;
-    const { nodes, ...others } = story;
-    saveStory({ nodes: [...nodes, newNode], others });
+    try {
+      const newNode = JSON.parse(event.dataTransfer.getData('text'));
+      newNode.x = -400;
+      newNode.y = -400;
+      const { nodes, ...others } = story;
+      saveStory({ nodes: [...nodes, newNode], others });
+    } catch (Error) {
+      return;
+    }
   };
 
   return (
     <div>
       <ActivitiesMenuButton />
 
-      <div
-        onDrop={event => onDropAddNode(event)}
-        onDragOver={event => event.preventDefault()}
-      >
+      <div onDrop={event => onDropAddNode(event)} onDragOver={event => event.preventDefault()}>
         <Graph
           data={Converter.getGraphFromStory(story)}
           options={Options}
           events={{ selectNode, deselectNode, dragEnd }}
-          getNetwork={obj => console.log(obj)}
+          getNetwork={network => console.log(network)}
         />
       </div>
     </div>
