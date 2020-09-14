@@ -23,12 +23,7 @@ Non so perchè ci fosse, ATTENZIONE se inserito rompe il css di tutto
       />*/
 
 function View({ children }) {
-  return (
-    <div>
-      
-      {children}
-    </div>
-  );
+  return <div>{children}</div>;
 }
 
 export default View;

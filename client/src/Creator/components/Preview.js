@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import shortid from 'shortid';
-
-import { useStory } from './context/story';
 
 const importComponent = async component =>
   React.lazy(() =>
-    import(`../common/${component}`).catch(() =>
+    import(`../../common/${component}`).catch(() =>
       console.log(`Unable to load ${component}`)
     )
   );
@@ -29,6 +27,8 @@ const loadViewHierarchy = async ({
 
   const Component = cachedComponents[componentName];
 
+  if (componentName === 'Elements/Text') console.log(props);
+
   return (
     <Component key={`${componentName}-${shortid.generate()}`} {...props}>
       {children}
@@ -36,30 +36,41 @@ const loadViewHierarchy = async ({
   );
 };
 
-function App() {
-  const { currentNode } = useStory();
-  const [view, setView] = useState(null);
+//let oldView = null;
+
+function Preview({ view }) {
+  // if (oldView === view) {
+  //   console.log('view equals');
+  // } else {
+  //   console.log('view differs');
+  //   oldView = view;
+  // }
+  console.log('preview initial', view.children);
+  const [hierarchy, setHierarchy] = useState(null);
+  const oldView = useRef();
+
+  const isLoading = oldView.current !== view;
 
   useEffect(() => {
+    oldView.current = view;
+    console.log('preview effect', view.children);
     const loadView = async viewObject => {
       try {
         const viewHierarchy = await loadViewHierarchy(viewObject);
-        setView(viewHierarchy);
+        setHierarchy(viewHierarchy);
       } catch (err) {
-        console.error(
-          `An error occured while loading for ${currentNode.name}: ${err}`
-        );
+        console.error(`An error occured while loading hierarchy: ${err}`);
       }
     };
 
-    loadView(currentNode.view);
-  }, [currentNode]);
+    loadView(view);
+  }, [view]);
 
-  return (
-    <React.Suspense fallback="Loading components...">
-      <div>{view}</div>
-    </React.Suspense>
-  );
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  return <React.Suspense fallback="Loading...">{hierarchy}</React.Suspense>;
 }
 
-export default App;
+export default Preview;

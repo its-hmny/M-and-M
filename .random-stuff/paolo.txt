@@ -1,0 +1,18 @@
+
+components can be added at will. window will scroll if too long. prrt
+
+_______________________________________
+|                                      |
+|           INSPECTOR                  |
+|______________________________________|
+|                                      |
+| v Title                           🗑 |
+|   |   font_family:                   |
+|   |   font_weight:                   |
+|   |   ....                           |
+| > component 1                        |
+| > component 2                        |
+|  _______                             |
+| |   +   |                            |
+| |_______|                            |
+|______________________________________|

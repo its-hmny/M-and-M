@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
 
-import styles from '../styles.json';
-
 const StylesContext = React.createContext();
 
-function StylesProvider({ children }) {
+function StylesProvider({ styles, children }) {
   return (
     <StylesContext.Provider value={styles}>{children}</StylesContext.Provider>
   );

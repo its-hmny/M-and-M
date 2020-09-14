@@ -1,4 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
+import shortid from 'shortid';
+
+import { ANSWER_VALUE } from '../constants';
 
 const story = {
   nodes: [
@@ -10,12 +13,13 @@ const story = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Benvenuto nella nostra prova',
+            text: 'Benvenuto nella nostra prova',
           },
           {
-            component: 'Atoms/Link',
-            to: 1,
-            children: 'Inizia!',
+            component: 'Elements/Button',
+            route: 1,
+            text: 'Inizia!',
+            styleName: 'SpaceButton',
           },
         ],
       },
@@ -28,17 +32,38 @@ const story = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Di che colore è il cavallo bianco di Napoleone?',
+            text: 'Di che colore è il cavallo bianco di Napoleone?',
           },
           {
-            component: 'Atoms/Link',
-            to: 2,
-            children: 'Bianco',
-          },
-          {
-            component: 'Atoms/Link',
-            to: 3,
-            children: 'Nero',
+            component: 'Elements/Choices',
+            answers: [
+              {
+                id: shortid.generate(),
+                text: 'Bianco',
+                value: ANSWER_VALUE.CORRECT,
+              },
+              {
+                id: shortid.generate(),
+                text: 'Verde',
+                value: ANSWER_VALUE.WRONG,
+              },
+              {
+                id: shortid.generate(),
+                text: 'Blue',
+                value: ANSWER_VALUE.WRONG,
+              },
+              {
+                id: shortid.generate(),
+                text: 'Nero',
+                value: ANSWER_VALUE.WRONG,
+              },
+            ],
+            routes: {
+              [ANSWER_VALUE.CORRECT]: 2,
+              [ANSWER_VALUE.WRONG]: 3,
+            },
+            withSubmit: true,
+            styleName: '',
           },
         ],
       },
@@ -51,7 +76,7 @@ const story = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'bravo!',
+            text: 'bravo!',
           },
         ],
       },
@@ -64,7 +89,7 @@ const story = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Sbagliato!',
+            text: 'Sbagliato!',
           },
           {
             component: 'Layout/Footer',
@@ -72,11 +97,15 @@ const story = {
               {
                 component: 'Elements/ButtonGroup',
                 children: [
-                  { component: 'Atoms/Link', to: 1, children: 'Ritenta' },
                   {
-                    component: 'Atoms/Link',
-                    to: 4,
-                    children: 'Abbandona',
+                    component: 'Elements/Button',
+                    route: 1,
+                    text: 'Ritenta',
+                  },
+                  {
+                    component: 'Elements/Button',
+                    route: 4,
+                    text: 'Abbandona',
                   },
                 ],
               },
@@ -93,7 +122,7 @@ const story = {
         children: [
           {
             component: 'Elements/Text',
-            children: 'Peccato!',
+            text: 'Peccato!',
           },
         ],
       },
@@ -105,15 +134,12 @@ const story = {
 //          all'interno dei componenti E PROPAGARLO nell'albero
 // provider: una proprietà con un valore qualunque
 // consumer: accede al provider
-const StoryContext = React.createContext({});
+const StoryContext = React.createContext({ currentNode: {}, moveTo: () => {} });
 
 function StoryProvider({ children }) {
   const [currentNode, setCurrentNode] = useState(story.nodes[0]);
 
-  const moveTo = id => {
-    setCurrentNode(story.nodes[id]);
-    console.log(`Moving to ${story.nodes[id].name}`);
-  };
+  const moveTo = useCallback(id => setCurrentNode(story.nodes[id]), []);
 
   return (
     <StoryContext.Provider value={{ currentNode, moveTo }}>
