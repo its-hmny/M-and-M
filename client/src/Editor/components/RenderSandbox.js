@@ -5,25 +5,14 @@ import shortid from 'shortid';
 const cachedComponents = [];
 
 const importComponent = async component =>
-  React.lazy(() =>
-    import(`../../common/${component}`).catch(() =>
-      console.log(`Unable to load ${component}`)
-    )
-  );
+  React.lazy(() => import(`../../common/${component}`).catch(() => console.log(`Unable to load ${component}`)));
 
-const loadViewHierarchy = async ({
-  component: componentName,
-  children,
-  ...props
-}) => {
+const loadViewHierarchy = async ({ component: componentName, children, ...props }) => {
   console.log(componentName);
   if (children && typeof children === 'object' && Array.isArray(children))
-    children = await Promise.all(
-      children.map(component => loadViewHierarchy(component))
-    );
+    children = await Promise.all(children.map(component => loadViewHierarchy(component)));
 
-  if (!cachedComponents[componentName])
-    cachedComponents[componentName] = await importComponent(componentName);
+  if (!cachedComponents[componentName]) cachedComponents[componentName] = await importComponent(componentName);
 
   const Component = cachedComponents[componentName];
 
@@ -51,9 +40,7 @@ const RenderSanbox = props => {
         const viewHierarchy = await loadViewHierarchy(viewObject);
         setView(viewHierarchy);
       } catch (err) {
-        console.error(
-          `An error occured while loading view for ${component.name}: ${err}`
-        );
+        console.error(`An error occured while loading view for ${component.name}: ${err}`);
       }
     };
 

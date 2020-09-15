@@ -5,7 +5,6 @@ import EditorContext from '../../context/EditorContext';
 const CustomTextField = props => {
   const { classNames, path } = props;
   const { getFromPath, setPathToValue } = useContext(EditorContext);
-  console.log(path);
 
   return (
     <div className={classNames.InspectorElement}>

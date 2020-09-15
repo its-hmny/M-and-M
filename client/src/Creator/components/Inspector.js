@@ -63,17 +63,9 @@ function SettingsItem({ component, onRemoveComponent, updateComponent }) {
   const [lastStyle, setLastStyle] = useState('');
   // const tempName = shortid.generate();
 
-  const {
-    component: componentName,
-    id: componentId,
-    styleName,
-    ...rest
-  } = component;
+  const { component: componentName, id: componentId, styleName, ...rest } = component;
 
-  const { styleNames, addStyle, updateStyleName, removeStyle } = useStyle(
-    componentName,
-    styleName
-  );
+  const { styleNames, addStyle, updateStyleName, removeStyle } = useStyle(componentName, styleName);
 
   const onSelectStyle = styleName => {
     updateComponent(componentId, { styleName: styleName });
@@ -138,27 +130,15 @@ function SettingsItem({ component, onRemoveComponent, updateComponent }) {
           }
         />
         <ListItemSecondaryAction>
-          <IconButton
-            edge="end"
-            aria-label="delete-component"
-            onClick={() => onRemoveComponent(componentId)}
-          >
+          <IconButton edge="end" aria-label="delete-component" onClick={() => onRemoveComponent(componentId)}>
             <DeleteIcon />
           </IconButton>
           {open ? (
             <>
-              <IconButton
-                edge="end"
-                aria-label="discard-changes"
-                onClick={discardChanges}
-              >
+              <IconButton edge="end" aria-label="discard-changes" onClick={discardChanges}>
                 <CloseIcon />
               </IconButton>
-              <IconButton
-                edge="end"
-                aria-label="save-changes"
-                onClick={() => setDialogOpen(true)}
-              >
+              <IconButton edge="end" aria-label="save-changes" onClick={() => setDialogOpen(true)}>
                 <DoneIcon />
               </IconButton>
             </>
@@ -181,11 +161,7 @@ function SettingsItem({ component, onRemoveComponent, updateComponent }) {
         onExit={() => setOpen(false)}
       />
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <SettingsComponent
-          componentId={componentId}
-          styleName={styleName}
-          {...rest}
-        />
+        <SettingsComponent componentId={componentId} styleName={styleName} {...rest} />
       </Collapse>
     </>
   );
@@ -212,14 +188,7 @@ const ViewSettings = ({ view, updateComponent, onRemoveComponent }) => {
   );
 };
 
-function Inspector({
-  view,
-  styles,
-  onAddComponent,
-  onRemoveComponent,
-  updateComponent,
-  onSave,
-}) {
+function Inspector({ view, styles, onAddComponent, onRemoveComponent, updateComponent, onSave }) {
   const classes = useInspectorStyles();
 
   return (
@@ -229,11 +198,7 @@ function Inspector({
           Inspector
         </Typography>
 
-        <ViewSettings
-          view={view}
-          updateComponent={updateComponent}
-          onRemoveComponent={onRemoveComponent}
-        />
+        <ViewSettings view={view} updateComponent={updateComponent} onRemoveComponent={onRemoveComponent} />
 
         <ComponentMenu onAddComponent={onAddComponent} onSave={onSave} />
       </div>

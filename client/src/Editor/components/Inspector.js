@@ -5,7 +5,7 @@ import properties from '../constants/ComponentProperties.json';
 
 import { makeStyles } from '@material-ui/core/styles';
 import InspectorElement from './InspectorElement';
-
+import shortid from 'shortid';
 const useStyles = makeStyles({
   InspectorPaperStyle: {
     padding: 15,
@@ -28,7 +28,7 @@ const CollapsableBox = props => {
   const { InspectorElementStyle } = useStyles();
 
   return (
-    <Box key={uuid} className={InspectorElementStyle}>
+    <Box className={InspectorElementStyle}>
       <List className={InspectorElementStyle}>
         <ListItem button onClick={() => handler(uuid)}>
           <Typography variant="h5" component="h5">
@@ -68,6 +68,7 @@ const Inspector = () => {
     const global = previousPath ? undefined : (
       <CollapsableBox
         uuid={`Global-${workingActivity}`}
+        key={`Global-${workingActivity}`}
         name="Global"
         isOpen={openElements}
         handler={setCollapsed}
@@ -81,7 +82,8 @@ const Inspector = () => {
         const boxName = getComponentName(element);
         return (
           <CollapsableBox
-            uuid={`${boxName}-${iterator}-${index}-${workingActivity}`}
+            uuid={`${boxName}-${index}-${workingActivity}`}
+            key={`${boxName}-${index}-${workingActivity}`}
             name={boxName}
             isOpen={openElements}
             handler={setCollapsed}

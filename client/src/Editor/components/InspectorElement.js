@@ -39,11 +39,13 @@ const InspectorElement = props => {
 
   return fieldsToSet.map((item, index) => {
     const InspectorFragment = React.lazy(() => import(`./EditorFragments/${item.fragment}`));
-    console.log(pathToVal);
+
     return (
-      <Suspense fallback={<Typography variant="subtitle2">{`Loading ${item.fragment}`}</Typography>}>
-        <InspectorFragment key={`${item.fragment}${index}`} path={pathToVal} classNames={classes} />
-      </Suspense>
+      <div key={`${item.fragment}${index}`}>
+        <Suspense fallback={<Typography variant="subtitle2">{`Loading ${item.fragment}`}</Typography>}>
+          <InspectorFragment path={pathToVal} classNames={classes} />
+        </Suspense>
+      </div>
     );
   });
 };
