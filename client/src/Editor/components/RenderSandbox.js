@@ -8,7 +8,6 @@ const importComponent = async component =>
   React.lazy(() => import(`../../common/${component}`).catch(() => console.log(`Unable to load ${component}`)));
 
 const loadViewHierarchy = async ({ component: componentName, children, ...props }) => {
-  console.log(componentName);
   if (children && typeof children === 'object' && Array.isArray(children))
     children = await Promise.all(children.map(component => loadViewHierarchy(component)));
 
@@ -31,7 +30,7 @@ const RenderSanbox = props => {
 
   useEffect(() => {
     if (component === undefined) {
-      setView(<h1>Select an element and here will appear the preview</h1>);
+      setView(<h5>Select an element and here will appear the preview</h5>);
       return;
     }
 

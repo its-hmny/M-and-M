@@ -2,7 +2,7 @@ const ExampleStory = {
   nodes: [
     {
       id: 0,
-      label: 'INTRO',
+      label: 'Introduzione',
       color: '#fef3f4',
       view: {
         component: 'View',
@@ -21,7 +21,7 @@ const ExampleStory = {
     },
     {
       id: 1,
-      label: 'QUESTION',
+      label: 'Domanda a scelta multipla',
       view: {
         component: 'View',
         children: [
@@ -44,7 +44,7 @@ const ExampleStory = {
     },
     {
       id: 2,
-      label: 'VICTORY',
+      label: 'Corretto',
       view: {
         component: 'View',
         children: [
@@ -57,7 +57,7 @@ const ExampleStory = {
     },
     {
       id: 3,
-      label: 'WRONG_ANSWER',
+      label: 'Sbagliato',
       view: {
         component: 'View',
         children: [
@@ -86,13 +86,33 @@ const ExampleStory = {
     },
     {
       id: 4,
-      label: 'DEFEAT',
+      label: 'Sconfitta',
       view: {
         component: 'View',
         children: [
           {
             component: 'Elements/Text',
             text: 'Peccato!',
+          },
+        ],
+      },
+    },
+    {
+      id: 5,
+      label: 'Test nuovi fragment',
+      view: {
+        component: 'View',
+        children: [
+          {
+            component: 'Elements/Text',
+            text: 'Indovina che animale è quello in figura!',
+          },
+          {
+            component: 'Elements/Image',
+            fallback: 'Stringa che andrà nell alt',
+            description: "Breve descrizione o titolo dell'immagine",
+            imgURL:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Cima_da_Conegliano%2C_God_the_Father.jpg/300px-Cima_da_Conegliano%2C_God_the_Father.jpg',
           },
         ],
       },

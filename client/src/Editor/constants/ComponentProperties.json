@@ -13,5 +13,11 @@
 
   "Elements/ButtonGroup": [],
 
+  "Elements/Image": [
+    { "fragment": "TextFieldFragment", "valToChange": "description" },
+    { "fragment": "TextFieldFragment", "valToChange": "fallback" },
+    { "fragment": "FilePickerFragment", "valToChange": "imgURL" }
+  ],
+
   "Layout/Footer": []
 }
