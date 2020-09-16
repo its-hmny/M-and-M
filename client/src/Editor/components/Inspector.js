@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { Paper, Box, Typography, List, ListItem, Collapse, Divider } from '@material-ui/core';
+import { Paper, Box, Typography, List, ListItem, Collapse, Divider, makeStyles } from '@material-ui/core';
 import EditorContext from '../context/EditorContext';
+import DynamicLoadFragments from './EditorFragments';
+
 import properties from '../constants/ComponentProperties.json';
 
-import { makeStyles } from '@material-ui/core/styles';
-import InspectorElement from './InspectorElement';
-import shortid from 'shortid';
 const useStyles = makeStyles({
   InspectorPaperStyle: {
     padding: 15,
@@ -37,7 +36,7 @@ const CollapsableBox = props => {
         </ListItem>
         <Collapse in={isOpen[uuid]} unmountOnExit>
           <Box borderLeft={1} borderColor="primary.main">
-            <InspectorElement {...specificProps} />
+            <DynamicLoadFragments {...specificProps} />
             {children}
           </Box>
         </Collapse>

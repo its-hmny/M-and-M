@@ -33,14 +33,14 @@ const useStyles = makeStyles({
   },
 });
 
-const InspectorElement = props => {
+const DynamicLoadFragments = props => {
   const { fieldsToSet, pathToVal } = props;
   const classes = useStyles();
 
   const fragmentList = useMemo(
     () =>
       fieldsToSet.map((item, index) => {
-        const EditorFragment = React.lazy(() => import(`./EditorFragments/${item.fragment}`));
+        const EditorFragment = React.lazy(() => import(`./${item.fragment}`));
         return (
           <EditorFragment
             key={`${item.fragment}${index}`}
@@ -58,4 +58,4 @@ const InspectorElement = props => {
   );
 };
 
-export default InspectorElement;
+export default DynamicLoadFragments;
