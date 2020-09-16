@@ -3,6 +3,7 @@ const ExampleStory = {
     {
       id: 0,
       label: 'INTRO',
+      color: '#fef3f4',
       view: {
         component: 'View',
         children: [

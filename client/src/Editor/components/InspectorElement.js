@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import { Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -37,17 +37,25 @@ const InspectorElement = props => {
   const { fieldsToSet, pathToVal } = props;
   const classes = useStyles();
 
-  return fieldsToSet.map((item, index) => {
-    const InspectorFragment = React.lazy(() => import(`./EditorFragments/${item.fragment}`));
+  const fragmentList = useMemo(
+    () =>
+      fieldsToSet.map((item, index) => {
+        const EditorFragment = React.lazy(() => import(`./EditorFragments/${item.fragment}`));
+        return (
+          <EditorFragment
+            key={`${item.fragment}${index}`}
+            path={pathToVal}
+            classNames={classes}
+            keyToUpdate={item.valToChange}
+          />
+        );
+      }),
+    [fieldsToSet]
+  );
 
-    return (
-      <div key={`${item.fragment}${index}`}>
-        <Suspense fallback={<Typography variant="subtitle2">{`Loading ${item.fragment}`}</Typography>}>
-          <InspectorFragment path={pathToVal} classNames={classes} />
-        </Suspense>
-      </div>
-    );
-  });
+  return (
+    <Suspense fallback={<Typography variant="subtitle2">{`Loading components`}</Typography>}>{fragmentList}</Suspense>
+  );
 };
 
 export default InspectorElement;

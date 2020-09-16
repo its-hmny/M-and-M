@@ -17,8 +17,6 @@ const GraphCanvas = () => {
     event.preventDefault();
     try {
       const newNode = JSON.parse(event.dataTransfer.getData('text'));
-      newNode.x = -400;
-      newNode.y = -400;
       const { nodes, ...others } = story;
       saveStory({ nodes: [...nodes, newNode], others });
     } catch (Error) {

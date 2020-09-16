@@ -39,7 +39,9 @@ const Editor = () => {
             <Typography gutterBottom variant="h5" component="h2">
               This is still a work in progress...
             </Typography>
-            <ReadOnly>{/* {<RenderSandbox />} */}</ReadOnly>
+            <ReadOnly>
+              <RenderSandbox />
+            </ReadOnly>
           </CardContent>
         </Card>
       </Grid>
