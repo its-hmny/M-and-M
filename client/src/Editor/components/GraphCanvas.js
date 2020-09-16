@@ -9,7 +9,12 @@ import './styles.css';
 const GraphCanvas = () => {
   const { story, saveStory, setWorkingActivity } = useContext(EditorContext);
 
-  const selectNode = event => setWorkingActivity(event.nodes[0]);
+  const selectNode = event => {
+    let node = event.nodes[0];
+    story.nodes[node] = { ...story.nodes[node] };
+
+    setWorkingActivity(node);
+  };
   const deselectNode = () => setWorkingActivity(undefined);
   const dragEnd = event => setWorkingActivity(event.nodes[0]);
 
