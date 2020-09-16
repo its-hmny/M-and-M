@@ -3,7 +3,7 @@ import EditorContext from '../context/EditorContext';
 import shortid from 'shortid';
 
 const cachedComponents = [];
-
+var cachedValues = [];
 const importComponent = async component =>
   React.lazy(() => import(`../../common/${component}`).catch(() => console.log(`Unable to load ${component}`)));
 
@@ -28,10 +28,12 @@ const RenderSanbox = props => {
   component = component || story.nodes[workingActivity];
   const [view, setView] = useState(null);
 
-  useEffect(() => {
+  const renderView = component => {
     if (component === undefined) {
       setView(<h5>Select an element and here will appear the preview</h5>);
       return;
+    } else {
+      cachedValues[component.name] = JSON.stringify(component.view.children);
     }
 
     const loadView = async viewObject => {
@@ -44,8 +46,18 @@ const RenderSanbox = props => {
     };
 
     loadView(component.view);
+  };
+
+  useEffect(() => {
+    renderView(component);
   }, [component]);
 
+  //Controlla se è stato modificato un campo, se lo è stato allora rirenderizza la view
+  if (component !== undefined && cachedValues[component.name] !== undefined) {
+    if (JSON.stringify(component.view.children) !== cachedValues[component.name]) {
+      renderView(component);
+    }
+  }
   return (
     <React.Suspense fallback={<h5>Loading components...</h5>}>
       <div>{view}</div>
