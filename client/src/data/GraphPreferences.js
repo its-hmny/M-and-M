@@ -1,4 +1,3 @@
-
 export const Options = {
   autoResize: true,
   height: '100vh',
@@ -77,11 +76,8 @@ export const Converter = {
 
   setEdgesFromChildrens: function (root, root_id, graph) {
     root.forEach(child => {
-      if (child.to !== undefined)
-        graph.edges = [...graph.edges, { from: root_id, to: child.to }];
-        
-      else if (child.children instanceof Array)
-        this.setEdgesFromChildrens(child.children, root_id, graph);
+      if (child.to !== undefined) graph.edges = [...graph.edges, { from: root_id, to: child.to }];
+      else if (child.children instanceof Array) this.setEdgesFromChildrens(child.children, root_id, graph);
     });
   },
 };

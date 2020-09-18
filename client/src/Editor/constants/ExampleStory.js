@@ -1,7 +1,7 @@
 const ExampleStory = {
   nodes: [
     {
-      id: 0,
+      id: 'stringid0',
       label: 'Introduzione',
       view: {
         component: 'View',
