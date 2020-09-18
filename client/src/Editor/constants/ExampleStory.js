@@ -1,4 +1,5 @@
 const ExampleStory = {
+  title: 'Story title',
   nodes: [
     {
       id: 'stringid0',

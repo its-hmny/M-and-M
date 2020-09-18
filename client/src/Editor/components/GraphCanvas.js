@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import Graph from 'vis-network-react';
 import { Options, Converter } from '../../data/GraphPreferences';
 import EditorContext from '../context/EditorContext';
@@ -9,28 +9,31 @@ import './styles.css';
 const GraphCanvas = () => {
   const { story, saveStory, setWorkingActivity } = useContext(EditorContext);
 
-  const selectNode = event => {
-    let eventNode = event.nodes[0];
+  const selectNode = useCallback(
+    event => {
+      const eventNode = event.nodes[0];
+      const pos = story.nodes.findIndex(node => node.id === eventNode);
+      story.nodes[pos] = { ...story.nodes[pos] };
+      setWorkingActivity(eventNode);
+    },
+    [setWorkingActivity, story.nodes]
+  );
+  const deselectNode = useCallback(() => setWorkingActivity(undefined), [setWorkingActivity]);
+  const dragEnd = useCallback(event => setWorkingActivity(event.nodes[0]), [setWorkingActivity]);
 
-    let pos = story.nodes.findIndex(node => node.id === eventNode);
-
-    story.nodes[pos] = { ...story.nodes[pos] };
-
-    setWorkingActivity(eventNode);
-  };
-  const deselectNode = () => setWorkingActivity(undefined);
-  const dragEnd = event => setWorkingActivity(event.nodes[0]);
-
-  const onDropAddNode = event => {
-    event.preventDefault();
-    try {
-      const newNode = JSON.parse(event.dataTransfer.getData('text'));
-      const { nodes, ...others } = story;
-      saveStory({ nodes: [...nodes, newNode], others });
-    } catch (Error) {
-      return;
-    }
-  };
+  const onDropAddNode = useCallback(
+    event => {
+      event.preventDefault();
+      try {
+        const newNode = JSON.parse(event.dataTransfer.getData('text'));
+        const { nodes, ...others } = story;
+        saveStory({ nodes: [...nodes, newNode], ...others });
+      } catch (Error) {
+        return;
+      }
+    },
+    [saveStory, story]
+  );
 
   return (
     <div>

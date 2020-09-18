@@ -1,8 +1,8 @@
 import ActivitiesMenu from './ActivitiesMenu';
 import DescriptiveCard from './DescriptiveCard';
 import GraphCanvas from './GraphCanvas';
-import Inspector from './Inspector';
+import SettingsColumn from './SettingsColumn';
 import ReadOnly from './ReadOnly';
 import RenderSandbox from './RenderSandbox';
 
-export { ActivitiesMenu, DescriptiveCard, GraphCanvas, Inspector, ReadOnly, RenderSandbox };
+export { ActivitiesMenu, DescriptiveCard, GraphCanvas, SettingsColumn, ReadOnly, RenderSandbox };
