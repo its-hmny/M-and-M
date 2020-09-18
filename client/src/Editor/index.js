@@ -1,9 +1,9 @@
 import React from 'react';
 import { Grid, Typography, Card, CardContent, makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { SettingsColumn, ReadOnly, RenderSandbox, GraphCanvas } from './components/';
+import { ActivitiesMenuButton, SettingsColumn, ReadOnly, RenderSandbox, GraphCanvas } from './components/';
 import { EditorContextProvider } from './context/EditorContext';
-import { ActivitiesMenuButton } from './components/ActivitiesMenu';
-import { blue, pink } from '@material-ui/core/colors';
+import { orange, pink } from '@material-ui/core/colors';
+
 import ExampleStory from './constants/ExampleStory';
 
 const useStyles = makeStyles({
@@ -22,15 +22,15 @@ const useStyles = makeStyles({
   },
 });
 
-const App = () => {
-  const customTheme = createMuiTheme({
-    palette: {
-      type: 'dark',
-      primary: pink,
-      secondary: blue,
-    },
-  });
+const customTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: pink,
+    secondary: orange,
+  },
+});
 
+const App = () => {
   const { InspectorContainerStyle, SimulatorContainerStyle } = useStyles();
 
   return (
@@ -38,6 +38,7 @@ const App = () => {
       <ThemeProvider theme={customTheme}>
         <EditorContextProvider userStory={ExampleStory}>
           <ActivitiesMenuButton />
+
           <Grid item xs={6} className={InspectorContainerStyle}>
             <SettingsColumn />
           </Grid>
