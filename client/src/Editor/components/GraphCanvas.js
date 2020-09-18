@@ -10,10 +10,13 @@ const GraphCanvas = () => {
   const { story, saveStory, setWorkingActivity } = useContext(EditorContext);
 
   const selectNode = event => {
-    let node = event.nodes[0];
-    story.nodes[node] = { ...story.nodes[node] };
+    let eventNode = event.nodes[0];
 
-    setWorkingActivity(node);
+    let pos = story.nodes.findIndex(node => node.id === eventNode);
+
+    story.nodes[pos] = { ...story.nodes[pos] };
+
+    setWorkingActivity(eventNode);
   };
   const deselectNode = () => setWorkingActivity(undefined);
   const dragEnd = event => setWorkingActivity(event.nodes[0]);

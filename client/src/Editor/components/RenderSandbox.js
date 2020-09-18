@@ -25,7 +25,7 @@ const loadViewHierarchy = async ({ component: componentName, children, ...props 
 const RenderSanbox = props => {
   let { component } = props;
   const { story, workingActivity } = useContext(EditorContext);
-  component = component || story.nodes[workingActivity];
+  component = component || story.nodes.filter(node => node.id === workingActivity)[0];
   const [view, setView] = useState(null);
 
   const renderView = component => {
