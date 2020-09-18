@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Typography, Card, CardContent, makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { Inspector, ReadOnly, RenderSandbox, GraphCanvas } from './components/';
 import { EditorContextProvider } from './context/EditorContext';
+import { ActivitiesMenuButton } from './components/ActivitiesMenu';
 import { blue, pink } from '@material-ui/core/colors';
 import ExampleStory from './constants/ExampleStory';
 
@@ -36,6 +37,7 @@ const App = () => {
     <>
       <ThemeProvider theme={customTheme}>
         <EditorContextProvider userStory={ExampleStory}>
+          <ActivitiesMenuButton />
           <Grid item xs={6} className={InspectorContainerStyle}>
             <Inspector />
           </Grid>

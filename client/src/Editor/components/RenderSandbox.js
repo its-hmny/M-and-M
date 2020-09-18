@@ -3,7 +3,7 @@ import EditorContext from '../context/EditorContext';
 import shortid from 'shortid';
 
 const cachedComponents = [];
-var cachedValues = [];
+const cachedValues = [];
 const importComponent = async component =>
   React.lazy(() => import(`../../common/${component}`).catch(() => console.log(`Unable to load ${component}`)));
 

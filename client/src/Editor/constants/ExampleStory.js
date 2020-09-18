@@ -3,7 +3,6 @@ const ExampleStory = {
     {
       id: 0,
       label: 'Introduzione',
-      color: '#fef3f4',
       view: {
         component: 'View',
         children: [
@@ -100,6 +99,7 @@ const ExampleStory = {
     {
       id: 5,
       label: 'Test nuovi fragment',
+      color: '#fef3f4',
       view: {
         component: 'View',
         children: [
