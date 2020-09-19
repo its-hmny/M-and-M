@@ -20,6 +20,8 @@ export const EditorContextProvider = ({ children, userStory }) => {
     },
 
     setPathToValue: (path, field, value) => {
+      /* path is the path to the current fragment in the story
+      Ex. view -> children -> 0 (second children) -> children -> 1 (second children) */
       let current = inProgressStory.nodes.filter(node => node.id === focusedNode)[0];
       path.forEach(key => (current = current[key]));
       current[field] = value;

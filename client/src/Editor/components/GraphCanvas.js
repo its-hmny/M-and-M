@@ -9,6 +9,7 @@ import './styles.css';
 const GraphCanvas = () => {
   const { story, saveStory, setWorkingActivity } = useContext(EditorContext);
 
+  /* Memoization of events to avoid processing multiple calls because of rerenders*/
   const selectNode = useCallback(
     event => {
       const eventNode = event.nodes[0];

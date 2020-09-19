@@ -33,8 +33,11 @@ const useStyles = makeStyles({
   },
 });
 
+/* Component loading dynamically EditorFragments based on data passed through 
+   fieldsToSet(data comes from ComponentProperties.json).  */
 const DynamicLoadFragments = props => {
   const { fieldsToSet, pathToVal } = props;
+
   const classes = useStyles();
 
   const fragmentList = useMemo(

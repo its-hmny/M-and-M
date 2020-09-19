@@ -49,9 +49,20 @@ const SettingsColumn = () => {
     return tokens[tokens.length - 1];
   };
 
+  //Function returning a list of CollapsableBox
   const populateInspector = (iterator, level, previousPath) => {
+    /*    uuid: unique identifier to close and open the collapsablebox
+          key: react key
+          name: component name
+          isOpen: object containing the opened boxes
+          handler: function for opening and closing the box
+          indentLevel: Level of indentation for 
+          fieldsToSet: component properties and associated EditorFragments 
+            as specified in ComponentProperties.json 
+          pathToVal: component path in the story */
+
     const absPath = previousPath || ['view', 'children'];
-    // This must be genrated only once at the first recursive call (when previousPath is undefined)
+    // This must be generated only once at the first recursive call (when previousPath is undefined)
     const global = previousPath ? undefined : (
       <CollapsableBox
         uuid={`Global-${workingActivity}`}
@@ -67,6 +78,7 @@ const SettingsColumn = () => {
       global,
       iterator.map((element, index) => {
         const boxName = getComponentName(element);
+
         return [
           <CollapsableBox
             uuid={`${boxName}-${index}-${workingActivity}`}

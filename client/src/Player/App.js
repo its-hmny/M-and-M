@@ -17,7 +17,6 @@ const loadViewHierarchy = async ({ component: componentName, children, ...props 
   if (!cachedComponents[componentName]) cachedComponents[componentName] = await importComponent(componentName);
 
   const Component = cachedComponents[componentName];
-
   return (
     <Component key={`${componentName}-${shortid.generate()}`} {...props}>
       {children}

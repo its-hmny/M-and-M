@@ -4,6 +4,8 @@ import shortid from 'shortid';
 
 const cachedComponents = [];
 const cachedValues = [];
+
+/* Lazy component importing */
 const importComponent = async component =>
   React.lazy(() => import(`../../common/${component}`).catch(() => console.log(`Unable to load ${component}`)));
 
@@ -33,21 +35,24 @@ const RenderSanbox = props => {
       setView(<h5>Select an element and here will appear the preview</h5>);
       return;
     } else {
+      /* Cache children data from components to notice changes and allow real time preview */
       cachedValues[component.name] = JSON.stringify(component.view.children);
     }
 
     const loadView = async viewObject => {
       try {
+        /* Load all components in view recursively and asynchronously  */
         const viewHierarchy = await loadViewHierarchy(viewObject);
         setView(viewHierarchy);
       } catch (err) {
         console.error(`An error occured while loading view for ${component.name}: ${err}`);
       }
     };
-
+    /* Async loading of component view (with all his children) */
     loadView(component.view);
   };
 
+  /* Execute rendering for first renderi */
   useEffect(() => {
     renderView(component);
   }, [component]);

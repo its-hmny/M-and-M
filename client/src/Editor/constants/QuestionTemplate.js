@@ -1,3 +1,4 @@
+/* Contains question templates formatted as story nodes */
 const QuestionTemplate = [
   {
     label: 'Introduzione',
