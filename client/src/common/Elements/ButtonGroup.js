@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-function ButtonGroup({ children }) {
+ const ButtonGroup = (props) => {
+  const { children } = props;
+
   return (
     <div
       css={css`

@@ -11,7 +11,8 @@ const base = css`
   cursor: pointer;
 `;
 
-function Button({ text, onClick, styleName }) {
+const Button = (props) => {
+  const { text, onClick, styleName } = props;
   const style = null;
   //const { style } = useStyle('Elements/Button', styleName);
   // const { moveTo } = useStory();

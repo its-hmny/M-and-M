@@ -7,9 +7,11 @@ const base = css`
   padding: 0.5rem 0;
 `;
 
-function Text({ text, styleName }) {
+const Text = (props) => {
+  const { text, styleName } = props;
   const style = null;
   //const { style } = useStyle('Elements/Text', styleName);
+  
   return <p css={[base, style]}>{text}</p>;
 }
 
