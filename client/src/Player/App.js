@@ -1,51 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import shortid from 'shortid';
 
-import { useStory } from './context/story';
+import View from '../common/View';
+import * as Elements from '../common/Elements';
 
-const importComponent = async component =>
-  React.lazy(() => import(`../common/${component}`).catch(() => console.log(`Unable to load ${component}`)));
+// import { useStory } from './context/story';
 
-// import actually uses browser cache, so...
-const cachedComponents = [];
+// const importComponent = async component =>
+//   React.lazy(() => import(`../common/${component}`).catch(() => console.log(`Unable to load ${component}`)));
 
-const loadViewHierarchy = async ({ component: componentName, children, ...props }) => {
-  if (children && typeof children === 'object' && Array.isArray(children)) {
-    children = await Promise.all(children.map(component => loadViewHierarchy(component)));
-  }
+// // import actually uses browser cache, so...
+// const cachedComponents = [];
 
-  if (!cachedComponents[componentName]) cachedComponents[componentName] = await importComponent(componentName);
+// const loadViewHierarchy = async ({ component: componentName, children, ...props }) => {
+//   if (children && typeof children === 'object' && Array.isArray(children)) {
+//     children = await Promise.all(children.map(component => loadViewHierarchy(component)));
+//   }
 
-  const Component = cachedComponents[componentName];
-  return (
-    <Component key={`${componentName}-${shortid.generate()}`} {...props}>
-      {children}
-    </Component>
-  );
-};
+//   if (!cachedComponents[componentName]) cachedComponents[componentName] = await importComponent(componentName);
 
-function App() {
-  const { currentNode } = useStory();
-  const [view, setView] = useState(null);
+//   const Component = cachedComponents[componentName];
+//   return (
+//     <Component key={`${componentName}-${shortid.generate()}`} {...props}>
+//       {children}
+//     </Component>
+//   );
+// };
 
-  useEffect(() => {
-    const loadView = async viewObject => {
-      try {
-        const viewHierarchy = await loadViewHierarchy(viewObject);
-        setView(viewHierarchy);
-      } catch (err) {
-        console.error(`An error occured while loading for ${currentNode.name}: ${err}`);
-      }
-    };
-
-    loadView(currentNode.view);
-  }, [currentNode]);
-
-  return (
-    <React.Suspense fallback="Loading components...">
-      <div>{view}</div>
-    </React.Suspense>
-  );
+function App({ components }) {
+  return <View>{}</View>;
 }
 
 export default App;

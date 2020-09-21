@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Card, CardContent, Typography, Button } from '@material-ui/core';
 import EditorContext from '../context/EditorContext';
+import Preview from '../../common/Preview';
 import RenderSandbox from './RenderSandbox';
 import ReadOnly from './ReadOnly';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,7 +36,8 @@ const DescriptiveCard = props => {
           <Typography variant="h6">{toPreview.label}</Typography>
           <Typography variant="subtitle1">{toPreview.description}</Typography>
 
-          <ReadOnly
+          <Preview components={toPreview} />
+          {/* <ReadOnly
             draggable={true}
             style={{ border: '2px solid white' }}
             onDragStart={event => {
@@ -45,7 +47,7 @@ const DescriptiveCard = props => {
             }}
           >
             <RenderSandbox component={toPreview} />
-          </ReadOnly>
+          </ReadOnly> */}
         </CardContent>
       </Card>
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import shortid from 'shortid';
 
-import * as Elements from '../../common/Elements';
-import View from '../../common/View';
-import { StylesContext } from '../context/style';
+import * as Elements from './Elements';
+import View from './View';
+import { StylesContext } from '../Creator/context/style';
 
 // const importComponent = async component =>
 //   React.lazy(() =>
@@ -39,13 +39,12 @@ import { StylesContext } from '../context/style';
 // };
 
 function Preview({ components }) {
-  const [{ styles }] = useContext(StylesContext);
+  // const [{ styles }] = useContext(StylesContext);
 
   const elements = components.map(component => {
-    const { id, name, styleId, ...rest } = component;
+    const { id, name, ...props } = component;
     const Element = Elements[name];
-    const style = styles[styleId];
-    return <Element key={id} style={style} {...rest} />;
+    return <Element key={id} {...props} />;
   });
 
   return <View>{elements}</View>;
