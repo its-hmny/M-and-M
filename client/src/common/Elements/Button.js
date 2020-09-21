@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import { useStyle } from '../../Creator/context/style';
-
 const base = css`
   padding: 0.5rem 1rem;
   border: none;
@@ -11,8 +9,7 @@ const base = css`
   cursor: pointer;
 `;
 
-function Button({ text, onClick, styleName }) {
-  const style = null;
+function Button({ text, onClick, style }) {
   //const { style } = useStyle('Elements/Button', styleName);
   // const { moveTo } = useStory();
   //const onClick = () => moveTo(route);

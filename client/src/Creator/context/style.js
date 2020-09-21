@@ -1,9 +1,14 @@
-import React, { useCallback, useState, useContext } from 'react';
+import React, { useCallback, useState, useContext, useReducer } from 'react';
+import shortid from 'shortid';
 
-const StylesContext = React.createContext();
+export const StylesContext = React.createContext();
 
 const initialState = {
-  'Elements/Text': {
+  styleIds: {
+    Text: ['DefaultText', 'SpaceText'],
+    Button: ['DefaultButton', 'SpaceButton', 'UnderwaterButton'],
+  },
+  styles: {
     DefaultText: {
       fontFamily: 'Arial',
       fontSize: '16px',
@@ -13,8 +18,6 @@ const initialState = {
       fontFamily: 'Arial',
       fontSize: '30px',
     },
-  },
-  'Elements/Button': {
     DefaultButton: {
       color: '#000',
       backgroundColor: '#8cceb3',
@@ -24,7 +27,7 @@ const initialState = {
       backgroundColor: 'blue',
       color: 'white',
     },
-    SubmarineButton: {
+    UnderwaterButton: {
       fontFamily: 'Arial',
       backgroundColor: 'aqua',
       color: 'white',
@@ -32,97 +35,172 @@ const initialState = {
   },
 };
 
+export const actions = {
+  ADD_STYLE: 'ADD_STYLE',
+  UPDATE_STYLE: 'UPDATE_STYLE',
+  REMOVE_STYLE: 'REMOVE_STYLE',
+  RENAME_STYLE: 'RENAME_STYLE',
+};
+
+const stylesReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case actions.ADD_STYLE: {
+      const { componentName, styleId, baseStyleId } = payload;
+      const componentStyles = state.styleIds[componentName];
+      const baseStyle = state.styles[baseStyleId] || {};
+
+      return {
+        ...state,
+        styleIds: {
+          ...state.styleIds,
+          [componentName]: [...componentStyles, styleId],
+        },
+        styles: {
+          ...state.styles,
+          [styleId]: baseStyle,
+        },
+      };
+    }
+    case actions.UPDATE_STYLE: {
+      const { styleId, ...props } = payload;
+      const oldStyle = state.styles[styleId];
+      const newStyle = { ...oldStyle, ...props };
+
+      return {
+        ...state,
+        styles: {
+          ...state.styles,
+          [styleId]: newStyle,
+        },
+      };
+    }
+    case actions.REMOVE_STYLE: {
+      const { componentName, styleId } = payload;
+      const updatedIds = state.styleIds[componentName].filter(id => id !== styleId);
+
+      return {
+        ...state,
+        styleIds: {
+          ...state.styleIds,
+          [componentName]: updatedIds,
+        },
+        styles: {
+          ...state.styles,
+          [styleId]: null,
+        },
+      };
+    }
+    case actions.RENAME_STYLE: {
+      const { componentName, oldId, newId } = payload;
+      const style = state.styles[oldId];
+      const updatedIds = state.styleIds[componentName].map(id => (id === oldId ? newId : id));
+
+      return {
+        ...state,
+        styleIds: {
+          ...state.styleIds,
+          [componentName]: updatedIds,
+        },
+        styles: {
+          ...state.styles,
+          [oldId]: null,
+          [newId]: style,
+        },
+      };
+    }
+    default:
+      throw new Error(`[stylesReducer]: Unknown action type ${type}.`);
+  }
+};
+
 export const StylesProvider = ({ children }) => {
-  const [styles, setStyles] = useState(initialState);
-
-  return (
-    <StylesContext.Provider value={{ styles, setStyles }}>
-      {children}
-    </StylesContext.Provider>
-  );
+  const [state, dispatch] = useReducer(stylesReducer, initialState);
+  return <StylesContext.Provider value={[state, dispatch]}>{children}</StylesContext.Provider>;
 };
 
-export const useStyle = (componentName, styleId) => {
-  const value = useContext(StylesContext);
-  if (value == null) {
-    throw new Error('useStyle must be used inside a StylesProvider');
-  }
+// export const useStyle = (componentName, styleId) => {
+//   const value = useContext(StylesContext);
+//   if (value == null) {
+//     throw new Error('useStyle must be used inside a StylesProvider');
+//   }
 
-  const { styles, setStyles } = value;
-  if (!styles[componentName][styleId]) {
-    throw new Error(`Unknown style with id ${styleId}`);
-  }
+//   const { styles, setStyles } = value;
+//   if (!styles[componentName][styleId]) {
+//     throw new Error(`Unknown style with id ${styleId}`);
+//   }
 
-  const updateStyle = useCallback(
-    style => {
-      setStyles(styles => {
-        return {
-          ...styles,
-          [componentName]: {
-            ...styles[componentName],
-            [styleId]: { ...styles[componentName][styleId], ...style },
-          },
-        };
-      });
-    },
-    [componentName, setStyles, styleId]
-  );
+//   const updateStyle = useCallback(
+//     style => {
+//       setStyles(styles => {
+//         return {
+//           ...styles,
+//           [componentName]: {
+//             ...styles[componentName],
+//             [styleId]: { ...styles[componentName][styleId], ...style },
+//           },
+//         };
+//       });
+//     },
+//     [componentName, setStyles, styleId]
+//   );
 
-  const addStyle = useCallback(
-    newStyleId => {
-      setStyles(styles => {
-        return {
-          ...styles,
-          [componentName]: {
-            ...styles[componentName],
-            [newStyleId]: { ...styles[componentName][styleId] },
-          },
-        };
-      });
-    },
-    [componentName, setStyles, styleId]
-  );
+//   const addStyle = useCallback(
+//     newStyleId => {
+//       setStyles(styles => {
+//         return {
+//           ...styles,
+//           [componentName]: {
+//             ...styles[componentName],
+//             [newStyleId]: { ...styles[componentName][styleId] },
+//           },
+//         };
+//       });
+//     },
+//     [componentName, setStyles, styleId]
+//   );
 
-  const updateStyleName = useCallback(
-    (oldStyleName, newStyleName) => {
-      setStyles(styles => {
-        const oldStyle = styles[componentName][oldStyleName];
-        delete styles[componentName][oldStyleName];
+//   const updateStyleName = useCallback(
+//     (oldStyleName, newStyleName) => {
+//       setStyles(styles => {
+//         const oldStyle = styles[componentName][oldStyleName];
+//         delete styles[componentName][oldStyleName];
 
-        return {
-          ...styles,
-          [componentName]: {
-            ...styles[componentName],
-            [newStyleName]: { ...oldStyle },
-          },
-        };
-      });
-    },
-    [componentName, setStyles]
-  );
+//         return {
+//           ...styles,
+//           [componentName]: {
+//             ...styles[componentName],
+//             [newStyleName]: { ...oldStyle },
+//           },
+//         };
+//       });
+//     },
+//     [componentName, setStyles]
+//   );
 
-  const removeStyle = useCallback(
-    target => {
-      setStyles(styles => {
-        const clean = styles[componentName];
-        delete clean[target];
-        return {
-          ...styles,
-          [componentName]: {
-            ...clean,
-          },
-        };
-      });
-    },
-    [componentName, setStyles]
-  );
+//   const removeStyle = useCallback(
+//     target => {
+//       setStyles(styles => {
+//         const clean = styles[componentName];
+//         delete clean[target];
+//         return {
+//           ...styles,
+//           [componentName]: {
+//             ...clean,
+//           },
+//         };
+//       });
+//     },
+//     [componentName, setStyles]
+//   );
 
-  return {
-    style: styles[componentName][styleId],
-    addStyle,
-    updateStyle,
-    updateStyleName,
-    removeStyle,
-    styleNames: Object.keys(styles[componentName]),
-  };
-};
+//   return {
+//     style: styles[componentName][styleId],
+//     addStyle,
+//     updateStyle,
+//     updateStyleName,
+//     removeStyle,
+//     styleNames: Object.keys(styles[componentName]),
+//   };
+// };

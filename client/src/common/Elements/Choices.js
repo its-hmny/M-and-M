@@ -5,7 +5,6 @@ import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
 import { Checkbox, Radio } from './Choice';
 import Button from './Button';
-import { useStyles } from '../../Player/context/styles';
 import { ANSWER_VALUE } from '../../Player/constants';
 
 /** renders a multiple choice component: if there is only
@@ -20,14 +19,7 @@ import { ANSWER_VALUE } from '../../Player/constants';
  *  - Button
  */
 
-function Choices({
-  name,
-  answers,
-  /*routes, */ withSubmit,
-  styleName,
-  onSubmit,
-}) {
-  const styles = useStyles(styleName);
+function Choices({ name, answers, /*routes, */ withSubmit, style, onSubmit }) {
   //const { currentNode, moveTo } = useStory();
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   /*const [route, setRoute] = useState(null);*/
@@ -42,22 +34,14 @@ function Choices({
   );
 
   const Component = useMemo(
-    () =>
-      answers.reduce(
-        (count, { value }) => count + (value === ANSWER_VALUE.CORRECT),
-        0
-      ) > 1
-        ? Checkbox
-        : Radio,
+    () => (answers.reduce((count, { value }) => count + (value === ANSWER_VALUE.CORRECT), 0) > 1 ? Checkbox : Radio),
     [answers]
   );
 
   const isCorrect = useMemo(
     () =>
       correctAnswers.length === selectedAnswers.length &&
-      selectedAnswers
-        .sort()
-        .every((answerId, index) => answerId === correctAnswers[index]),
+      selectedAnswers.sort().every((answerId, index) => answerId === correctAnswers[index]),
     [correctAnswers, selectedAnswers]
   );
 
@@ -70,9 +54,7 @@ function Choices({
       setSelectedAnswers([id]);
     } else {
       setSelectedAnswers(
-        event.target.checked
-          ? [...selectedAnswers, id]
-          : selectedAnswers.filter(answerId => answerId !== id)
+        event.target.checked ? [...selectedAnswers, id] : selectedAnswers.filter(answerId => answerId !== id)
       );
     }
   };
@@ -87,8 +69,7 @@ function Choices({
     //   moveTo(newRoute);
 
     // setRoute(newRoute);
-    if (!withSubmit && correctAnswers.length === selectedAnswers.length)
-      onSubmit(isCorrect);
+    if (!withSubmit && correctAnswers.length === selectedAnswers.length) onSubmit(isCorrect);
   }, [withSubmit, onSubmit, isCorrect, correctAnswers, selectedAnswers]);
 
   return (
@@ -114,17 +95,13 @@ function Choices({
             label={text}
             selected={!!selectedAnswers.find(answerId => answerId === id)}
             onSelected={onSelected}
-            styles={styles[Component.displayName]}
+            style={style[Component.displayName]}
           />
         ))}
       </div>
 
       {withSubmit && selectedAnswers.length > 0 && (
-        <Button
-          onClick={() => onSubmit && onSubmit(isCorrect)}
-          styleName={styles.Button}
-          text="Conferma"
-        />
+        <Button onClick={() => onSubmit && onSubmit(isCorrect)} style={style.Button} text="Conferma" />
       )}
     </div>
   );

@@ -35,17 +35,10 @@ const base = css`
   }
 `;
 
-function Choice({ type, id, name, label, selected, onSelected, styles }) {
+function Choice({ type, id, name, label, selected, onSelected, style }) {
   return (
-    <div css={[base, styles]}>
-      <input
-        id={id}
-        type={type}
-        name={name}
-        value={label}
-        checked={selected}
-        onChange={onSelected}
-      />
+    <div css={[base, style]}>
+      <input id={id} type={type} name={name} value={label} checked={selected} onChange={onSelected} />
       <label htmlFor={id}>{label}</label>
     </div>
   );

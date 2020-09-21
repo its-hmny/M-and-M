@@ -1,12 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import { useStyle } from '../../Creator/context/style';
-
 const base = css``;
 
-const AudioPlayer = ({ srcURL, styleName }) => {
-  const style = null;
+const AudioPlayer = ({ srcURL, style }) => {
   //const { style } = useStyle('Elements/Button', styleName);
   // const { moveTo } = useStory();
   //const onClick = () => moveTo(route);

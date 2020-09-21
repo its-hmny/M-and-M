@@ -19,28 +19,24 @@ import {
   Button,
 } from '@material-ui/core';
 
+function DialogStyleName({ open, initialId, onComplete }) {
+  const [styleId, setStyleId] = useState(initialId);
 
-function DialogStyleName({ open, onCancel, value, onChange, onSave }) {
+  const handleChange = event => setStyleId(event.target.value);
+  const handleComplete = () => onComplete(styleId);
 
   return (
-    <Dialog onClose={onCancel} open={open} aria-labelledby="dialog-new-style-name" >
-      <DialogTitle id="new-style-name">Insert new name</DialogTitle>
+    <Dialog open={open}>
+      <DialogTitle>Style Id</DialogTitle>
       <DialogContent>
         <Typography>What do you want to call your new style?</Typography>
-        <TextField
-          autoFocus
-          id="new-style-dialog-name-input"
-          label="Style Name"
-          value={value}
-          onChange={(event) => onChange(event.target.value)} />
+        <TextField autoFocus label="Style id" value={styleId} onChange={handleChange} />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCancel}>Cancel</Button>
-        <Button onClick={onSave}>Save</Button>
+        <Button onClick={handleComplete}>Ok</Button>
       </DialogActions>
     </Dialog>
-
-  )
+  );
 }
 
 export default DialogStyleName;

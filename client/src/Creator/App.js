@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Inspector from './components/Inspector';
-import Preview from './components/Preview';
+import Preview from '../common/Preview';
 import { StylesProvider } from './context/style';
 import shortid from 'shortid';
 
@@ -11,65 +11,62 @@ const defaultStyles = {
 };
 
 function App() {
-  const [view, setView] = useState({
-    component: 'View',
-    children: [
-      {
-        id: 'Text01',
-        component: 'Elements/Text',
-        text: 'Di che colore è il cavallo bianco di Napoleone?',
-        styleName: 'DefaultText',
-      },
-      {
-        id: 'Button01',
-        component: 'Elements/Button',
-        text: 'Some Button inside ButtonGroup',
-        styleName: 'DefaultButton',
-      },
-      // {
-      //   id: 'ButtonGroup01',
-      //   component: 'Elements/ButtonGroup',
-      //   children: [
-
-      //   ],
-      // },
-    ],
-  });
-
-  const addComponent = component => {
-    const children = view.children;
-    children.push({
+  const [components, setComponents] = useState([
+    {
       id: shortid.generate(),
-      component,
+      name: 'Text',
+      text: 'Di che colore è il cavallo bianco di Napoleone?',
+      styleId: 'DefaultText',
+    },
+    {
+      id: shortid.generate(),
+      name: 'Button',
+      text: 'Some Button inside ButtonGroup',
+      styleId: 'DefaultButton',
+    },
+    // {
+    //   id: shortid.generate(),
+    //   name: 'ButtonGroup',
+    //   children: [
+    //     {
+    //       id: shortid.generate(),
+    //       name: 'Button',
+    //       text: 'Some Button inside ButtonGroup',
+    //       styleId: 'DefaultButton',
+    //     },
+    //     {
+    //       id: shortid.generate(),
+    //       name: 'Button',
+    //       text: 'Some Button inside ButtonGroup',
+    //       styleId: 'DefaultButton',
+    //     },
+    //   ],
+    // },
+  ]);
+
+  const handleAddComponent = componentName => {
+    const newComponent = {
+      id: shortid.generate(),
+      name: componentName,
       text: 'Lorem ipsum dolor sit amet',
-      styleName: defaultStyles[component],
-    });
-    setView({ ...view, children });
+      styleId: `Default${componentName}`,
+    };
+    setComponents(components => [...components, newComponent]);
   };
 
   // receives component id and property to change
-  const updateComponent = (componentId, updatedProp) => {
-    let component = view.children.find(
-      component => component.id === componentId
+  const handleUpdateComponent = (updatedId, update) => {
+    setComponents(components =>
+      components.map(component => (component.id === updatedId ? { ...component, ...update } : component))
     );
-    component = { ...component, ...updatedProp };
-    setView({
-      ...view,
-      children: view.children.map(child =>
-        child.id === component.id ? component : child
-      ),
-    });
   };
 
-  const removeComponent = id => {
-    setView({
-      ...view,
-      children: view.children.filter(component => component.id !== id),
-    });
+  const handleRemoveComponent = removedId => {
+    setComponents(components => components.filter(component => component.id !== removedId));
   };
 
   const onSave = () => {
-    console.log(view);
+    // console.log(view);
   };
 
   return (
@@ -77,16 +74,15 @@ function App() {
       <Grid container>
         <Grid item xs={6}>
           <Inspector
-            view={view}
-            setView={setView}
-            onAddComponent={addComponent}
-            onRemoveComponent={removeComponent}
-            updateComponent={updateComponent}
+            components={components}
+            onAddComponent={handleAddComponent}
+            onRemoveComponent={handleRemoveComponent}
+            onUpdateComponent={handleUpdateComponent}
             onSave={onSave}
           />
         </Grid>
         <Grid item xs={6}>
-          <Preview view={view} />
+          <Preview components={components} />
         </Grid>
       </Grid>
     </StylesProvider>

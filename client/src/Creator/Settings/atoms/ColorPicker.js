@@ -22,6 +22,7 @@ function ColorPickerInput({ onChange, value }) {
   const handleChangeBackgroundColor = event => {
     onChange({ backgroundColor: event.currentTarget.value });
   };
+
   const colorInputId = shortid.generate();
   const backgroundColorInputId = shortid.generate();
 
@@ -38,9 +39,7 @@ function ColorPickerInput({ onChange, value }) {
         />
       </div>
       <div>
-        <InputLabel htmlFor={backgroundColorInputId}>
-          Pick background color
-        </InputLabel>
+        <InputLabel htmlFor={backgroundColorInputId}>Pick background color</InputLabel>
         <input
           type="color"
           className={classes.colorInput}
