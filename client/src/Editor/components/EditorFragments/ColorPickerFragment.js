@@ -3,10 +3,11 @@ import { Typography } from '@material-ui/core';
 import EditorContext from '../../context/EditorContext';
 
 const ColorPickerFragment = props => {
-  const { classNames, path, keyToUpdate } = props;
+  const { classNames, path, fragmentSpecificProps } = props;
+  const { valToChange } = fragmentSpecificProps
   const { getFromPath, setPathToValue } = useContext(EditorContext);
   // If undefined then it defaults to orange
-  const colorValue = getFromPath(path || [])[keyToUpdate] || '#eb8231';
+  const colorValue = getFromPath(path || [])[valToChange] || '#eb8231';
 
   return (
     <div className={classNames.InspectorElement}>
@@ -17,7 +18,7 @@ const ColorPickerFragment = props => {
         className={classNames.colorButton}
         type="color"
         value={colorValue}
-        onChange={event => setPathToValue(path || [], keyToUpdate, event.target.value)}
+        onChange={event => setPathToValue(path || [], valToChange, event.target.value)}
       />
     </div>
   );

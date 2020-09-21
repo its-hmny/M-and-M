@@ -1,23 +1,25 @@
 {
   "Global": [
-    { "fragment": "TextFieldFragment", "valToChange": "label" },
-    { "fragment": "ColorPickerFragment", "valToChange": "color" }
+    { "fragment": "TextFieldFragment", "props": {"valToChange": "label"} },
+    { "fragment": "ColorPickerFragment", "props":{"valToChange": "color"} }
   ],
 
   "Elements/Button": [
-    { "fragment": "TextFieldFragment", "valToChange": "text" },
-    { "fragment": "SelectFragment", "valToChange": "to" }
+    { "fragment": "TextFieldFragment", "props":{"valToChange": "text"} },
+    { "fragment": "SelectFragment", "props":{"valToChange": "to"} }
   ],
 
-  "Elements/Text": [{ "fragment": "TextFieldFragment", "valToChange": "text" }],
+  "Elements/Text": [{ "fragment": "TextFieldFragment", "props":{"valToChange": "text" }}],
 
   "Elements/ButtonGroup": [],
 
   "Elements/Image": [
-    { "fragment": "TextFieldFragment", "valToChange": "description" },
-    { "fragment": "TextFieldFragment", "valToChange": "fallback" },
-    { "fragment": "FilePickerFragment", "valToChange": "imgURL" }
+    { "fragment": "TextFieldFragment", "props":{"valToChange": "description"} },
+    { "fragment": "TextFieldFragment", "props":{"valToChange": "fallback"} },
+    { "fragment": "FilePickerFragment", "props":{"valToChange": "imgURL"} }
   ],
+
+  "Elements/AudioPlayer": [],
 
   "Layout/Footer": []
 }

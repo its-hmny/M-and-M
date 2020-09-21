@@ -3,17 +3,18 @@ import { TextField } from '@material-ui/core';
 import EditorContext from '../../context/EditorContext';
 
 const TextFieldFragment = props => {
-  const { classNames, path, keyToUpdate } = props;
+  const { classNames, path, fragmentSpecificProps } = props;
+  const { valToChange } = fragmentSpecificProps
   const { getFromPath, setPathToValue } = useContext(EditorContext);
 
   return (
     <TextField
       className={classNames.InspectorElement}
-      autoFocus={true}
-      label={keyToUpdate.toUpperCase()}
+      fullWidth={true}
+      label={valToChange.toUpperCase()}
       multiline={true}
-      value={getFromPath(path || [])[keyToUpdate]}
-      onChange={event => setPathToValue(path || [], keyToUpdate, event.target.value)}
+      value={getFromPath(path || [])[valToChange]}
+      onChange={event => setPathToValue(path || [], valToChange, event.target.value)}
     />
   );
 };

@@ -12,8 +12,7 @@ const useStyles = makeStyles({
 /* Element in the inspector list, contains component name and the logic to expand and show
    the modifiable component properties in <DynamicLoadFragments> */
 const CollapsableBox = props => {
-  //Children is legacy?
-  const { name, uuid, isOpen, handler, children, indentLevel, fieldsToSet, ...specificProps } = props;
+  const { name, uuid, isOpen, handler, indentLevel, fieldsToSet, ...specificProps } = props;
   const { InspectorElementStyle } = useStyles();
   const marginLeft = indentLevel * 15 || undefined;
 

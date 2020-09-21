@@ -109,6 +109,10 @@ const ExampleStory = {
             text: 'Indovina che animale è quello in figura!',
           },
           {
+            component: 'Elements/AudioPlayer',
+            srcURL: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
+          },
+          {
             component: 'Elements/Image',
             fallback: 'Stringa che andrà nell alt',
             description: "Breve descrizione o titolo dell'immagine",

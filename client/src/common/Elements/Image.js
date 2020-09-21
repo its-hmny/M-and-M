@@ -3,15 +3,9 @@ import { css, jsx } from '@emotion/core';
 
 import { useStyle } from '../../Creator/context/style';
 
-const base = css`
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 0.25rem;
-  font-size: 1rem;
-  cursor: pointer;
-`;
+const base = css``;
 
-function Image({ description, fallback, imgURL, styleName }) {
+const Image = ({ description, fallback, imgURL, styleName }) => {
   const style = null;
   //const { style } = useStyle('Elements/Button', styleName);
   // const { moveTo } = useStory();
@@ -25,6 +19,6 @@ function Image({ description, fallback, imgURL, styleName }) {
       </figure>
     </div>
   );
-}
+};
 
 export default Image;

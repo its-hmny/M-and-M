@@ -20,8 +20,12 @@ export const EditorContextProvider = ({ children, userStory }) => {
     },
 
     setPathToValue: (path, field, value) => {
-      /* path is the path to the current fragment in the story
-      Ex. view -> children -> 0 (second children) -> children -> 1 (second children) */
+      /* 
+        path is the path to the current fragment in the story, 
+        field is the name of the key inside to object that as to be modified,
+        value is the value that has to ovverride the previous one
+        Ex. view -> children -> 0 (first children) -> children -> 1 (second children)
+      */
       let current = inProgressStory.nodes.filter(node => node.id === focusedNode)[0];
       path.forEach(key => (current = current[key]));
       current[field] = value;

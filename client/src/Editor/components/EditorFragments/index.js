@@ -49,7 +49,7 @@ const DynamicLoadFragments = props => {
             key={`${item.fragment}${index}`}
             path={pathToVal}
             classNames={classes}
-            keyToUpdate={item.valToChange}
+            fragmentSpecificProps={item.props}
           />
         );
       }),

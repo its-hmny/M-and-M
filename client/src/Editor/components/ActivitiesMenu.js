@@ -92,10 +92,8 @@ const ActivitiesMenu = props => {
       anchor="left"
       open={isMenuOpen}
       onClose={() => setMenuOpen(!isMenuOpen)}
-      //Mantiene la width la stessa cambiando scelta
-      classes={{
-        paper: classes.PaperOverride,
-      }}
+      // Keeps the width fixed
+      classes={{ paper: classes.PaperOverride }}
     >
       <Typography variant="h5" align="center">
         Choose a new template
