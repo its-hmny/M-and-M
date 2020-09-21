@@ -25,12 +25,13 @@ const SettingsColumn = () => {
   const [openBox, setOpenBox] = useState({});
 
   const setCollapsed = uuid => {
-    let tmp; // A temporary object to store all the changes made
+    let tmp = { ...openBox }; // A temporary object to store all the changes made
     const maxOpenBoxes = 3;
 
     // Set the user selected box to be open
-    if (openBox[uuid] === undefined) tmp = { ...openBox, [uuid]: true };
-    else tmp = { ...openBox, [uuid]: !openBox[uuid] };
+    if (openBox[uuid] === undefined) tmp[uuid] = true;
+    else delete tmp[uuid];
+    console.log(tmp);
 
     // Get the all the elements in the same columns that are already open
     const alreadyOpen = Object.keys(tmp).filter(
@@ -38,8 +39,8 @@ const SettingsColumn = () => {
     );
 
     // If there are more than maxOpenBox then the first to be opened gets closed
-    if (alreadyOpen.length > maxOpenBoxes) tmp = { ...tmp, [alreadyOpen[0]]: false };
-
+    if (alreadyOpen.length > maxOpenBoxes) delete tmp[alreadyOpen[0]];
+    console.log(tmp);
     // Set the new state
     setOpenBox(tmp);
   };
