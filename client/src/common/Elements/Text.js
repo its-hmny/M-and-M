@@ -5,9 +5,10 @@ const base = css`
   padding: 0.5rem 0;
 `;
 
-function Text({ text, style }) {
-  //const { style } = useStyle('Elements/Text', styleName);
-  return <p css={[base, style]}>{text}</p>;
-}
+const Text = ({ text, style }) => (
+  <div>
+    <p css={[base, style]}>{text}</p>
+  </div>
+);
 
 export default Text;
