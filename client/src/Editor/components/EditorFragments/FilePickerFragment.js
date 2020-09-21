@@ -1,26 +1,26 @@
 import React, { useContext } from 'react';
-import { Typography, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import EditorContext from '../../context/EditorContext';
 
 // TODO find a way to implement server upload and make the image a static resource
 const FilePickerFragment = props => {
   const { classNames, path, fragmentSpecificProps } = props;
-  const {} = fragmentSpecificProps;
+  const { valToChange, acceptedFileType, buttonLabel} = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useContext(EditorContext);
 
   return (
     <div className={classNames.InspectorElement}>
-      <label htmlFor="upload-photo">
+      <label htmlFor="upload-res">
         <input
           style={{ display: 'none' }}
-          id="upload-photo"
+          id="upload-res"
           type="file"
-          accept="image/*"
+          accept={acceptedFileType}
           onChange={event => console.log(event.target.files[0])}
         />
 
         <Button color="primary" variant="contained" component="span">
-          Upload local image
+          { buttonLabel }
         </Button>
       </label>
     </div>

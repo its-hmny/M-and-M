@@ -91,7 +91,7 @@ const SettingsColumn = () => {
             indentLevel={level}
             fieldsToSet={properties[element.component]}
             pathToVal={[...absPath, index]}
-          ></CollapsableBox>,
+          />,
           Array.isArray(element.children)
             ? populateInspector(element.children, level + 1, [...absPath, index, 'children'])
             : undefined,

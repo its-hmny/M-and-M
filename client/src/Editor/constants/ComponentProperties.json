@@ -1,25 +1,41 @@
 {
   "Global": [
     { "fragment": "TextFieldFragment", "props": {"valToChange": "label"} },
-    { "fragment": "ColorPickerFragment", "props":{"valToChange": "color"} }
+    { "fragment": "ColorPickerFragment", "props": {"valToChange": "color"} }
   ],
 
   "Elements/Button": [
-    { "fragment": "TextFieldFragment", "props":{"valToChange": "text"} },
-    { "fragment": "SelectFragment", "props":{"valToChange": "to"} }
+    { "fragment": "TextFieldFragment", "props": {"valToChange": "text"} },
+    { "fragment": "SelectFragment", "props": {"valToChange": "to"} }
   ],
 
-  "Elements/Text": [{ "fragment": "TextFieldFragment", "props":{"valToChange": "text" }}],
+  "Elements/Text": [{ "fragment": "TextFieldFragment", "props": {"valToChange": "text" }}],
 
   "Elements/ButtonGroup": [],
 
   "Elements/Image": [
-    { "fragment": "TextFieldFragment", "props":{"valToChange": "description"} },
-    { "fragment": "TextFieldFragment", "props":{"valToChange": "fallback"} },
-    { "fragment": "FilePickerFragment", "props":{"valToChange": "imgURL"} }
+    { "fragment": "TextFieldFragment", "props": {"valToChange": "description"} },
+    { "fragment": "TextFieldFragment", "props": {"valToChange": "fallback"} },
+    { 
+      "fragment": "FilePickerFragment", 
+      "props": {
+        "valToChange": "imgURL", 
+        "acceptedFileType": "image/*", 
+        "buttonLabel": "Upload image"
+      } 
+    }
   ],
 
-  "Elements/AudioPlayer": [],
+  "Elements/AudioPlayer": [
+    { 
+      "fragment": "FilePickerFragment", 
+      "props": {
+        "valToChange": "srcURL",
+        "acceptedFileType": "audio/mp4",
+        "buttonLabel": "Upload MP4"
+      }
+    }
+  ],
 
   "Layout/Footer": []
 }

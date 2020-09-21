@@ -1,5 +1,5 @@
 const ExampleStory = {
-  title: 'Story title',
+  title: "Pablo's story",
   nodes: [
     {
       id: 'stringid0',
