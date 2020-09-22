@@ -1,12 +1,5 @@
 import React from 'react';
 
-function Footer({ children }) {
-  return (
-    <footer>
-      <h4>A nice footer component</h4>
-      {children}
-    </footer>
-  );
-}
+const Footer = ({ children }) => <footer>{children}</footer>;
 
 export default Footer;

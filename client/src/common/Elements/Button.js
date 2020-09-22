@@ -9,18 +9,12 @@ const base = css`
   cursor: pointer;
 `;
 
-function Button({ text, onClick, style }) {
-  //const { style } = useStyle('Elements/Button', styleName);
-  // const { moveTo } = useStory();
-  //const onClick = () => moveTo(route);
-
-  return (
-    <div>
-      <button css={[base, style]} onClick={onClick}>
-        {text}
-      </button>
-    </div>
-  );
-}
+const Button = ({ text, onClick, style }) => (
+  <div>
+    <button css={[base, style]} onClick={onClick}>
+      {text}
+    </button>
+  </div>
+);
 
 export default Button;

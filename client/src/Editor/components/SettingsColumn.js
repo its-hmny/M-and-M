@@ -31,7 +31,6 @@ const SettingsColumn = () => {
     // Set the user selected box to be open
     if (openBox[uuid] === undefined) tmp[uuid] = true;
     else delete tmp[uuid];
-    console.log(tmp);
 
     // Get the all the elements in the same columns that are already open
     const alreadyOpen = Object.keys(tmp).filter(
@@ -40,7 +39,7 @@ const SettingsColumn = () => {
 
     // If there are more than maxOpenBox then the first to be opened gets closed
     if (alreadyOpen.length > maxOpenBoxes) delete tmp[alreadyOpen[0]];
-    console.log(tmp);
+
     // Set the new state
     setOpenBox(tmp);
   };
