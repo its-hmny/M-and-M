@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography, Card, CardContent, makeStyles } from '@material-ui/core';
 
-import { ActivitiesMenuButton, SettingsColumn, ReadOnly, RenderSandbox, GraphCanvas } from './components';
+import { ActivitiesMenuButton, SettingsColumn, RenderSandbox, GraphCanvas } from './components';
 import { useEditor } from './context/EditorContext';
 
 const useStyles = makeStyles({

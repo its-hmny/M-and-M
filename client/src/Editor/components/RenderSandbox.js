@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import shortid from 'shortid';
-
-import { useEditor } from '../context/EditorContext';
+import React from 'react';
 import View from '../../common/View';
 import * as Elements from '../../common/Elements';
 
@@ -74,13 +71,21 @@ import * as Elements from '../../common/Elements';
 // };
 
 const RenderSanbox = ({ components }) => {
-  const elements = components.map(component => {
-    const { id, name, ...props } = component;
-    const Element = Elements[name];
-    return <Element key={id} {...props} />;
-  });
+  const loadFromList = list => {
+    return list.map(component => {
+      const { id, name, children, ...props } = component;
+      const Element = Elements[name];
+      if (Array.isArray(children))
+        return (
+          <Element key={id} {...props}>
+            {loadFromList(children)}
+          </Element>
+        );
+      else return <Element key={id} {...props} />;
+    });
+  };
 
-  return <View>{elements}</View>;
+  return <View>{loadFromList(components)}</View>;
 };
 
 export default RenderSanbox;

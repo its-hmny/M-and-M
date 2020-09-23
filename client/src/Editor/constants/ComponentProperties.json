@@ -5,7 +5,7 @@
   ],
   "Button": [
     { "fragment": "TextFieldFragment", "props": { "valToChange": "text" } },
-    { "fragment": "SelectFragment", "props": { "valToChange": "story.nextNode" } }
+    { "fragment": "SelectFragment", "props": { "specificPath": ["story"], "valToChange": "nextNode" } }
   ],
   "Text": [{ "fragment": "TextFieldFragment", "props": { "valToChange": "text" } }],
   "ButtonGroup": [],

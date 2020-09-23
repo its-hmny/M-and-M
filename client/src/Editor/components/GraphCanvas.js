@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import Graph from 'vis-network-react';
 
 import { Options, getGraphFromStory } from '../../data/GraphPreferences';

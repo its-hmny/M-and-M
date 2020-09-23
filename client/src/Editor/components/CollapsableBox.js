@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, List, ListItem, Typography, Collapse, Divider, makeStyles } from '@material-ui/core';
+import { Box, List, ListItem, Typography, Collapse, makeStyles } from '@material-ui/core';
 import DynamicLoadFragments from './EditorFragments';
 
 const useStyles = makeStyles({

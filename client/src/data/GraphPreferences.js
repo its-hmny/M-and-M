@@ -41,7 +41,6 @@ export const Options = {
       nodeSpacing: 200,
       edgeMinimization: false,
       parentCentralization: false,
-      //shakeTowards: "roots"
     },
   },
 
@@ -56,7 +55,6 @@ export const Options = {
     zoomView: true,
   },
 
-  // Must write functions to handle events
   manipulation: { enabled: false, initiallyActive: false },
 
   physics: { enabled: false },
@@ -67,7 +65,6 @@ export const getGraphFromStory = story => {
 
   story.nodes.forEach(node => {
     graph.nodes = [...graph.nodes, node];
-    console.log(node);
     setEdgesFromChildren(node.components, node.id, graph);
   });
 
