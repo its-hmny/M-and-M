@@ -2,13 +2,8 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Inspector from './components/Inspector';
 import Preview from '../common/Preview';
-import { StylesProvider } from './context/style';
+import { StylesProvider } from './style';
 import shortid from 'shortid';
-
-const defaultStyles = {
-  'Elements/Text': 'DefaultText',
-  'Elements/Button': 'DefaultButton',
-};
 
 function App() {
   const [components, setComponents] = useState([
@@ -65,6 +60,10 @@ function App() {
     setComponents(components => components.filter(component => component.id !== removedId));
   };
 
+  const handleReorderComponents = components => {
+    setComponents(components);
+  };
+
   const onSave = () => {
     // console.log(view);
   };
@@ -78,6 +77,7 @@ function App() {
             onAddComponent={handleAddComponent}
             onRemoveComponent={handleRemoveComponent}
             onUpdateComponent={handleUpdateComponent}
+            onReorderComponents={handleReorderComponents}
             onSave={onSave}
           />
         </Grid>

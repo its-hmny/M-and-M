@@ -23,7 +23,7 @@ export const fakeStories = {
             text: 'Inizia!',
             styleId: 'SpaceButton',
             story: {
-              nextNode: 2,
+              nextNode: 1,
             },
           },
         ],
@@ -62,9 +62,11 @@ export const fakeStories = {
                 value: ANSWER_VALUE.WRONG,
               },
             ],
-            routes: {
-              [ANSWER_VALUE.CORRECT]: 2,
-              [ANSWER_VALUE.WRONG]: 3,
+            story: {
+              nextNode: {
+                [ANSWER_VALUE.CORRECT]: 2,
+                [ANSWER_VALUE.WRONG]: 3,
+              },
             },
             withSubmit: true,
             styleId: '',
@@ -93,12 +95,14 @@ export const fakeStories = {
           },
           {
             id: shortid.generate(),
-            name: 'Layout/Footer',
+            name: 'Footer',
             children: [
               {
+                id: shortid.generate(),
                 name: 'ButtonGroup',
                 children: [
                   {
+                    id: shortid.generate(),
                     name: 'Button',
                     text: 'Ritenta',
                     story: {
@@ -106,6 +110,7 @@ export const fakeStories = {
                     },
                   },
                   {
+                    id: shortid.generate(),
                     name: 'Button',
                     text: 'Abbandona',
                     story: {

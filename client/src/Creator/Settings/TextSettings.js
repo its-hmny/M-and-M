@@ -5,7 +5,7 @@ import FontSize from './atoms/FontSize';
 // import ImageProp from './atoms/ImageProp';
 import TextFormat from './atoms/TextFormat';
 import TextAlignment from './atoms/TextAlignment';
-import { StylesContext, actions } from '../context/style';
+import { StylesContext, actions } from '../style';
 
 function TextSettings({ styleId }) {
   // const { style, updateStyle } = useStyle('Elements/Text', styleName);

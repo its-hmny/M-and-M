@@ -19,10 +19,22 @@ import { ANSWER_VALUE } from '../../Player/constants';
  *  - Button
  */
 
-function Choices({ name, answers, /*routes, */ withSubmit, style, onSubmit }) {
-  //const { currentNode, moveTo } = useStory();
+const base = css`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > div {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+`;
+
+const noop = () => {};
+
+function Choices({ name, answers, withSubmit, style, onSubmit = noop }) {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
-  /*const [route, setRoute] = useState(null);*/
 
   const correctAnswers = useMemo(
     () =>
@@ -38,14 +50,13 @@ function Choices({ name, answers, /*routes, */ withSubmit, style, onSubmit }) {
     [answers]
   );
 
-  const isCorrect = useMemo(
-    () =>
-      correctAnswers.length === selectedAnswers.length &&
-      selectedAnswers.sort().every((answerId, index) => answerId === correctAnswers[index]),
-    [correctAnswers, selectedAnswers]
-  );
+  const isCorrect = useMemo(() => {
+    const correctLength = correctAnswers.length === selectedAnswers.length;
+    const allCorrect = selectedAnswers.sort().every((answerId, index) => answerId === correctAnswers[index]);
+    return correctLength && allCorrect ? ANSWER_VALUE.CORRECT : ANSWER_VALUE.WRONG;
+  }, [correctAnswers, selectedAnswers]);
 
-  const onSelected = event => {
+  const handleSelected = event => {
     // if it's radio button, selected answer is only one.
     // Otherwise, update selectedAnswers accordingly
     const { type, id } = event.target;
@@ -60,33 +71,14 @@ function Choices({ name, answers, /*routes, */ withSubmit, style, onSubmit }) {
   };
 
   useEffect(() => {
-    //TODO: spostare fuori dal componente e nella funzione di handling
-    // const newRoute = isCorrect
-    //   ? routes[ANSWER_VALUE.CORRECT]
-    //   : routes[ANSWER_VALUE.WRONG];
-
-    // if (!withSubmit && correctAnswers.length === selectedAnswers.length)
-    //   moveTo(newRoute);
-
-    // setRoute(newRoute);
-    if (!withSubmit && correctAnswers.length === selectedAnswers.length) onSubmit(isCorrect);
+    if (!withSubmit && correctAnswers.length === selectedAnswers.length) {
+      onSubmit(isCorrect);
+    }
   }, [withSubmit, onSubmit, isCorrect, correctAnswers, selectedAnswers]);
 
   return (
-    <div
-      css={css`
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      `}
-    >
-      <div
-        css={css`
-          margin-bottom: 1rem;
-          width: 100%;
-        `}
-      >
+    <div css={[base, style]}>
+      <div>
         {answers.map(({ id, text }) => (
           <Component
             key={id}
@@ -94,14 +86,14 @@ function Choices({ name, answers, /*routes, */ withSubmit, style, onSubmit }) {
             name={name}
             label={text}
             selected={!!selectedAnswers.find(answerId => answerId === id)}
-            onSelected={onSelected}
-            style={style[Component.displayName]}
+            onSelected={handleSelected}
+            style={style && style[Component.displayName]}
           />
         ))}
       </div>
 
       {withSubmit && selectedAnswers.length > 0 && (
-        <Button onClick={() => onSubmit && onSubmit(isCorrect)} style={style.Button} text="Conferma" />
+        <Button onClick={() => onSubmit(isCorrect)} style={style && style['Button']} text="Conferma" />
       )}
     </div>
   );

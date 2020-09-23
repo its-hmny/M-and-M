@@ -1,3 +1,5 @@
+import shortid from 'shortid';
+
 const ExampleStory = {
   title: "Pablo's story",
   nodes: [
@@ -6,10 +8,12 @@ const ExampleStory = {
       label: 'Introduzione',
       components: [
         {
+          id: shortid.generate(),
           name: 'Text',
           text: 'Benvenuto nella nostra prova',
         },
         {
+          id: shortid.generate(),
           name: 'Button',
           text: 'Inizia!',
           story: {
@@ -23,10 +27,12 @@ const ExampleStory = {
       label: 'Domanda a scelta multipla',
       components: [
         {
+          id: shortid.generate(),
           name: 'Text',
           text: 'Di che colore è il cavallo bianco di Napoleone?',
         },
         {
+          id: shortid.generate(),
           name: 'Button',
           text: 'Bianco',
           story: {
@@ -34,6 +40,7 @@ const ExampleStory = {
           },
         },
         {
+          id: shortid.generate(),
           name: 'Button',
           text: 'Nero',
           story: {
@@ -47,6 +54,7 @@ const ExampleStory = {
       label: 'Corretto',
       components: [
         {
+          id: shortid.generate(),
           name: 'Text',
           text: 'Bravo!',
         },
@@ -57,6 +65,7 @@ const ExampleStory = {
       label: 'Sbagliato',
       components: [
         {
+          id: shortid.generate(),
           name: 'Text',
           text: 'Sbagliato!',
         },
@@ -64,9 +73,11 @@ const ExampleStory = {
           name: 'Footer',
           children: [
             {
+              id: shortid.generate(),
               name: 'ButtonGroup',
               children: [
                 {
+                  id: shortid.generate(),
                   name: 'Button',
                   text: 'Ritenta',
                   story: {
@@ -74,6 +85,7 @@ const ExampleStory = {
                   },
                 },
                 {
+                  id: shortid.generate(),
                   name: 'Button',
                   text: 'Abbandona',
                   story: {
@@ -91,6 +103,7 @@ const ExampleStory = {
       label: 'Sconfitta',
       components: [
         {
+          id: shortid.generate(),
           name: 'Text',
           text: 'Peccato!',
         },
@@ -102,14 +115,17 @@ const ExampleStory = {
       color: '#fef3f4',
       components: [
         {
+          id: shortid.generate(),
           name: 'Text',
           text: 'Indovina che animale è quello in figura!',
         },
         {
+          id: shortid.generate(),
           name: 'AudioPlayer',
           srcURL: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
         },
         {
+          id: shortid.generate(),
           name: 'Image',
           fallback: 'Stringa che andrà nell alt',
           description: "Breve descrizione o titolo dell'immagine",

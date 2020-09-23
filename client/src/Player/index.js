@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import * as Elements from '../common/Elements';
 import View from '../common/View';
 
-import { fakeStories } from './constants';
+import { ANSWER_VALUE, fakeStories } from './constants';
 
 const fakeFetch = async storyId => {
   return new Promise(resolve => {
@@ -18,17 +18,37 @@ const useQuery = () => Object.fromEntries(new URLSearchParams(useLocation().sear
 
 // `Story` param is an object that stores properties needed for computing
 // storyProps for this specific component
-const createStoryProps = (componentName, props, story) => {
-  switch (componentName) {
+const createStoryProps = (component, storyContext) => {
+  const { name, story: storyProps, ...props } = component;
+
+  switch (name) {
     case 'Button':
       // Button has 1 story related prop: onClick
       return {
-        onClick: () => story.moveTo(props.nextNode),
+        onClick: () => storyContext.moveTo(storyProps.nextNode),
+      };
+    case 'Choices':
+      return {
+        onSubmit: answer => {
+          const nextNode = storyProps.nextNode[answer];
+          storyContext.moveTo(nextNode);
+        },
       };
     default:
-      throw new Error(`Cannot compute story props for ${componentName} because this component does not exist.`);
+      throw new Error(`Cannot compute story props for ${name} because this component does not exist.`);
   }
 };
+
+const buildViewContent = (components, storyContext) =>
+  components.map(component => {
+    const { story, children, ...rest } = component;
+    const storyProps = story ? createStoryProps(component, storyContext) : {};
+    // compound components must keep their "atoms" in children prop, or we can't
+    // know what to load (i.e. what is a prop and what is a renderable component)
+    const props = { ...storyProps, ...rest, children: children && buildViewContent(children, storyContext) };
+    const Element = Elements[component.name];
+    return <Element key={component.id} {...props} />;
+  });
 
 function Player() {
   const { storyId } = useQuery();
@@ -38,6 +58,7 @@ function Player() {
 
   const storyContext = useMemo(
     () => ({
+      currentNodeId,
       moveTo: node => setCurrentNodeId(node),
     }),
     []
@@ -66,15 +87,7 @@ function Player() {
     // Stupid JS! I miss you Option<T>...sigh
     if (currentNodeId != null) {
       const { components } = story.nodes.find(node => node.id === currentNodeId);
-
-      const content = components.map(component => {
-        const { id, name, story, ...rest } = component;
-        const storyProps = story ? createStoryProps(name, story, storyContext) : {};
-        const props = { ...storyProps, ...rest };
-        const Element = Elements[name];
-        return <Element key={id} {...props} />;
-      });
-
+      const content = buildViewContent(components, storyContext);
       setViewContent(content);
     }
   }, [currentNodeId, story, storyContext]);

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import ColorPickerInput from './atoms/ColorPicker';
-import { StylesContext, actions } from '../context/style';
+import { StylesContext, actions } from '../style';
 
 function ButtonSettings({ styleId }) {
   const [{ styles }, dispatch] = useContext(StylesContext);
