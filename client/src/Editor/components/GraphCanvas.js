@@ -1,13 +1,14 @@
 import React, { useContext, useCallback } from 'react';
 import Graph from 'vis-network-react';
-import { Options, Converter } from '../../data/GraphPreferences';
-import EditorContext from '../context/EditorContext';
+
+import { Options, getGraphFromStory } from '../../data/GraphPreferences';
+import { useEditor } from '../context/EditorContext';
 import { ActivitiesMenuButton } from './ActivitiesMenu';
 
 import './styles.css';
 
 const GraphCanvas = () => {
-  const { story, saveStory, setWorkingActivity } = useContext(EditorContext);
+  const { story, saveStory, setWorkingActivity } = useEditor();
 
   /* Memoization of events to avoid processing multiple calls because of rerenders */
   const selectNode = useCallback(
@@ -42,7 +43,7 @@ const GraphCanvas = () => {
 
       <div onDrop={event => onDropAddNode(event)} onDragOver={event => event.preventDefault()}>
         <Graph
-          data={Converter.getGraphFromStory(story)}
+          data={getGraphFromStory(story)}
           options={Options}
           events={{ selectNode, deselectNode, dragEnd }}
           getNetwork={network => console.log(network)}

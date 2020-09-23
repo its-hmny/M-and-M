@@ -114,7 +114,7 @@ const ActivitiesMenu = props => {
         </Grid>
 
         <Grid item xs={8}>
-          <DescriptiveCard toPreview={QuestionTemplate[currentTab].components} setParent={setMenuOpen} />
+          <DescriptiveCard toPreview={QuestionTemplate[currentTab]} setParent={setMenuOpen} />
         </Grid>
       </Grid>
     </Drawer>

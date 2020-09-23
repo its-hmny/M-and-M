@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Typography } from '@material-ui/core';
-import EditorContext from '../../context/EditorContext';
+import { useEditor } from '../../context/EditorContext';
 
 const ColorPickerFragment = props => {
   const { classNames, path, fragmentSpecificProps } = props;
-  const { valToChange } = fragmentSpecificProps
-  const { getFromPath, setPathToValue } = useContext(EditorContext);
+  const { valToChange } = fragmentSpecificProps;
+  const { getFromPath, setPathToValue } = useEditor();
   // If undefined then it defaults to orange
   const colorValue = getFromPath(path || [])[valToChange] || '#eb8231';
 

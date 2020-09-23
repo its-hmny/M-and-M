@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
-import EditorContext from '../../context/EditorContext';
+import { useEditor } from '../../context/EditorContext';
 
 // TODO find a way to implement server upload and make the image a static resource
 const FilePickerFragment = props => {
   const { classNames, path, fragmentSpecificProps } = props;
-  const { valToChange, acceptedFileType, buttonLabel} = fragmentSpecificProps;
-  const { getFromPath, setPathToValue } = useContext(EditorContext);
+  const { valToChange, acceptedFileType, buttonLabel } = fragmentSpecificProps;
+  const { getFromPath, setPathToValue } = useEditor();
 
   return (
     <div className={classNames.InspectorElement}>
@@ -20,7 +20,7 @@ const FilePickerFragment = props => {
         />
 
         <Button color="primary" variant="contained" component="span">
-          { buttonLabel }
+          {buttonLabel}
         </Button>
       </label>
     </div>

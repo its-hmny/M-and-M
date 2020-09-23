@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
-import EditorContext from '../../context/EditorContext';
+import { useEditor } from '../../context/EditorContext';
 
-const SelectFragment = props => {
-  const { classNames, path, fragmentSpecificProps } = props;
-  const { valToChange } = fragmentSpecificProps
-  const { story, getFromPath, setPathToValue } = useContext(EditorContext);
+const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
+  const { valToChange } = fragmentSpecificProps;
+  const { story, getFromPath, setPathToValue } = useEditor();
 
   const destinationOption = story.nodes.map(node => (
     <MenuItem key={node.id} value={node.id}>
@@ -22,9 +21,7 @@ const SelectFragment = props => {
           onChange={event => setPathToValue(path, valToChange, event.target.value)}
         >
           {destinationOption}
-          <MenuItem key={story.nodes.lenght} value={undefined}>
-            Blank
-          </MenuItem>
+          <MenuItem key={story.nodes.length} value=""></MenuItem>
         </Select>
       </FormControl>
     </div>

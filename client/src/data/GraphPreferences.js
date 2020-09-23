@@ -62,22 +62,21 @@ export const Options = {
   physics: { enabled: false },
 };
 
-export const Converter = {
-  getGraphFromStory: function (story) {
-    const graph = { nodes: [], edges: [] };
+export const getGraphFromStory = story => {
+  const graph = { nodes: [], edges: [] };
 
-    story.nodes.forEach(node => {
-      graph.nodes = [...graph.nodes, node];
-      this.setEdgesFromChildrens(node.view.children, node.id, graph);
-    });
+  story.nodes.forEach(node => {
+    graph.nodes = [...graph.nodes, node];
+    console.log(node);
+    setEdgesFromChildren(node.components, node.id, graph);
+  });
 
-    return graph;
-  },
+  return graph;
+};
 
-  setEdgesFromChildrens: function (root, root_id, graph) {
-    root.forEach(child => {
-      if (child.to !== undefined) graph.edges = [...graph.edges, { from: root_id, to: child.to }];
-      else if (child.children instanceof Array) this.setEdgesFromChildrens(child.children, root_id, graph);
-    });
-  },
+const setEdgesFromChildren = (root, rootId, graph) => {
+  root.forEach(child => {
+    if (child.story && child.story.nextNode) graph.edges = [...graph.edges, { from: rootId, to: child.story.nextNode }];
+    else if (child.children instanceof Array) setEdgesFromChildren(child.children, rootId, graph);
+  });
 };

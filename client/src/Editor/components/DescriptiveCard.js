@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Typography, Button } from '@material-ui/core';
-import EditorContext from '../context/EditorContext';
-import Preview from '../../common/Preview';
+
 import RenderSandbox from './RenderSandbox';
 import ReadOnly from './ReadOnly';
-import { makeStyles } from '@material-ui/core/styles';
+import { useEditor } from '../context/EditorContext';
 
 const useStyles = makeStyles(theme => ({
   CardStyle: {
@@ -18,9 +18,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const DescriptiveCard = props => {
-  const { toPreview, setParent } = props;
-  const { story, saveStory } = useContext(EditorContext);
+const DescriptiveCard = ({ toPreview, setParent }) => {
+  const { story, saveStory } = useEditor();
   const { CardStyle, AddButtonStyle } = useStyles();
 
   const addToStory = () => {
@@ -36,8 +35,7 @@ const DescriptiveCard = props => {
           <Typography variant="h6">{toPreview.label}</Typography>
           <Typography variant="subtitle1">{toPreview.description}</Typography>
 
-          <Preview components={toPreview} />
-          {/* <ReadOnly
+          <ReadOnly
             draggable={true}
             style={{ border: '2px solid white' }}
             onDragStart={event => {
@@ -46,8 +44,8 @@ const DescriptiveCard = props => {
               event.dataTransfer.setDragImage(new Image(), 0, 0);
             }}
           >
-            <RenderSandbox component={toPreview} />
-          </ReadOnly> */}
+            <RenderSandbox components={toPreview.components} />
+          </ReadOnly>
         </CardContent>
       </Card>
 

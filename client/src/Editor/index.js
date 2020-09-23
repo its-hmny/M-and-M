@@ -1,68 +1,12 @@
 import React from 'react';
-import { Grid, Typography, Card, CardContent, makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { ActivitiesMenuButton, SettingsColumn, ReadOnly, RenderSandbox, GraphCanvas } from './components/';
-import { EditorContextProvider } from './context/EditorContext';
-import { orange, pink } from '@material-ui/core/colors';
 
-import ExampleStory from './constants/ExampleStory';
+import Providers from './Providers';
+import App from './App';
 
-const useStyles = makeStyles({
-  InspectorContainerStyle: {
-    zIndex: 2,
-    position: 'absolute',
-    marginLeft: '75vw',
-    marginTop: 3,
-  },
+const Editor = () => (
+  <Providers>
+    <App />
+  </Providers>
+);
 
-  SimulatorContainerStyle: {
-    zIndex: 2,
-    position: 'absolute',
-    marginLeft: 15,
-    marginTop: 100,
-  },
-});
-
-const customTheme = createMuiTheme({
-  palette: {
-    type: 'dark',
-    primary: pink,
-    secondary: orange,
-  },
-});
-
-const App = () => {
-  const { InspectorContainerStyle, SimulatorContainerStyle } = useStyles();
-
-  return (
-    <>
-      <ThemeProvider theme={customTheme}>
-        <EditorContextProvider userStory={ExampleStory}>
-          <ActivitiesMenuButton />
-
-          <Grid item xs={6} className={InspectorContainerStyle}>
-            <SettingsColumn />
-          </Grid>
-
-          <Grid item xs={3} className={SimulatorContainerStyle}>
-            <Card>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  This is still a work in progress...
-                </Typography>
-                <ReadOnly>
-                  <RenderSandbox />
-                </ReadOnly>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <div id="graphcanvas-container">
-            <GraphCanvas />
-          </div>
-        </EditorContextProvider>
-      </ThemeProvider>
-    </>
-  );
-};
-
-export default App;
+export default Editor;

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Paper, Typography, makeStyles } from '@material-ui/core';
-import EditorContext from '../context/EditorContext';
-import CollapsableBox from './CollapsableBox';
 
+import { useEditor } from '../context/EditorContext';
+import CollapsableBox from './CollapsableBox';
 import properties from '../constants/ComponentProperties.json';
 
 const useStyles = makeStyles({
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 const SettingsColumn = () => {
-  const { story, workingActivity } = useContext(EditorContext);
+  const { story, workingActivity } = useEditor();
   const { InspectorPaperStyle, DefaultTitleStyle } = useStyles();
   const [openBox, setOpenBox] = useState({});
 
@@ -44,13 +44,13 @@ const SettingsColumn = () => {
     setOpenBox(tmp);
   };
 
-  const getComponentName = node => {
-    const tokens = node.component.split('/');
-    return tokens[tokens.length - 1];
-  };
+  // const getComponentName = node => {
+  //   const tokens = node.component.split('/');
+  //   return tokens[tokens.length - 1];
+  // };
 
   //Function returning a list of CollapsableBox
-  const populateInspector = (iterator, level, previousPath) => {
+  const populateInspector = (components, level, previousPath) => {
     /*    
       uuid: unique identifier to close and open the collapsablebox
       key: react key
@@ -63,7 +63,7 @@ const SettingsColumn = () => {
       pathToVal: component path in the story
     */
 
-    const absPath = previousPath || ['view', 'children'];
+    const absPath = previousPath || ['components'];
     // This must be generated only once at the first recursive call (when previousPath is undefined)
     const global = previousPath ? undefined : (
       <CollapsableBox
@@ -78,22 +78,22 @@ const SettingsColumn = () => {
 
     return [
       global,
-      iterator.map((element, index) => {
-        const boxName = getComponentName(element);
+      components.map((component, index) => {
+        const { name } = component;
 
         return [
           <CollapsableBox
-            uuid={`${boxName}-${index}-${workingActivity}`}
-            key={`${boxName}-${index}-${workingActivity}`}
-            name={boxName}
+            uuid={`${name}-${index}-${workingActivity}`}
+            key={`${name}-${index}-${workingActivity}`}
+            name={name}
             isOpen={openBox}
             handler={setCollapsed}
             indentLevel={level}
-            fieldsToSet={properties[element.component]}
+            fieldsToSet={properties[name]}
             pathToVal={[...absPath, index]}
           />,
-          Array.isArray(element.children)
-            ? populateInspector(element.children, level + 1, [...absPath, index, 'children'])
+          Array.isArray(component.children)
+            ? populateInspector(component.children, level + 1, [...absPath, index, 'children'])
             : undefined,
         ];
       }),
@@ -105,8 +105,7 @@ const SettingsColumn = () => {
       <Typography variant="h4" component="h4" className={DefaultTitleStyle}>
         {story.title}
       </Typography>
-      {!workingActivity ||
-        populateInspector(story.nodes.filter(node => node.id === workingActivity)[0].view.children, 0)}
+      {!workingActivity || populateInspector(story.nodes.find(node => node.id === workingActivity).components, 0)}
     </Paper>
   );
 };

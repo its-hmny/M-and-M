@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import { TextField } from '@material-ui/core';
-import EditorContext from '../../context/EditorContext';
+import { useEditor } from '../../context/EditorContext';
 
-const TextFieldFragment = props => {
-  const { classNames, path, fragmentSpecificProps } = props;
-  const { valToChange } = fragmentSpecificProps
-  const { getFromPath, setPathToValue } = useContext(EditorContext);
+const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
+  const { valToChange } = fragmentSpecificProps;
+  const { getFromPath, setPathToValue } = useEditor();
 
   return (
     <TextField
