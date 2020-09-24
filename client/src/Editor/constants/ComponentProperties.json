@@ -1,7 +1,8 @@
 {
   "Global": [
     { "fragment": "TextFieldFragment", "props": { "valToChange": "label" } },
-    { "fragment": "ColorPickerFragment", "props": { "valToChange": "color" } }
+    { "fragment": "ColorPickerFragment", "props": { "valToChange": "color" } },
+    { "fragment": "ButtonFragment", "props": {  } }
   ],
   "Button": [
     { "fragment": "TextFieldFragment", "props": { "valToChange": "text" } },

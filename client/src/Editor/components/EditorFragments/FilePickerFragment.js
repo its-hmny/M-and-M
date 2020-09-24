@@ -6,7 +6,10 @@ import { useEditor } from '../../context/EditorContext';
 const FilePickerFragment = props => {
   const { classNames, path, fragmentSpecificProps } = props;
   const { valToChange, acceptedFileType, buttonLabel } = fragmentSpecificProps;
-  const { getFromPath, setPathToValue } = useEditor();
+  const { setPathToValue } = useEditor();
+
+  // Clearly this has to be changed
+  const loadToServer = toUpload => `file://C:/Users/eneag/Pictures/Wallpapers/${toUpload.name}`;
 
   return (
     <div className={classNames.InspectorElement}>
@@ -16,11 +19,11 @@ const FilePickerFragment = props => {
           id="upload-res"
           type="file"
           accept={acceptedFileType}
-          onChange={event => console.log(event.target.files[0])}
+          onChange={event => setPathToValue(path, valToChange, loadToServer(event.target.files[0]))}
         />
 
         <Button color="primary" variant="contained" component="span">
-          {buttonLabel}
+          { buttonLabel }
         </Button>
       </label>
     </div>

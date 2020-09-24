@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import View from '../../common/View';
 import * as Elements from '../../common/Elements';
 
 import StyleDB from '../../data/styles.json';
-import { common } from '@material-ui/core/colors';
 
 // const cachedComponents = [];
 // const cachedValues = [];
