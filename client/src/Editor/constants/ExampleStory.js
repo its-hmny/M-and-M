@@ -35,6 +35,7 @@ const ExampleStory = {
           id: shortid.generate(),
           name: 'Button',
           text: 'Bianco',
+          styleId: 'SpaceButton',
           story: {
             nextNode: 2,
           },
@@ -43,6 +44,7 @@ const ExampleStory = {
           id: shortid.generate(),
           name: 'Button',
           text: 'Nero',
+          styleId: 'SpaceButton',
           story: {
             nextNode: 3,
           },
@@ -80,6 +82,8 @@ const ExampleStory = {
                   id: shortid.generate(),
                   name: 'Button',
                   text: 'Ritenta',
+
+                  styleId: 'SpaceButton',
                   story: {
                     nextNode: 1,
                   },
@@ -88,6 +92,8 @@ const ExampleStory = {
                   id: shortid.generate(),
                   name: 'Button',
                   text: 'Abbandona',
+
+                  styleId: 'SpaceButton',
                   story: {
                     nextNode: 4,
                   },

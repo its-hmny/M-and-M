@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import View from '../../common/View';
 import * as Elements from '../../common/Elements';
+
+import StyleDB from '../../data/styles.json';
+import { common } from '@material-ui/core/colors';
 
 // const cachedComponents = [];
 // const cachedValues = [];
@@ -71,17 +74,35 @@ import * as Elements from '../../common/Elements';
 // };
 
 const RenderSanbox = ({ components }) => {
+  const expandStyle = list => {
+    list.forEach(component => {
+      const { styleId, children } = component;
+      // Deletes the key and replaces it with the expanded style object
+      if (styleId) {
+        delete component.styleId;
+        component.style = StyleDB[styleId];
+      }
+      // Recursively on children as well
+      if (Array.isArray(children))
+        expandStyle(children);
+    });
+  };
+
   const loadFromList = list => {
+    expandStyle(list);
+
     return list.map(component => {
       const { id, name, children, ...props } = component;
       const Element = Elements[name];
+      
       if (Array.isArray(children))
         return (
           <Element key={id} {...props}>
             {loadFromList(children)}
           </Element>
         );
-      else return <Element key={id} {...props} />;
+      else 
+        return <Element key={id} {...props} />;
     });
   };
 
