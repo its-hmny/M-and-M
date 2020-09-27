@@ -3,7 +3,7 @@ import Graph from 'vis-network-react';
 
 import { Options, getGraphFromStory } from '../../data/GraphPreferences';
 import { useEditor } from '../context/EditorContext';
-import { ActivitiesMenuButton } from './ActivitiesMenu';
+import ActivitiesMenuButton from './ActivitiesMenu';
 
 import './styles.css';
 

@@ -3,14 +3,14 @@ import { TextField } from '@material-ui/core';
 import { useEditor } from '../../context/EditorContext';
 
 const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
-  const { valToChange } = fragmentSpecificProps;
+  const { valToChange, label  } = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
 
   return (
     <TextField
       className={classNames.InspectorElement}
       fullWidth={true}
-      label={valToChange.toUpperCase()}
+      label={label.toUpperCase()}
       multiline={true}
       value={getFromPath(path || [])[valToChange]}
       onChange={event => setPathToValue(path || [], valToChange, event.target.value)}

@@ -1,22 +1,22 @@
 {
   "Global": [
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "label" } },
+    { "fragment": "TextFieldFragment", "props": { "valToChange": "label", "label": "Node name"} },
     { "fragment": "ColorPickerFragment", "props": { "valToChange": "color" } },
     { "fragment": "ButtonFragment", "props": {  } }
   ],
   "Button": [
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "text" } },
+    { "fragment": "TextFieldFragment", "props": { "valToChange": "text", "label": "Button text" } },
     { "fragment": "SelectFragment", "props": { "specificPath": ["story"], "valToChange": "nextNode" } }
   ],
-  "Text": [{ "fragment": "TextFieldFragment", "props": { "valToChange": "text" } }],
+  "Text": [{ "fragment": "TextFieldFragment", "props": { "valToChange": "text", "label": "Content" } }],
   "Input": [
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "placeholder" } },
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "correctAnswer" } }
+    { "fragment": "TextFieldFragment", "props": { "valToChange": "placeholder", "label": "Description" } },
+    { "fragment": "TextFieldFragment", "props": { "valToChange": "correctAnswer", "label": "Correct answer" } }
   ],
   "ButtonGroup": [],
   "Image": [
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "description" } },
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "fallback" } },
+    { "fragment": "TextFieldFragment", "props": { "valToChange": "description", "label": "Image description" } },
+    { "fragment": "TextFieldFragment", "props": { "valToChange": "fallback", "label": "Fallback" } },
     {
       "fragment": "FilePickerFragment",
       "props": {

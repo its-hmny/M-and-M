@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Drawer, Tabs, Tab, Grid, Typography, IconButton, Paper, Collapse } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddIcon from '@material-ui/icons/Add';
 import DescriptiveCard from './DescriptiveCard.js';
 
 // TODO: Will become an API call to fetch the data stored server-side
@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 /* Button to open drawer */
-export const ActivitiesMenuButton = () => {
+const ActivitiesMenuButton = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const classes = useStyles();
 
@@ -67,7 +67,7 @@ export const ActivitiesMenuButton = () => {
         className={isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose}
         onClick={() => setMenuOpen(!isMenuOpen)}
       >
-        <AddCircleIcon />
+        <AddIcon />
       </IconButton>
 
       <Collapse in={isMenuOpen}>
@@ -121,4 +121,4 @@ const ActivitiesMenu = props => {
   );
 };
 
-export default ActivitiesMenu;
+export default ActivitiesMenuButton;

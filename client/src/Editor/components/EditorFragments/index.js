@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   },
 
   InspectorElement: {
-    margin: 10,
+    marginTop: 5,
     marginLeft: 15,
     boxSizing: 'content-box',
   },
