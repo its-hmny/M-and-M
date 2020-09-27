@@ -138,6 +138,13 @@ const ExampleStory = {
           imgURL:
             'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Cima_da_Conegliano%2C_God_the_Father.jpg/300px-Cima_da_Conegliano%2C_God_the_Father.jpg',
         },
+        {
+          id: shortid.generate(),
+          name: 'Input',
+          inputType: 'text',
+          correctAnswer: "xxx",
+          placeholder: "Scrivi la tua risposta qui",
+        },
       ],
     },
   ],

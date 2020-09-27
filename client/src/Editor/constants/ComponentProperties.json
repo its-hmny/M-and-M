@@ -9,6 +9,10 @@
     { "fragment": "SelectFragment", "props": { "specificPath": ["story"], "valToChange": "nextNode" } }
   ],
   "Text": [{ "fragment": "TextFieldFragment", "props": { "valToChange": "text" } }],
+  "Input": [
+    { "fragment": "TextFieldFragment", "props": { "valToChange": "placeholder" } },
+    { "fragment": "TextFieldFragment", "props": { "valToChange": "correctAnswer" } }
+  ],
   "ButtonGroup": [],
   "Image": [
     { "fragment": "TextFieldFragment", "props": { "valToChange": "description" } },

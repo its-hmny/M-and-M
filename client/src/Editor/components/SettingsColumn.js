@@ -26,7 +26,7 @@ const SettingsColumn = () => {
 
   const setCollapsed = uuid => {
     let tmp = { ...openBox }; // A temporary object to store all the changes made
-    const maxOpenBoxes = 3;
+    const maxOpenBoxes = 2;
 
     // Set the user selected box to be open
     if (openBox[uuid] === undefined) tmp[uuid] = true;
