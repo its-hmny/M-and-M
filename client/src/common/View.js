@@ -22,8 +22,8 @@ Non so perchè ci fosse, ATTENZIONE se inserito rompe il css di tutto
         `}
       />*/
 
-function View({ children }) {
-  return <div>{children}</div>;
+function View({ children, style }) {
+  return <div style={style}>{children}</div>;
 }
 
 export default View;

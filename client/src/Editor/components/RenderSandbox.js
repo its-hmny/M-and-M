@@ -72,7 +72,7 @@ import StyleDB from '../../data/styles.json';
 //   );
 // };
 
-const RenderSanbox = ({ components }) => {
+const RenderSanbox = ({ components, style }) => {
   const expandStyle = list => {
     list.forEach(component => {
       const { styleId, children } = component;
@@ -105,7 +105,7 @@ const RenderSanbox = ({ components }) => {
     });
   };
 
-  return <View>{loadFromList(components)}</View>;
+  return <View style={style}>{loadFromList(components)}</View>;
 };
 
 export default RenderSanbox;

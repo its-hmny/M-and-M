@@ -6,3 +6,4 @@ export { default as Footer } from './Footer';
 export { default as Image } from './Image';
 export { default as Input } from './Input';
 export { default as Text } from './Text';
+export { default as TextArea } from './TextArea';

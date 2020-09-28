@@ -145,6 +145,11 @@ const ExampleStory = {
           correctAnswer: "xxx",
           placeholder: "Scrivi la tua risposta qui",
         },
+        {
+          id: shortid.generate(),
+          name: 'TextArea',
+          placeholder: "Scrivi la tua risposta più ampia qui",
+        },
       ],
     },
   ],

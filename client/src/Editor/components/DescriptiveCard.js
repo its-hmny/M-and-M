@@ -2,8 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Typography, Button } from '@material-ui/core';
 
-import RenderSandbox from './RenderSandbox';
-import ReadOnly from './ReadOnly';
+import { ReadOnly, SmartphoneEmulator } from './';
 import { useEditor } from '../context/EditorContext';
 
 const useStyles = makeStyles(theme => ({
@@ -37,14 +36,13 @@ const DescriptiveCard = ({ toPreview, setParent }) => {
 
           <ReadOnly
             draggable={true}
-            style={{ border: '2px solid white' }}
             onDragStart={event => {
               event.dataTransfer.clearData('text');
               event.dataTransfer.setData('text', JSON.stringify({ id: undefined, ...toPreview }));
               event.dataTransfer.setDragImage(new Image(), 0, 0);
             }}
           >
-            <RenderSandbox components={toPreview.components} />
+            <SmartphoneEmulator storyNode={toPreview} />
           </ReadOnly>
         </CardContent>
       </Card>

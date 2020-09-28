@@ -3,13 +3,12 @@ import { css, jsx } from '@emotion/core';
 
 const base = css`
   padding: 0.5rem 0;
-  color: black;
 `;
 
-const Text = ({ text, style }) => (
+const TextArea = ({ placeholder, rows, style }) => (
   <div>
-    <p css={[base, style]}>{text}</p>
+    <textarea placeholder={placeholder} />
   </div>
 );
 
-export default Text;
+export default TextArea;

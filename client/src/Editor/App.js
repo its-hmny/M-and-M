@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography, Card, CardContent, makeStyles } from '@material-ui/core';
 
-import { ActivitiesMenuButton, SettingsColumn, RenderSandbox, GraphCanvas } from './components';
+import { ActivitiesMenuButton, SettingsColumn, SmartphoneEmulator, GraphCanvas } from './components';
 import { useEditor } from './context/EditorContext';
 
 const useStyles = makeStyles({
@@ -40,7 +40,7 @@ const App = () => {
             <Typography gutterBottom variant="h5" component="h2">
               This is still a work in progress...
             </Typography>
-            {currentNode && <RenderSandbox components={currentNode.components} />}
+            {currentNode && <SmartphoneEmulator storyNode={currentNode} />}
           </CardContent>
         </Card>
       </Grid>
