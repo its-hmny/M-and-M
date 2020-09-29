@@ -37,10 +37,13 @@ const App = () => {
       <Grid item xs={3} className={SimulatorContainerStyle}>
         <Card>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              This is still a work in progress...
-            </Typography>
-            {currentNode && <SmartphoneEmulator storyNode={currentNode} />}
+            {
+              currentNode ?  
+                (<SmartphoneEmulator storyNode={currentNode} />) :
+                (<Typography variant="h5" component="h2">
+                  Select a node to see its preview
+                </Typography>)
+            }
           </CardContent>
         </Card>
       </Grid>

@@ -13,7 +13,6 @@ const useStyles = makeStyles(theme => ({
   AddButtonStyle: {
     float: 'right',
     marginTop: 15,
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
   },
 }));
 
@@ -47,7 +46,7 @@ const DescriptiveCard = ({ toPreview, setParent }) => {
         </CardContent>
       </Card>
 
-      <Button className={AddButtonStyle} onClick={addToStory}>
+      <Button className={AddButtonStyle} color="primary" variant="contained" onClick={addToStory}>
         Add new question
       </Button>
     </>
