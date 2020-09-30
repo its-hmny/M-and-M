@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Typography, makeStyles } from '@material-ui/core';
+import { Paper, Typography, Slide, makeStyles } from '@material-ui/core';
 
 import { useEditor } from '../context/EditorContext';
 import CollapsableBox from './CollapsableBox';
@@ -9,19 +9,24 @@ const useStyles = makeStyles({
   InspectorPaperStyle: {
     padding: 15,
     zIndex: 2,
-    marginTop: 15,
+    maxHeight: '100vh',
   },
 
   DefaultTitleStyle: {
     paddingLeft: 15,
     paddingRight: 15,
-    width: 270,
+  },
+
+  content: {
+    height: '100%',
+    overflowY: 'auto',
+    overflowX: 'none',
   },
 });
 
 const SettingsColumn = () => {
   const { story, workingActivity } = useEditor();
-  const { InspectorPaperStyle, DefaultTitleStyle } = useStyles();
+  const { InspectorPaperStyle, DefaultTitleStyle, content } = useStyles();
   const [openBox, setOpenBox] = useState({});
 
   const setCollapsed = uuid => {
@@ -101,12 +106,16 @@ const SettingsColumn = () => {
   };
 
   return (
-    <Paper className={InspectorPaperStyle} elevation={3}>
-      <Typography variant="h4" component="h4" className={DefaultTitleStyle}>
-        {story.title}
-      </Typography>
-      {!workingActivity || populateInspector(story.nodes.find(node => node.id === workingActivity).components, 0)}
-    </Paper>
+    <Slide in={workingActivity != null} direction="left">
+      <Paper className={InspectorPaperStyle} elevation={3}>
+        <Typography variant="h4" component="h4" className={DefaultTitleStyle}>
+          {story.title}
+        </Typography>
+        <div className={content}>
+          {workingActivity && populateInspector(story.nodes.find(node => node.id === workingActivity).components, 0)}
+        </div>
+      </Paper>
+    </Slide>
   );
 };
 

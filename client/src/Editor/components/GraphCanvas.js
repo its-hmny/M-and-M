@@ -1,13 +1,13 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import Graph from 'vis-network-react';
 
 import { Options, getGraphFromStory } from '../../data/GraphPreferences';
 import { useEditor } from '../context/EditorContext';
-import ActivitiesMenuButton from './ActivitiesMenu';
 
 import './styles.css';
 
 const GraphCanvas = () => {
+  const networkRef = useRef();
   const { story, saveStory, setWorkingActivity } = useEditor();
 
   /* Memoization of events to avoid processing multiple calls because of rerenders */
@@ -20,7 +20,14 @@ const GraphCanvas = () => {
     },
     [setWorkingActivity, story.nodes]
   );
-  const deselectNode = useCallback(() => setWorkingActivity(undefined), [setWorkingActivity]);
+
+  const doubleClick = useCallback(() => networkRef.current.addEdgeMode(), [networkRef]);
+
+  const deselectNode = useCallback(() => {
+    networkRef.current.disableEditMode();
+    setWorkingActivity(undefined);
+  }, [setWorkingActivity]);
+
   const dragEnd = useCallback(event => setWorkingActivity(event.nodes[0]), [setWorkingActivity]);
 
   const onDropAddNode = useCallback(
@@ -38,17 +45,13 @@ const GraphCanvas = () => {
   );
 
   return (
-    <div>
-      <ActivitiesMenuButton />
-
-      <div onDrop={event => onDropAddNode(event)} onDragOver={event => event.preventDefault()}>
-        <Graph
-          data={getGraphFromStory(story)}
-          options={Options}
-          events={{ selectNode, deselectNode, dragEnd }}
-          getNetwork={network => console.log(network)}
-        />
-      </div>
+    <div onDrop={event => onDropAddNode(event)} onDragOver={event => event.preventDefault()}>
+      <Graph
+        data={getGraphFromStory(story)}
+        options={Options}
+        events={{ doubleClick, selectNode, deselectNode, dragEnd }}
+        getNetwork={network => (networkRef.current = network)}
+      />
     </div>
   );
 };

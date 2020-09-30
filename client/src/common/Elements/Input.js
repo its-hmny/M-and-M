@@ -7,19 +7,21 @@ const base = css`
 `;
 
 const Input = ({ inputType, placeholder, correctAnswer, text, style }) => {
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState('');
 
   const validate = () => {
-    if (answer.toLowerCase() === correctAnswer.toLowerCase())
-      alert("Answer correct")
-    else 
-      alert("Answer wrong")
-  }
-  
+    if (answer.toLowerCase() === correctAnswer.toLowerCase()) alert('Answer correct');
+    else alert('Answer wrong');
+  };
+
   return (
     <div>
-      <input type={inputType} placeholder={placeholder} value={answer} 
-        onChange={event => setAnswer(event.target.value)} css={[css, base]}
+      <input
+        type={inputType}
+        placeholder={placeholder}
+        value={answer}
+        onChange={event => setAnswer(event.target.value)}
+        css={[base, style]}
       />
       <button onClick={validate}>Invia risposta</button>
     </div>

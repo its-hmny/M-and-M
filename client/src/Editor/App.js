@@ -1,27 +1,26 @@
 import React from 'react';
-import { Grid, Typography, Card, CardContent, makeStyles } from '@material-ui/core';
+import { Grid, Typography, Card, CardContent, Slide, makeStyles, Paper } from '@material-ui/core';
 
 import { ActivitiesMenuButton, SettingsColumn, SmartphoneEmulator, GraphCanvas } from './components';
 import { useEditor } from './context/EditorContext';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   InspectorContainerStyle: {
     zIndex: 2,
     position: 'absolute',
-    marginLeft: '75vw',
-    marginTop: 3,
+    top: 0,
+    right: 0,
   },
-
   SimulatorContainerStyle: {
     zIndex: 2,
     position: 'absolute',
-    marginLeft: 15,
-    marginTop: 100,
+    top: 100,
+    left: 15,
   },
-});
+}));
 
 const App = () => {
-  const { InspectorContainerStyle, SimulatorContainerStyle } = useStyles();
+  const { InspectorContainerStyle, SimulatorContainerStyle, paper } = useStyles();
   const { story, workingActivity } = useEditor();
   const currentNode = story.nodes.find(node => node.id === workingActivity);
   console.log(`currentNode: ${workingActivity}`);
@@ -35,17 +34,9 @@ const App = () => {
       </Grid>
 
       <Grid item xs={3} className={SimulatorContainerStyle}>
-        <Card>
-          <CardContent>
-            {
-              currentNode ?  
-                (<SmartphoneEmulator storyNode={currentNode} />) :
-                (<Typography variant="h5" component="h2">
-                  Select a node to see its preview
-                </Typography>)
-            }
-          </CardContent>
-        </Card>
+        <Slide in={currentNode != null} direction="right">
+          <div>{currentNode && <SmartphoneEmulator storyNode={currentNode} />}</div>
+        </Slide>
       </Grid>
 
       <div id="graphcanvas-container">

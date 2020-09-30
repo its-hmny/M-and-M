@@ -5,13 +5,8 @@ import './styles.css';
 
 const SmartphoneEmulator = ({ storyNode, children }) => {
   return (
-    <div class="smartphone">
-      <div class="content">
-        <RenderSanbox 
-            style={{ width: '100%', border: 'none', height: '100%' }} 
-            components={storyNode.components} 
-        />
-      </div>
+    <div className="smartphone">
+      <RenderSanbox components={storyNode.components} />
     </div>
   );
 };

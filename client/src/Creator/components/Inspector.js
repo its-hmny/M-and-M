@@ -76,7 +76,7 @@ function Inspector({ components, onAddComponent, onRemoveComponent, onUpdateComp
 
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="settings-list">
-            {(provided, _snapshot) => (
+            {provided => (
               <List ref={provided.innerRef} {...provided.droppableProps}>
                 {settings}
                 {provided.placeholder}

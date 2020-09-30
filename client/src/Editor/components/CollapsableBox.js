@@ -27,7 +27,7 @@ const CollapsableBox = props => {
           onClick={() => handler(uuid)}
           divider
         >
-          <Typography style={{ marginLeft }} variant="h5" component="h5">
+          <Typography style={{ marginLeft }} variant="h6" component="h6">
             {name}
           </Typography>
         </ListItem>

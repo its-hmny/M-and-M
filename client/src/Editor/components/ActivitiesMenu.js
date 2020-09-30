@@ -59,10 +59,7 @@ const ActivitiesMenuButton = () => {
   const classes = useStyles();
 
   return (
-    <Paper
-      className={isMenuOpen ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden}
-      elevation={isMenuOpen ? 5 : 0}
-    >
+    <div className={isMenuOpen ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden}>
       <IconButton
         className={isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose}
         onClick={() => setMenuOpen(!isMenuOpen)}
@@ -73,7 +70,7 @@ const ActivitiesMenuButton = () => {
       <Collapse in={isMenuOpen}>
         <ActivitiesMenu binding={{ isMenuOpen, setMenuOpen }} />
       </Collapse>
-    </Paper>
+    </div>
   );
 };
 

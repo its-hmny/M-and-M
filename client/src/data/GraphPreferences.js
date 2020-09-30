@@ -55,7 +55,16 @@ export const Options = {
     zoomView: true,
   },
 
-  manipulation: { enabled: false, initiallyActive: false },
+  manipulation: {
+    enabled: false,
+    initiallyActive: false,
+    addEdge: (edgeData, callback) => {
+      if (edgeData.from !== edgeData.to) {
+        var r = window.confirm('Do you want to connect the node to itself?');
+        if (r === true) callback(edgeData);
+      }
+    },
+  },
 
   physics: { enabled: false },
 };
