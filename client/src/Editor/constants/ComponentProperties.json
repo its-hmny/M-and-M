@@ -32,7 +32,7 @@
       "props": {
         "valToChange": "srcURL",
         "acceptedFileType": "audio/mp4",
-        "buttonLabel": "Upload MP4"
+        "buttonLabel": "Upload audio"
       }
     }
   ],

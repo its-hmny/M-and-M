@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const shortid = require('shortid');
 
 const router = express.Router();
 const basePath = './static/resources/';
@@ -34,7 +35,7 @@ router.put('/', (req, res) => {
     res.send({ status: false, message: 'A file to upload is not provided' });
   } else {
     // ToDo set a name and change it to input element client side
-    const uploadFile = req.files.upload_file;
+    const uploadFile = req.files.file;
     const resId = shortid.generate(); 
     uploadFile.mv(`${basePath}${resId}`);
 
@@ -43,8 +44,6 @@ router.put('/', (req, res) => {
   }
 
 });
-
-router.patch('/', (req, res) => {});
 
 router.delete('/:uuid', (req, res) => {
   const resId = req.params.uuid;
