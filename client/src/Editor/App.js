@@ -23,7 +23,6 @@ const App = () => {
   const { InspectorContainerStyle, SimulatorContainerStyle, paper } = useStyles();
   const { story, workingActivity } = useEditor();
   const currentNode = story.nodes.find(node => node.id === workingActivity);
-  console.log(`currentNode: ${workingActivity}`);
 
   return (
     <>
