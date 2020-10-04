@@ -1,6 +1,6 @@
 const express = require('express');
-const fs = require('fs');
 const shortid = require('shortid');
+const fs = require('fs');
 
 const router = express.Router();
 const basePath = './dynamic/resources/';
