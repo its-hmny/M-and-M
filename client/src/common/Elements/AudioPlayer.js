@@ -47,7 +47,7 @@ const AudioPlayer = ({ srcURL, style }) => {
   }
 
   const updateProgress = (time) => {
-    //7986CBù
+
     setWidth(time / audioref.audioEl.current.duration * 100);
 
   }
