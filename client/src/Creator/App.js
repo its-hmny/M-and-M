@@ -23,6 +23,7 @@ function App() {
       text: 'Some Button inside ButtonGroup',
       styleId: 'DefaultButton',
     },
+    /*
     {
       id: shortid.generate(),
       name: 'ButtonGroup',
@@ -41,24 +42,7 @@ function App() {
         },
       ],
     },
-    // {
-    //   id: shortid.generate(),
-    //   name: 'ButtonGroup',
-    //   children: [
-    //     {
-    //       id: shortid.generate(),
-    //       name: 'Button',
-    //       text: 'Some Button inside ButtonGroup',
-    //       styleId: 'DefaultButton',
-    //     },
-    //     {
-    //       id: shortid.generate(),
-    //       name: 'Button',
-    //       text: 'Some Button inside ButtonGroup',
-    //       styleId: 'DefaultButton',
-    //     },
-    //   ],
-    // },
+    */
   ]);
 
   const handleAddComponent = componentName => {
