@@ -4,6 +4,9 @@ import { useLocation } from 'react-router-dom';
 import * as Elements from '../common/Elements';
 import View from '../common/View';
 
+// Temporary
+import ChatExpander from './components/Chat';
+
 import { ANSWER_VALUE, fakeStories } from './constants';
 
 const fakeFetch = async storyId => {
@@ -50,7 +53,7 @@ const buildViewContent = (components, storyContext) =>
     return <Element key={component.id} {...props} />;
   });
 
-function Player() {
+const Player = () => {
   const { storyId } = useQuery();
   const [story, setStory] = useState(null);
   const [currentNodeId, setCurrentNodeId] = useState(null);
@@ -100,7 +103,12 @@ function Player() {
     return <p>An error occured while loading story. Try refresh page.</p>;
   }
 
-  return <View>{viewContent}</View>;
-}
+  return (
+    <>
+      <View>{viewContent}</View>
+      <ChatExpander />
+    </>
+  );
+};
 
 export default Player;

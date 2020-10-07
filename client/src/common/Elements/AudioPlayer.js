@@ -5,28 +5,30 @@ import ReactAudioPlayer from 'react-audio-player';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 const base = css`
-  .player{
+  .player {
     margin: 5px;
     box-shadow: 1px 2px #BDBDBD;
     
     background-color: #E0E0E0;
 
   }
-  .progress{
+  
+  .progress {
     
     height: 2px;
     left: 0;
     top: 0;
     background-color: #BDBDBD;
   }
-  .play-pause{
+  
+  .play-pause {
     border: none;
     background-color: none;
   }
-  .icon-play{
+
+  .icon-play {
 
   }
-  
 `;
 
 const AudioPlayer = ({ srcURL, style }) => {

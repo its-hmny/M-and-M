@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography, Card, CardContent, Slide, makeStyles, Paper } from '@material-ui/core';
+import { Grid, Slide, makeStyles } from '@material-ui/core';
 
 import { ActivitiesMenuButton, SettingsColumn, SmartphoneEmulator, GraphCanvas } from './components';
 import { useEditor } from './context/EditorContext';
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const App = () => {
-  const { InspectorContainerStyle, SimulatorContainerStyle, paper } = useStyles();
+  const { InspectorContainerStyle, SimulatorContainerStyle } = useStyles();
   const { story, workingActivity } = useEditor();
   const currentNode = story.nodes.find(node => node.id === workingActivity);
 

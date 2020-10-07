@@ -31,7 +31,7 @@
       "fragment": "FilePickerFragment",
       "props": {
         "valToChange": "srcURL",
-        "acceptedFileType": "audio/mp4",
+        "acceptedFileType": "audio/mp3",
         "buttonLabel": "Upload audio"
       }
     }
