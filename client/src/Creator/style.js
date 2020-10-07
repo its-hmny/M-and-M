@@ -7,6 +7,7 @@ const initialState = {
   styleIds: {
     Text: ['DefaultText', 'SpaceText'],
     Button: ['DefaultButton', 'SpaceButton', 'UnderwaterButton'],
+    ButtonGroup: ['DefaultButtonGroup', 'SpaceButtonGroup'],
   },
   styles: {
     DefaultText: {
@@ -31,6 +32,12 @@ const initialState = {
       fontFamily: 'Arial',
       backgroundColor: 'aqua',
       color: 'white',
+    },
+    DefaultButtonGroup: {
+      backgroundColor: 'yellow',
+    },
+    SpaceButtonGroup: {
+      backgroundColor: 'white',
     },
   },
 };

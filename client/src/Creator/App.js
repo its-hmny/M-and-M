@@ -23,6 +23,24 @@ function App() {
       text: 'Some Button inside ButtonGroup',
       styleId: 'DefaultButton',
     },
+    {
+      id: shortid.generate(),
+      name: 'ButtonGroup',
+      children: [
+        {
+          id: shortid.generate(),
+          name: 'Button',
+          text: 'Ritenta',
+          styleId: 'DefaultButton',
+        },
+        {
+          id: shortid.generate(),
+          name: 'Button',
+          text: 'Abbandona',
+          styleId: 'DefaultButton',
+        },
+      ],
+    },
     // {
     //   id: shortid.generate(),
     //   name: 'ButtonGroup',
