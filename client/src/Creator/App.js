@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import Grid from '@material-ui/core/Grid';
+import {
+  Grid,
+  Typography,
+}
+  from '@material-ui/core';
 import Inspector from './components/Inspector';
 import Preview from '../common/Preview';
 import { StylesProvider } from './style';
@@ -71,6 +75,11 @@ function App() {
   return (
     <StylesProvider>
       <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="h5" color="primary">
+            Creator
+          </Typography>
+        </Grid>
         <Grid item xs={6}>
           <Inspector
             components={components}

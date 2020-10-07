@@ -26,6 +26,13 @@ const useStyles = makeStyles({
     display: 'inline-block',
     marginRight: '30px',
   },
+  draggableItem: {
+    border: '1px solid black',
+    borderRadius: '20px',
+  },
+  isDragging: {
+    backgroundColor: '#474741',
+  }
 });
 
 const SettingsItem = forwardRef(
@@ -39,6 +46,7 @@ const SettingsItem = forwardRef(
       style,
       onEditing,
       isDragDisabled,
+      isDragging,
     },
     ref
   ) => {
@@ -88,7 +96,7 @@ const SettingsItem = forwardRef(
 
     return (
       <>
-        <ListItem ref={ref} ContainerProps={{ ...draggableProps, style }}>
+        <ListItem className={[classes.draggableItem, isDragging ? classes.isDragging : null]} ref={ref} ContainerProps={{ ...draggableProps, style }}>
           <ListItemText
             primary={
               <>
@@ -128,10 +136,10 @@ const SettingsItem = forwardRef(
                 </IconButton>
               </>
             ) : (
-              <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
-                <EditIcon />
-              </IconButton>
-            )}
+                <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
+                  <EditIcon />
+                </IconButton>
+              )}
           </ListItemSecondaryAction>
         </ListItem>
         <Collapse in={isEditing} timeout="auto" unmountOnExit>

@@ -25,7 +25,7 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-function getStyle(style, snapshot) {
+function getStyle(style, isDragging) {
   if (style.transform) {
     const axisLockY = 'translate(0px' + style.transform.slice(style.transform.indexOf(','), style.transform.length);
     return {
@@ -52,7 +52,8 @@ function Inspector({ components, onAddComponent, onRemoveComponent, onUpdateComp
           onRemoveComponent={onRemoveComponent}
           onEditing={isEditing => setIsDragDisabled(isEditing)}
           isDragDisabled={isDragDisabled}
-          style={getStyle(provided.draggableProps.style, snapshot)}
+          style={getStyle(provided.draggableProps.style, snapshot.isDragging)}
+          isDragging={snapshot.isDragging}
         />
       )}
     </Draggable>
@@ -70,7 +71,7 @@ function Inspector({ components, onAddComponent, onRemoveComponent, onUpdateComp
   return (
     <Container>
       <div className={classes.root}>
-        <Typography variant="h6" color="primary">
+        <Typography variant="h6" color="secondary">
           Inspector
         </Typography>
 
