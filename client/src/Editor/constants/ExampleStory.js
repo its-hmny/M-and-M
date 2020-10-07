@@ -30,12 +30,13 @@ const ExampleStory = {
           id: shortid.generate(),
           name: 'Text',
           text: 'Di che colore è il cavallo bianco di Napoleone?',
+          styleId: 'SpaceText'
         },
         {
           id: shortid.generate(),
           name: 'Button',
           text: 'Bianco',
-          styleId: 'SpaceButton',
+
           story: {
             nextNode: 2,
           },

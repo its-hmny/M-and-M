@@ -76,8 +76,11 @@ const RenderSanbox = ({ components, style }) => {
   const expandStyle = list => {
     list.forEach(component => {
       const { styleId, children } = component;
+
       // Deletes the key and replaces it with the expanded style object
       if (styleId) {
+        console.log(styleId);
+        console.log(StyleDB[styleId]);
         delete component.styleId;
         component.style = StyleDB[styleId];
       }
@@ -93,14 +96,14 @@ const RenderSanbox = ({ components, style }) => {
     return list.map(component => {
       const { id, name, children, ...props } = component;
       const Element = Elements[name];
-      
+
       if (Array.isArray(children))
         return (
           <Element key={id} {...props}>
             {loadFromList(children)}
           </Element>
         );
-      else 
+      else
         return <Element key={id} {...props} />;
     });
   };

@@ -2,10 +2,12 @@
   "SpaceButton": {
     "fontFamily": "Arial",
     "backgroundColor": "limegreen",
-    "color": "white"
+    "color": "white",
+    "margin": "5px"
   },
   "SpaceChoices": {
     "Radio": {
+      "margin": "5px",
       "color": "green",
       "backgroundColor": "yellow",
       "border": "4px dotted pink",
@@ -15,10 +17,16 @@
       }
     },
     "Checkbox": {
+      "margin": "5px",
       "backgroundColor": "black",
       "border": "1px solid black",
       "color": "white"
     },
     "Button": "SpaceButton"
+  },
+  "SpaceText": {
+    "margin": "5px",
+    "color": "green",
+    "fontSize": "14px"
   }
 }

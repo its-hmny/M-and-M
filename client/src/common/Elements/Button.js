@@ -4,9 +4,14 @@ import { css, jsx } from '@emotion/core';
 const base = css`
   padding: 0.5rem 1rem;
   border: none;
-  border-radius: 0.25rem;
+  
   font-size: 1rem;
   cursor: pointer;
+  margin: 5px;
+  background-color: #555555;
+  
+  color: white;
+  
 `;
 
 const Button = ({ text, onClick, style }) => (

@@ -23,6 +23,7 @@ const base = css`
 
   input:checked + label {
     background-color: #3b92f6;
+    margin: 5px;
   }
 
   label {
@@ -32,7 +33,10 @@ const base = css`
     background-color: #9dc8fa;
     text-align: center;
     cursor: pointer;
+    margin: 5px;
   }
+  
+
 `;
 
 function Choice({ type, id, name, label, selected, onSelected, style }) {
