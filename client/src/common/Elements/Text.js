@@ -4,12 +4,16 @@ import { css, jsx } from '@emotion/core';
 const base = css`
   padding: 0.5rem 0;
   color: black;
+  margin: 5px;
 `;
 
-const Text = ({ text, style }) => (
-  <div>
-    <p css={[base, style]}>{text}</p>
-  </div>
-);
+const Text = ({ text, style }) => {
+  console.log(style);
+  return (
+    <div>
+      <p css={[base, style]}>{text}</p>
+    </div>
+  );
+}
 
 export default Text;

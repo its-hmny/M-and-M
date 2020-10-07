@@ -9,6 +9,7 @@ const ButtonGroup = ({ children }) => (
         display: flex;
         justify-content: space-evenly;
       }
+      margin: 5px;
     `}
   >
     {children}

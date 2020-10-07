@@ -24,14 +24,14 @@ const base = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  margin: 5px;
   > div {
     margin-bottom: 1rem;
     width: 100%;
   }
 `;
 
-const noop = () => {};
+const noop = () => { };
 
 function Choices({ name, answers, withSubmit, style, onSubmit = noop }) {
   const [selectedAnswers, setSelectedAnswers] = useState([]);

@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 
   colorButton: {
     margin: 10,
-    marginLeft: 15,
+    marginLeft: 30,
     width: 60,
     height: 30,
     border: 'none',
