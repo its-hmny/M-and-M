@@ -3,9 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import * as Elements from '../common/Elements';
 import View from '../common/View';
-
-// Temporary
-import ChatExpander from './components/Chat';
+import Chat from './components/Chat';
 
 import { ANSWER_VALUE, fakeStories } from './constants';
 
@@ -106,7 +104,7 @@ const Player = () => {
   return (
     <>
       <View>{viewContent}</View>
-      <ChatExpander />
+      <Chat />
     </>
   );
 };
