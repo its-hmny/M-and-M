@@ -5,23 +5,20 @@ import FontSize from './atoms/FontSize';
 // import ImageProp from './atoms/ImageProp';
 import TextFormat from './atoms/TextFormat';
 import TextAlignment from './atoms/TextAlignment';
-import useStylesStore, { actions } from '../styles';
+import useStylesStore from '../stores/styles';
 
 function TextSettings({ styleId }) {
-  // const { style, updateStyle } = useStyle('Elements/Text', styleName);
-  const [state, dispatch] = useStylesStore();
-  const onChange = subStyle => {
-    dispatch({ type: actions.UPDATE_STYLE, payload: { styleId, ...subStyle } });
-  };
+  const { styles, updateStyle } = useStylesStore(state => ({ styles: state.styles, updateStyle: state.updateStyle }));
+  const onChange = subStyle => updateStyle({ styleId, ...subStyle });
 
   return (
     <div>
-      <FontFamily onChange={onChange} value={state.styles[styleId]} />
-      <FontSize onChange={onChange} value={state.styles[styleId]} />
-      <ColorPicker onChange={onChange} value={state.styles[styleId]} />
-      {/*<ImageProp onChange={onChange} value={state.styles[styleId]} />*/}
-      <TextFormat onChange={onChange} value={state.styles[styleId]} />
-      <TextAlignment onChange={onChange} value={state.styles[styleId]} />
+      <FontFamily onChange={onChange} value={styles[styleId]} />
+      <FontSize onChange={onChange} value={styles[styleId]} />
+      <ColorPicker onChange={onChange} value={styles[styleId]} />
+      {/*<ImageProp onChange={onChange} value={styles[styleId]} />*/}
+      <TextFormat onChange={onChange} value={styles[styleId]} />
+      <TextAlignment onChange={onChange} value={styles[styleId]} />
     </div>
   );
 }

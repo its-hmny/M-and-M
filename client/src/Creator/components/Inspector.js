@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
@@ -7,6 +7,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import AddComponentButton from './AddComponentButton';
 import SettingsItem from './SettingsItem';
+import useTemplateStore from '../stores/template';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -36,9 +37,14 @@ function getStyle(style, isDragging) {
   return style;
 }
 
-function Inspector({ components, onAddComponent, onRemoveComponent, onUpdateComponent, onReorderComponents, onSave }) {
+function Inspector() {
   const classes = useStyles();
   const [isDragDisabled, setIsDragDisabled] = useState(false);
+  const { components, addComponent, reorderComponents } = useTemplateStore(state => ({
+    components: state.components,
+    addComponent: state.addComponent,
+    reorderComponents: state.reorderComponents,
+  }));
 
   const settings = components.map((component, index) => (
     <Draggable key={component.id} draggableId={component.id} index={index}>
@@ -48,8 +54,6 @@ function Inspector({ components, onAddComponent, onRemoveComponent, onUpdateComp
           draggableProps={provided.draggableProps}
           dragHandleProps={provided.dragHandleProps}
           component={component}
-          onUpdateComponent={onUpdateComponent}
-          onRemoveComponent={onRemoveComponent}
           onEditing={isEditing => setIsDragDisabled(isEditing)}
           isDragDisabled={isDragDisabled}
           style={getStyle(provided.draggableProps.style, snapshot.isDragging)}
@@ -65,7 +69,8 @@ function Inspector({ components, onAddComponent, onRemoveComponent, onUpdateComp
       return;
     }
 
-    onReorderComponents(reorder(components, result.source.index, result.destination.index));
+    const newOrder = reorder(components, result.source.index, result.destination.index);
+    reorderComponents(newOrder);
   };
 
   return (
@@ -86,7 +91,7 @@ function Inspector({ components, onAddComponent, onRemoveComponent, onUpdateComp
           </Droppable>
         </DragDropContext>
 
-        <AddComponentButton onClick={onAddComponent} />
+        <AddComponentButton onClick={addComponent} />
       </div>
     </Container>
   );

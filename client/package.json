@@ -19,6 +19,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.20.0",
+    "immer": "^7.0.9",
     "material-ui-color-picker": "^3.5.0",
     "react": "^16.13.1",
     "react-audio-player": "^0.14.0",
@@ -29,7 +30,8 @@
     "react-scripts": "^3.4.1",
     "shortid": "^2.2.15",
     "vis": "^4.21.0-EOL",
-    "vis-network-react": "^1.3.3"
+    "vis-network-react": "^1.3.3",
+    "zustand": "^3.1.3"
   },
   "scripts": {
     "wdyr": "ENABLE_WDYR=true yarn start",

@@ -18,7 +18,8 @@ import {
 
 import shortid from 'shortid';
 import * as Settings from '../Settings';
-import useStylesStore, { actions } from '../styles';
+import useStylesStore from '../stores/styles';
+import useTemplateStore from '../stores/template';
 import StyleIdDialog from './StyleIdDialog';
 
 const useStyles = makeStyles({
@@ -36,40 +37,36 @@ const useStyles = makeStyles({
 });
 
 const SettingsItem = forwardRef(
-  (
-    {
-      component,
-      onUpdateComponent,
-      onRemoveComponent,
-      draggableProps,
-      dragHandleProps,
-      style,
-      onEditing,
-      isDragDisabled,
-      isDragging,
-    },
-    ref
-  ) => {
+  ({ component, draggableProps, dragHandleProps, style, onEditing, isDragDisabled, isDragging }, ref) => {
     const classes = useStyles();
 
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    const [{ styleIds }, dispatch] = useStylesStore();
+    const { changeStyleId, removeComponent } = useTemplateStore(state => ({
+      changeStyleId: state.changeStyleId,
+      removeComponent: state.removeComponent,
+    }));
+    const { styleIds, addStyle, removeStyle, renameStyle } = useStylesStore(state => ({
+      styleIds: state.styleIds,
+      addStyle: state.addStyle,
+      removeStyle: state.removeStyle,
+      renameStyle: state.renameStyle,
+    }));
 
     const { id: componentId, name: componentName, styleId, ...rest } = component;
 
     const handleStyleIdChanged = event => {
-      onUpdateComponent(componentId, { styleId: event.target.value });
+      changeStyleId({ componentId, newStyleId: event.target.value });
     };
 
-    const handleDelete = () => onRemoveComponent(componentId);
+    const handleDelete = () => removeComponent(componentId);
 
     const handleEdit = () => {
       onEditing(true);
       setIsEditing(true);
       const newStyleId = `${componentName}-${shortid.generate()}`;
-      onUpdateComponent(componentId, { styleId: newStyleId });
-      dispatch({ type: actions.ADD_STYLE, payload: { componentName, styleId: newStyleId, baseStyleId: styleId } });
+      changeStyleId({ componentId, newStyleId });
+      addStyle({ componentName, styleId: newStyleId, baseStyleId: styleId });
     };
 
     const handleSave = () => {
@@ -81,14 +78,14 @@ const SettingsItem = forwardRef(
     const handleDiscard = () => {
       setIsEditing(false);
       onEditing(false);
-      onUpdateComponent(componentId, { styleId: `Default${componentName}` });
-      dispatch({ type: actions.REMOVE_STYLE, payload: { componentName, styleId } });
+      changeStyleId({ componentId, newStyleId: `Default${componentName}` });
+      removeStyle({ componentName, styleId });
     };
 
-    const handleComplete = newId => {
+    const handleComplete = newStyleId => {
       setIsSaving(false);
-      onUpdateComponent(componentId, { styleId: newId });
-      dispatch({ type: actions.RENAME_STYLE, payload: { componentName, oldId: styleId, newId } });
+      changeStyleId({ componentId, newStyleId });
+      renameStyle({ componentName, oldId: styleId, newId: newStyleId });
     };
 
     // find correct component
@@ -97,7 +94,10 @@ const SettingsItem = forwardRef(
     return (
       <>
         <ListItem
-          className={[classes.draggableItem, isDragging ? classes.isDragging : null]}
+          className={classes.draggableItem}
+          classes={{
+            root: isDragging ? classes.isDragging : null,
+          }}
           ref={ref}
           ContainerProps={{ ...draggableProps, style }}
         >
