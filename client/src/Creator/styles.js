@@ -1,7 +1,5 @@
-import React, { useCallback, useState, useContext, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import shortid from 'shortid';
-
-export const StylesContext = React.createContext();
 
 const initialState = {
   styleIds: {
@@ -122,7 +120,6 @@ const stylesReducer = (state, action) => {
   }
 };
 
-export const StylesProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(stylesReducer, initialState);
-  return <StylesContext.Provider value={[state, dispatch]}>{children}</StylesContext.Provider>;
-};
+const useStylesStore = () => useReducer(stylesReducer, initialState);
+
+export default useStylesStore;

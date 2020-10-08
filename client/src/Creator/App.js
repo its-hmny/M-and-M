@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import {
-  Grid,
-  Typography,
-}
-  from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import Inspector from './components/Inspector';
 import Preview from '../common/Preview';
-import { StylesProvider } from './style';
+import useStylesStore from './styles';
 import shortid from 'shortid';
 
 function App() {
+  const [styles] = useStylesStore();
   const [components, setComponents] = useState([
     {
       id: shortid.generate(),
@@ -75,28 +72,26 @@ function App() {
   };
 
   return (
-    <StylesProvider>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant="h5" color="primary">
-            Creator
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Inspector
-            components={components}
-            onAddComponent={handleAddComponent}
-            onRemoveComponent={handleRemoveComponent}
-            onUpdateComponent={handleUpdateComponent}
-            onReorderComponents={handleReorderComponents}
-            onSave={onSave}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <Preview components={components} />
-        </Grid>
+    <Grid container>
+      <Grid item xs={12}>
+        <Typography variant="h5" color="primary">
+          Creator
+        </Typography>
       </Grid>
-    </StylesProvider>
+      <Grid item xs={6}>
+        <Inspector
+          components={components}
+          onAddComponent={handleAddComponent}
+          onRemoveComponent={handleRemoveComponent}
+          onUpdateComponent={handleUpdateComponent}
+          onReorderComponents={handleReorderComponents}
+          onSave={onSave}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <Preview components={components} styles={styles} />
+      </Grid>
+    </Grid>
   );
 }
 

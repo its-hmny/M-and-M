@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import ColorPickerInput from './atoms/ColorPicker';
-import { StylesContext, actions } from '../style';
+import useStylesStore, { actions } from '../styles';
 
 function ButtonSettings({ styleId }) {
-  const [{ styles }, dispatch] = useContext(StylesContext);
+  const [{ styles }, dispatch] = useStylesStore();
   const onChange = subStyle => {
     dispatch({ type: actions.UPDATE_STYLE, payload: { styleId, ...subStyle } });
   };

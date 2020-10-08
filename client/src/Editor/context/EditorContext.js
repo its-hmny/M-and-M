@@ -23,7 +23,7 @@ export const EditorProvider = ({ children, userStory }) => {
       /* 
         path is the path to the current fragment in the story, 
         field is the name of the key inside the object that has to be modified,
-        value is the value that has to ovverride the previous one
+        value is the value that has to overwrite the previous one
         Ex. components -> 0 (first component) -> children -> 1 (second component)
       */
       let current = inProgressStory.nodes.find(node => node.id === focusedNode);

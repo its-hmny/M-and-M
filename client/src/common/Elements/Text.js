@@ -8,12 +8,11 @@ const base = css`
 `;
 
 const Text = ({ text, style }) => {
-  console.log(style);
   return (
     <div>
       <p css={[base, style]}>{text}</p>
     </div>
   );
-}
+};
 
 export default Text;

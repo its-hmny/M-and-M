@@ -5,11 +5,11 @@ import FontSize from './atoms/FontSize';
 // import ImageProp from './atoms/ImageProp';
 import TextFormat from './atoms/TextFormat';
 import TextAlignment from './atoms/TextAlignment';
-import { StylesContext, actions } from '../style';
+import useStylesStore, { actions } from '../styles';
 
 function TextSettings({ styleId }) {
   // const { style, updateStyle } = useStyle('Elements/Text', styleName);
-  const [state, dispatch] = useContext(StylesContext);
+  const [state, dispatch] = useStylesStore();
   const onChange = subStyle => {
     dispatch({ type: actions.UPDATE_STYLE, payload: { styleId, ...subStyle } });
   };

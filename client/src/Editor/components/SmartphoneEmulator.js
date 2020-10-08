@@ -6,7 +6,7 @@ import './styles.css';
 const SmartphoneEmulator = ({ storyNode, children }) => {
   return (
     <div className="smartphone">
-      <RenderSanbox components={storyNode.components} />
+      <RenderSanbox components={[...storyNode.components]} />
     </div>
   );
 };

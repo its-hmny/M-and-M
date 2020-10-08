@@ -26,7 +26,7 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
       }}
       label={label.toUpperCase()}
       multiline={true}
-      rows={2}
+      rowsMax={3}
       value={value}
       onChange={event => setPathToValue(path || [], valToChange, event.target.value)}
     />

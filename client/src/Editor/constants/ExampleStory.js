@@ -30,7 +30,7 @@ const ExampleStory = {
           id: shortid.generate(),
           name: 'Text',
           text: 'Di che colore è il cavallo bianco di Napoleone?',
-          styleId: 'SpaceText'
+          styleId: 'SpaceText',
         },
         {
           id: shortid.generate(),
@@ -73,6 +73,7 @@ const ExampleStory = {
           text: 'Sbagliato!',
         },
         {
+          id: shortid.generate(),
           name: 'Footer',
           children: [
             {
@@ -143,13 +144,13 @@ const ExampleStory = {
           id: shortid.generate(),
           name: 'Input',
           inputType: 'text',
-          correctAnswer: "xxx",
-          placeholder: "Scrivi la tua risposta qui",
+          correctAnswer: 'xxx',
+          placeholder: 'Scrivi la tua risposta qui',
         },
         {
           id: shortid.generate(),
           name: 'TextArea',
-          placeholder: "Scrivi la tua risposta più ampia qui",
+          placeholder: 'Scrivi la tua risposta più ampia qui',
         },
       ],
     },

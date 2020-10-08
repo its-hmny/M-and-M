@@ -18,7 +18,7 @@ import {
 
 import shortid from 'shortid';
 import * as Settings from '../Settings';
-import { StylesContext, actions } from '../style';
+import useStylesStore, { actions } from '../styles';
 import StyleIdDialog from './StyleIdDialog';
 
 const useStyles = makeStyles({
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
   isDragging: {
     backgroundColor: '#474741',
-  }
+  },
 });
 
 const SettingsItem = forwardRef(
@@ -54,7 +54,7 @@ const SettingsItem = forwardRef(
 
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    const [{ styleIds }, dispatch] = useContext(StylesContext);
+    const [{ styleIds }, dispatch] = useStylesStore();
 
     const { id: componentId, name: componentName, styleId, ...rest } = component;
 
@@ -96,7 +96,11 @@ const SettingsItem = forwardRef(
 
     return (
       <>
-        <ListItem className={[classes.draggableItem, isDragging ? classes.isDragging : null]} ref={ref} ContainerProps={{ ...draggableProps, style }}>
+        <ListItem
+          className={[classes.draggableItem, isDragging ? classes.isDragging : null]}
+          ref={ref}
+          ContainerProps={{ ...draggableProps, style }}
+        >
           <ListItemText
             primary={
               <>
@@ -136,10 +140,10 @@ const SettingsItem = forwardRef(
                 </IconButton>
               </>
             ) : (
-                <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
-                  <EditIcon />
-                </IconButton>
-              )}
+              <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
+                <EditIcon />
+              </IconButton>
+            )}
           </ListItemSecondaryAction>
         </ListItem>
         <Collapse in={isEditing} timeout="auto" unmountOnExit>

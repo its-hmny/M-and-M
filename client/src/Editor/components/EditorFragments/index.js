@@ -1,6 +1,20 @@
 import React, { Suspense, useMemo } from 'react';
 import { Typography, makeStyles } from '@material-ui/core';
 
+import ButtonFragment from './ButtonFragment';
+import ColorPickerFragment from './ColorPickerFragment';
+import FilePickerFragment from './FilePickerFragment';
+import SelectFragment from './SelectFragment';
+import TextFieldFragment from './TextFieldFragment';
+
+const fragmentsComponents = {
+  ButtonFragment,
+  ColorPickerFragment,
+  FilePickerFragment,
+  SelectFragment,
+  TextFieldFragment,
+};
+
 const useStyles = makeStyles({
   InspectorPaper: {
     padding: 10,
@@ -43,7 +57,7 @@ const DynamicLoadFragments = props => {
   const fragmentList = useMemo(
     () =>
       fieldsToSet.map((item, index) => {
-        const EditorFragment = React.lazy(() => import(`./${item.fragment}`));
+        const EditorFragment = fragmentsComponents[item.fragment];
         return (
           <EditorFragment
             key={`${item.fragment}${index}`}
@@ -56,9 +70,7 @@ const DynamicLoadFragments = props => {
     [fieldsToSet]
   );
 
-  return (
-    <Suspense fallback={<Typography variant="subtitle2">{`Loading components`}</Typography>}>{fragmentList}</Suspense>
-  );
+  return <>{fragmentList}</>;
 };
 
 export default DynamicLoadFragments;
