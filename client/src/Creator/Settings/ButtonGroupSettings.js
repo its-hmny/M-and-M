@@ -1,17 +1,35 @@
-import React, { useContext } from 'react';
-import ColorPickerInput from './atoms/ColorPicker';
-import useStylesStore from '../stores/styles';
-import TextSettings from './TextSettings';
+import React, { useContext, useState } from 'react';
+import List from '@material-ui/core/List';
+import useTemplateStore from '../stores/template';
+import ButtonSettings from './ButtonSettings';
+import SettingsItem from '../components/SettingsItem';
+import { Droppable } from 'react-beautiful-dnd';
 
-function ButtonGroupSettings({ styleId }) {
-  // const [state, dispatch] = useStylesStore(state => ({ }));
-  // const onChange = subStyle => {
-  //   dispatch({ type: actions.UPDATE_STYLE, payload: { styleId, ...subStyle } });
-  // };
+function ButtonGroupSettings({ componentId, styleId }) {
+  const [isDragDisabled, setIsDragDisabled] = useState(false);
+  const getButtons = state => state.components.find(component => component.id === componentId).children;
+  const { buttons, addComponents } = useTemplateStore(state => ({
+    buttons: getButtons(state),
+    addComponents: state.addComponents,
+  }));
 
   return (
     <div>
-      <p>uela</p>
+      <Droppable droppableId="button-group-settings-list">
+        {provided => (
+          <List ref={provided.innerRef} {...provided.droppableProps}>
+            {buttons.map((button, index) => (
+              <SettingsItem
+                dragIndex={index}
+                component={button}
+                onEditing={isEditing => setIsDragDisabled(isEditing)}
+                isDragDisabled={isDragDisabled}
+              />
+            ))}
+            {provided.placeholder}
+          </List>
+        )}
+      </Droppable>
     </div>
   );
 }

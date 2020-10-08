@@ -9,6 +9,13 @@ import AddComponentButton from './AddComponentButton';
 import SettingsItem from './SettingsItem';
 import useTemplateStore from '../stores/template';
 
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};
+
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -18,24 +25,6 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
   },
 }));
-
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-  return result;
-};
-
-function getStyle(style, isDragging) {
-  if (style.transform) {
-    const axisLockY = 'translate(0px' + style.transform.slice(style.transform.indexOf(','), style.transform.length);
-    return {
-      ...style,
-      transform: axisLockY,
-    };
-  }
-  return style;
-}
 
 function Inspector() {
   const classes = useStyles();
@@ -47,20 +36,12 @@ function Inspector() {
   }));
 
   const settings = components.map((component, index) => (
-    <Draggable key={component.id} draggableId={component.id} index={index}>
-      {(provided, snapshot) => (
-        <SettingsItem
-          ref={provided.innerRef}
-          draggableProps={provided.draggableProps}
-          dragHandleProps={provided.dragHandleProps}
-          component={component}
-          onEditing={isEditing => setIsDragDisabled(isEditing)}
-          isDragDisabled={isDragDisabled}
-          style={getStyle(provided.draggableProps.style, snapshot.isDragging)}
-          isDragging={snapshot.isDragging}
-        />
-      )}
-    </Draggable>
+    <SettingsItem
+      dragIndex={index}
+      component={component}
+      onEditing={isEditing => setIsDragDisabled(isEditing)}
+      isDragDisabled={isDragDisabled}
+    />
   ));
 
   const handleDragEnd = result => {

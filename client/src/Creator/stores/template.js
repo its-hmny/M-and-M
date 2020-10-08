@@ -15,26 +15,24 @@ const useTemplateStore = createStore(set => ({
       text: 'Some Button inside ButtonGroup',
       styleId: 'DefaultButton',
     },
-    /*
-            {
-              id: shortid.generate(),
-              name: 'ButtonGroup',
-              children: [
-                {
-                  id: shortid.generate(),
-                  name: 'Button',
-                  text: 'Ritenta',
-                  styleId: 'DefaultButton',
-                },
-                {
-                  id: shortid.generate(),
-                  name: 'Button',
-                  text: 'Abbandona',
-                  styleId: 'DefaultButton',
-                },
-              ],
-            },
-            */
+    {
+      id: shortid.generate(),
+      name: 'ButtonGroup',
+      children: [
+        {
+          id: shortid.generate(),
+          name: 'Button',
+          text: 'Ritenta',
+          styleId: 'DefaultButton',
+        },
+        {
+          id: shortid.generate(),
+          name: 'Button',
+          text: 'Abbandona',
+          styleId: 'DefaultButton',
+        },
+      ],
+    },
   ],
   addComponent: componentName => {
     set(state => {
@@ -47,8 +45,6 @@ const useTemplateStore = createStore(set => ({
     });
   },
   changeStyleId: ({ componentId, newStyleId }) => {
-    console.log(`component to be changed: ${componentId}`);
-    console.log(`new style id: ${newStyleId}`);
     set(state => {
       const component = state.components.find(component => component.id === componentId);
       component.styleId = newStyleId;
