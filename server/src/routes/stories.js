@@ -60,7 +60,6 @@ router.delete('/:uuid', (req, res) => {
   const story_uuid = req.params.uuid;
   fs.unlink(`${basePath}${story_uuid}.json`, err => {
     if (err) {
-        console.log(err);
       res.statusCode = 404;
       res.send({ status: false, message: 'Could not delete the story' });
     } else {
