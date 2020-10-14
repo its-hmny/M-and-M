@@ -5,7 +5,6 @@ import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
 import { Checkbox, Radio } from './Choice';
 import Button from './Button';
-import { ANSWER_VALUE } from '../../Player/constants';
 
 /** renders a multiple choice component: if there is only
  * one correct answer radiobutton will be used, otherwise checkbox
@@ -19,6 +18,11 @@ import { ANSWER_VALUE } from '../../Player/constants';
  *  - Button
  */
 
+const ANSWER_VALUE = {
+  CORRECT: '[CORRECT]',
+  WRONG: '[WRONG]',
+};
+
 const base = css`
   padding: 20px;
   display: flex;
@@ -31,7 +35,7 @@ const base = css`
   }
 `;
 
-const noop = () => { };
+const noop = () => {};
 
 function Choices({ name, answers, withSubmit, style, onSubmit = noop }) {
   const [selectedAnswers, setSelectedAnswers] = useState([]);

@@ -14,8 +14,10 @@ router.get('/:story_uuid', (req, res) => {
     while (database[story_uuid].find(id => id === requested_uuid)) {
       requested_uuid = shortid.generate();
     }
-    // Add the new uuid to the database and send the response
-    database[story_uuid].push(requested_uuid);
+    // Packetize player uuid and evaluator uuid for the story
+    const data = { player: requested_uuid, evaluator: `evaluator${story_uuid}` };
+    // Keep track of the story in the DB
+    database[story_uuid] = [requested_uuid];
     res.statusCode = 200;
     res.send({ status: true, message: 'UUID allocated successfully', payload: data });
   } else {
