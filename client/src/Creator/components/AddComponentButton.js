@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Fab, Menu, MenuItem } from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
 
-function getComponentList() {
-  return ['Button', 'Text'];
-}
+import { componentBuilders } from '../stores/template';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    textAlign: 'center',
+    position: 'relative',
+    top: '-5px',
+  },
+}));
 
 function AddComponentButton({ onClick }) {
-  const possibleComponents = getComponentList();
+  const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = event => setAnchorEl(event.target);
+  const handleClick = event => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const handleItemClick = componentName => {
     onClick(componentName);
@@ -18,18 +25,27 @@ function AddComponentButton({ onClick }) {
   };
 
   return (
-    <div>
-      <Button aria-controls="component-selection-menu" aria-haspopup="true" onClick={handleClick}>
+    <div className={classes.root}>
+      <Fab size="medium" onClick={handleClick}>
         <AddIcon />
-      </Button>
+      </Fab>
       <Menu
         id="component-selection-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
       >
-        {possibleComponents.map(componentName => (
+        {Object.keys(componentBuilders).map(componentName => (
           <MenuItem key={componentName} onClick={() => handleItemClick(componentName)}>
             {componentName}
           </MenuItem>

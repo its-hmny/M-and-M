@@ -1,6 +1,72 @@
 import shortid from 'shortid';
 import createStore from './createStore';
 
+// Maybe this should be moved somewhere else
+const words = [
+  'beautiful',
+  'sparkly',
+  'grim',
+  'blue',
+  'loving',
+  'crappy',
+  'distracted',
+  'javascript',
+  'OCaml...!',
+];
+
+const generateText = name =>
+  `yoyo this is a ${words[Math.floor(Math.random() * words.length)]} ${name}`;
+
+export const componentBuilders = {
+  Text: () => ({
+    name: 'Text',
+    text: generateText('Text'),
+    styleId: 'DefaultText',
+  }),
+  Button: () => ({
+    name: 'Button',
+    text: generateText('Button'),
+    styleId: 'DefaultButton',
+  }),
+  ButtonGroup: () => ({
+    name: 'ButtonGroup',
+    styleId: 'DefaultButtonGroup',
+    children: [],
+  }),
+};
+
+const recursiveFind = (components, targetId) => {
+  for (const component of components) {
+    if (component.id === targetId) return component;
+
+    if (component.children) {
+      const result = recursiveFind(component.children, targetId);
+      if (result) return result;
+    }
+  }
+
+  return undefined;
+};
+
+const recursiveFilter = (components, targetId) =>
+  components.reduce((filtered, component) => {
+    if (component.id === targetId) return filtered;
+
+    if (component.children) {
+      component.children = recursiveFilter(component.children, targetId);
+    }
+
+    filtered.push(component);
+    return filtered;
+  }, []);
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};
+
 const useTemplateStore = createStore(set => ({
   components: [
     {
@@ -18,6 +84,7 @@ const useTemplateStore = createStore(set => ({
     {
       id: shortid.generate(),
       name: 'ButtonGroup',
+      styleId: 'DefaultButtonGroup',
       children: [
         {
           id: shortid.generate(),
@@ -34,29 +101,44 @@ const useTemplateStore = createStore(set => ({
       ],
     },
   ],
-  addComponent: componentName => {
+  addComponent: (componentName, parentId) => {
     set(state => {
-      state.components.push({
+      let components = state.components;
+      if (parentId) {
+        const parent = recursiveFind(state.components, parentId);
+        components = parent.children;
+      }
+
+      const component = componentBuilders[componentName]();
+      components.push({
         id: shortid.generate(),
-        name: componentName,
-        text: 'Lorem ipsum dolor sit amet',
-        styleId: `Default${componentName}`,
+        ...component,
       });
     });
   },
   changeStyleId: ({ componentId, newStyleId }) => {
     set(state => {
-      const component = state.components.find(component => component.id === componentId);
+      const component = recursiveFind(state.components, componentId);
       component.styleId = newStyleId;
+      // Exception is not allowed so that error is raised (intended behaviour)
     });
   },
   removeComponent: removedId => {
     set(state => {
-      state.components = state.components.filter(component => component.id !== removedId);
+      state.components = recursiveFilter(state.components, removedId);
     });
   },
-  reorderComponents: newValue => {
-    set(state => void (state.components = newValue));
+  reorderComponents: (start, end, dragListId) => {
+    set(state => {
+      if (dragListId) {
+        // Update component sublist
+        const list = recursiveFind(state.components, dragListId);
+        list.children = reorder(list.children, start, end);
+      } else {
+        // Update top level components list
+        state.components = reorder(state.components, start, end);
+      }
+    });
   },
 }));
 
