@@ -18,6 +18,9 @@ const Navbar = () => (
       <li>
         <Link to={`${ROUTES.PLAYER}?storyId=0`}>Player</Link>
       </li>
+      <li>
+        <Link to={ROUTES.EVALUATOR}>Evaluator</Link>
+      </li>
     </ul>
   </nav>
 );
