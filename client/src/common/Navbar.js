@@ -16,7 +16,7 @@ const Navbar = () => (
         <Link to={ROUTES.EDITOR}>Editor</Link>
       </li>
       <li>
-        <Link to={`${ROUTES.PLAYER}?storyId=0`}>Player</Link>
+        <Link to={`${ROUTES.PLAYER}?storyId=test`}>Player</Link>
       </li>
       <li>
         <Link to={ROUTES.EVALUATOR}>Evaluator</Link>
