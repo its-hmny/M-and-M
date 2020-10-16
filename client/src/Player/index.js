@@ -1,19 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 import * as Elements from '../common/Elements';
 import View from '../common/View';
 import Chat from './components/Chat';
-
-import { ANSWER_VALUE, fakeStories } from './constants';
-
-const fakeFetch = async storyId => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(fakeStories[storyId]);
-    }, 500);
-  });
-};
 
 const useQuery = () => Object.fromEntries(new URLSearchParams(useLocation().search));
 
@@ -54,8 +45,9 @@ const buildViewContent = (components, storyContext) =>
 const Player = () => {
   const { storyId } = useQuery();
   const [story, setStory] = useState(null);
-  const [currentNodeId, setCurrentNodeId] = useState(null);
+  const [status, setStatus] = useState('LOADING');
   const [viewContent, setViewContent] = useState(null);
+  const [currentNodeId, setCurrentNodeId] = useState(null);
 
   const storyContext = useMemo(
     () => ({
@@ -65,22 +57,16 @@ const Player = () => {
     []
   );
 
-  const [status, setStatus] = useState('LOADING');
-
   useEffect(() => {
-    const fetchStory = async () => {
-      try {
-        const storyJson = await fakeFetch(storyId);
-        setStory(storyJson);
-        setCurrentNodeId(storyJson.nodes[0].id);
+    axios
+      .get(`http://localhost:8000/stories/${storyId}`)
+      .then(resp => {
+        const newStory = resp.data.payload;
+        setStory(newStory);
+        setCurrentNodeId(newStory.nodes[0].id);
         setStatus('SUCCESS');
-      } catch (err) {
-        console.error(`An error occured while loading story ${storyId}: ${err}`);
-        setStatus('FAILURE');
-      }
-    };
-
-    fetchStory();
+      })
+      .catch(_ => setStatus('FAILURE'));
   }, [storyId]);
 
   useEffect(() => {

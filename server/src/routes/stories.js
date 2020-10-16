@@ -44,6 +44,12 @@ router.put('/', (req, res) => {
     res.send({ status: false, message: 'A JSON of the story object must be provided' });
   } else {
     const newstory_uuid = shortid.generate();
+
+    // newstory_uuid collision handling, another uuid will be generated
+    while (fs.existsSync(`${basePath}${newstory_uuid}.json`)) {
+      newstory_uuid = shortid.generate();
+    }
+
     fs.writeFile(`${basePath}${newstory_uuid}.json`, JSON.stringify(req.body), { encoding: 'utf8' }, err => {
       if (err) {
         res.statusCode = 500;

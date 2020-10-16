@@ -29,6 +29,12 @@ router.put('/', (req, res) => {
   } else {
     const uploadFile = req.files.file;
     const res_uuid = shortid.generate();
+
+    // res_uuid collision handling, another uuid will be generated
+    while (fs.existsSync(`${basePath}${res_uuid}`)) {
+      res_uuid = shortid.generate();
+    }
+
     uploadFile.mv(`${basePath}${res_uuid}`);
 
     res.statusCode = 200;
