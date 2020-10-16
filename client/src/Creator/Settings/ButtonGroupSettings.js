@@ -1,35 +1,74 @@
-import React, { useContext, useState } from 'react';
-import List from '@material-ui/core/List';
+import React, { useMemo, useState } from 'react';
+import Button from '@material-ui/core/Button';
+import { Add as AddIcon } from '@material-ui/icons';
 import useTemplateStore from '../stores/template';
-import ButtonSettings from './ButtonSettings';
 import SettingsItem from '../components/SettingsItem';
-import { Droppable } from 'react-beautiful-dnd';
+import { DraggableList } from '../components/DraggableList';
+import ColorPickerInput from './atoms/ColorPicker';
+import useStylesStore from '../stores/styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  buttonList: {
+    padding: `0 ${theme.spacing(5)}px ${theme.spacing(2)}px`,
+  },
+}));
 
 function ButtonGroupSettings({ componentId, styleId }) {
-  const [isDragDisabled, setIsDragDisabled] = useState(false);
-  const getButtons = state => state.components.find(component => component.id === componentId).children;
-  const { buttons, addComponents } = useTemplateStore(state => ({
-    buttons: getButtons(state),
-    addComponents: state.addComponents,
+  const classes = useStyles();
+
+  // buttonGroup styles
+  const { styles, updateStyle } = useStylesStore(state => ({
+    styles: state.styles,
+    updateStyle: state.updateStyle,
   }));
+  const onChange = subStyle => updateStyle({ styleId, ...subStyle });
+
+  // contained buttons
+  const [currentlyEditing, setCurrentlyEditing] = useState(0);
+  const getButtons = state =>
+    state.components.find(component => component.id === componentId).children;
+  const { buttons, addComponent } = useTemplateStore(state => ({
+    buttons: getButtons(state),
+    addComponent: state.addComponent,
+  }));
+
+  const list = useMemo(
+    () =>
+      buttons.map((button, index) => (
+        <SettingsItem
+          key={button.id}
+          id={button.id}
+          dragIndex={index}
+          component={button}
+          onEditing={isEditing =>
+            setCurrentlyEditing(currentlyEditing =>
+              isEditing ? currentlyEditing + 1 : currentlyEditing - 1
+            )
+          }
+        />
+      )),
+    [buttons]
+  );
 
   return (
     <div>
-      <Droppable droppableId="button-group-settings-list">
-        {provided => (
-          <List ref={provided.innerRef} {...provided.droppableProps}>
-            {buttons.map((button, index) => (
-              <SettingsItem
-                dragIndex={index}
-                component={button}
-                onEditing={isEditing => setIsDragDisabled(isEditing)}
-                isDragDisabled={isDragDisabled}
-              />
-            ))}
-            {provided.placeholder}
-          </List>
-        )}
-      </Droppable>
+      <ColorPickerInput onChange={onChange} value={styles[styleId]} />
+      <div className={classes.buttonList}>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={() => addComponent('Button', componentId)}
+        >
+          Add button
+        </Button>
+        <DraggableList
+          id={componentId}
+          list={list || []}
+          disabled={currentlyEditing > 0}
+        />
+      </div>
     </div>
   );
 }

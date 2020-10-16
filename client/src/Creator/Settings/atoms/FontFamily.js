@@ -1,9 +1,7 @@
 import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import { TextField, InputLabel } from '@material-ui/core';
-import Autocomplete, {
-  createFilterOptions,
-} from '@material-ui/lab/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import shortid from 'shortid';
 
 const filter = createFilterOptions();
@@ -24,8 +22,6 @@ function FontFamilyInput({ onChange, value }) {
 
   return (
     <div>
-      {/* clearly unnecessary, BUT check for accessibility!!!*/}
-      <InputLabel htmlFor={autoInput}>Font family</InputLabel>
       <Autocomplete
         id={autoInput}
         onChange={(_, newValue) => {
@@ -65,7 +61,7 @@ function FontFamilyInput({ onChange, value }) {
         renderOption={option => option.name}
         style={{ width: 300 }}
         renderInput={params => (
-          <TextField {...params} label="text" variant="outlined" />
+          <TextField {...params} label="Font family" variant="outlined" />
         )}
       />
     </div>

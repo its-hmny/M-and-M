@@ -21,9 +21,14 @@ import shortid from 'shortid';
 import * as Settings from '../Settings';
 import useStylesStore from '../stores/styles';
 import useTemplateStore from '../stores/template';
+import { useDragList } from '../components/DraggableList';
 import StyleIdDialog from './StyleIdDialog';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
+  iconSmallHover: {
+    fontSize: theme.typography.pxToRem(10),
+    '&:hover': {},
+  },
   componentName: {
     display: 'inline-block',
     marginRight: '30px',
@@ -35,11 +40,24 @@ const useStyles = makeStyles({
   isDragging: {
     backgroundColor: '#474741',
   },
-});
+  collapse: {
+    padding: `${theme.spacing(5)}px ${theme.spacing(2)}px`,
+  },
+  listItem: {
+    boxShadow: props => theme.shadows[props.isDragging ? 4 : 1],
+    backgroundColor: theme.palette.background.paper,
+  },
+  listItemContainer: {
+    borderBottom: `${theme.spacing(0.25)}px solid transparent`,
+    borderTop: `${theme.spacing(0.25)}px solid transparent`,
+  },
+}));
 
 function getStyle(style, isDragging) {
-  if (style.transform) {
-    const axisLockY = 'translate(0px' + style.transform.slice(style.transform.indexOf(','), style.transform.length);
+  if (isDragging && style.transform) {
+    const axisLockY =
+      'translate(0px' +
+      style.transform.slice(style.transform.indexOf(','), style.transform.length);
     return {
       ...style,
       transform: axisLockY,
@@ -48,11 +66,17 @@ function getStyle(style, isDragging) {
   return style;
 }
 
-const SettingsItem = ({ dragIndex, component, onEditing, isDragDisabled }) => {
-  const classes = useStyles();
-
+const SettingsItem = ({
+  dragIndex,
+  component,
+  onEditing,
+  isDragDisabled,
+  subSettings,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const { provided, snapshot } = useDragList();
+  const classes = useStyles({ isDragging: snapshot.isDragging });
   const { changeStyleId, removeComponent } = useTemplateStore(state => ({
     changeStyleId: state.changeStyleId,
     removeComponent: state.removeComponent,
@@ -103,77 +127,71 @@ const SettingsItem = ({ dragIndex, component, onEditing, isDragDisabled }) => {
   const SettingsComponent = Settings[`${componentName}Settings`];
 
   return (
-    <Draggable key={componentId} draggableId={componentId} index={dragIndex}>
-      {(provided, snapshot) => (
-        <>
-          <ListItem
-            className={classes.draggableItem}
-            classes={{
-              root: snapshot.isDragging ? classes.isDragging : null,
-            }}
-            ref={provided.innerRef}
-            ContainerProps={{
-              ...provided.draggableProps,
-              style: getStyle(provided.draggableProps.style, snapshot.isDragging),
-            }}
-          >
-            <ListItemText
-              primary={
-                <>
-                  <IconButton
-                    edge="end"
-                    aria-label="delete-component"
-                    disabled={isDragDisabled}
-                    {...provided.dragHandleProps}
-                  >
-                    <DragHandleIcon />
-                  </IconButton>
-                  <Typography className={classes.componentName}>{componentName}</Typography>
-                  <TextField
-                    disabled={isEditing}
-                    select
-                    label="Select"
-                    value={styleId}
-                    onChange={handleStyleIdChanged}
-                    variant="outlined"
-                    size="small"
-                  >
-                    {styleIds[componentName].map(id => (
-                      <MenuItem key={id} value={id}>
-                        {id}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </>
-              }
-            />
-            <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="delete-component" onClick={handleDelete}>
-                <DeleteIcon />
+    <>
+      <ListItem
+        ref={provided.innerRef}
+        className={classes.listItem}
+        ContainerProps={{
+          ...provided.draggableProps,
+          className: classes.listItemContainer,
+          style: getStyle(provided.draggableProps.style, snapshot.isDragging),
+        }}
+      >
+        <ListItemText
+          primary={
+            <>
+              <IconButton
+                className={classes.iconSmallHover}
+                edge="start"
+                aria-label="move-component"
+                {...provided.dragHandleProps}
+              >
+                <DragHandleIcon />
               </IconButton>
-              {isEditing ? (
-                <>
-                  <IconButton edge="end" aria-label="discard" onClick={handleDiscard}>
-                    <CloseIcon />
-                  </IconButton>
-                  <IconButton edge="end" aria-label="save" onClick={handleSave}>
-                    <DoneIcon />
-                  </IconButton>
-                </>
-              ) : (
-                <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
-                  <EditIcon />
-                </IconButton>
-              )}
-            </ListItemSecondaryAction>
-          </ListItem>
-          <Collapse in={isEditing} timeout="auto" unmountOnExit>
-            <SettingsComponent componentId={componentId} styleId={styleId} />
-          </Collapse>
-          <StyleIdDialog open={isSaving} initialId={styleId} onComplete={handleComplete} />
-        </>
-      )}
-    </Draggable>
+              <Typography className={classes.componentName}>{componentName}</Typography>
+              <TextField
+                disabled={isEditing}
+                select
+                label="Select"
+                value={styleId}
+                onChange={handleStyleIdChanged}
+                variant="outlined"
+                size="small"
+              >
+                {styleIds[componentName].map(id => (
+                  <MenuItem key={id} value={id}>
+                    {id}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </>
+          }
+        />
+        <ListItemSecondaryAction>
+          <IconButton edge="end" aria-label="delete-component" onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+          {isEditing ? (
+            <>
+              <IconButton edge="end" aria-label="discard" onClick={handleDiscard}>
+                <CloseIcon />
+              </IconButton>
+              <IconButton edge="end" aria-label="save" onClick={handleSave}>
+                <DoneIcon />
+              </IconButton>
+            </>
+          ) : (
+            <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
+              <EditIcon />
+            </IconButton>
+          )}
+        </ListItemSecondaryAction>
+      </ListItem>
+      <Collapse className={classes.collapse} in={isEditing} timeout="auto" unmountOnExit>
+        <SettingsComponent componentId={componentId} styleId={styleId} />
+      </Collapse>
+      <StyleIdDialog open={isSaving} initialId={styleId} onComplete={handleComplete} />
+    </>
   );
 };
 
