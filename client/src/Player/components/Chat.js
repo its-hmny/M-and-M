@@ -14,7 +14,8 @@ const Chat = () => {
   let playerID = undefined,
     evaluatorID = undefined;
   const [storyId, _] = useState(useQuery().storyId);
-  const sendHandler = msg => socket.emit('chat-msg-send', { senderId: playerID, receiverID: evaluatorID, msg });
+  const sendHandler = msg =>
+    socket.emit('chat-msg-send', { senderId: playerID, receiverID: evaluatorID, msg });
 
   useEffect(() => {
     axios.get(`http://localhost:8000/chats/${storyId}`).then(resp => {
