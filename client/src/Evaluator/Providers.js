@@ -1,6 +1,7 @@
 import React from 'react';
 import { orange, pink } from '@material-ui/core/colors';
 import { createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
+import { EvaluatorProvider } from './context/EvaluatorContext';
 
 const customTheme = createMuiTheme({
   overrides: {
@@ -22,7 +23,7 @@ const customTheme = createMuiTheme({
 const Providers = ({ children }) => (
   <ThemeProvider theme={customTheme}>
     <CssBaseline />
-    {children}
+    <EvaluatorProvider>{children}</EvaluatorProvider>
   </ThemeProvider>
 );
 

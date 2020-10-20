@@ -13,9 +13,14 @@ const useQuery = () => Object.fromEntries(new URLSearchParams(useLocation().sear
 const Chat = () => {
   let playerID = undefined,
     evaluatorID = undefined;
-  const [storyId, _] = useState(useQuery().storyId);
+  const storyId = useQuery().storyId;
   const sendHandler = msg =>
-    socket.emit('chat-msg-send', { senderId: playerID, receiverID: evaluatorID, msg });
+    socket.emit('chat-msg-send', {
+      story: storyId,
+      senderId: playerID,
+      receiverID: evaluatorID,
+      msg,
+    });
 
   useEffect(() => {
     axios.get(`http://localhost:8000/chats/${storyId}`).then(resp => {
@@ -26,8 +31,8 @@ const Chat = () => {
   }, []);
 
   socket.on('chat-msg-recv', payload => {
-    const { senderId, receiverId, msg } = payload;
-    if (senderId === evaluatorID && receiverId === playerID) {
+    const { story, senderId, receiverId, msg } = payload;
+    if (story === storyId && senderId === evaluatorID && receiverId === playerID) {
       addResponseMessage(msg);
     }
   });

@@ -49,20 +49,6 @@ body {
   border-radius: 10px;
 }
 
-/* The circle on the bottom of the device 
-.smartphone:after {
-  content: '';
-  display: block;
-  width: 35px;
-  height: 35px;
-  position: absolute;
-  left: 50%;
-  bottom: -5vh;
-  transform: translate(-50%, -50%);
-  background: #333;
-  border-radius: 50%;
-} */
-
 /* The screen (or content) of the device */
 .smartphone {
   width: calc(75vh * 0.5);
