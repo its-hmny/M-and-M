@@ -1,6 +1,8 @@
 import shortid from 'shortid';
 import createStore from './createStore';
 
+import { ANSWER_VALUE } from '../../common/Elements/Choices';
+
 // Maybe this should be moved somewhere else
 const words = [
   'beautiful',
@@ -32,6 +34,33 @@ export const componentBuilders = {
     name: 'ButtonGroup',
     styleId: 'DefaultButtonGroup',
     children: [],
+  }),
+  Choices: () => ({
+    name: 'Choices',
+    styleId: 'DefaultChoices',
+    withSubmit: true,
+    answers: [
+      {
+        id: shortid.generate(),
+        text: 'Bianco',
+        value: ANSWER_VALUE.CORRECT,
+      },
+      {
+        id: shortid.generate(),
+        text: 'Rosso',
+        value: ANSWER_VALUE.WRONG,
+      },
+      {
+        id: shortid.generate(),
+        text: 'Blu',
+        value: ANSWER_VALUE.WRONG,
+      },
+      {
+        id: shortid.generate(),
+        text: 'Verde',
+        value: ANSWER_VALUE.WRONG,
+      },
+    ],
   }),
 };
 

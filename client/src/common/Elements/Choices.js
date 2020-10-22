@@ -1,6 +1,4 @@
 /** @jsx jsx */
-// i get it, this is trash. maybe make a
-// directories file from which we pull out what we need? this sounds like a mattia problem :)
 import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
 import { Checkbox, Radio } from './Choice';
@@ -18,7 +16,7 @@ import Button from './Button';
  *  - Button
  */
 
-const ANSWER_VALUE = {
+export const ANSWER_VALUE = {
   CORRECT: '[CORRECT]',
   WRONG: '[WRONG]',
 };
@@ -50,13 +48,19 @@ function Choices({ name, answers, withSubmit, style, onSubmit = noop }) {
   );
 
   const Component = useMemo(
-    () => (answers.reduce((count, { value }) => count + (value === ANSWER_VALUE.CORRECT), 0) > 1 ? Checkbox : Radio),
+    () =>
+      answers.reduce((count, { value }) => count + (value === ANSWER_VALUE.CORRECT), 0) >
+      1
+        ? Checkbox
+        : Radio,
     [answers]
   );
 
   const isCorrect = useMemo(() => {
     const correctLength = correctAnswers.length === selectedAnswers.length;
-    const allCorrect = selectedAnswers.sort().every((answerId, index) => answerId === correctAnswers[index]);
+    const allCorrect = selectedAnswers
+      .sort()
+      .every((answerId, index) => answerId === correctAnswers[index]);
     return correctLength && allCorrect ? ANSWER_VALUE.CORRECT : ANSWER_VALUE.WRONG;
   }, [correctAnswers, selectedAnswers]);
 
@@ -69,7 +73,9 @@ function Choices({ name, answers, withSubmit, style, onSubmit = noop }) {
       setSelectedAnswers([id]);
     } else {
       setSelectedAnswers(
-        event.target.checked ? [...selectedAnswers, id] : selectedAnswers.filter(answerId => answerId !== id)
+        event.target.checked
+          ? [...selectedAnswers, id]
+          : selectedAnswers.filter(answerId => answerId !== id)
       );
     }
   };
@@ -81,7 +87,7 @@ function Choices({ name, answers, withSubmit, style, onSubmit = noop }) {
   }, [withSubmit, onSubmit, isCorrect, correctAnswers, selectedAnswers]);
 
   return (
-    <div css={[base, style]}>
+    <div css={[base, style.Root]}>
       <div>
         {answers.map(({ id, text }) => (
           <Component
@@ -97,7 +103,11 @@ function Choices({ name, answers, withSubmit, style, onSubmit = noop }) {
       </div>
 
       {withSubmit && selectedAnswers.length > 0 && (
-        <Button onClick={() => onSubmit(isCorrect)} style={style && style['Button']} text="Conferma" />
+        <Button
+          onClick={() => onSubmit(isCorrect)}
+          style={style && style.Button}
+          text="Conferma"
+        />
       )}
     </div>
   );

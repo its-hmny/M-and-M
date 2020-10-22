@@ -5,8 +5,25 @@ const useStylesStore = createStore(set => ({
     Text: ['DefaultText', 'SpaceText'],
     Button: ['DefaultButton', 'SpaceButton', 'UnderwaterButton'],
     ButtonGroup: ['DefaultButtonGroup', 'SpaceButtonGroup'],
+    Radio: ['DefaultRadio'],
+    Checkbox: ['Checkbox'],
+    Choices: ['DefaultChoices'],
   },
   styles: {
+    DefaultRadio: {},
+    DefaultCheckbox: {},
+    DefaultChoices: {
+      Root: {},
+      Radio: {
+        color: '#000',
+        backgroundColor: '#8cceb3',
+      },
+      Checkbox: {},
+      Button: {
+        color: '#000',
+        backgroundColor: '#8cceb3',
+      },
+    },
     DefaultText: {
       fontFamily: 'Arial',
       fontSize: '16px',
@@ -43,9 +60,17 @@ const useStylesStore = createStore(set => ({
       state.styles[styleId] = state.styles[baseStyleId] || {};
     });
   },
-  updateStyle: ({ styleId, ...props }) => {
+  updateStyle: ({ styleId, ...subStyle }, parentStyleId) => {
     set(state => {
-      state.styles[styleId] = { ...state.styles[styleId], ...props };
+      if (parentStyleId) {
+        console.log(parentStyleId, styleId, subStyle);
+        state.styles[parentStyleId][styleId] = {
+          ...state.styles[parentStyleId][styleId],
+          ...subStyle,
+        };
+      } else {
+        state.styles[styleId] = { ...state.styles[styleId], ...subStyle };
+      }
     });
   },
   removeStyle: ({ componentName, styleId }) => {
@@ -57,7 +82,9 @@ const useStylesStore = createStore(set => ({
   },
   renameStyle: ({ componentName, oldId, newId }) => {
     set(state => {
-      const updatedIds = state.styleIds[componentName].map(id => (id === oldId ? newId : id));
+      const updatedIds = state.styleIds[componentName].map(id =>
+        id === oldId ? newId : id
+      );
       state.styleIds[componentName] = updatedIds;
       state.styles[newId] = state.styles[oldId];
       state.styles[oldId] = null;
