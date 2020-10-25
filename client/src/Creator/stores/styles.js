@@ -8,11 +8,37 @@ const useStylesStore = createStore(set => ({
     Radio: ['DefaultRadio'],
     Checkbox: ['Checkbox'],
     Choices: ['DefaultChoices'],
+    SingleAnsChoices: ['DefaultSingleAnsChoices'],
+    MultiAnsChoices: ['DefaultMultiAnsChoices'],
   },
   styles: {
     DefaultRadio: {},
     DefaultCheckbox: {},
     DefaultChoices: {
+      Root: {},
+      Radio: {
+        color: '#000',
+        backgroundColor: '#8cceb3',
+      },
+      Checkbox: {},
+      Button: {
+        color: '#000',
+        backgroundColor: '#8cceb3',
+      },
+    },
+    DefaultSingleAnsChoices: {
+      Root: {},
+      Radio: {
+        color: '#100',
+        backgroundColor: '#8cceb3',
+      },
+      Checkbox: {},
+      Button: {
+        color: '#100',
+        backgroundColor: '#8cceb3',
+      },
+    },
+    DefaultMultiAnsChoices: {
       Root: {},
       Radio: {
         color: '#000',

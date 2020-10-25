@@ -17,7 +17,7 @@ const words = [
 ];
 
 const generateText = name =>
-  `yoyo this is a ${words[Math.floor(Math.random() * words.length)]} ${name}`;
+  `im a ${words[Math.floor(Math.random() * words.length)]} ${name}`;
 
 export const componentBuilders = {
   Text: () => ({
@@ -49,6 +49,60 @@ export const componentBuilders = {
         id: shortid.generate(),
         text: 'Rosso',
         value: ANSWER_VALUE.WRONG,
+      },
+      {
+        id: shortid.generate(),
+        text: 'Blu',
+        value: ANSWER_VALUE.WRONG,
+      },
+      {
+        id: shortid.generate(),
+        text: 'Verde',
+        value: ANSWER_VALUE.WRONG,
+      },
+    ],
+  }),
+  SingleAnsChoices: () => ({
+    name: 'SingleAnsChoices',
+    styleId: 'DefaultSingleAnsChoices',
+    withSubmit: true,
+    answers: [
+      {
+        id: shortid.generate(),
+        text: 'Bianco',
+        value: ANSWER_VALUE.CORRECT,
+      },
+      {
+        id: shortid.generate(),
+        text: 'Rosso',
+        value: ANSWER_VALUE.WRONG,
+      },
+      {
+        id: shortid.generate(),
+        text: 'Blu',
+        value: ANSWER_VALUE.WRONG,
+      },
+      {
+        id: shortid.generate(),
+        text: 'Verde',
+        value: ANSWER_VALUE.WRONG,
+      },
+    ],
+  }),
+  MultiAnsChoices: () => ({
+    name: 'MultiAnsChoices',
+    styleId: 'DefaultMultiAnsChoices',
+    withSubmit: true,
+    answers: [
+      {
+        id: shortid.generate(),
+        text: 'Bianco',
+        value: ANSWER_VALUE.CORRECT,
+      },
+      {
+        id: shortid.generate(),
+        text: 'Rosso',
+        value: ANSWER_VALUE.CORRECT,
       },
       {
         id: shortid.generate(),
