@@ -30,6 +30,7 @@ const base = css`
     width: 100%;
   }
 `;
+
 const noop = () => {};
 
 function MultiAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) {
@@ -86,7 +87,7 @@ function MultiAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) 
 
       {withSubmit && (
         <Button
-          disabled={selectedAnswers.length > 0}
+          disabled={!(selectedAnswers.length > 0)}
           onClick={() => onSubmit(isCorrect)}
           style={style && style.Button}
           text="Conferma"

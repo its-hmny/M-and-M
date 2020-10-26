@@ -23,11 +23,7 @@ const base = css`
     margin-bottom: 1rem;
   }
 
-  input {
-    display: none;
-  }
-
-  input:checked + label {
+  input:checked ~ & {
     background-color: #3b92f6;
     margin: 5px;
   }
@@ -35,7 +31,7 @@ const base = css`
 
 function Choice({ type, id, name, label, selected, onSelected, style }) {
   return (
-    <div css={[base, style]}>
+    <div>
       <input
         id={id}
         type={type}
@@ -43,8 +39,11 @@ function Choice({ type, id, name, label, selected, onSelected, style }) {
         value={label}
         checked={selected}
         onChange={onSelected}
+        style={{ display: 'none' }}
       />
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} css={[base, style]}>
+        {label}
+      </label>
     </div>
   );
 }

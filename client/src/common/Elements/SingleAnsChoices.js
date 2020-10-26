@@ -73,7 +73,7 @@ function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop })
             id={id}
             name={name}
             label={text}
-            selected={!!selectedAnswer}
+            selected={!!(id === selectedAnswer)}
             onSelected={handleSelected}
             style={style && style['Radio']}
           />
