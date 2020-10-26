@@ -14,29 +14,30 @@ const useStyles = makeStyles({
 const CollapsableBox = props => {
   const { name, uuid, isOpen, handler, indentLevel, fieldsToSet, ...specificProps } = props;
   const { InspectorElementStyle } = useStyles();
-  const marginLeft = indentLevel * 15 || undefined;
+  
+
+  var ListComponent = fieldsToSet.length === 0 ? undefined : <List className={InspectorElementStyle}>
+  <ListItem
+    button={fieldsToSet.length !== 0}
+    onClick={() => handler(uuid)}
+    divider
+  >
+    <Typography variant="h6" component="h6">
+      {name}
+    </Typography>
+  </ListItem>
+  <Collapse in={isOpen[uuid]} unmountOnExit>
+    <Box borderLeft={1} borderColor="primary.main">
+      <DynamicLoadFragments fieldsToSet={fieldsToSet} {...specificProps} />
+    </Box>
+  </Collapse>
+</List>
 
   /* If current component does not have modifiable fields the function will return a disabled listitem
      else the function will return a clickable listitem with a collapsable box */
   return (
     <Box className={InspectorElementStyle}>
-      <List className={InspectorElementStyle}>
-        <ListItem
-          button={fieldsToSet.length !== 0}
-          disabled={fieldsToSet.length === 0}
-          onClick={() => handler(uuid)}
-          divider
-        >
-          <Typography style={{ marginLeft }} variant="h6" component="h6">
-            {name}
-          </Typography>
-        </ListItem>
-        <Collapse in={isOpen[uuid]} unmountOnExit>
-          <Box borderLeft={1} borderColor="primary.main">
-            <DynamicLoadFragments fieldsToSet={fieldsToSet} {...specificProps} />
-          </Box>
-        </Collapse>
-      </List>
+      {ListComponent}
     </Box>
   );
 };
