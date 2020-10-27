@@ -1,10 +1,49 @@
-import React, { useEffect } from 'react';
-import { Widget } from 'react-chat-widget';
+import React from 'react';
+import { Widget, addResponseMessage, toggleWidget } from 'react-chat-widget';
+import { useEvaluator } from '../context/EvaluatorContext';
+import io from 'socket.io-client';
 
 import 'react-chat-widget/lib/styles.css';
 
+const socket = io('http://localhost:8000');
+
 const ChatPopUp = () => {
-  return <Widget title={'Player'} />;
+  // To "force" open or close widget toggleWidget();
+  const { playerList, selectedPlayer } = useEvaluator();
+  const { playerName, playerAvatar } =
+    playerList.find(item => item.playerId === selectedPlayer) || {};
+
+  const sendHandler = msg =>
+    socket.emit('chat-msg-send', {
+      story: 'test', // ToDo change
+      senderId: 'evaluatortest', // ToDo change
+      receiverID: selectedPlayer,
+      msg,
+    });
+
+  socket.on('chat-msg-recv', payload => {
+    const { story, senderId, receiverId, msg } = payload;
+    if (story === 'test' && senderId === selectedPlayer && receiverId === 'evaluatortest')
+      // ToDo change
+      addResponseMessage(msg);
+  });
+
+  return (
+    <Widget
+      title={playerName || selectedPlayer}
+      subtitle=""
+      senderPlaceHolder="Type here your message"
+      showCloseButton={true}
+      fullScreenMode={false}
+      autofocus={true}
+      showTimeStamp={true}
+      handleNewUserMessage={sendHandler}
+      launcherOpenLabel="Player chat opened"
+      launcherClosedLabel="Player chat closed"
+      sendButtonAlt="Send"
+      profileAvatar={playerAvatar || undefined}
+    />
+  );
 };
 
 export default ChatPopUp;

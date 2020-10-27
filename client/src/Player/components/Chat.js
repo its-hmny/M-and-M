@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Widget, addResponseMessage } from 'react-chat-widget';
 import io from 'socket.io-client';
 import { useLocation } from 'react-router-dom';
@@ -14,11 +14,12 @@ const Chat = () => {
   let playerID = undefined,
     evaluatorID = undefined;
   const storyId = useQuery().storyId;
+
   const sendHandler = msg =>
     socket.emit('chat-msg-send', {
       story: storyId,
       senderId: playerID,
-      receiverID: evaluatorID,
+      receiverId: evaluatorID,
       msg,
     });
 
@@ -27,14 +28,14 @@ const Chat = () => {
       const { player, evaluator } = resp.data.payload;
       playerID = player;
       evaluatorID = evaluator;
+      console.log(evaluatorID);
     });
   }, []);
 
   socket.on('chat-msg-recv', payload => {
     const { story, senderId, receiverId, msg } = payload;
-    if (story === storyId && senderId === evaluatorID && receiverId === playerID) {
+    if (story === storyId && senderId === evaluatorID && receiverId === playerID)
       addResponseMessage(msg);
-    }
   });
 
   return (

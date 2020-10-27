@@ -7,17 +7,6 @@ const EvaluatorContext = React.createContext();
 export const EvaluatorProvider = ({ children, _ }) => {
   const [selectedPlayer, setSelectedPlayer] = useState(undefined);
 
-  const updateData = () => {
-    console.log('Data updated');
-    setTimeout(updateData, 1000);
-  };
-
-  useEffect(() => {
-    updateData();
-    const id = setTimeout(updateData, 1000);
-    return () => clearTimeout(id);
-  }, []);
-
   const toProvide = {
     playerList: DummyData,
     selectedPlayer,
