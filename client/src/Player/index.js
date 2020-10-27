@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import * as Elements from '../common/Elements';
-import View from '../common/View';
 import Chat from './components/Chat';
 
 const useQuery = () => Object.fromEntries(new URLSearchParams(useLocation().search));
@@ -95,7 +94,7 @@ const Player = () => {
 
   return (
     <>
-      <View>{viewContent}</View>
+      <div>{viewContent}</div>
       <Chat />
     </>
   );

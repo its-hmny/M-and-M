@@ -1,12 +1,13 @@
 import React from 'react';
-import RenderSanbox from '../RenderSandbox';
+import Preview from '../../../common/Preview';
+import StyleDB from '../../../data/styles.json';
 
 import './styles.css';
 
 const SmartphoneEmulator = ({ storyNode, children }) => {
   return (
     <div className="smartphone">
-      <RenderSanbox components={[...storyNode.components]} />
+      <Preview components={[...storyNode.components]} styles={StyleDB} />
     </div>
   );
 };

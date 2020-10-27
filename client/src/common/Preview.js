@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from '@material-ui/core';
 import * as Elements from './Elements';
-import View from './View';
 
 function Preview({ components, styles }) {
   const [elements, setElements] = useState([]);
@@ -29,7 +28,7 @@ function Preview({ components, styles }) {
       <Typography variant="h6" color="secondary">
         Preview
       </Typography>
-      <View>{elements}</View>
+      <div>{elements}</div>
     </>
   );
 }

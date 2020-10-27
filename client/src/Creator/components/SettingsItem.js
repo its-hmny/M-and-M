@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,7 +15,6 @@ import {
   DragHandle as DragHandleIcon,
   Edit as EditIcon,
 } from '@material-ui/icons';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import shortid from 'shortid';
 import * as Settings from '../Settings';
@@ -88,7 +87,7 @@ const SettingsItem = ({
     renameStyle: state.renameStyle,
   }));
 
-  const { id: componentId, name: componentName, styleId, ...rest } = component;
+  const { id: componentId, name: componentName, styleId } = component;
 
   const handleStyleIdChanged = event => {
     changeStyleId({ componentId, newStyleId: event.target.value });
