@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import PlayerProgressGraph from './components/PlayerProgressGraph';
+import SmartphoneEmulator from '../Editor/components/SmartphoneEmulator';
 import PlayerSidebar from './components/PlayerSidebar';
 import ChatPopUp from './components/ChatPopUp';
 import Launcher from './components/Launcher';
@@ -15,8 +16,11 @@ const App = () => {
       <PlayerSidebar />
       <ChatPopUp />
       <Launcher backgroundColor="#121212" img="http://localhost:8000/clear-button.svg">
-        <div className="rcw-conversation-container">
-          <h1>Diocane</h1>
+        <div>
+          <div class="rcw-conversation-container active">
+            {/* <SmartphoneEmulator storyNode={{ components: [] }} /> */}
+            <h1>Diocane</h1>
+          </div>
         </div>
       </Launcher>
     </>

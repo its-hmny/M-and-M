@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Widget, addResponseMessage } from 'react-chat-widget';
-import io from 'socket.io-client';
 import { useLocation } from 'react-router-dom';
 
+import { Widget, addResponseMessage } from 'react-chat-widget';
 import 'react-chat-widget/lib/styles.css';
-import './customstyle.css';
+import './styles.css';
+
+import io from 'socket.io-client';
 import axios from 'axios';
 
 const socket = io('http://localhost:8000');

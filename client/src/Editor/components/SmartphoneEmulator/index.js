@@ -1,5 +1,5 @@
 import React from 'react';
-import RenderSanbox from './RenderSandbox';
+import RenderSanbox from '../RenderSandbox';
 
 import './styles.css';
 

@@ -1,8 +1,8 @@
 import React, { useCallback, useRef } from 'react';
 import Graph from 'vis-network-react';
 
-import { Options, getGraphFromStory } from '../../data/GraphPreferences';
-import { useEditor } from '../context/EditorContext';
+import { Options, getGraphFromStory } from './GraphPreferences';
+import { useEditor } from '../../context/EditorContext';
 
 import './styles.css';
 
@@ -28,7 +28,9 @@ const GraphCanvas = () => {
     setWorkingActivity(undefined);
   }, [setWorkingActivity]);
 
-  const dragEnd = useCallback(event => setWorkingActivity(event.nodes[0]), [setWorkingActivity]);
+  const dragEnd = useCallback(event => setWorkingActivity(event.nodes[0]), [
+    setWorkingActivity,
+  ]);
 
   const onDropAddNode = useCallback(
     event => {
@@ -45,7 +47,10 @@ const GraphCanvas = () => {
   );
 
   return (
-    <div onDrop={event => onDropAddNode(event)} onDragOver={event => event.preventDefault()}>
+    <div
+      onDrop={event => onDropAddNode(event)}
+      onDragOver={event => event.preventDefault()}
+    >
       <Graph
         data={getGraphFromStory(story)}
         options={Options}
