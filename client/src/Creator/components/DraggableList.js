@@ -1,13 +1,6 @@
 import React, { useCallback, useContext } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { ListItem, List, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    backgroundColor: theme.palette.background.default,
-  },
-}));
+import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { List } from '@material-ui/core';
 
 const DragListContext = React.createContext();
 
@@ -22,8 +15,6 @@ export const useDragList = () => {
 
 // List contiene i componenti React da trasformare
 export const DraggableList = ({ id, list, disabled }) => {
-  const classes = useStyles();
-
   const renderList = useCallback(
     components =>
       components.map((component, index) => {
@@ -38,7 +29,7 @@ export const DraggableList = ({ id, list, disabled }) => {
           </Draggable>
         );
       }),
-    [list]
+    [disabled]
   );
 
   return (

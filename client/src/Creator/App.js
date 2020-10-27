@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import Inspector from './components/Inspector';
 import Preview from '../common/Preview';
 import useStylesStore from './stores/styles';
 import useTemplateStore from './stores/template';
-import shortid from 'shortid';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({

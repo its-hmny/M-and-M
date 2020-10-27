@@ -1,8 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+import { Container, Typography, makeStyles } from '@material-ui/core';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { DraggableList } from './DraggableList';
 
@@ -43,16 +40,19 @@ function Inspector() {
     [components]
   );
 
-  const handleDragEnd = useCallback(({ source, destination, type: dragListId }) => {
-    // dropped outside the list
-    if (destination) {
-      reorderComponents(
-        source.index,
-        destination.index,
-        dragListId === inspectorDragId ? null : dragListId
-      );
-    }
-  }, []);
+  const handleDragEnd = useCallback(
+    ({ source, destination, type: dragListId }) => {
+      // dropped outside the list
+      if (destination) {
+        reorderComponents(
+          source.index,
+          destination.index,
+          dragListId === inspectorDragId ? null : dragListId
+        );
+      }
+    },
+    [reorderComponents]
+  );
 
   return (
     <Container className={classes.root}>

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
-import { Checkbox, Radio } from './Choice';
+import { Checkbox } from './Choice';
 import Button from './Button';
 
 /** renders a multiple choice component: checkbox

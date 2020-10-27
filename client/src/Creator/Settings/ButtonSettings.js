@@ -1,9 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ColorPickerInput from './atoms/ColorPicker';
 import useStylesStore from '../stores/styles';
 
 function ButtonSettings({ componentId, styleId }) {
-  const { styles, updateStyle } = useStylesStore(state => ({ styles: state.styles, updateStyle: state.updateStyle }));
+  const { styles, updateStyle } = useStylesStore(state => ({
+    styles: state.styles,
+    updateStyle: state.updateStyle,
+  }));
   const onChange = subStyle => updateStyle({ styleId, ...subStyle });
 
   return (

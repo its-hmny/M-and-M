@@ -1,5 +1,5 @@
-import React, { Suspense, useMemo } from 'react';
-import { Typography, makeStyles } from '@material-ui/core';
+import React, { useMemo } from 'react';
+import { makeStyles } from '@material-ui/core';
 
 import ButtonFragment from './ButtonFragment';
 import ColorPickerFragment from './ColorPickerFragment';
@@ -67,7 +67,7 @@ const DynamicLoadFragments = props => {
           />
         );
       }),
-    [fieldsToSet]
+    [fieldsToSet, classes, pathToVal]
   );
 
   return <>{fragmentList}</>;

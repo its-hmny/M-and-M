@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import FontFamily from './atoms/FontFamily';
 import ColorPicker from './atoms/ColorPicker';
 import FontSize from './atoms/FontSize';
@@ -8,7 +8,10 @@ import TextAlignment from './atoms/TextAlignment';
 import useStylesStore from '../stores/styles';
 
 function TextSettings({ styleId }) {
-  const { styles, updateStyle } = useStylesStore(state => ({ styles: state.styles, updateStyle: state.updateStyle }));
+  const { styles, updateStyle } = useStylesStore(state => ({
+    styles: state.styles,
+    updateStyle: state.updateStyle,
+  }));
   const onChange = subStyle => updateStyle({ styleId, ...subStyle });
 
   return (

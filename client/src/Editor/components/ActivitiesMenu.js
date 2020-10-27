@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Drawer, Tabs, Tab, Grid, Typography, IconButton, Paper, Collapse } from '@material-ui/core';
+import {
+  Drawer,
+  Tabs,
+  Tab,
+  Grid,
+  Typography,
+  IconButton,
+  Collapse,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import DescriptiveCard from './DescriptiveCard.js';
@@ -59,7 +67,13 @@ const ActivitiesMenuButton = () => {
   const classes = useStyles();
 
   return (
-    <div className={isMenuOpen ? classes.ActivityMenuContainerShow : classes.ActivityMenuContainerHidden}>
+    <div
+      className={
+        isMenuOpen
+          ? classes.ActivityMenuContainerShow
+          : classes.ActivityMenuContainerHidden
+      }
+    >
       <IconButton
         className={isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose}
         onClick={() => setMenuOpen(!isMenuOpen)}
@@ -80,7 +94,9 @@ const ActivitiesMenu = props => {
   const classes = useStyles();
 
   const initializeTabs = () => {
-    return QuestionTemplate.map((item, index) => <Tab label={item.label} key={index} disableRipple />);
+    return QuestionTemplate.map((item, index) => (
+      <Tab label={item.label} key={index} disableRipple />
+    ));
   };
 
   return (
@@ -111,7 +127,10 @@ const ActivitiesMenu = props => {
         </Grid>
 
         <Grid item xs={8}>
-          <DescriptiveCard toPreview={QuestionTemplate[currentTab]} setParent={setMenuOpen} />
+          <DescriptiveCard
+            toPreview={QuestionTemplate[currentTab]}
+            setParent={setMenuOpen}
+          />
         </Grid>
       </Grid>
     </Drawer>

@@ -1,6 +1,6 @@
 import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
-import { TextField, InputLabel } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import shortid from 'shortid';
 

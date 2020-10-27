@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { Widget, addResponseMessage } from 'react-chat-widget';
@@ -12,30 +12,27 @@ const socket = io('http://localhost:8000');
 const useQuery = () => Object.fromEntries(new URLSearchParams(useLocation().search));
 
 const Chat = () => {
-  let playerID = undefined,
-    evaluatorID = undefined;
+  const [ids, setIDs] = useState({});
   const storyId = useQuery().storyId;
 
   const sendHandler = msg =>
     socket.emit('chat-msg-send', {
       story: storyId,
-      senderId: playerID,
-      receiverId: evaluatorID,
+      senderId: ids.player,
+      receiverId: ids.evaluator,
       msg,
     });
 
   useEffect(() => {
     axios.get(`http://localhost:8000/chats/${storyId}`).then(resp => {
       const { player, evaluator } = resp.data.payload;
-      playerID = player;
-      evaluatorID = evaluator;
-      console.log(evaluatorID);
+      setIDs({ player, evaluator });
     });
-  }, []);
+  }, [storyId]);
 
   socket.on('chat-msg-recv', payload => {
     const { story, senderId, receiverId, msg } = payload;
-    if (story === storyId && senderId === evaluatorID && receiverId === playerID)
+    if (story === storyId && senderId === ids.evaluator && receiverId === ids.player)
       addResponseMessage(msg);
   });
 

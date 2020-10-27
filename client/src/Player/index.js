@@ -11,7 +11,7 @@ const useQuery = () => Object.fromEntries(new URLSearchParams(useLocation().sear
 // `Story` param is an object that stores properties needed for computing
 // storyProps for this specific component
 const createStoryProps = (component, storyContext) => {
-  const { name, story: storyProps, ...props } = component;
+  const { name, story: storyProps } = component;
 
   switch (name) {
     case 'Button':
@@ -27,7 +27,9 @@ const createStoryProps = (component, storyContext) => {
         },
       };
     default:
-      throw new Error(`Cannot compute story props for ${name} because this component does not exist.`);
+      throw new Error(
+        `Cannot compute story props for ${name} because this component does not exist.`
+      );
   }
 };
 
@@ -37,7 +39,11 @@ const buildViewContent = (components, storyContext) =>
     const storyProps = story ? createStoryProps(component, storyContext) : {};
     // compound components must keep their "atoms" in children prop, or we can't
     // know what to load (i.e. what is a prop and what is a renderable component)
-    const props = { ...storyProps, ...rest, children: children && buildViewContent(children, storyContext) };
+    const props = {
+      ...storyProps,
+      ...rest,
+      children: children && buildViewContent(children, storyContext),
+    };
     const Element = Elements[component.name];
     return <Element key={component.id} {...props} />;
   });
@@ -54,7 +60,7 @@ const Player = () => {
       currentNodeId,
       moveTo: node => setCurrentNodeId(node),
     }),
-    []
+    [currentNodeId]
   );
 
   useEffect(() => {

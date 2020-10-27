@@ -1,5 +1,5 @@
 import React from 'react';
-import { Widget, addResponseMessage, toggleWidget } from 'react-chat-widget';
+import { Widget, addResponseMessage } from 'react-chat-widget';
 import { useEvaluator } from '../context/EvaluatorContext';
 import io from 'socket.io-client';
 
