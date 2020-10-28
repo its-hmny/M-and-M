@@ -34,7 +34,7 @@ const noop = () => {};
 
 function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-
+  
   //let's only work with IDs
   const correctAnswer = useMemo(
     () =>
@@ -65,7 +65,7 @@ function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop })
   }, [withSubmit, onSubmit, isCorrect, correctAnswer, selectedAnswer]);
 
   return (
-    <div css={[base, style.Root]}>
+    <div css={[base, style]}>
       <div>
         {answers.map(({ id, text }) => (
           <Radio

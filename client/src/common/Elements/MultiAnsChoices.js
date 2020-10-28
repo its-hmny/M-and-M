@@ -70,7 +70,7 @@ function MultiAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) 
   }, [withSubmit, onSubmit, isCorrect, correctAnswers, selectedAnswers]);
 
   return (
-    <div css={[base, style.Root]}>
+    <div css={[base, style]}>
       <div>
         {answers.map(({ id, text }) => (
           <Checkbox

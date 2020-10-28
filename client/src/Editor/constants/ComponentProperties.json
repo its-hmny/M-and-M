@@ -1,22 +1,82 @@
 {
   "Global": [
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "label", "label": "Node name"} },
-    { "fragment": "ColorPickerFragment", "props": { "valToChange": "color" } },
-    { "fragment": "ButtonFragment", "props": {  } }
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "label",
+        "label": "Node name"
+      }
+    },
+    {
+      "fragment": "ColorPickerFragment",
+      "props": {
+        "valToChange": "color"
+      }
+    },
+    {
+      "fragment": "ButtonFragment",
+      "props": {}
+    }
   ],
   "Button": [
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "text", "label": "Button text" } },
-    { "fragment": "SelectFragment", "props": { "specificPath": ["story"], "valToChange": "nextNode" } }
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "text",
+        "label": "Button text"
+      }
+    },
+    {
+      "fragment": "SelectFragment",
+      "props": {
+        "specificPath": [
+          "story"
+        ],
+        "valToChange": "nextNode"
+      }
+    }
   ],
-  "Text": [{ "fragment": "TextFieldFragment", "props": { "valToChange": "text", "label": "Content" } }],
+  "Text": [
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "text",
+        "label": "Content"
+      }
+    }
+  ],
   "Input": [
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "placeholder", "label": "Description" } },
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "correctAnswer", "label": "Correct answer" } }
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "placeholder",
+        "label": "Description"
+      }
+    },
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "correctAnswer",
+        "label": "Correct answer"
+      }
+    }
   ],
   "ButtonGroup": [],
   "Image": [
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "description", "label": "Image description" } },
-    { "fragment": "TextFieldFragment", "props": { "valToChange": "fallback", "label": "Fallback" } },
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "description",
+        "label": "Image description"
+      }
+    },
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "fallback",
+        "label": "Fallback"
+      }
+    },
     {
       "fragment": "FilePickerFragment",
       "props": {
@@ -36,6 +96,142 @@
       }
     }
   ],
-  "TextArea" : [],
-  "Footer": []
+  "TextArea": [],
+  "Footer": [],
+  "SingleAnsChoices": [
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          0
+        ],
+        "valToChange": "text",
+        "label": "First Answer"
+      }
+    },
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          1
+        ],
+        "valToChange": "text",
+        "label": "Second Answer"
+      }
+    },
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          2
+        ],
+        "valToChange": "text",
+        "label": "Third Answer"
+      }
+    },
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          3
+        ],
+        "valToChange": "text",
+        "label": "Fourth Answer"
+      }
+    }
+  ],
+  "MultiAnsChoices": [
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          0
+        ],
+        "valToChange": "text",
+        "label": "First Answer"
+      }
+    },
+    {
+      "fragment": "CheckboxFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          0
+        ],
+        "valToChange": "value",
+        "label": "Correct answer"
+      }
+    },
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          1
+        ],
+        "valToChange": "text",
+        "label": "Second Answer"
+      }
+    },
+    {
+      "fragment": "CheckboxFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          1
+        ],
+        "valToChange": "value",
+        "label": "Correct answer"
+      }
+    },
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          2
+        ],
+        "valToChange": "text",
+        "label": "Third Answer"
+      }
+    },
+    {
+      "fragment": "CheckboxFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          2
+        ],
+        "valToChange": "value",
+        "label": "Correct answer"
+      }
+    },
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          3
+        ],
+        "valToChange": "text",
+        "label": "Fourth Answer"
+      }
+    },
+    {
+      "fragment": "CheckboxFragment",
+      "props": {
+        "pathAlternative": [
+          "answers",
+          3
+        ],
+        "valToChange": "value",
+        "label": "Correct answer"
+      }
+    }
+  ]
 }

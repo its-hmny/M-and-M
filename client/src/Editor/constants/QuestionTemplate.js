@@ -89,6 +89,77 @@ const QuestionTemplate = [
       },
     ],
   },
+  {
+    label: 'SingleAnsChoice',
+    description: 'Test single choice',
+    components: [
+      {
+        name: 'Text',
+        text: 'Domanda placeholder'
+      },
+      {
+        name: 'SingleAnsChoices',
+        answers:[
+          {
+            
+            text: 'Risposta 1',
+            value: '[CORRECT]'
+          },
+          {
+            text: 'Risposta 2',
+            value: '[WRONG]'
+          },
+          {
+            text: 'Risposta 2 Bis',
+            value: '[WRONG]'
+          },
+          {
+            text: 'Risposta 3',
+            value: '[WRONG]'
+          }
+          
+        ],
+        withSubmit: 'true'
+        
+      }
+    ]
+  },
+  {
+    label: 'MultiAnsChoice',
+    description: 'Test multi choice',
+    components: [
+      {
+        name: 'Text',
+        text: 'Domanda placeholder'
+      },
+      {
+        name: 'MultiAnsChoices',
+        answers:[
+          {
+            
+            text: 'Risposta 1',
+            value: '[CORRECT]'
+          },
+          {
+            text: 'Risposta 2',
+            value: '[CORRECT]'
+          },
+          {
+            text: 'Risposta 2 Bis',
+            value: '[WRONG]'
+          },
+          {
+            text: 'Risposta 3',
+            value: '[WRONG]'
+          }
+          
+        ],
+        withSubmit: 'true'
+        
+      }
+    ]
+  },
+  
 ];
 
 export default QuestionTemplate;

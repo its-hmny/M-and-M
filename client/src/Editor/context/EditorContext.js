@@ -26,8 +26,10 @@ export const EditorProvider = ({ children, userStory }) => {
         value is the value that has to overwrite the previous one
         Ex. components -> 0 (first component) -> children -> 1 (second component)
       */
+      
       let current = inProgressStory.nodes.find(node => node.id === focusedNode);
       path.forEach(key => (current = current[key]));
+      
       current[field] = value;
       setStory({ ...inProgressStory });
     },

@@ -13,10 +13,12 @@ const useStyles = makeStyles(theme => ({
 
 const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { root, inputRoot } = useStyles();
-  const { valToChange, label } = fragmentSpecificProps;
+  const { pathAlternative, valToChange, label } = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
+  //Additional field to modify objects or array 
+  path = path.concat(pathAlternative || []);
   const value = getFromPath(path || [])[valToChange];
-
+  
   return (
     <TextField
       className={classNames.InspectorElement}
