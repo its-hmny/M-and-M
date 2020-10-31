@@ -3,6 +3,7 @@ import { Typography } from '@material-ui/core';
 import PlayerSidebar from './components/PlayerSidebar';
 import ChatPopUp from './components/ChatPopUp';
 import Launcher from './components/Launcher';
+import { SmartphoneEmulator } from '../Editor/components';
 import { useEvaluator } from './context/EvaluatorContext';
 
 const App = () => {
@@ -12,13 +13,12 @@ const App = () => {
       <Typography>{selectedPlayer}</Typography>
       <PlayerSidebar />
       <ChatPopUp />
-      <Launcher backgroundColor="#121212" img="http://localhost:8000/clear-button.svg">
-        <div>
-          <div class="rcw-conversation-container active">
-            {/* <SmartphoneEmulator storyNode={{ components: [] }} /> */}
-            <h1>Diocane</h1>
-          </div>
-        </div>
+      <Launcher
+        img="http://localhost:8000/M&M_Icon.svg"
+        backgroundColor="#121212"
+        marginRight={'5vw'}
+      >
+        <SmartphoneEmulator storyNode={{ components: [] }} />
       </Launcher>
     </>
   );

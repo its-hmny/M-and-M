@@ -2,7 +2,8 @@
 const QuestionTemplate = [
   {
     label: 'Introduzione',
-    description: "Semplice componente di introduzione per immergere l'utente nella storia",
+    description:
+      "Semplice componente di introduzione per immergere l'utente nella storia",
     components: [
       {
         name: 'Text',
@@ -56,7 +57,7 @@ const QuestionTemplate = [
         name: 'Image',
         imgURL: '',
         description: 'Optional description',
-        fallback: 'An optional fallback in case something goes wrong'
+        fallback: 'An optional fallback in case something goes wrong',
       },
       {
         name: 'Input',
@@ -66,8 +67,7 @@ const QuestionTemplate = [
   },
   {
     label: 'Memo vocale',
-    description:
-      'Semplice componente per far ascoltare un audio MP4 al giocatore ',
+    description: 'Semplice componente per far ascoltare un audio MP4 al giocatore ',
     components: [
       {
         name: 'AudioPlayer',
@@ -75,8 +75,8 @@ const QuestionTemplate = [
       },
       {
         name: 'Input',
-        placeholder: 'Placeholder here'
-      }
+        placeholder: 'Placeholder here',
+      },
     ],
   },
   {
@@ -90,76 +90,71 @@ const QuestionTemplate = [
     ],
   },
   {
-    label: 'SingleAnsChoice',
-    description: 'Test single choice',
+    label: 'Single Answer',
+    description:
+      'Frammento con piu risposte predefinite di cui solo una e pero quella corretta e valida',
     components: [
       {
         name: 'Text',
-        text: 'Domanda placeholder'
+        text: 'Domanda placeholder',
       },
       {
         name: 'SingleAnsChoices',
-        answers:[
+        answers: [
           {
-            
             text: 'Risposta 1',
-            value: '[CORRECT]'
+            value: '[CORRECT]',
           },
           {
             text: 'Risposta 2',
-            value: '[WRONG]'
+            value: '[WRONG]',
           },
           {
             text: 'Risposta 2 Bis',
-            value: '[WRONG]'
+            value: '[WRONG]',
           },
           {
             text: 'Risposta 3',
-            value: '[WRONG]'
-          }
-          
+            value: '[WRONG]',
+          },
         ],
-        withSubmit: 'true'
-        
-      }
-    ]
+        withSubmit: 'true',
+      },
+    ],
   },
   {
-    label: 'MultiAnsChoice',
-    description: 'Test multi choice',
+    label: 'Multiple Answer',
+    description:
+      'Frammento con piu risposte predefinite e piu risposte corrette, tutte debbono essere selezionate per avere una risposta corretta globalmente',
     components: [
       {
         name: 'Text',
-        text: 'Domanda placeholder'
+        text: 'Domanda placeholder',
       },
       {
         name: 'MultiAnsChoices',
-        answers:[
+        answers: [
           {
-            
             text: 'Risposta 1',
-            value: '[CORRECT]'
+            value: '[CORRECT]',
           },
           {
             text: 'Risposta 2',
-            value: '[CORRECT]'
+            value: '[CORRECT]',
           },
           {
             text: 'Risposta 2 Bis',
-            value: '[WRONG]'
+            value: '[WRONG]',
           },
           {
             text: 'Risposta 3',
-            value: '[WRONG]'
-          }
-          
+            value: '[WRONG]',
+          },
         ],
-        withSubmit: 'true'
-        
-      }
-    ]
+        withSubmit: 'true',
+      },
+    ],
   },
-  
 ];
 
 export default QuestionTemplate;

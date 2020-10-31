@@ -29,9 +29,7 @@
     {
       "fragment": "SelectFragment",
       "props": {
-        "specificPath": [
-          "story"
-        ],
+        "specificPath": ["story"],
         "valToChange": "nextNode"
       }
     }
@@ -102,10 +100,7 @@
     {
       "fragment": "TextFieldFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          0
-        ],
+        "pathAlternative": ["answers", 0],
         "valToChange": "text",
         "label": "First Answer"
       }
@@ -113,10 +108,7 @@
     {
       "fragment": "TextFieldFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          1
-        ],
+        "pathAlternative": ["answers", 1],
         "valToChange": "text",
         "label": "Second Answer"
       }
@@ -124,10 +116,7 @@
     {
       "fragment": "TextFieldFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          2
-        ],
+        "pathAlternative": ["answers", 2],
         "valToChange": "text",
         "label": "Third Answer"
       }
@@ -135,10 +124,7 @@
     {
       "fragment": "TextFieldFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          3
-        ],
+        "pathAlternative": ["answers", 3],
         "valToChange": "text",
         "label": "Fourth Answer"
       }
@@ -148,10 +134,7 @@
     {
       "fragment": "TextFieldFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          0
-        ],
+        "pathAlternative": ["answers", 0],
         "valToChange": "text",
         "label": "First Answer"
       }
@@ -159,10 +142,7 @@
     {
       "fragment": "CheckboxFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          0
-        ],
+        "pathAlternative": ["answers", 0],
         "valToChange": "value",
         "label": "Correct answer"
       }
@@ -170,10 +150,7 @@
     {
       "fragment": "TextFieldFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          1
-        ],
+        "pathAlternative": ["answers", 1],
         "valToChange": "text",
         "label": "Second Answer"
       }
@@ -181,10 +158,7 @@
     {
       "fragment": "CheckboxFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          1
-        ],
+        "pathAlternative": ["answers", 1],
         "valToChange": "value",
         "label": "Correct answer"
       }
@@ -192,10 +166,7 @@
     {
       "fragment": "TextFieldFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          2
-        ],
+        "pathAlternative": ["answers", 2],
         "valToChange": "text",
         "label": "Third Answer"
       }
@@ -203,10 +174,7 @@
     {
       "fragment": "CheckboxFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          2
-        ],
+        "pathAlternative": ["answers", 2],
         "valToChange": "value",
         "label": "Correct answer"
       }
@@ -214,10 +182,7 @@
     {
       "fragment": "TextFieldFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          3
-        ],
+        "pathAlternative": ["answers", 3],
         "valToChange": "text",
         "label": "Fourth Answer"
       }
@@ -225,10 +190,7 @@
     {
       "fragment": "CheckboxFragment",
       "props": {
-        "pathAlternative": [
-          "answers",
-          3
-        ],
+        "pathAlternative": ["answers", 3],
         "valToChange": "value",
         "label": "Correct answer"
       }
