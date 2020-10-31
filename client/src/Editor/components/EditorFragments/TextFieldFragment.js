@@ -15,10 +15,10 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { root, inputRoot } = useStyles();
   const { pathAlternative, valToChange, label } = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
-  //Additional field to modify objects or array 
-  path = path.concat(pathAlternative || []);
+  //Additional field to modify objects or array
+  path = pathAlternative ? path.concat(pathAlternative || []) : path;
   const value = getFromPath(path || [])[valToChange];
-  
+
   return (
     <TextField
       className={classNames.InspectorElement}

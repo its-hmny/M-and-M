@@ -14,7 +14,7 @@ const App = () => {
       <PlayerSidebar />
       <ChatPopUp />
       <Launcher
-        img="http://localhost:8000/M&M_Icon.svg"
+        img="http://localhost:8000/smartphone.svg"
         backgroundColor="#121212"
         marginRight={'5vw'}
       >

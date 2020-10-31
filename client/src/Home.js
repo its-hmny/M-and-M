@@ -11,6 +11,7 @@ const Home = () => {
         <Toolbar>
           <img
             src="http://localhost:8000/M&M_Icon.svg"
+            alt="Application Logo"
             style={{ height: '5vh', marginRight: '1vw' }}
           />
           <Typography variant="h5">{'M&M'}</Typography>
