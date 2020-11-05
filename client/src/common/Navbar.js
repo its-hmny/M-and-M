@@ -1,28 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 
+import logo from '../assets/logo.svg';
 import * as ROUTES from '../routes';
 
 const Navbar = () => (
-  <nav>
-    <ul>
-      <li>
-        <Link to={ROUTES.HOME}>Home</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.CREATOR}>Creator</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.EDITOR}>Editor</Link>
-      </li>
-      <li>
-        <Link to={`${ROUTES.PLAYER}?storyId=test`}>Player</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.EVALUATOR}>Evaluator</Link>
-      </li>
-    </ul>
-  </nav>
+  <AppBar position="static" color="secondary">
+    <Toolbar>
+      <img
+        src={logo}
+        alt="Application Logo"
+        style={{ height: '5vh', marginRight: '1vw' }}
+      />
+      <Typography variant="h6">
+        <Button color="inherit" component={Link} to={ROUTES.HOME}>
+          Home
+        </Button>
+      </Typography>
+      <Typography variant="h6">
+        <Button color="inherit" component={Link} to={ROUTES.CREATOR}>
+          Creator
+        </Button>
+      </Typography>
+      <Typography variant="h6">
+        <Button color="inherit" component={Link} to={ROUTES.EDITOR}>
+          Editor
+        </Button>
+      </Typography>
+      <Typography variant="h6">
+        <Button color="inherit" component={Link} to={ROUTES.PLAYER}>
+          Player
+        </Button>
+      </Typography>
+      <Typography variant="h6">
+        <Button color="inherit" component={Link} to={ROUTES.EVALUATOR}>
+          Evaluator
+        </Button>
+      </Typography>
+    </Toolbar>
+  </AppBar>
 );
 
 export default Navbar;

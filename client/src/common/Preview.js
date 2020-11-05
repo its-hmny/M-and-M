@@ -1,8 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
 import * as Elements from './Elements';
 
-function Preview({ components, styles }) {
+const useStyles = makeStyles({
+  smartphoneFrame: {
+    position: 'relative',
+    margin: 'auto',
+    border: '2vh black solid',
+    borderTopWidth: '5vh',
+    borderBottomWidth: '6vh',
+    borderRadius: '36px',
+    width: 'calc(70vh * 0.5)',
+    height: '70vh',
+    background: 'white',
+    overflowY: 'auto',
+  },
+});
+
+const Preview = ({ components, styles }) => {
+  const classes = useStyles();
   const [elements, setElements] = useState([]);
 
   useEffect(() => {
@@ -20,17 +37,13 @@ function Preview({ components, styles }) {
         );
       });
 
-    setElements(buildElements(components));
+    // A guard against possible, very difficult to debug, disaster
+    if (components) {
+      setElements(buildElements(components));
+    }
   }, [components, styles]);
 
-  return (
-    <>
-      <Typography variant="h6" color="secondary">
-        Preview
-      </Typography>
-      <div>{elements}</div>
-    </>
-  );
-}
+  return <div className={classes.smartphoneFrame}>{elements}</div>;
+};
 
 export default Preview;

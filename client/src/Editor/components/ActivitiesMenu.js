@@ -10,10 +10,12 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-import DescriptiveCard from './DescriptiveCard.js';
+
+import DescriptiveCard from './DescriptiveCard';
+import TemplateSelectionDialog from './TemplateSelectionDialog';
 
 // TODO: Will become an API call to fetch the data stored server-side
-import QuestionTemplate from '../constants/QuestionTemplate.js';
+import QuestionTemplate from '../constants/QuestionTemplate';
 
 const useStyles = makeStyles(theme => ({
   MenuButtonOpen: {
@@ -63,27 +65,36 @@ const useStyles = makeStyles(theme => ({
 
 /* Button to open drawer */
 const ActivitiesMenuButton = () => {
-  const [isMenuOpen, setMenuOpen] = useState(false);
   const classes = useStyles();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const { story, saveStory } = useEditor();
+
+  const addToStory = () => {
+    setParent(false);
+    const { nodes, ...others } = story;
+    saveStory({ nodes: [...nodes, { id: undefined, ...toPreview }], ...others });
+  };
 
   return (
     <div
       className={
-        isMenuOpen
+        isDialogOpen
           ? classes.ActivityMenuContainerShow
           : classes.ActivityMenuContainerHidden
       }
     >
       <IconButton
-        className={isMenuOpen ? classes.MenuButtonOpen : classes.MenuButtonClose}
-        onClick={() => setMenuOpen(!isMenuOpen)}
+        className={isDialogOpen ? classes.MenuButtonOpen : classes.MenuButtonClose}
+        onClick={() => setIsDialogOpen(true)}
       >
         <AddIcon />
       </IconButton>
 
-      <Collapse in={isMenuOpen}>
-        <ActivitiesMenu binding={{ isMenuOpen, setMenuOpen }} />
-      </Collapse>
+      <TemplateSelectionDialog
+        open={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+      />
     </div>
   );
 };

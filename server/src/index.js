@@ -10,6 +10,7 @@ const fileUpload = require('express-fileupload');
 const resourcesRouter = require('./routes/resources');
 const storiesRouter = require('./routes/stories');
 const chatRouter = require('./routes/chat');
+const templatesRouter = require('./routes/templates');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -24,6 +25,7 @@ io.on('connection', socket => {
 app.use('/resources', resourcesRouter);
 app.use('/stories', storiesRouter);
 app.use('/chats', chatRouter);
+app.use('/templates', templatesRouter);
 
 app.get('/', (_, res) => res.send('Hello World from M&M server!'));
 

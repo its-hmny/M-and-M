@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Typography, Slide, makeStyles } from '@material-ui/core';
+import { Paper, Typography, makeStyles } from '@material-ui/core';
 
 import { useEditor } from '../context/EditorContext';
 import CollapsableBox from './CollapsableBox';
@@ -8,7 +8,6 @@ import properties from '../constants/ComponentProperties.json';
 const useStyles = makeStyles({
   InspectorPaperStyle: {
     padding: 15,
-    zIndex: 2,
     maxHeight: '100vh',
   },
 
@@ -24,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-const SettingsColumn = () => {
+const Inspector = () => {
   const { story, workingActivity } = useEditor();
   const { InspectorPaperStyle, DefaultTitleStyle, content } = useStyles();
   const [openBox, setOpenBox] = useState({});
@@ -98,7 +97,11 @@ const SettingsColumn = () => {
             pathToVal={[...absPath, index]}
           />,
           Array.isArray(component.children)
-            ? populateInspector(component.children, level + 1, [...absPath, index, 'children'])
+            ? populateInspector(component.children, level + 1, [
+                ...absPath,
+                index,
+                'children',
+              ])
             : undefined,
         ];
       }),
@@ -106,17 +109,19 @@ const SettingsColumn = () => {
   };
 
   return (
-    <Slide in={workingActivity != null} direction="left">
-      <Paper className={InspectorPaperStyle} elevation={3}>
-        <Typography variant="h4" component="h4" className={DefaultTitleStyle}>
-          {story.title}
-        </Typography>
-        <div className={content}>
-          {workingActivity && populateInspector(story.nodes.find(node => node.id === workingActivity).components, 0)}
-        </div>
-      </Paper>
-    </Slide>
+    <Paper className={InspectorPaperStyle} elevation={3}>
+      <Typography variant="h4" component="h4" className={DefaultTitleStyle}>
+        {story.title}
+      </Typography>
+      <div className={content}>
+        {workingActivity &&
+          populateInspector(
+            story.nodes.find(node => node.id === workingActivity).components,
+            0
+          )}
+      </div>
+    </Paper>
   );
 };
 
-export default SettingsColumn;
+export default Inspector;

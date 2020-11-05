@@ -23,8 +23,8 @@
 
 /* The screen (or content) of the device */
 .smartphone {
-  width: calc(75vh * 0.5);
-  height: 75vh;
+  width: calc(70vh * 0.5);
+  height: 70vh;
   background: white;
   overflow-y: auto;
 }

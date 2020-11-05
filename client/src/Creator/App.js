@@ -1,53 +1,66 @@
-import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
-import Inspector from './components/Inspector';
-import Preview from '../common/Preview';
-import useStylesStore from './stores/styles';
-import useTemplateStore from './stores/template';
+import React, { useState } from 'react';
+import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Navbar from '../common/Navbar';
+import Preview from '../common/Preview';
+import Inspector from './components/Inspector';
+import SaveDialog from './components/SaveDialog';
+import axios from './axios';
+import useTemplateStore from './stores/template';
+import useStylesStore from './stores/styles';
+
 const useStyles = makeStyles(theme => ({
-  smartphone: {
-    position: 'relative',
-    margin: 'auto',
-    border: '2vh black solid',
-    borderTopWidth: '5vh',
-    borderBottomWidth: '6vh',
-    borderRadius: '36px',
-    width: 'calc(75vh * 0.5)',
-    height: '75vh',
-    background: 'white',
-    overflowY: 'auto',
+  saveButton: {
+    position: 'absolute',
+    bottom: theme.spacing(3),
+    right: theme.spacing(3),
   },
 }));
 
-function PreviewWrapper() {
+const App = () => {
   const classes = useStyles();
+  const [isSaving, setIsSaving] = useState(false);
   const styles = useStylesStore(state => state.styles);
   const components = useTemplateStore(state => state.components);
+  const saveTemplate = name => {
+    setIsSaving(false);
+    console.log(`About to save template ${name}...`);
+    axios
+      .post('templates', { name, components })
+      .then(value => console.log(value))
+      .catch(err => console.error(err));
+  };
+
   return (
-    <div className={classes.smartphone}>
-      <Preview components={components} styles={styles} />
+    <div>
+      <Navbar />
+      <Grid container>
+        <Grid item xs={6}>
+          <Inspector />
+        </Grid>
+        <Grid item xs={6}>
+          <Preview components={components} styles={styles} />
+          <Button
+            color="primary"
+            variant="contained"
+            className={classes.saveButton}
+            onClick={() => setIsSaving(true)}
+          >
+            Save Template
+          </Button>
+          <SaveDialog
+            open={isSaving}
+            onCancel={() => {
+              console.log('cancel');
+              setIsSaving(false);
+            }}
+            onSave={saveTemplate}
+          />
+        </Grid>
+      </Grid>
     </div>
   );
-}
-
-function App() {
-  return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Typography variant="h5" color="primary">
-          Creator
-        </Typography>
-      </Grid>
-      <Grid item xs={6}>
-        <Inspector />
-      </Grid>
-      <Grid item xs={6}>
-        <PreviewWrapper />
-      </Grid>
-    </Grid>
-  );
-}
+};
 
 export default App;
