@@ -1,14 +1,29 @@
-import React, { useContext, useState } from 'react';
-
-import DummyData from '../dummydata.json';
+import React, { useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 const EvaluatorContext = React.createContext();
 
 export const EvaluatorProvider = ({ children, _ }) => {
   const [selectedPlayer, setSelectedPlayer] = useState(undefined);
+  const [playerList, setPlayerList] = useState([]);
+
+  useEffect(() => {
+    // onMount setup the update routine
+    const intervalId = setInterval(
+      () =>
+        axios
+          .get('http://localhost:8000/stats/test')
+          .then(res => setPlayerList(res.data.payload))
+          .catch(err => console.warn(err)),
+      1000
+    );
+
+    // onUnmount removes the interval
+    return () => clearInterval(intervalId);
+  }, []);
 
   const toProvide = {
-    playerList: DummyData,
+    playerList,
     selectedPlayer,
     setSelectedPlayer,
   };

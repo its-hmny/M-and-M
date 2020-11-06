@@ -4,3 +4,4 @@ export { default as ChoicesSettings } from './ChoicesSettings';
 export { default as SingleAnsChoicesSettings } from './SingleAnsChoicesSettings';
 export { default as MultiAnsChoicesSettings } from './MultiAnsChoicesSettings';
 export { default as ButtonGroupSettings } from './ButtonGroupSettings';
+export { default as TextAreaSettings } from './TextAreaSettings';

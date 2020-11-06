@@ -116,6 +116,11 @@ export const componentBuilders = {
       },
     ],
   }),
+  TextAreaSettings: () => ({
+    name: 'TextArea',
+    styleId: 'DefaultTextArea',
+    placeholder: 'Default placeholder text',
+  }),
 };
 
 const recursiveFind = (components, targetId) => {
