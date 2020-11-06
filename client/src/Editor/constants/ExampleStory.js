@@ -5,7 +5,7 @@ const ExampleStory = {
   nodes: [
     {
       id: 'stringid0',
-      label: 'Introduzione',
+      name: 'Introduzione',
       components: [
         {
           id: shortid.generate(),
@@ -24,7 +24,7 @@ const ExampleStory = {
     },
     {
       id: 1,
-      label: 'Domanda a scelta multipla',
+      name: 'Domanda a scelta multipla',
       components: [
         {
           id: shortid.generate(),
@@ -54,7 +54,7 @@ const ExampleStory = {
     },
     {
       id: 2,
-      label: 'Corretto',
+      name: 'Corretto',
       components: [
         {
           id: shortid.generate(),
@@ -65,7 +65,7 @@ const ExampleStory = {
     },
     {
       id: 3,
-      label: 'Sbagliato',
+      name: 'Sbagliato',
       components: [
         {
           id: shortid.generate(),
@@ -108,7 +108,7 @@ const ExampleStory = {
     },
     {
       id: 4,
-      label: 'Sconfitta',
+      name: 'Sconfitta',
       components: [
         {
           id: shortid.generate(),
@@ -119,7 +119,7 @@ const ExampleStory = {
     },
     {
       id: 5,
-      label: 'Test nuovi fragment',
+      name: 'Test nuovi fragment',
       color: '#fef3f4',
       components: [
         {
@@ -130,7 +130,8 @@ const ExampleStory = {
         {
           id: shortid.generate(),
           name: 'AudioPlayer',
-          srcURL: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
+          srcURL:
+            'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
         },
         {
           id: shortid.generate(),

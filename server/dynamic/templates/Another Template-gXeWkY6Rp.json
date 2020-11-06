@@ -1,0 +1,37 @@
+{
+  "name": "Another Template",
+  "description": "Desc",
+  "components": [
+    {
+      "id": "9H1EIKPTe",
+      "name": "Text",
+      "text": "Di che colore è il cavallo bianco di Napoleone?",
+      "styleId": "DefaultText"
+    },
+    {
+      "id": "L6ly_wnjZ8",
+      "name": "Button",
+      "text": "Some Button inside ButtonGroup",
+      "styleId": "DefaultButton"
+    },
+    {
+      "id": "I9vO4WxEkc",
+      "name": "ButtonGroup",
+      "styleId": "DefaultButtonGroup",
+      "children": [
+        {
+          "id": "UBLebIZg26",
+          "name": "Button",
+          "text": "Ritenta",
+          "styleId": "DefaultButton"
+        },
+        {
+          "id": "Z4YDkroqWC",
+          "name": "Button",
+          "text": "Abbandona",
+          "styleId": "DefaultButton"
+        }
+      ]
+    }
+  ]
+}

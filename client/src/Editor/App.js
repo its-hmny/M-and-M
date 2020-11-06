@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import { Add as AddIcon } from '@material-ui/icons';
+import shortid from 'shortid';
 
 import { useEditor } from './context/EditorContext';
 import Preview from '../common/Preview';
 import GraphCanvas from './components/GraphCanvas';
 import Inspector from './components/Inspector';
-import TemplateSelectionDialog from './components/TemplateSelectionDialog';
+import TemplatesDialog from './components/TemplatesDialog';
 import Panel from './components/Panel';
 
 import styles from '../data/styles.json';
@@ -45,7 +46,7 @@ const App = () => {
   const addNode = template => {
     setIsDialogOpen(false);
     const { nodes, ...others } = story;
-    saveStory({ nodes: [...nodes, { id: undefined, ...template }], ...others });
+    saveStory({ nodes: [...nodes, { id: shortid.generate(), ...template }], ...others });
   };
 
   return (
@@ -72,7 +73,7 @@ const App = () => {
           <Inspector />
         </div>
       </Panel>
-      <TemplateSelectionDialog
+      <TemplatesDialog
         open={isDialogOpen}
         onCancel={() => setIsDialogOpen(false)}
         onConfirm={addNode}

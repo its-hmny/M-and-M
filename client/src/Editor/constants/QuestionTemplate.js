@@ -1,7 +1,7 @@
 /* Contains question templates formatted as story nodes */
 const QuestionTemplate = [
   {
-    label: 'Introduzione',
+    name: 'Introduzione',
     description:
       "Semplice componente di introduzione per immergere l'utente nella storia",
     components: [
@@ -20,7 +20,7 @@ const QuestionTemplate = [
     ],
   },
   {
-    label: 'Scelta multipla',
+    name: 'Scelta multipla',
     description:
       'Possibili scelte ognuna con un proprio pulsante cliccabile, ogni scelta puó portare ad una strada diversa',
     components: [
@@ -45,7 +45,7 @@ const QuestionTemplate = [
     ],
   },
   {
-    label: 'Domanda e immagine',
+    name: 'Domanda e immagine',
     description:
       "L'utente deve rispondere a una domanda controllando/valutando l'immagine",
     components: [
@@ -66,7 +66,7 @@ const QuestionTemplate = [
     ],
   },
   {
-    label: 'Memo vocale',
+    name: 'Memo vocale',
     description: 'Semplice componente per far ascoltare un audio MP4 al giocatore ',
     components: [
       {
@@ -80,7 +80,7 @@ const QuestionTemplate = [
     ],
   },
   {
-    label: 'Epilogo',
+    name: 'Epilogo',
     description: 'Un componente che permette di chiudere la storia in maniera narrativa',
     components: [
       {
@@ -90,7 +90,7 @@ const QuestionTemplate = [
     ],
   },
   {
-    label: 'Single Answer',
+    name: 'Single Answer',
     description:
       'Frammento con piu risposte predefinite di cui solo una e pero quella corretta e valida',
     components: [
@@ -123,7 +123,7 @@ const QuestionTemplate = [
     ],
   },
   {
-    label: 'Multiple Answer',
+    name: 'Multiple Answer',
     description:
       'Frammento con piu risposte predefinite e piu risposte corrette, tutte debbono essere selezionate per avere una risposta corretta globalmente',
     components: [

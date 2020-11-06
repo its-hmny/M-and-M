@@ -23,11 +23,11 @@ const App = () => {
   const [isSaving, setIsSaving] = useState(false);
   const styles = useStylesStore(state => state.styles);
   const components = useTemplateStore(state => state.components);
-  const saveTemplate = name => {
+  const saveTemplate = meta => {
     setIsSaving(false);
-    console.log(`About to save template ${name}...`);
+    console.log(`About to save template ${meta.name}...`);
     axios
-      .post('templates', { name, components })
+      .post('templates', { ...meta, components })
       .then(value => console.log(value))
       .catch(err => console.error(err));
   };

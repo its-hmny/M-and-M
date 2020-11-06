@@ -73,7 +73,7 @@ export const getGraphFromStory = story => {
   const graph = { nodes: [], edges: [] };
 
   story.nodes.forEach(node => {
-    graph.nodes = [...graph.nodes, node];
+    graph.nodes = [...graph.nodes, { ...node, label: node.name }];
     setEdgesFromChildren(node.components, node.id, graph);
   });
 
@@ -82,7 +82,9 @@ export const getGraphFromStory = story => {
 
 const setEdgesFromChildren = (root, rootId, graph) => {
   root.forEach(child => {
-    if (child.story && child.story.nextNode) graph.edges = [...graph.edges, { from: rootId, to: child.story.nextNode }];
-    else if (child.children instanceof Array) setEdgesFromChildren(child.children, rootId, graph);
+    if (child.story && child.story.nextNode)
+      graph.edges = [...graph.edges, { from: rootId, to: child.story.nextNode }];
+    else if (child.children instanceof Array)
+      setEdgesFromChildren(child.children, rootId, graph);
   });
 };
