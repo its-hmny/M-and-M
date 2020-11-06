@@ -1,11 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 
 import ColorPickerInput from './atoms/ColorPicker';
 import useStylesStore from '../stores/styles';
-import TextSettings from './TextSettings';
 
-const useStyles = makeStyles({});
 
 // Choices style object reference:
 // {
@@ -16,7 +13,6 @@ const useStyles = makeStyles({});
 // }
 
 function ChoicesSettings({ styleId }) {
-  const classes = useStyles();
 
   // Choices styles
   const { styles, updateStyle } = useStylesStore(state => ({

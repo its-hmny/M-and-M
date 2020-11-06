@@ -80,16 +80,6 @@ const QuestionTemplate = [
     ],
   },
   {
-    label: 'Epilogo',
-    description: 'Un componente che permette di chiudere la storia in maniera narrativa',
-    components: [
-      {
-        name: 'Text',
-        text: 'É stato bell giocare con te!',
-      },
-    ],
-  },
-  {
     label: 'Single Answer',
     description:
       'Frammento con piu risposte predefinite di cui solo una e pero quella corretta e valida',
@@ -152,6 +142,16 @@ const QuestionTemplate = [
           },
         ],
         withSubmit: 'true',
+      },
+    ],
+  },
+  {
+    label: 'Epilogo',
+    description: 'Un componente che permette di chiudere la storia in maniera narrativa',
+    components: [
+      {
+        name: 'Text',
+        text: 'É stato bell giocare con te!',
       },
     ],
   },

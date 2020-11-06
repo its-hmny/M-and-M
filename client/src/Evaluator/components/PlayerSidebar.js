@@ -1,5 +1,14 @@
 import React, { useState, useMemo } from 'react';
-import { Avatar, Tab, Tabs, Grid, Paper } from '@material-ui/core';
+import {
+  Grid,
+  Paper,
+  Badge,
+  Avatar,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+} from '@material-ui/core';
 import { useEvaluator } from '../context/EvaluatorContext';
 
 const PlayerSidebar = () => {
@@ -18,11 +27,13 @@ const PlayerSidebar = () => {
           .join('');
 
         return (
-          <Tab
-            key={playerId}
-            label={avaiableName}
-            icon={<Avatar src={playerAvatar}>{initials}</Avatar>}
-          />
+          <ListItem key={playerId}>
+            <Badge badgeContent={'!'} color="primary" />
+            <ListItemAvatar>
+              <Avatar src={playerAvatar}>{initials}</Avatar>
+            </ListItemAvatar>
+            <ListItemText>{avaiableName}</ListItemText>
+          </ListItem>
         );
       }),
     [playerList]
@@ -31,7 +42,7 @@ const PlayerSidebar = () => {
   return (
     <Grid item xs={2}>
       <Paper>
-        <Tabs
+        <List
           orientation="vertical"
           variant="scrollable"
           indicatorColor="primary"
@@ -44,7 +55,7 @@ const PlayerSidebar = () => {
           onDoubleClick={() => console.log('Meccanismo per assegnare nome')}
         >
           {generateTab}
-        </Tabs>
+        </List>
       </Paper>
     </Grid>
   );

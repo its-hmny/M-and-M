@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import PlayerSidebar from './components/PlayerSidebar';
 import ChatPopUp from './components/ChatPopUp';
 import Launcher from './components/Launcher';
-// import { SmartphoneEmulator } from '../Editor/components';
+import Preview from '../common/Preview';
 import { useEvaluator } from './context/EvaluatorContext';
 
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
         backgroundColor="#121212"
         marginRight={'5vw'}
       >
-        {/* <SmartphoneEmulator storyNode={{ components: [] }} /> */}
+        <Preview storyNode={{ components: [] }} />
       </Launcher>
     </>
   );
