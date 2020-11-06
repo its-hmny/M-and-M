@@ -10,6 +10,7 @@ const useStylesStore = createStore(set => ({
     Choices: ['DefaultChoices'],
     SingleAnsChoices: ['DefaultSingleAnsChoices'],
     MultiAnsChoices: ['DefaultMultiAnsChoices'],
+    TextArea: ['DefaultTextArea'],
   },
   styles: {
     DefaultRadio: {},
@@ -77,6 +78,10 @@ const useStylesStore = createStore(set => ({
       backgroundColor: 'yellow',
     },
     SpaceButtonGroup: {
+      backgroundColor: 'white',
+    },
+    DefaultTextArea: {
+      color: 'black',
       backgroundColor: 'white',
     },
   },
