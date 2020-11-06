@@ -8,11 +8,19 @@ export const EvaluatorProvider = ({ children, _ }) => {
   const [playerList, setPlayerList] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:8000/stats/test')
-      .then(res => setPlayerList(res.data.payload))
-      .catch(err => alert(err));
-  });
+    // onMount setup the update routine
+    const intervalId = setInterval(
+      () =>
+        axios
+          .get('http://localhost:8000/stats/test')
+          .then(res => setPlayerList(res.data.payload))
+          .catch(err => console.warn(err)),
+      1000
+    );
+
+    // onUnmount removes the interval
+    return () => clearInterval(intervalId);
+  }, []);
 
   const toProvide = {
     playerList,
