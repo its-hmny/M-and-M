@@ -1,14 +1,21 @@
-import React, { useContext, useState } from 'react';
-
-import DummyData from '../dummydata.json';
+import React, { useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 const EvaluatorContext = React.createContext();
 
 export const EvaluatorProvider = ({ children, _ }) => {
   const [selectedPlayer, setSelectedPlayer] = useState(undefined);
+  const [playerList, setPlayerList] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8000/stats/test')
+      .then(res => setPlayerList(res.data.payload))
+      .catch(err => alert(err));
+  });
 
   const toProvide = {
-    playerList: DummyData,
+    playerList,
     selectedPlayer,
     setSelectedPlayer,
   };

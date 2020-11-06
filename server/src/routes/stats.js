@@ -11,7 +11,9 @@ router.get('/:story_uuid', (req, res) => {
   const story_uuid = req.params.story_uuid;
 
   if (database[story_uuid]) {
-    const payload = database[story_uuid];
+    const payload = Object.values(database[story_uuid]).filter(
+      player => !player.hasFinished
+    );
     res.statusCode = 200;
     res.send({ status: true, message: 'Updated stats sent!', payload });
   } else {
@@ -42,18 +44,18 @@ router.patch('/:story_uuid/:player_uuid', (req, res) => {
 });
 
 // Connect return <player_id, evaluator_id> tuple to the player that beginned a story
-router.connect('/:story_uuid', (req, res) => {
+router.put('/:story_uuid', (req, res) => {
   const story_uuid = req.params.story_uuid;
   const requested_uuid = shortid.generate();
   if (database[story_uuid]) {
     // Collision handling
-    while (database[story_uuid].find(id => id === requested_uuid)) {
+    while (database[story_uuid][requested_uuid]) {
       requested_uuid = shortid.generate();
     }
     // Packetize player uuid and evaluator uuid for the story
     const data = { player: requested_uuid, evaluator: `evaluator${story_uuid}` };
     // Keep track of the story in the DB
-    database[story_uuid][requested_uuid] = {};
+    database[story_uuid][requested_uuid] = { ...req.body, playerId: requested_uuid };
     res.statusCode = 200;
     res.send({ status: true, message: 'UUID allocated successfully', payload: data });
   } else {
@@ -61,7 +63,7 @@ router.connect('/:story_uuid', (req, res) => {
     const data = { player: requested_uuid, evaluator: `evaluator${story_uuid}` };
     // Keep track of the story in the DB
     database[story_uuid] = {};
-    database[story_uuid][requested_uuid] = {};
+    database[story_uuid][requested_uuid] = { ...req.body, playerId: requested_uuid };
     // Send the payload to the client
     res.statusCode = 200;
     res.send({ status: true, message: 'UUID allocated successfully', payload: data });
@@ -92,7 +94,7 @@ router.delete('/:story_uuid', (req, res) => {
     return;
   }
   // Only if all the player have finished a complete log is returned
-  const stillPlaying = Object.values(database[story_uuid]).map(
+  const stillPlaying = Object.values(database[story_uuid]).filter(
     player_info => player_info.hasFinished
   );
   if (stillPlaying.length === 0) {

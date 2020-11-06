@@ -24,7 +24,7 @@ const Chat = () => {
     });
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/chats/${storyId}`).then(resp => {
+    axios.put(`http://localhost:8000/stats/${storyId}`).then(resp => {
       const { player, evaluator } = resp.data.payload;
       setIDs({ player, evaluator });
     });

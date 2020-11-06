@@ -2,7 +2,6 @@ import shortid from 'shortid';
 import createStore from './createStore';
 
 import { ANSWER_VALUE } from '../../common/Elements/Choices';
-import { TextArea } from '../../common/Elements';
 
 // Maybe this should be moved somewhere else
 const words = [
