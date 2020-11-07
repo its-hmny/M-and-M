@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Grid, Badge, Avatar } from '@material-ui/core';
 import { List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import { useEvaluator } from '../context/EvaluatorContext';
@@ -17,14 +17,17 @@ const renamePlayer = playerId => {
 
 const PlayerSidebar = () => {
   const { playerList, setSelectedPlayer } = useEvaluator();
-  const [tabOnFocus, setFocusedTab] = useState(0);
 
   const generateTab = playerList.map(player => {
     const { playerName, playerId, playerAvatar } = player;
     const avaiableName = playerName || playerId;
 
     return (
-      <ListItem key={playerId} onDoubleClick={() => renamePlayer(playerId)}>
+      <ListItem
+        key={playerId}
+        onDoubleClick={() => renamePlayer(playerId)}
+        onClick={() => setSelectedPlayer(playerId)}
+      >
         <Badge badgeContent={'!'} color="primary" />
         <ListItemAvatar>
           <Avatar src={playerAvatar}>{initials}</Avatar>
@@ -36,17 +39,7 @@ const PlayerSidebar = () => {
 
   return (
     <Grid item xs={2}>
-      <List
-        orientation="vertical"
-        variant="scrollable"
-        indicatorColor="primary"
-        scrollButtons="auto"
-        value={tabOnFocus}
-        onChange={(_, newVal) => {
-          setFocusedTab(newVal);
-          setSelectedPlayer(playerList[newVal].playerId);
-        }}
-      >
+      <List orientation="vertical" indicatorColor="primary">
         {generateTab}
       </List>
     </Grid>

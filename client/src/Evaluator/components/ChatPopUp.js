@@ -1,29 +1,65 @@
-import React from 'react';
-import { Widget, addResponseMessage } from 'react-chat-widget';
+import React, { useState, useEffect } from 'react';
+import {
+  Widget,
+  deleteMessages,
+  addResponseMessage,
+  addUserMessage,
+} from 'react-chat-widget';
 import { useEvaluator } from '../context/EvaluatorContext';
+import io from 'socket.io-client';
 
 import 'react-chat-widget/lib/styles.css';
 
+const socket = io('http://localhost:8000');
+
 const ChatPopUp = () => {
   // To "force" open or close widget toggleWidget();
-  const { playerList, selectedPlayer, storyId, socket } = useEvaluator();
+  const { playerList, selectedPlayer, storyId } = useEvaluator();
+  const [conversations, setConversations] = useState({});
   const { playerName, playerAvatar } =
     playerList.find(item => item.playerId === selectedPlayer) || {};
 
-  const sendHandler = msg =>
+  useEffect(() => {
+    deleteMessages();
+    if (conversations[selectedPlayer] !== undefined)
+      conversations[selectedPlayer].forEach(item => {
+        console.log('Iteration');
+        if (item.id === `evaluator${storyId}`) addUserMessage(item.msg);
+        else addResponseMessage(item.msg);
+      });
+  }, [conversations, selectedPlayer, storyId]);
+
+  const sendHandler = msg => {
+    if (conversations[selectedPlayer] !== undefined) {
+      conversations[selectedPlayer].push({ id: `evaluator${storyId}`, msg });
+    } else {
+      conversations[selectedPlayer] = [{ id: `evaluator${storyId}`, msg }];
+    }
     socket.emit('chat-msg-send', {
       story: storyId,
-      senderId: 'evaluatortest',
-      receiverID: selectedPlayer,
+      senderId: `evaluator${storyId}`,
+      receiverId: selectedPlayer,
       msg,
     });
+    //setConversations({ ...conversations });
+  };
 
-  //addResponseMessage(msg);
+  socket.on('chat-msg-recv', payload => {
+    const { story, senderId, receiverId, msg } = payload;
+    if (story === storyId && receiverId === `evaluator${storyId}`) {
+      if (conversations[senderId] !== undefined) {
+        conversations[senderId].push({ id: senderId, msg });
+      } else {
+        conversations[senderId] = [{ id: senderId, msg }];
+      }
+      setConversations({ ...conversations });
+    }
+  });
 
   return (
     <Widget
       title={playerName || selectedPlayer}
-      subtitle=""
+      subtitle="Respond to the player's request"
       senderPlaceHolder="Type here your message"
       showCloseButton={true}
       fullScreenMode={false}
