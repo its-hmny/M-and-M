@@ -1,32 +1,24 @@
 import React from 'react';
 import { Widget, addResponseMessage } from 'react-chat-widget';
 import { useEvaluator } from '../context/EvaluatorContext';
-import io from 'socket.io-client';
 
 import 'react-chat-widget/lib/styles.css';
 
-const socket = io('http://localhost:8000');
-
 const ChatPopUp = () => {
   // To "force" open or close widget toggleWidget();
-  const { playerList, selectedPlayer } = useEvaluator();
+  const { playerList, selectedPlayer, storyId, socket } = useEvaluator();
   const { playerName, playerAvatar } =
     playerList.find(item => item.playerId === selectedPlayer) || {};
 
   const sendHandler = msg =>
     socket.emit('chat-msg-send', {
-      story: 'test', // ToDo change
-      senderId: 'evaluatortest', // ToDo change
+      story: storyId,
+      senderId: 'evaluatortest',
       receiverID: selectedPlayer,
       msg,
     });
 
-  socket.on('chat-msg-recv', payload => {
-    const { story, senderId, receiverId, msg } = payload;
-    if (story === 'test' && senderId === selectedPlayer && receiverId === 'evaluatortest')
-      // ToDo change
-      addResponseMessage(msg);
-  });
+  //addResponseMessage(msg);
 
   return (
     <Widget

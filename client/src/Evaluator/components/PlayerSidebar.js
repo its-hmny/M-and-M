@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Badge, Avatar } from '@material-ui/core';
 import { List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import { useEvaluator } from '../context/EvaluatorContext';
-import axios from 'axios';
+import axios from '../../common/shared';
 
 const initials = name =>
   name
@@ -12,7 +12,7 @@ const initials = name =>
 
 const renamePlayer = playerId => {
   const newName = prompt('Choose a new name for this player');
-  axios.patch(`http://localhost:8000/stats/test/${playerId}`, { playerName: newName });
+  axios.patch(`stats/test/${playerId}`, { playerName: newName });
 };
 
 const PlayerSidebar = () => {

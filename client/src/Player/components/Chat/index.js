@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import axios, { useQuery } from '../../../common/shared';
 
 import { Widget, addResponseMessage } from 'react-chat-widget';
 import 'react-chat-widget/lib/styles.css';
 import './styles.css';
 
 import io from 'socket.io-client';
-import axios from 'axios';
 
 const socket = io('http://localhost:8000');
-const useQuery = () => Object.fromEntries(new URLSearchParams(useLocation().search));
 
 const Chat = () => {
   const [ids, setIDs] = useState({});
@@ -24,7 +22,7 @@ const Chat = () => {
     });
 
   useEffect(() => {
-    axios.put(`http://localhost:8000/stats/${storyId}`).then(resp => {
+    axios.put(`stats/${storyId}`).then(resp => {
       const { player, evaluator } = resp.data.payload;
       setIDs({ player, evaluator });
     });

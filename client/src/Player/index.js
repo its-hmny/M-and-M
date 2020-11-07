@@ -1,11 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axios, { useQuery } from '../common/shared';
 
 import * as Elements from '../common/Elements';
 import Chat from './components/Chat';
-
-const useQuery = () => Object.fromEntries(new URLSearchParams(useLocation().search));
 
 // `Story` param is an object that stores properties needed for computing
 // storyProps for this specific component
@@ -64,7 +61,7 @@ const Player = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/stories/${storyId}`)
+      .get(`stories/${storyId}`)
       .then(resp => {
         const newStory = resp.data.payload;
         setStory(newStory);

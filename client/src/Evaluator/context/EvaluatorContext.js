@@ -1,18 +1,27 @@
 import React, { useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { useQuery } from '../../common/shared';
+import io from 'socket.io-client';
 
+const socket = io('http://localhost:8000');
 const EvaluatorContext = React.createContext();
 
 export const EvaluatorProvider = ({ children, _ }) => {
+  const storyId = useQuery().storyId;
   const [selectedPlayer, setSelectedPlayer] = useState(undefined);
   const [playerList, setPlayerList] = useState([]);
+
+  socket.on('chat-msg-recv', payload => {
+    const { story, senderId, receiverId, msg } = payload;
+    if (story === 'test' && receiverId === 'evaluator${storyId}')
+      playerList.find(item => item.playerId === selectedPlayer);
+  });
 
   useEffect(() => {
     // onMount setup the update routine
     const intervalId = setInterval(
       () =>
         axios
-          .get('http://localhost:8000/stats/test')
+          .get('/stats/test')
           .then(res => setPlayerList(res.data.payload))
           .catch(err => console.warn(err)),
       1000
@@ -23,6 +32,7 @@ export const EvaluatorProvider = ({ children, _ }) => {
   }, []);
 
   const toProvide = {
+    socket,
     playerList,
     selectedPlayer,
     setSelectedPlayer,

@@ -6,7 +6,7 @@ import Navbar from '../common/Navbar';
 import Preview from '../common/Preview';
 import Inspector from './components/Inspector';
 import SaveDialog from './components/SaveDialog';
-import axios from './axios';
+import axios from '../common/shared';
 import useTemplateStore from './stores/template';
 import useStylesStore from './stores/styles';
 
@@ -26,7 +26,7 @@ const App = () => {
   const saveTemplate = meta => {
     setIsSaving(false);
     console.log(`About to save template ${meta.name}...`);
-    axios
+    axios // See common/shared.js (useAPI hook)
       .post('templates', { ...meta, components })
       .then(value => console.log(value))
       .catch(err => console.error(err));
