@@ -8,6 +8,7 @@ import SelectFragment from './SelectFragment';
 import TextFieldFragment from './TextFieldFragment';
 import CheckboxFragment from './CheckboxFragment';
 import TextFieldCheckboxFragment from './TextFieldCheckboxFragment';
+
 const fragmentsComponents = {
   ButtonFragment,
   ColorPickerFragment,
@@ -15,7 +16,7 @@ const fragmentsComponents = {
   SelectFragment,
   TextFieldFragment,
   CheckboxFragment,
-  TextFieldCheckboxFragment
+  TextFieldCheckboxFragment,
 };
 
 const useStyles = makeStyles({
@@ -54,7 +55,7 @@ const useStyles = makeStyles({
    fieldsToSet(data comes from ComponentProperties.json).  */
 const DynamicLoadFragments = props => {
   const { fieldsToSet, pathToVal } = props;
-  
+
   const classes = useStyles();
 
   const fragmentList = useMemo(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import * as Elements from './Elements';
@@ -18,32 +18,27 @@ const useStyles = makeStyles({
   },
 });
 
+const buildElements = (components, styles) =>
+  components.map(component => {
+    const { id, name, styleId, children, ...props } = component;
+    const Element = Elements[name];
+    return (
+      <Element
+        key={id}
+        style={styles[styleId]}
+        children={children && buildElements(children)}
+        {...props}
+      />
+    );
+  });
+
 const Preview = ({ components, styles }) => {
   const classes = useStyles();
-  const [elements, setElements] = useState([]);
-
-  useEffect(() => {
-    const buildElements = components =>
-      components.map(component => {
-        const { id, name, styleId, children, ...props } = component;
-        const Element = Elements[name];
-        return (
-          <Element
-            key={id}
-            style={styles[styleId]}
-            children={children && buildElements(children)}
-            {...props}
-          />
-        );
-      });
-
-    // A guard against possible, very difficult to debug, disaster
-    if (components) {
-      setElements(buildElements(components));
-    }
-  }, [components, styles]);
-
-  return <div className={classes.smartphoneFrame}>{elements}</div>;
+  return (
+    <div className={classes.smartphoneFrame}>
+      {components ? buildElements(components, styles) : []}
+    </div>
+  );
 };
 
 export default Preview;

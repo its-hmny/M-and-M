@@ -9,7 +9,7 @@ const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
 
   const destinationOption = story.nodes.map(node => (
     <MenuItem key={node.id} value={node.id}>
-      {node.label}
+      {node.name}
     </MenuItem>
   ));
 
@@ -19,10 +19,14 @@ const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
         <InputLabel>Destination</InputLabel>
         <Select
           value={getFromPath(completePath)[valToChange]}
-          onChange={event => setPathToValue(completePath, valToChange, event.target.value)}
+          onChange={event =>
+            setPathToValue(completePath, valToChange, event.target.value)
+          }
         >
           {destinationOption}
-          <MenuItem key={story.nodes.length} value="">Undefined</MenuItem>
+          <MenuItem key={story.nodes.length} value="">
+            Undefined
+          </MenuItem>
         </Select>
       </FormControl>
     </div>
