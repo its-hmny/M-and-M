@@ -9,6 +9,7 @@ import TextFieldFragment from './TextFieldFragment';
 import CheckboxFragment from './CheckboxFragment';
 import AnswerFragment from './AnswerFragment';
 import RadioFragment from './RadioFragment';
+import DividerFragment from './DividerFragment';
 const fragmentsComponents = {
   ButtonFragment,
   ColorPickerFragment,
@@ -18,6 +19,7 @@ const fragmentsComponents = {
   CheckboxFragment,
   AnswerFragment,
   RadioFragment,
+  DividerFragment,
 };
 
 const useStyles = makeStyles({

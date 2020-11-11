@@ -15,6 +15,7 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { root, inputRoot } = useStyles();
   const { pathAlternative, valToChange, label, onChange } = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
+
   //Additional field to modify objects or array
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
   const value = getFromPath(path || [])[valToChange];
@@ -26,7 +27,7 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
       InputProps={{
         className: inputRoot,
       }}
-      label={label.toUpperCase()}
+      label={label}
       multiline={true}
       rowsMax={3}
       value={value}

@@ -3,7 +3,7 @@
     {
       "fragment": "TextFieldFragment",
       "props": {
-        "valToChange": "label",
+        "valToChange": "name",
         "label": "Node name"
       }
     },
@@ -16,7 +16,29 @@
     {
       "fragment": "ButtonFragment",
       "props": {
-        "text": "Delete this node"
+        "text": "Delete this node",
+        "onClick": "removeNode"
+      }
+    }
+  ],
+  "Missions":[
+    {
+      "fragment": "SelectFragment",
+      "props": {
+        "valToChange": "mission",
+        "label": "Select Mission",
+        "data": "mission",
+        "dataName": "mission"
+      }
+    },
+    {
+      "fragment": "DividerFragment"
+    },
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "mission",
+        "label": "Add Mission"
       }
     }
   ],
@@ -32,7 +54,11 @@
       "fragment": "SelectFragment",
       "props": {
         "specificPath": ["story"],
-        "valToChange": "nextNode"
+        "valToChange": "nextNode",
+        "label": "Destination",
+        "data": "id",
+        "dataName": "name"
+
       }
     }
   ],

@@ -5,17 +5,22 @@ import { useEditor } from '../../context/EditorContext';
 const ButtonFragment = props => {
   const { classNames, fragmentSpecificProps } = props;
   const { story, workingActivity, saveStory, setWorkingActivity } = useEditor();
-
-  const removeFromStory = () => {
-    let { nodes, ...others } = story;
-    nodes = nodes.filter(node => node.id !== workingActivity);
-    saveStory({ nodes, ...others });
-    setWorkingActivity(undefined);
-  };
+  /* Switch to check which predefined button function to use */
+  var onClick;
+  switch (fragmentSpecificProps.onClick) {
+    case 'removeNode':
+      onClick = () => {
+        let { nodes, ...others } = story;
+        nodes = nodes.filter(node => node.id !== workingActivity);
+        saveStory({ nodes, ...others });
+        setWorkingActivity(undefined);
+      };
+      break;
+  }
 
   return (
     <Button
-      onClick={removeFromStory}
+      onClick={() => onClick()}
       color="primary"
       variant="contained"
       className={classNames.InspectorElement}

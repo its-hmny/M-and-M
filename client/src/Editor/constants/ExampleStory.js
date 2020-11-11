@@ -6,6 +6,7 @@ const ExampleStory = {
     {
       id: 'stringid0',
       name: 'Introduzione',
+      mission: 'Missione 1',
       components: [
         {
           id: shortid.generate(),
@@ -25,6 +26,7 @@ const ExampleStory = {
     {
       id: 1,
       name: 'Domanda a scelta multipla',
+      mission: 'Missione 1',
       components: [
         {
           id: shortid.generate(),
@@ -55,6 +57,7 @@ const ExampleStory = {
     {
       id: 2,
       name: 'Corretto',
+      mission: 'Missione 1',
       components: [
         {
           id: shortid.generate(),
@@ -66,6 +69,7 @@ const ExampleStory = {
     {
       id: 3,
       name: 'Sbagliato',
+      mission: 'Missione 2',
       components: [
         {
           id: shortid.generate(),
@@ -109,6 +113,7 @@ const ExampleStory = {
     {
       id: 4,
       name: 'Sconfitta',
+      mission: 'Missione 2',
       components: [
         {
           id: shortid.generate(),
@@ -120,6 +125,7 @@ const ExampleStory = {
     {
       id: 5,
       name: 'Test nuovi fragment',
+      mission: 'Missione 2',
       color: '#fef3f4',
       components: [
         {
@@ -158,6 +164,7 @@ const ExampleStory = {
     {
       id: 6,
       name: 'Test singleanschoice',
+      mission: 'Missione 3',
       components: [
         {
           id: shortid.generate(),
@@ -180,6 +187,7 @@ const ExampleStory = {
     {
       id: 7,
       name: 'Test multianschoice',
+      mission: 'Missione 3',
       components: [
         {
           id: shortid.generate(),
