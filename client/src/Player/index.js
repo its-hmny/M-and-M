@@ -19,8 +19,6 @@ const createStoryProps = (component, storyContext) => {
     case 'MultiAnsChoices':
       return {
         onSubmit: answer => {
-          console.log(answer);
-          console.log(storyProps.nextNode);
           const nextNode = storyProps.nextNode[answer];
           storyContext.moveTo(nextNode);
         },

@@ -27,6 +27,14 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   //Additional field to modify objects or array
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
   const answers = getFromPath(path || [])[valToChange];
+  //Initialize correctAnswerValue if singleCorrectAnswer == true only the first time
+  React.useEffect(() => {
+    if (singleCorrectAnswer) {
+      answers.map((answer, i) =>
+        answer.value === ANSWER_VALUE.CORRECT ? setCorrectAnswerValue(i) : null
+      );
+    }
+  }, [singleCorrectAnswer, answers]);
 
   const addChoice = () => {
     setPathToValue(path || [], 'answers', [
@@ -48,7 +56,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
     setCorrectAnswerValue(value);
     setPathToValue(
       answerPath,
-      valToChange,
+      'value',
       event.target.checked
         ? truthValues !== undefined
           ? truthValues[0]

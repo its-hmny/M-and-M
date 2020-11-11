@@ -17,11 +17,10 @@ const RadioFragment = ({ classNames, path, fragmentSpecificProps }) => {
     correctAnswerValue,
     index,
   } = fragmentSpecificProps;
-  console.log(fragmentSpecificProps);
+
   const { getFromPath, setPathToValue } = useEditor();
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
-  const value = getFromPath(path || [])[valToChange];
-  console.log(value);
+
   return (
     <FormControlLabel
       className={classNames.InspectorElement}
