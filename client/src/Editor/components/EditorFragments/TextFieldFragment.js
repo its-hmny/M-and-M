@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 
 const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { root, inputRoot } = useStyles();
-  const { pathAlternative, valToChange, label } = fragmentSpecificProps;
+  const { pathAlternative, valToChange, label, onChange } = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
   //Additional field to modify objects or array
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
@@ -30,7 +30,11 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
       multiline={true}
       rowsMax={3}
       value={value}
-      onChange={event => setPathToValue(path || [], valToChange, event.target.value)}
+      onChange={event =>
+        onChange !== undefined
+          ? onChange(event)
+          : setPathToValue(path || [], valToChange, event.target.value)
+      }
     />
   );
 };

@@ -155,6 +155,50 @@ const ExampleStory = {
         },
       ],
     },
+    {
+      id: 6,
+      name: 'Test singleanschoice',
+      components: [
+        {
+          id: shortid.generate(),
+          name: 'SingleAnsChoices',
+          answers: [
+            {
+              value: '[CORRECT]',
+              id: shortid.generate(),
+              text: 'Risposta 1',
+            },
+            {
+              value: '[WRONG]',
+              id: shortid.generate(),
+              text: 'Risposta 2',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 7,
+      name: 'Test multianschoice',
+      components: [
+        {
+          id: shortid.generate(),
+          name: 'MultiAnsChoices',
+          answers: [
+            {
+              value: '[CORRECT]',
+              id: shortid.generate(),
+              text: 'Risposta 1',
+            },
+            {
+              value: '[CORRECT]',
+              id: shortid.generate(),
+              text: 'Risposta 2',
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
 

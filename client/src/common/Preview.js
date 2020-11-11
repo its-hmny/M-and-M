@@ -20,8 +20,10 @@ const useStyles = makeStyles({
 
 const buildElements = (components, styles) =>
   components.map(component => {
+    styles = styles || {};
     const { id, name, styleId, children, ...props } = component;
     const Element = Elements[name];
+
     return (
       <Element
         key={id}

@@ -7,7 +7,6 @@ const useStylesStore = createStore(set => ({
     ButtonGroup: ['DefaultButtonGroup', 'SpaceButtonGroup'],
     Radio: ['DefaultRadio'],
     Checkbox: ['Checkbox'],
-    Choices: ['DefaultChoices'],
     SingleAnsChoices: ['DefaultSingleAnsChoices'],
     MultiAnsChoices: ['DefaultMultiAnsChoices'],
     TextArea: ['DefaultTextArea'],

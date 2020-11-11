@@ -1,37 +1,34 @@
 import React from 'react';
 import { useEditor } from '../../context/EditorContext';
-import { Checkbox, FormControlLabel } from '@material-ui/core';
+import { Radio, FormControlLabel } from '@material-ui/core';
 
 /*
   truthValues = [TrueValue, FalseValue]
 */
 
-const CheckboxFragment = ({ classNames, path, fragmentSpecificProps }) => {
+const RadioFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const {
     pathAlternative,
     valToChange,
     label,
     onChange,
     truthValues,
-    disabled,
+    name,
+    correctAnswerValue,
+    index,
   } = fragmentSpecificProps;
+  console.log(fragmentSpecificProps);
   const { getFromPath, setPathToValue } = useEditor();
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
   const value = getFromPath(path || [])[valToChange];
-
+  console.log(value);
   return (
     <FormControlLabel
       className={classNames.InspectorElement}
-      control={
-        <Checkbox
-          color="primary"
-          checked={value === (truthValues !== undefined ? truthValues[0] : true)}
-          disabled={disabled || false}
-        />
-      }
+      control={<Radio name={name} value={index} checked={index === correctAnswerValue} />}
       onChange={event =>
         onChange !== undefined
-          ? onChange(event)
+          ? onChange(event, index, path || [], truthValues)
           : setPathToValue(
               path || [],
               valToChange,
@@ -49,4 +46,4 @@ const CheckboxFragment = ({ classNames, path, fragmentSpecificProps }) => {
   );
 };
 
-export default CheckboxFragment;
+export default RadioFragment;

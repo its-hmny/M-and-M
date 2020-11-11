@@ -7,8 +7,8 @@ import FilePickerFragment from './FilePickerFragment';
 import SelectFragment from './SelectFragment';
 import TextFieldFragment from './TextFieldFragment';
 import CheckboxFragment from './CheckboxFragment';
-import TextFieldCheckboxFragment from './TextFieldCheckboxFragment';
-
+import AnswerFragment from './AnswerFragment';
+import RadioFragment from './RadioFragment';
 const fragmentsComponents = {
   ButtonFragment,
   ColorPickerFragment,
@@ -16,7 +16,8 @@ const fragmentsComponents = {
   SelectFragment,
   TextFieldFragment,
   CheckboxFragment,
-  TextFieldCheckboxFragment,
+  AnswerFragment,
+  RadioFragment,
 };
 
 const useStyles = makeStyles({

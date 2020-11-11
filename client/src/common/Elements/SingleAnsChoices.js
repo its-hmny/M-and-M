@@ -34,7 +34,7 @@ const noop = () => {};
 
 function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  
+
   //let's only work with IDs
   const correctAnswer = useMemo(
     () =>
@@ -47,7 +47,9 @@ function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop })
 
   const isCorrect = useMemo(() => {
     // if an answer is selected AND is correct, return correct
-    return selectedAnswer && selectedAnswer === correctAnswer
+    // Uses == instead === because for some reason type(selectedAnswer) != type(correctAnswer)
+    // so a conversion is needed
+    return selectedAnswer && selectedAnswer == correctAnswer
       ? ANSWER_VALUE.CORRECT
       : ANSWER_VALUE.WRONG;
   }, [correctAnswer, selectedAnswer]);
