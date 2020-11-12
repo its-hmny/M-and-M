@@ -10,6 +10,9 @@ const useStylesStore = createStore(set => ({
     SingleAnsChoices: ['DefaultSingleAnsChoices'],
     MultiAnsChoices: ['DefaultMultiAnsChoices'],
     TextArea: ['DefaultTextArea'],
+    Input: ['DefaultInput'],
+    Image: ['DefaultImage'],
+    AudioPlayer: ['DefaultAudioPlayer'],
   },
   styles: {
     DefaultRadio: {},
@@ -80,6 +83,18 @@ const useStylesStore = createStore(set => ({
       backgroundColor: 'white',
     },
     DefaultTextArea: {
+      color: 'black',
+      backgroundColor: 'white',
+    },
+    DefaultInput: {
+      color: 'black',
+      backgroundColor: 'white',
+    },
+    DefaultImage: {
+      color: 'black',
+      backgroundColor: 'white',
+    },
+    DefaultAudioPlayer: {
       color: 'black',
       backgroundColor: 'white',
     },

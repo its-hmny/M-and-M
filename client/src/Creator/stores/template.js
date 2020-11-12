@@ -92,10 +92,30 @@ export const componentBuilders = {
       },
     ],
   }),
-  TextAreaSettings: () => ({
+  TextArea: () => ({
     name: 'TextArea',
     styleId: 'DefaultTextArea',
     placeholder: 'Default placeholder text',
+  }),
+  Input: () => ({
+    name: 'Input',
+    styleId: 'DefaultInput',
+    inputType: 'text',
+    placeholder: 'Default placeholder text',
+    correctAnswer: 'giorgio',
+  }),
+  Image: () => ({
+    name: 'Image',
+    styleId: 'DefaultImage',
+    description: 'This is a sample description',
+    imgURL:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Cima_da_Conegliano%2C_God_the_Father.jpg/300px-Cima_da_Conegliano%2C_God_the_Father.jpg',
+    fallback: 'This is the default fallback',
+  }),
+  AudioPlayer: () => ({
+    name: 'AudioPlayer',
+    styleId: 'DefaultAudioPlayer',
+    srcURL: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
   }),
 };
 
