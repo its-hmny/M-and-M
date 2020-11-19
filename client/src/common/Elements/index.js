@@ -8,3 +8,5 @@ export { default as Image } from './Image';
 export { default as Input } from './Input';
 export { default as Text } from './Text';
 export { default as TextArea } from './TextArea';
+export { default as Spacer } from './Spacer';
+export { default as Background } from './Background';

@@ -15,6 +15,7 @@ const useStyles = makeStyles({
     height: '70vh',
     background: 'white',
     overflowY: 'auto',
+    zIndex: -2,
   },
 });
 

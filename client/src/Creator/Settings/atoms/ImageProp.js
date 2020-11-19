@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Slider, InputLabel, Switch } from '@material-ui/core';
-import shortid from 'shortid';
+import React,  from 'react';
+
 
 function getText(value) {
   return `${value}%`;
@@ -26,6 +25,7 @@ const autoSettings = {
   height: '50%',
   padding: '5 5px',
 };
+
 const defaultSettings = {
   display: 'flex',
   'margin-left': 'auto',

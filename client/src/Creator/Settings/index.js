@@ -8,3 +8,5 @@ export { default as TextAreaSettings } from './TextAreaSettings';
 export { default as InputSettings } from './InputSettings';
 export { default as ImageSettings } from './ImageSettings';
 export { default as AudioPlayerSettings } from './AudioPlayerSettings';
+export { default as SpacerSettings } from './SpacerSettings';
+export { default as BackgroundSettings } from './BackgroundSettings';

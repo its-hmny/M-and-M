@@ -25,6 +25,5 @@
 .smartphone {
   width: calc(70vh * 0.5);
   height: 70vh;
-  background: white;
   overflow-y: auto;
 }

@@ -107,15 +107,21 @@ export const componentBuilders = {
   Image: () => ({
     name: 'Image',
     styleId: 'DefaultImage',
-    description: 'This is a sample description',
-    imgURL:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Cima_da_Conegliano%2C_God_the_Father.jpg/300px-Cima_da_Conegliano%2C_God_the_Father.jpg',
+    imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
     fallback: 'This is the default fallback',
   }),
   AudioPlayer: () => ({
     name: 'AudioPlayer',
     styleId: 'DefaultAudioPlayer',
     srcURL: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
+  }),
+  Background: () => ({
+    name: 'Background',
+    styleId: 'DefaultBackground',
+  }),
+  Spacer: () => ({
+    name: 'Spacer',
+    styleId: 'DefaultSpacer',
   }),
 };
 

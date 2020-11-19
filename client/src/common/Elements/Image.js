@@ -2,21 +2,23 @@
 import { css, jsx } from '@emotion/core';
 
 const base = css`
-  align: left;
-  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  width: 50%;
+  height: 50%;
+  padding: 5 5px;
 `;
 
 const figcaptionStyle = css`
   color: black;
 `;
 
-const Image = ({ description, fallback, imgURL, style }) => {
+const Image = ({ fallback, imgURL, style }) => {
   return (
     <div>
-      <figure>
-        <img src={imgURL} alt={fallback}  css={[base, style]}/>
-        <figcaption css={figcaptionStyle}>{description}</figcaption>
-      </figure>
+      <img src={imgURL} alt={fallback} css={[base, style]} />
     </div>
   );
 };
