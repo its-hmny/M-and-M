@@ -13,7 +13,7 @@ import 'react-chat-widget/lib/styles.css';
 
 const socket = io('http://localhost:8000');
 
-const ChatPopUp = () => {
+const PlayersChat = () => {
   // To "force" open or close widget toggleWidget();
   const { playerList, selectedPlayer, storyId } = useEvaluator();
   const [conversations, setConversations] = useState({});
@@ -46,21 +46,20 @@ const ChatPopUp = () => {
     setConversations({ ...conversations });
   };
 
-  useEffect(
-    () =>
-      socket.on('chat-msg-recv', payload => {
-        const { story, senderId, receiverId, msg } = payload;
-        if (story === storyId && receiverId === `evaluator${storyId}`) {
-          if (conversations[senderId] !== undefined) {
-            conversations[senderId].push({ id: senderId, msg });
-          } else {
-            conversations[senderId] = [{ id: senderId, msg }];
-          }
-          setConversations({ ...conversations });
+  useEffect(() => {
+    socket.on('chat-msg-recv', payload => {
+      const { story, senderId, receiverId, msg } = payload;
+      if (story === storyId && receiverId === `evaluator${storyId}`) {
+        if (conversations[senderId] !== undefined) {
+          conversations[senderId].push({ id: senderId, msg });
+        } else {
+          conversations[senderId] = [{ id: senderId, msg }];
         }
-      }),
-    []
-  );
+        setConversations({ ...conversations });
+      }
+    });
+    return () => socket.removeListener('chat-msg-recv');
+  }, [conversations, storyId]);
 
   return (
     <Widget
@@ -80,4 +79,4 @@ const ChatPopUp = () => {
   );
 };
 
-export default ChatPopUp;
+export default PlayersChat;

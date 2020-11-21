@@ -36,7 +36,7 @@ const Chat = () => {
     });
 
     return () => socket.removeListener('chat-msg-recv');
-  }, [ids]);
+  }, [storyId, ids]);
 
   return (
     <Widget

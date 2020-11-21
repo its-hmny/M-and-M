@@ -49,7 +49,7 @@ function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop })
     // if an answer is selected AND is correct, return correct
     // Uses == instead === because for some reason type(selectedAnswer) != type(correctAnswer)
     // so a conversion is needed
-    return selectedAnswer && selectedAnswer == correctAnswer
+    return selectedAnswer && selectedAnswer === correctAnswer
       ? ANSWER_VALUE.CORRECT
       : ANSWER_VALUE.WRONG;
   }, [correctAnswer, selectedAnswer]);

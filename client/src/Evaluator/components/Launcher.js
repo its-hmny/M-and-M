@@ -8,7 +8,7 @@ const Launcher = props => {
 
   return (
     <div className="rcw-widget-container" style={style}>
-      <div class="rcw-conversation-container active" style={{ display: open || 'none' }}>
+      <div className="rcw-conversation-container active">
         {open ? children : undefined}
       </div>
       <button
@@ -17,7 +17,6 @@ const Launcher = props => {
         onClick={toggleChat}
         style={{ ...style, backgroundColor }}
       >
-        {/* {!showChat && <Badge badge={badgeCount} />} */}
         {open ? (
           <img
             width="20vw"

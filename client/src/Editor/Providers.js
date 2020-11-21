@@ -6,15 +6,6 @@ import { EditorProvider } from './context/EditorContext';
 import ExampleStory from './constants/ExampleStory';
 
 const customTheme = createMuiTheme({
-  overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        body: {
-          overflow: 'hidden',
-        },
-      },
-    },
-  },
   palette: {
     type: 'dark',
     primary: pink,
