@@ -15,13 +15,16 @@ const useStyles = makeStyles({
     height: '70vh',
     background: 'white',
     overflowY: 'auto',
+    zIndex: -2,
   },
 });
 
 const buildElements = (components, styles) =>
   components.map(component => {
+    styles = styles || {};
     const { id, name, styleId, children, ...props } = component;
     const Element = Elements[name];
+
     return (
       <Element
         key={id}

@@ -1,8 +1,6 @@
 import shortid from 'shortid';
 import createStore from './createStore';
 
-import { ANSWER_VALUE } from '../../common/Elements/Choices';
-
 // Maybe this should be moved somewhere else
 const words = [
   'beautiful',
@@ -15,6 +13,11 @@ const words = [
   'javascript',
   'OCaml...!',
 ];
+
+const ANSWER_VALUE = {
+  CORRECT: '[CORRECT]',
+  WRONG: '[WRONG]',
+};
 
 const generateText = name =>
   `im a ${words[Math.floor(Math.random() * words.length)]} ${name}`;
@@ -34,33 +37,6 @@ export const componentBuilders = {
     name: 'ButtonGroup',
     styleId: 'DefaultButtonGroup',
     children: [],
-  }),
-  Choices: () => ({
-    name: 'Choices',
-    styleId: 'DefaultChoices',
-    withSubmit: true,
-    answers: [
-      {
-        id: shortid.generate(),
-        text: 'Bianco',
-        value: ANSWER_VALUE.CORRECT,
-      },
-      {
-        id: shortid.generate(),
-        text: 'Rosso',
-        value: ANSWER_VALUE.WRONG,
-      },
-      {
-        id: shortid.generate(),
-        text: 'Blu',
-        value: ANSWER_VALUE.WRONG,
-      },
-      {
-        id: shortid.generate(),
-        text: 'Verde',
-        value: ANSWER_VALUE.WRONG,
-      },
-    ],
   }),
   SingleAnsChoices: () => ({
     name: 'SingleAnsChoices',
@@ -116,10 +92,36 @@ export const componentBuilders = {
       },
     ],
   }),
-  TextAreaSettings: () => ({
+  TextArea: () => ({
     name: 'TextArea',
     styleId: 'DefaultTextArea',
     placeholder: 'Default placeholder text',
+  }),
+  Input: () => ({
+    name: 'Input',
+    styleId: 'DefaultInput',
+    inputType: 'text',
+    placeholder: 'Default placeholder text',
+    correctAnswer: 'giorgio',
+  }),
+  Image: () => ({
+    name: 'Image',
+    styleId: 'DefaultImage',
+    imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+    fallback: 'This is the default fallback',
+  }),
+  AudioPlayer: () => ({
+    name: 'AudioPlayer',
+    styleId: 'DefaultAudioPlayer',
+    srcURL: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
+  }),
+  Background: () => ({
+    name: 'Background',
+    styleId: 'DefaultBackground',
+  }),
+  Spacer: () => ({
+    name: 'Spacer',
+    styleId: 'DefaultSpacer',
   }),
 };
 

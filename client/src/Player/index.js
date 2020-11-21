@@ -15,7 +15,8 @@ const createStoryProps = (component, storyContext) => {
       return {
         onClick: () => storyContext.moveTo(storyProps.nextNode),
       };
-    case 'Choices':
+    case 'SingleAnsChoices':
+    case 'MultiAnsChoices':
       return {
         onSubmit: answer => {
           const nextNode = storyProps.nextNode[answer];

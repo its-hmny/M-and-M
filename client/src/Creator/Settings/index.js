@@ -5,3 +5,8 @@ export { default as SingleAnsChoicesSettings } from './SingleAnsChoicesSettings'
 export { default as MultiAnsChoicesSettings } from './MultiAnsChoicesSettings';
 export { default as ButtonGroupSettings } from './ButtonGroupSettings';
 export { default as TextAreaSettings } from './TextAreaSettings';
+export { default as InputSettings } from './InputSettings';
+export { default as ImageSettings } from './ImageSettings';
+export { default as AudioPlayerSettings } from './AudioPlayerSettings';
+export { default as SpacerSettings } from './SpacerSettings';
+export { default as BackgroundSettings } from './BackgroundSettings';

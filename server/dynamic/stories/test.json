@@ -7,6 +7,7 @@
       "components": [
         { "id": "", "name": "Text", "text": "Benvenuto nella nostra prova del cazzo. Paolo Marzolo scemo coglione" },
         { "id": "", "name": "Button", "text": "Inizia!", "story": { "nextNode": 1 } }
+        
       ]
     },
     {

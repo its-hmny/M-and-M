@@ -1,0 +1,37 @@
+{
+  "name": "culetto",
+  "description": "culone",
+  "components": [
+    {
+      "id": "xYEA_MELF",
+      "name": "Text",
+      "text": "Di che colore è il cavallo bianco di Napoleone?",
+      "styleId": "DefaultText"
+    },
+    {
+      "id": "8cwDa4disK",
+      "name": "Button",
+      "text": "Some Button inside ButtonGroup",
+      "styleId": "DefaultButton"
+    },
+    {
+      "id": "p8U_qr9ljc",
+      "name": "ButtonGroup",
+      "styleId": "DefaultButtonGroup",
+      "children": [
+        {
+          "id": "Jh358sFH6V",
+          "name": "Button",
+          "text": "Ritenta",
+          "styleId": "DefaultButton"
+        },
+        {
+          "id": "5yqzTvqkGq",
+          "name": "Button",
+          "text": "Abbandona",
+          "styleId": "DefaultButton"
+        }
+      ]
+    }
+  ]
+}

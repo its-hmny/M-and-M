@@ -4,6 +4,7 @@ import {
   deleteMessages,
   addResponseMessage,
   addUserMessage,
+  setBadgeCount,
 } from 'react-chat-widget';
 import { useEvaluator } from '../context/EvaluatorContext';
 import io from 'socket.io-client';
@@ -27,6 +28,7 @@ const ChatPopUp = () => {
         if (item.id === `evaluator${storyId}`) addUserMessage(item.msg);
         else addResponseMessage(item.msg);
       });
+    setBadgeCount(0);
   }, [conversations, selectedPlayer, storyId]);
 
   const sendHandler = msg => {
@@ -41,7 +43,7 @@ const ChatPopUp = () => {
       receiverId: selectedPlayer,
       msg,
     });
-    //setConversations({ ...conversations });
+    setConversations({ ...conversations });
   };
 
   useEffect(

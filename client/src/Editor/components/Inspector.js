@@ -79,9 +79,20 @@ const Inspector = () => {
         fieldsToSet={properties['Global']}
       />
     );
+    const missions = previousPath ? undefined : (
+      <CollapsableBox
+        uuid={`Missions-${workingActivity}`}
+        key={`Missions-${workingActivity}`}
+        name="Missions"
+        isOpen={openBox}
+        handler={setCollapsed}
+        fieldsToSet={properties['Missions']}
+      />
+    );
 
     return [
       global,
+      missions,
       components.map((component, index) => {
         const { name } = component;
 

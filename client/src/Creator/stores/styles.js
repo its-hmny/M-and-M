@@ -7,10 +7,14 @@ const useStylesStore = createStore(set => ({
     ButtonGroup: ['DefaultButtonGroup', 'SpaceButtonGroup'],
     Radio: ['DefaultRadio'],
     Checkbox: ['Checkbox'],
-    Choices: ['DefaultChoices'],
     SingleAnsChoices: ['DefaultSingleAnsChoices'],
     MultiAnsChoices: ['DefaultMultiAnsChoices'],
     TextArea: ['DefaultTextArea'],
+    Input: ['DefaultInput'],
+    Image: ['DefaultImage'],
+    AudioPlayer: ['DefaultAudioPlayer'],
+    Spacer: ['DefaultSpacer'],
+    Background: ['DefaultBackground'],
   },
   styles: {
     DefaultRadio: {},
@@ -83,6 +87,28 @@ const useStylesStore = createStore(set => ({
     DefaultTextArea: {
       color: 'black',
       backgroundColor: 'white',
+    },
+    DefaultInput: {
+      color: 'black',
+      backgroundColor: 'white',
+    },
+    DefaultImage: {
+      width: '100%',
+      color: 'black',
+      backgroundColor: 'white',
+    },
+    DefaultAudioPlayer: {
+      color: 'black',
+      backgroundColor: 'white',
+    },
+    DefaultSpacer: {
+      color: 'white',
+      backgroundColor: 'white',
+      height: '20%',
+      width: '100%',
+    },
+    DefaultBackground: {
+      backgroundImage: 'url(http://localhost:8000/default_background.jpg)',
     },
   },
   addStyle: ({ componentName, styleId, baseStyleId }) => {
