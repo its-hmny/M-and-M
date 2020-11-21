@@ -26,7 +26,7 @@ const buildElements = (components, styles) =>
       <Element
         key={id}
         style={styles[styleId]}
-        children={children && buildElements(children)}
+        children={children && buildElements(children, styles)}
         {...props}
       />
     );

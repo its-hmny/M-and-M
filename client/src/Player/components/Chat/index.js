@@ -28,11 +28,16 @@ const Chat = () => {
     });
   }, [storyId]);
 
-  socket.on('chat-msg-recv', payload => {
-    const { story, senderId, receiverId, msg } = payload;
-    if (story === storyId && senderId === ids.evaluator && receiverId === ids.player)
-      addResponseMessage(msg);
-  });
+  useEffect(
+    () =>
+      socket.on('chat-msg-recv', payload => {
+        console.log(payload);
+        const { story, senderId, receiverId, msg } = payload;
+        if (story === storyId && senderId === ids.evaluator && receiverId === ids.player)
+          addResponseMessage(msg);
+      }),
+    []
+  );
 
   return (
     <Widget

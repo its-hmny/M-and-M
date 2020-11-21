@@ -44,17 +44,21 @@ const ChatPopUp = () => {
     //setConversations({ ...conversations });
   };
 
-  socket.on('chat-msg-recv', payload => {
-    const { story, senderId, receiverId, msg } = payload;
-    if (story === storyId && receiverId === `evaluator${storyId}`) {
-      if (conversations[senderId] !== undefined) {
-        conversations[senderId].push({ id: senderId, msg });
-      } else {
-        conversations[senderId] = [{ id: senderId, msg }];
-      }
-      setConversations({ ...conversations });
-    }
-  });
+  useEffect(
+    () =>
+      socket.on('chat-msg-recv', payload => {
+        const { story, senderId, receiverId, msg } = payload;
+        if (story === storyId && receiverId === `evaluator${storyId}`) {
+          if (conversations[senderId] !== undefined) {
+            conversations[senderId].push({ id: senderId, msg });
+          } else {
+            conversations[senderId] = [{ id: senderId, msg }];
+          }
+          setConversations({ ...conversations });
+        }
+      }),
+    []
+  );
 
   return (
     <Widget
