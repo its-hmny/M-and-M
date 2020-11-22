@@ -14,9 +14,9 @@ import 'react-chat-widget/lib/styles.css';
 const socket = io('http://localhost:8000');
 
 const PlayersChat = () => {
-  // To "force" open or close widget toggleWidget();
   const { playerList, selectedPlayer, storyId } = useEvaluator();
   const [conversations, setConversations] = useState({});
+
   const { playerName, playerAvatar } =
     playerList.find(item => item.playerId === selectedPlayer) || {};
 
