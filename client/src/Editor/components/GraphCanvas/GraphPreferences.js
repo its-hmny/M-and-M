@@ -1,3 +1,5 @@
+import { CssBaseline } from '@material-ui/core';
+
 export const Options = {
   autoResize: true,
   height: '100vh',
@@ -37,9 +39,9 @@ export const Options = {
     hierarchical: {
       enabled: false,
       direction: 'LR',
-      levelSeparation: 100,
-      nodeSpacing: 200,
-      edgeMinimization: false,
+      levelSeparation: 150,
+      nodeSpacing: 100,
+      edgeMinimization: true,
       parentCentralization: false,
     },
   },
@@ -75,7 +77,7 @@ export const getGraphFromStory = story => {
   const graph = { nodes: [], edges: [] };
 
   story.nodes.forEach(node => {
-    graph.nodes = [...graph.nodes, { ...node, label: node.name }];
+    graph.nodes = [...graph.nodes, { ...node, label: node.name, mission: node.mission }];
     setEdgesFromChildren(node.components, node.id, graph);
   });
 
@@ -89,4 +91,70 @@ const setEdgesFromChildren = (root, rootId, graph) => {
     else if (child.children instanceof Array)
       setEdgesFromChildren(child.children, rootId, graph);
   });
+};
+
+export const makeClusters = network => {
+  const missions = getMissions(network);
+
+  missions.forEach(mission => {
+    const options = {
+      joinCondition: currentNodeOptions => {
+        return currentNodeOptions.mission === mission;
+      },
+      clusterNodeProperties: {
+        id: mission,
+        borderWidth: 3,
+        shape: 'database',
+        label: mission,
+        allowSingleNodeCluster: true,
+      },
+      clusterEdgeProperties: {},
+    };
+    network.clustering.cluster(options);
+  });
+
+  return missions;
+};
+
+export const openClusters = network => {
+  const missions = getMissions(network);
+
+  missions.forEach(mission => {
+    if (network.isCluster(mission)) {
+      network.openCluster(mission, {
+        releaseFunction: (clusterPosition, containedNodesPositions) => {
+          return containedNodesPositions;
+        },
+      });
+    }
+  });
+};
+
+const getMissions = network => {
+  var missions = [];
+  /*Populating mission database 
+    (there isn't a central db because it wasn't necessary)
+  */
+  //Getting node data we set from network.body.nodes[i].options
+  if (network !== undefined) {
+    network.body.data.nodes.forEach(node => {
+      if (!missions.includes(node.mission)) {
+        missions.push(node.mission);
+      }
+    });
+  }
+
+  return missions;
+};
+
+export const cleanClusterEdges = (network, missions) => {
+  if (network !== undefined) {
+    for (const [key, edge] of Object.entries(network.body.edges)) {
+      if (key.includes('clusterEdge')) {
+        if (!missions.includes(edge.toId)) {
+          edge.options.hidden = true;
+        }
+      }
+    }
+  }
 };
