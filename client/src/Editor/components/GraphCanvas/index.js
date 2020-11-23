@@ -35,7 +35,7 @@ const GraphCanvas = () => {
   };
 
   /* Memoization of events to avoid processing multiple calls because of rerenders */
-
+  // on doubleClick select node
   const doubleClick = useCallback(
     event => {
       const eventNode = event.nodes[0];
@@ -61,6 +61,14 @@ const GraphCanvas = () => {
       }
     },
     [setWorkingActivity, story.nodes, clusteredMissions]
+  );
+
+  const deselectNode = useCallback(
+    event => {
+      networkRef.current.disableEditMode();
+      setWorkingActivity(undefined);
+    },
+    [setWorkingActivity]
   );
 
   useEffect(() => {
@@ -128,10 +136,11 @@ const GraphCanvas = () => {
     console.log(event);
   });
 
-  const events = useMemo(() => ({ doubleClick, selectEdge, zoom }), [
+  const events = useMemo(() => ({ doubleClick, selectEdge, zoom, deselectNode }), [
     doubleClick,
     selectEdge,
     zoom,
+    deselectNode,
   ]);
 
   return (

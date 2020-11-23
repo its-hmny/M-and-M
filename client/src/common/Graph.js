@@ -28,7 +28,6 @@ const Graph = ({
   data,
   options = defaultOptions,
   events = {},
-  style = { width: '100%', height: '100%' },
   getNetwork,
   getNodes,
   getEdges,
@@ -107,7 +106,7 @@ const Graph = ({
     };
   }, [events]);
 
-  return <div ref={container} style={style} />;
+  return <div ref={container} />;
 };
 
 export default Graph;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Button } from '@material-ui/core';
+import { makeStyles, Button, IconButton, Divider } from '@material-ui/core';
 import { useEditor } from '../../context/EditorContext';
 import TextFieldFragment from './TextFieldFragment';
 import CheckboxboxFragment from './CheckboxFragment';
@@ -9,10 +9,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '25ch',
+    overflow: 'auto',
   },
   inputRoot: {
     paddingRight: theme.spacing(2),
+  },
+  divider: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
 }));
 const ANSWER_VALUE = {
@@ -20,7 +24,7 @@ const ANSWER_VALUE = {
   WRONG: '[WRONG]',
 };
 const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
-  const { root, inputRoot } = useStyles();
+  const { root, inputRoot, divider, answersList } = useStyles();
   const { pathAlternative, valToChange, singleCorrectAnswer } = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
   const [correctAnswerValue, setCorrectAnswerValue] = React.useState([]);
@@ -69,18 +73,32 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
 
   return (
     <div>
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={addChoice}
+        className={classNames.InspectorElement}
+      >
+        Add
+      </Button>
       {answers.map((answer, i) => {
         return (
-          <div>
-            <TextFieldFragment
-              classNames={classNames}
-              path={path}
-              fragmentSpecificProps={{
-                pathAlternative: ['answers', i],
-                valToChange: 'text',
-                label: 'text',
-              }}
-            />
+          <div key={`answer-${i}-${shortid.generate()}`}>
+            <Divider className={divider} />
+            <div style={{ display: 'flex', alignItems: 'bottom' }}>
+              <TextFieldFragment
+                classNames={classNames}
+                path={path}
+                fragmentSpecificProps={{
+                  pathAlternative: ['answers', i],
+                  valToChange: 'text',
+                  label: 'Answer text',
+                }}
+              />
+              <IconButton onClick={() => deleteChoice(i)}>
+                <DeleteIcon></DeleteIcon>
+              </IconButton>
+            </div>
             {singleCorrectAnswer ? (
               <RadioFragment
                 classNames={classNames}
@@ -112,21 +130,9 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
                 }}
               />
             )}
-
-            <Button onClick={() => deleteChoice(i)}>
-              <DeleteIcon></DeleteIcon>
-            </Button>
           </div>
         );
       })}
-      <Button
-        color="primary"
-        variant="contained"
-        onClick={addChoice}
-        className={classNames.InspectorElement}
-      >
-        Add
-      </Button>
     </div>
   );
 };

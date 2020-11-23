@@ -21,7 +21,7 @@
       }
     }
   ],
-  "Missions":[
+  "Missions": [
     {
       "fragment": "SelectFragment",
       "props": {
@@ -58,7 +58,6 @@
         "label": "Destination",
         "data": "id",
         "dataName": "name"
-
       }
     }
   ],
@@ -124,36 +123,37 @@
   ],
   "TextArea": [],
   "Footer": [],
+  "Spacer": [],
+  "Background": [],
   "SingleAnsChoices": [
     {
+      "fragment": "CheckboxFragment",
+      "props": {
+        "valToChange": "withSubmit",
+        "label": "Submit Button"
+      }
+    },
+    {
       "fragment": "AnswerFragment",
-      "props":{
+      "props": {
         "valToChange": "answers",
         "singleCorrectAnswer": true
       }
-    },
-    {
-      "fragment": "CheckboxFragment",
-      "props":{
-        "valToChange": "withSubmit",
-        "label": "Submit Button"
-      }
     }
-    
   ],
   "MultiAnsChoices": [
     {
-      "fragment": "AnswerFragment",
-      "props":{
-        "valToChange": "answers",
-        "singleCorrectAnswer": false
+      "fragment": "CheckboxFragment",
+      "props": {
+        "valToChange": "withSubmit",
+        "label": "Submit Button"
       }
     },
     {
-      "fragment": "CheckboxFragment",
-      "props":{
-        "valToChange": "withSubmit",
-        "label": "Submit Button"
+      "fragment": "AnswerFragment",
+      "props": {
+        "valToChange": "answers",
+        "singleCorrectAnswer": false
       }
     }
   ]

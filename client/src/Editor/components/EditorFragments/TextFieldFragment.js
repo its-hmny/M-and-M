@@ -31,6 +31,8 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
       multiline={true}
       rowsMax={3}
       value={value}
+      variant="outlined"
+      size="small"
       onChange={event =>
         onChange !== undefined
           ? onChange(event)

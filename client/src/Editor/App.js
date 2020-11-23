@@ -14,6 +14,12 @@ import Panel from './components/Panel';
 import styles from '../data/styles.json';
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    position: 'relative',
+    maxWidth: '100vw',
+    maxHeight: '100vw',
+    overflow: 'hidden',
+  },
   addButton: {
     position: 'absolute',
     marginTop: theme.spacing(2),
@@ -28,12 +34,6 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     justifyContent: 'center',
-  },
-  inspector: {
-    marginRight: theme.spacing(4),
-    height: '100%',
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
   },
 }));
 
@@ -50,7 +50,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className={classes.container}>
       <Fab
         variant="extended"
         className={classes.addButton}
@@ -69,9 +69,7 @@ const App = () => {
       </Panel>
       <GraphCanvas />
       <Panel open={currentNode != null} position="right">
-        <div className={classes.inspector}>
-          <Inspector />
-        </div>
+        <Inspector />
       </Panel>
       <TemplatesDialog
         open={isDialogOpen}

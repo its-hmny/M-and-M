@@ -5,23 +5,21 @@ import { useEditor } from '../context/EditorContext';
 import CollapsableBox from './CollapsableBox';
 import properties from '../constants/ComponentProperties.json';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   InspectorPaperStyle: {
     padding: 15,
-    maxHeight: '100vh',
+    height: '100vh',
+    paddingBottom: theme.spacing(4),
+    boxSizing: 'border-box',
+    overflowY: 'auto',
+    overflowX: 'hidden',
   },
-
   DefaultTitleStyle: {
     paddingLeft: 15,
     paddingRight: 15,
   },
-
-  content: {
-    height: '100%',
-    overflowY: 'auto',
-    overflowX: 'none',
-  },
-});
+  content: {},
+}));
 
 const Inspector = () => {
   const { story, workingActivity } = useEditor();
