@@ -1,9 +1,9 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+import PlayerProgressGraph from './components/PlayerProgressGraph';
 import PlayerSidebar from './components/PlayerSidebar';
-import ChatPopUp from './components/ChatPopUp';
-import Launcher from './components/Launcher';
-import Preview from '../common/Preview';
+import ActionBar from './components/ActionBar';
+
 import { useEvaluator } from './context/EvaluatorContext';
 
 const App = () => {
@@ -11,15 +11,9 @@ const App = () => {
   return (
     <>
       <Typography>{selectedPlayer}</Typography>
+      {/*<PlayerProgressGraph />*/}
       <PlayerSidebar />
-      <ChatPopUp />
-      <Launcher
-        img="http://localhost:8000/smartphone.svg"
-        backgroundColor="#121212"
-        marginRight={'5vw'}
-      >
-        <Preview storyNode={{ components: [] }} />
-      </Launcher>
+      <ActionBar />
     </>
   );
 };

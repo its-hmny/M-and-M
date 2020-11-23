@@ -72,6 +72,8 @@ export const Options = {
 };
 
 export const getGraphFromStory = story => {
+  if (!story) return { nodes: [], edges: [] };
+
   const graph = { nodes: [], edges: [] };
 
   story.nodes.forEach(node => {

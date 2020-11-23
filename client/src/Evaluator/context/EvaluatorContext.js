@@ -7,9 +7,12 @@ export const EvaluatorProvider = ({ children, _ }) => {
   const { storyId } = useQuery();
   const [selectedPlayer, setSelectedPlayer] = useState(undefined);
   const [playerList, setPlayerList] = useState([]);
+  const [story, setStory] = useState(undefined);
 
   useEffect(() => {
-    // onMount setup the update routine
+    // onMount load the story and setup the update routine
+    axios.get(`/stories/${storyId}`).then(res => setStory(res.data.payload));
+
     const intervalId = setInterval(
       () =>
         axios
@@ -24,6 +27,7 @@ export const EvaluatorProvider = ({ children, _ }) => {
   }, [storyId]);
 
   const toProvide = {
+    story,
     storyId,
     playerList,
     selectedPlayer,

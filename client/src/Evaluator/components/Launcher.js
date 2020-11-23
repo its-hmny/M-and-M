@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const Launcher = props => {
-  const { backgroundColor, img, children, ...style } = props;
-  const [open, setOpen] = useState(false);
-
-  const toggleChat = () => setOpen(!open);
+  const { buttonColor, icon, children, open, toggleContainer, ...style } = props;
 
   return (
-    <div className="rcw-widget-container" style={style}>
-      <div class="rcw-conversation-container active" style={{ display: open || 'none' }}>
-        {open ? children : undefined}
-      </div>
+    <div className="rcw-widget-container" style={{ ...style }}>
+      {open && (
+        <div
+          className="rcw-conversation-container active"
+          style={{ display: open || 'none' }}
+        >
+          {children}
+        </div>
+      )}
       <button
         type="button"
         className="rcw-launcher"
-        onClick={toggleChat}
-        style={{ ...style, backgroundColor }}
+        onClick={toggleContainer}
+        style={{ backgroundColor: buttonColor }}
       >
-        {/* {!showChat && <Badge badge={badgeCount} />} */}
         {open ? (
           <img
             width="20vw"
@@ -26,7 +27,7 @@ const Launcher = props => {
             alt="Closed"
           />
         ) : (
-          <img width="20vw" src={img} className="rcw-close-launcher" alt="Open" />
+          <img width="20vw" src={icon} className="rcw-close-launcher" alt="Open" />
         )}
       </button>
     </div>
