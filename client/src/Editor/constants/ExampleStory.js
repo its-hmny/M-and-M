@@ -18,13 +18,13 @@ const ExampleStory = {
           name: 'Button',
           text: 'Inizia!',
           story: {
-            nextNode: 1,
+            nextNode: 'stringid1',
           },
         },
       ],
     },
     {
-      id: 1,
+      id: 'stringid1',
       name: 'Domanda a scelta multipla',
       mission: 'Missione 1',
       components: [
@@ -40,7 +40,7 @@ const ExampleStory = {
           text: 'Bianco',
 
           story: {
-            nextNode: 2,
+            nextNode: 'stringid2',
           },
         },
         {
@@ -49,13 +49,13 @@ const ExampleStory = {
           text: 'Nero',
           styleId: 'SpaceButton',
           story: {
-            nextNode: 3,
+            nextNode: 'stringid3',
           },
         },
       ],
     },
     {
-      id: 2,
+      id: 'stringid2',
       name: 'Corretto',
       mission: 'Missione 1',
       components: [
@@ -67,7 +67,7 @@ const ExampleStory = {
       ],
     },
     {
-      id: 3,
+      id: 'stringid3',
       name: 'Sbagliato',
       mission: 'Missione 2',
       components: [
@@ -91,7 +91,7 @@ const ExampleStory = {
 
                   styleId: 'SpaceButton',
                   story: {
-                    nextNode: 1,
+                    nextNode: 'stringid1',
                   },
                 },
                 {
@@ -101,7 +101,7 @@ const ExampleStory = {
 
                   styleId: 'SpaceButton',
                   story: {
-                    nextNode: 4,
+                    nextNode: 'stringid4',
                   },
                 },
               ],
@@ -111,7 +111,7 @@ const ExampleStory = {
       ],
     },
     {
-      id: 4,
+      id: 'stringid4',
       name: 'Sconfitta',
       mission: 'Missione 2',
       components: [
@@ -123,9 +123,9 @@ const ExampleStory = {
       ],
     },
     {
-      id: 5,
+      id: 'stringid5',
       name: 'Test nuovi fragment',
-      mission: 'Missione 2',
+      mission: 'Missione 3',
       color: '#fef3f4',
       components: [
         {
@@ -162,7 +162,7 @@ const ExampleStory = {
       ],
     },
     {
-      id: 6,
+      id: 'stringid6',
       name: 'Test singleanschoice',
       mission: 'Missione 3',
       components: [
@@ -185,7 +185,7 @@ const ExampleStory = {
       ],
     },
     {
-      id: 7,
+      id: 'stringid7',
       name: 'Test multianschoice',
       mission: 'Missione 3',
       components: [
