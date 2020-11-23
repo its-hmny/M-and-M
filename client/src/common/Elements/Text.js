@@ -2,6 +2,7 @@
 import { css, jsx } from '@emotion/core';
 
 const base = css`
+  position: relative;
   padding: 0.5rem 0;
   color: black;
   margin: 5px;

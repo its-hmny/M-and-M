@@ -3,7 +3,8 @@
 ## Adding new components
 Here's some help if you need to add a new component.
 ### Adding the component (across all views)
-- add component file in common/elements
+- add component file in common/elements:
+	- REMEMBER to include z-index: 1 in base css
 - add component export in common/index
 ### Adding new Settings (Creator component) for a component
 - add component settings file in Creator/Settings

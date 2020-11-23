@@ -1,0 +1,60 @@
+{
+  "name": "Spacing",
+  "description": "djeidj",
+  "components": [
+    {
+      "id": "H4a_Ej-QA",
+      "name": "Text",
+      "text": "Di che colore è il cavallo bianco di Napoleone?",
+      "styleId": "DefaultText",
+      "style": {
+        "fontFamily": "Arial",
+        "fontSize": "16px",
+        "color": "#000"
+      }
+    },
+    {
+      "id": "DEswrOdBa0",
+      "name": "Button",
+      "text": "Some Button inside ButtonGroup",
+      "styleId": "DefaultButton",
+      "style": {
+        "color": "#000",
+        "backgroundColor": "#8cceb3"
+      }
+    },
+    {
+      "id": "lMsKQ4exE",
+      "name": "Spacer",
+      "styleId": "Spacer20",
+      "style": {
+        "color": "white",
+        "backgroundColor": "white",
+        "height": "7%",
+        "width": "100%"
+      }
+    },
+    {
+      "id": "Z72RjOgQ3B",
+      "name": "ButtonGroup",
+      "styleId": "DefaultButtonGroup",
+      "children": [
+        {
+          "id": "2DrRFT5fT1",
+          "name": "Button",
+          "text": "Ritenta",
+          "styleId": "DefaultButton"
+        },
+        {
+          "id": "vhPLxPG67w",
+          "name": "Button",
+          "text": "Abbandona",
+          "styleId": "DefaultButton"
+        }
+      ],
+      "style": {
+        "backgroundColor": "yellow"
+      }
+    }
+  ]
+}

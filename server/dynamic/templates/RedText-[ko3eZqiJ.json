@@ -1,0 +1,17 @@
+{
+  "name": "RedText",
+  "description": "Yo",
+  "components": [
+    {
+      "id": "tVnza4zVn",
+      "name": "Text",
+      "text": "im a beautiful Text",
+      "styleId": "DefaultText2",
+      "style": {
+        "fontFamily": "Arial",
+        "fontSize": "16px",
+        "color": "#d94c4b"
+      }
+    }
+  ]
+}

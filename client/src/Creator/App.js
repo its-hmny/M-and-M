@@ -26,8 +26,12 @@ const App = () => {
   const saveTemplate = meta => {
     setIsSaving(false);
     console.log(`About to save template ${meta.name}...`);
+    const styledComponents = components.map(component => ({
+      ...component,
+      style: styles[component.styleId],
+    }));
     axios // See common/shared.js (useAPI hook)
-      .post('templates', { ...meta, components })
+      .post('templates', { ...meta, components: styledComponents })
       .then(value => console.log(value))
       .catch(err => console.error(err));
   };

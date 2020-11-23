@@ -21,8 +21,6 @@ import Failure from './Failure';
 import { CREATOR } from '../../../routes';
 import useTemplates from './use-templates';
 
-import styles from '../../../data/styles.json';
-
 const useStyles = makeStyles(theme => ({
   container: {
     flexGrow: 1,
@@ -79,7 +77,7 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
               <Box display="flex">
                 <Box px={4}>
                   <ReadOnly>
-                    <Preview components={templates[current].components} styles={styles} />
+                    <Preview components={templates[current].components} />
                   </ReadOnly>
                 </Box>
                 <Box py={2} width={300}>

@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 
 const base = css`
-  alignself: stretch;
+  align-self: stretch;
 `;
 const container = css`
   display: flex;
@@ -12,7 +12,7 @@ const container = css`
 const Spacer = ({ style }) => {
   return (
     <div css={container} style={{ height: style.height }}>
-      <div css={[base, style]} />
+      <div css={[base, style, { height: '100%' }]} />
     </div>
   );
 };

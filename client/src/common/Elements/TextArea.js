@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-const base = css`
-  padding: 0.5rem 0;
+const base = css`5rem 0;
   margin: 5px;
   border-radius: 5px;
   padding: 7px;
@@ -13,9 +12,7 @@ const base = css`
 
 const TextArea = ({ placeholder, rows, style }) => (
   <div>
-    <textarea
-      css={[base, style]}
-      placeholder={placeholder} />
+    <textarea css={[base, style]} placeholder={placeholder} />
   </div>
 );
 
