@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react';
-import Graph from './Graph';
+import Graph from '../../../common/Graph';
 
 import {
   Options,

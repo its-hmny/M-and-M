@@ -1,5 +1,5 @@
 import React from 'react';
-import Graph from 'vis-network-react';
+import Graph from '../../common/Graph';
 import {
   Options,
   getGraphFromStory,

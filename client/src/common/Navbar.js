@@ -38,6 +38,11 @@ const Navbar = () => (
           Evaluator
         </Button>
       </Typography>
+      <Typography variant="h6">
+        <Button color="inherit" component={Link} to={ROUTES.PUBLISHER}>
+          Publisher
+        </Button>
+      </Typography>
     </Toolbar>
   </AppBar>
 );
