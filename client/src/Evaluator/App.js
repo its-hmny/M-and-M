@@ -7,10 +7,8 @@ import ActionBar from './components/ActionBar';
 import { useEvaluator } from './context/EvaluatorContext';
 
 const App = () => {
-  const { selectedPlayer } = useEvaluator();
   return (
     <>
-      <Typography>{selectedPlayer}</Typography>
       <PlayerSidebar />
       <ActionBar />
     </>

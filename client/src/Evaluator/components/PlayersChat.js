@@ -10,30 +10,18 @@ import io from 'socket.io-client';
 
 const socket = io('http://localhost:8000');
 
-const PlayersChat = () => {
+const PlayersChat = ({ onOpen }) => {
   const { playerList, selectedPlayer, storyId } = useEvaluator();
   const [conversations, setConversations] = useState({});
 
   const { playerName, playerAvatar } =
     playerList.find(item => item.playerId === selectedPlayer) || {};
 
-  useEffect(() => {
-    deleteMessages();
-    if (conversations[selectedPlayer] !== undefined)
-      conversations[selectedPlayer].forEach(item => {
-        console.log('Iteration');
-        if (item.id === `evaluator${storyId}`) addUserMessage(item.msg);
-        else addResponseMessage(item.msg);
-      });
-    setBadgeCount(0);
-  }, [conversations, selectedPlayer, storyId]);
-
   const sendHandler = msg => {
-    if (conversations[selectedPlayer] !== undefined) {
+    if (conversations[selectedPlayer] !== undefined)
       conversations[selectedPlayer].push({ id: `evaluator${storyId}`, msg });
-    } else {
-      conversations[selectedPlayer] = [{ id: `evaluator${storyId}`, msg }];
-    }
+    else conversations[selectedPlayer] = [{ id: `evaluator${storyId}`, msg }];
+
     socket.emit('chat-msg-send', {
       story: storyId,
       senderId: `evaluator${storyId}`,
@@ -44,14 +32,23 @@ const PlayersChat = () => {
   };
 
   useEffect(() => {
+    deleteMessages();
+    if (conversations[selectedPlayer] !== undefined)
+      conversations[selectedPlayer].forEach(item => {
+        if (item.id === `evaluator${storyId}`) addUserMessage(item.msg);
+        else addResponseMessage(item.msg);
+      });
+    setBadgeCount(0);
+  }, [conversations, selectedPlayer, storyId]);
+
+  useEffect(() => {
     socket.on('chat-msg-recv', payload => {
       const { story, senderId, receiverId, msg } = payload;
       if (story === storyId && receiverId === `evaluator${storyId}`) {
-        if (conversations[senderId] !== undefined) {
+        if (conversations[senderId] !== undefined)
           conversations[senderId].push({ id: senderId, msg });
-        } else {
-          conversations[senderId] = [{ id: senderId, msg }];
-        }
+        else conversations[senderId] = [{ id: senderId, msg }];
+
         setConversations({ ...conversations });
       }
     });
@@ -60,6 +57,8 @@ const PlayersChat = () => {
 
   return (
     <ChatWidget
+      automaticToggle={false}
+      setOpen={onOpen}
       title={playerName || selectedPlayer}
       subtitle="Respond to the player's request"
       handleNewUserMessage={sendHandler}

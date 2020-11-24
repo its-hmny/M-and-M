@@ -1,11 +1,11 @@
 import React from 'react';
-import { Widget } from 'react-chat-widget';
+import { Widget, toggleWidget } from 'react-chat-widget';
 
 import 'react-chat-widget/lib/styles.css';
 import './styles.css';
 
-const ChatWidget = ({ ...forwardProps }) => {
-  return (
+const ChatWidget = ({ automaticToggle, setOpen, ...forwardProps }) => {
+  const baseComponent = (
     <Widget
       senderPlaceHolder="Type here your message"
       showCloseButton={true}
@@ -18,6 +18,10 @@ const ChatWidget = ({ ...forwardProps }) => {
       {...forwardProps}
     />
   );
+
+  return (
+    <>{automaticToggle ? baseComponent : <div onClick={setOpen}>{baseComponent}</div>}</>
+  );
 };
 
 export {
@@ -26,4 +30,5 @@ export {
   addUserMessage,
   setBadgeCount,
 } from 'react-chat-widget';
+
 export default ChatWidget;

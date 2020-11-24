@@ -9,17 +9,17 @@ const ActionBar = () => {
   const { selectedPlayer } = useEvaluator();
   const [currentOpen, setCurrentOpen] = useState(undefined);
 
-  const toggleContained = nToggle =>
+  const toggleContained = (nToggle, callback) =>
     setCurrentOpen(nPrev => (nPrev === nToggle ? undefined : nToggle));
 
   return (
     <div style={{ display: selectedPlayer ? undefined : 'none' }}>
-      <PlayersChat />
+      <PlayersChat onOpen={() => toggleContained(0)} />
 
       <Launcher
         icon="http://localhost:8000/smartphone.svg"
         buttonColor="#121212"
-        marginRight="10vw"
+        marginRight="21vw"
         open={currentOpen === 1}
         toggleContainer={() => toggleContained(1)}
       >
@@ -29,7 +29,7 @@ const ActionBar = () => {
       <Launcher
         icon="http://localhost:8000/info.svg"
         buttonColor="#d3d3d3"
-        marginRight="20vw"
+        marginRight="40vw"
         open={currentOpen === 2}
         toggleContainer={() => toggleContained(2)}
       >
