@@ -38,7 +38,6 @@ const ExampleStory = {
           id: shortid.generate(),
           name: 'Button',
           text: 'Bianco',
-
           story: {
             nextNode: 'stringid2',
           },
@@ -98,7 +97,6 @@ const ExampleStory = {
                   id: shortid.generate(),
                   name: 'Button',
                   text: 'Abbandona',
-
                   styleId: 'SpaceButton',
                   story: {
                     nextNode: 'stringid4',
@@ -150,14 +148,13 @@ const ExampleStory = {
         {
           id: shortid.generate(),
           name: 'Input',
-          inputType: 'text',
-          correctAnswer: 'xxx',
           placeholder: 'Scrivi la tua risposta qui',
         },
         {
           id: shortid.generate(),
           name: 'TextArea',
           placeholder: 'Scrivi la tua risposta più ampia qui',
+          rows: 5,
         },
       ],
     },

@@ -29,12 +29,12 @@ const Navbar = () => (
         </Button>
       </Typography>
       <Typography variant="h6">
-        <Button color="inherit" component={Link} to={ROUTES.PLAYER + '?storyId=test'}>
+        <Button color="inherit" component={Link} to={ROUTES.PLAYER + '?storyId=1'}>
           Player
         </Button>
       </Typography>
       <Typography variant="h6">
-        <Button color="inherit" component={Link} to={ROUTES.EVALUATOR + '?storyId=test'}>
+        <Button color="inherit" component={Link} to={ROUTES.EVALUATOR + '?storyId=1'}>
           Evaluator
         </Button>
       </Typography>

@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { useState } from 'react';
 
-const base = css`5rem 0;
+const base = css`
+  5rem 0;
   margin: 5px;
   border-radius: 5px;
   padding: 7px;
@@ -10,10 +12,22 @@ const base = css`5rem 0;
   width: 95%;
 `;
 
-const TextArea = ({ placeholder, rows, style }) => (
-  <div>
-    <textarea css={[base, style]} placeholder={placeholder} />
-  </div>
-);
+const noop = () => {};
+
+const TextArea = ({ placeholder, rows, onSubmit = noop, style }) => {
+  const [value, setValue] = useState('');
+  return (
+    <div>
+      <textarea
+        css={[base, style]}
+        placeholder={placeholder}
+        rows={rows}
+        value={value}
+        onChange={evt => setValue(evt.target.value)}
+      />
+      <button onClick={() => onSubmit(value)}>Invia risposta</button>
+    </div>
+  );
+};
 
 export default TextArea;
