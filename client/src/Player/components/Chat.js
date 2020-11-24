@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios, { useQuery } from '../../../common/shared';
+import axios, { useQuery } from '../../common/shared';
 
-import { Widget, addResponseMessage } from 'react-chat-widget';
-import 'react-chat-widget/lib/styles.css';
-import './styles.css';
+import ChatWidget, { addResponseMessage } from '../../common/ChatWidget';
 
+// Socket initialization
 import io from 'socket.io-client';
-
 const socket = io('http://localhost:8000');
 
 const Chat = () => {
@@ -39,18 +37,10 @@ const Chat = () => {
   }, [storyId, ids]);
 
   return (
-    <Widget
+    <ChatWidget
       title="Evaluator"
       subtitle="The evaluator will help you in case you have any problem"
-      senderPlaceHolder="Type here your message"
-      showCloseButton={true}
-      fullScreenMode={false}
-      autofocus={true}
-      showTimeStamp={true}
       handleNewUserMessage={sendHandler}
-      launcherOpenLabel="Chat opened"
-      launcherClosedLabel="Chat closed"
-      sendButtonAlt="Send"
     />
   );
 };

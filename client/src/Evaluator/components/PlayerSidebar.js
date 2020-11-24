@@ -1,6 +1,6 @@
 import React from 'react';
 import { Badge, Avatar, Paper } from '@material-ui/core';
-import { List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
+import { Grid, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import { useEvaluator } from '../context/EvaluatorContext';
 import axios from '../../common/shared';
 
@@ -32,11 +32,13 @@ const PlayerSidebar = () => {
   });
 
   return (
-    <Paper elevation={3} style={{ zIndex: 100 }}>
-      <List orientation="vertical" indicatorColor="primary">
-        {generateTab}
-      </List>
-    </Paper>
+    <Grid item xs={2}>
+      <Paper elevation={3}>
+        <List orientation="vertical" indicatorColor="primary">
+          {generateTab}
+        </List>
+      </Paper>
+    </Grid>
   );
 };
 

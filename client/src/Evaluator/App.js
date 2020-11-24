@@ -11,7 +11,6 @@ const App = () => {
   return (
     <>
       <Typography>{selectedPlayer}</Typography>
-      {/*<PlayerProgressGraph />*/}
       <PlayerSidebar />
       <ActionBar />
     </>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useEvaluator } from '../context/EvaluatorContext';
 import Preview from '../../common/Preview';
-import PlayersChat, { toggleWidget } from './PlayersChat';
+import PlayersChat from './PlayersChat';
+import PlayerStats from './PlayerStats';
 import Launcher from './Launcher';
 
 const ActionBar = () => {
@@ -32,7 +33,7 @@ const ActionBar = () => {
         open={currentOpen === 2}
         toggleContainer={() => toggleContained(2)}
       >
-        <h4>In this will be put the stats of the player</h4>
+        <PlayerStats></PlayerStats>
       </Launcher>
     </div>
   );

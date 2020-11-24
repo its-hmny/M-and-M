@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Widget,
+import ChatWidget, {
   deleteMessages,
   addResponseMessage,
   addUserMessage,
   setBadgeCount,
-} from 'react-chat-widget';
+} from '../../common/ChatWidget';
 import { useEvaluator } from '../context/EvaluatorContext';
 import io from 'socket.io-client';
-
-import 'react-chat-widget/lib/styles.css';
 
 const socket = io('http://localhost:8000');
 
@@ -62,18 +59,10 @@ const PlayersChat = () => {
   }, [conversations, storyId]);
 
   return (
-    <Widget
+    <ChatWidget
       title={playerName || selectedPlayer}
       subtitle="Respond to the player's request"
-      senderPlaceHolder="Type here your message"
-      showCloseButton={true}
-      fullScreenMode={false}
-      autofocus={true}
-      showTimeStamp={true}
       handleNewUserMessage={sendHandler}
-      launcherOpenLabel="Player chat opened"
-      launcherClosedLabel="Player chat closed"
-      sendButtonAlt="Send"
       profileAvatar={playerAvatar || undefined}
     />
   );
