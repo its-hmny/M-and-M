@@ -30,6 +30,7 @@ const base = css`
     width: 100%;
   }
 `;
+
 const noop = () => {};
 
 function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) {
@@ -62,7 +63,7 @@ function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop })
 
   useEffect(() => {
     if (!withSubmit && selectedAnswer) {
-      onSubmit(isCorrect);
+      onSubmit(isCorrect, selectedAnswer);
     }
   }, [withSubmit, onSubmit, isCorrect, correctAnswer, selectedAnswer]);
 
@@ -85,7 +86,7 @@ function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop })
       {withSubmit && (
         <Button
           disabled={selectedAnswer === null}
-          onClick={() => onSubmit(isCorrect)}
+          onClick={() => onSubmit(isCorrect, selectedAnswer)}
           style={style && style.Button}
           text="Conferma"
         />

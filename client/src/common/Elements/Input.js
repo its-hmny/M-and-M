@@ -25,23 +25,18 @@ const base = css`
   }
 `;
 
-const Input = ({ inputType, placeholder, correctAnswer, text, style }) => {
+const noop = () => {};
+
+const Input = ({ placeholder, onSubmit = noop, style }) => {
   const [answer, setAnswer] = useState('');
-
-  const validate = () => {
-    if (answer.toLowerCase() === correctAnswer.toLowerCase()) alert('Answer correct');
-    else alert('Answer wrong');
-  };
-
   return (
     <div css={[base, style]}>
       <input
-        type={inputType}
         placeholder={placeholder}
         value={answer}
         onChange={event => setAnswer(event.target.value)}
       />
-      <button onClick={validate}>Invia risposta</button>
+      <button onClick={() => onSubmit(answer)}>Invia risposta</button>
     </div>
   );
 };

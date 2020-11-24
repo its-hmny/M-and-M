@@ -65,7 +65,7 @@ function MultiAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) 
 
   useEffect(() => {
     if (!withSubmit && correctAnswers.length === selectedAnswers.length) {
-      onSubmit(isCorrect);
+      onSubmit(isCorrect, selectedAnswers);
     }
   }, [withSubmit, onSubmit, isCorrect, correctAnswers, selectedAnswers]);
 
@@ -88,7 +88,7 @@ function MultiAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) 
       {withSubmit && (
         <Button
           disabled={!(selectedAnswers.length > 0)}
-          onClick={() => onSubmit(isCorrect)}
+          onClick={() => onSubmit(isCorrect, selectedAnswers)}
           style={style && style.Button}
           text="Conferma"
         />

@@ -94,26 +94,25 @@ export const componentBuilders = {
   }),
   TextArea: () => ({
     name: 'TextArea',
-    styleId: 'DefaultTextArea',
     placeholder: 'Default placeholder text',
+    rows: 5,
+    styleId: 'DefaultTextArea',
   }),
   Input: () => ({
     name: 'Input',
-    styleId: 'DefaultInput',
-    inputType: 'text',
     placeholder: 'Default placeholder text',
-    correctAnswer: 'giorgio',
+    styleId: 'DefaultInput',
   }),
   Image: () => ({
     name: 'Image',
-    styleId: 'DefaultImage',
     imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
     fallback: 'This is the default fallback',
+    styleId: 'DefaultImage',
   }),
   AudioPlayer: () => ({
     name: 'AudioPlayer',
-    styleId: 'DefaultAudioPlayer',
     srcURL: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
+    styleId: 'DefaultAudioPlayer',
   }),
   Background: () => ({
     name: 'Background',
