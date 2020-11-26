@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Launcher = props => {
+const WidgetLauncher = props => {
   const { buttonColor, icon, children, open, toggleContainer, ...style } = props;
 
   return (
@@ -34,4 +34,4 @@ const Launcher = props => {
   );
 };
 
-export default Launcher;
+export default WidgetLauncher;

@@ -9,22 +9,22 @@ const renamePlayer = playerId => {
   axios.patch(`stats/test/${playerId}`, { playerName: newName });
 };
 
-const PlayerSidebar = () => {
-  const { playerList, setSelectedPlayer } = useEvaluator();
+const ActivePlayersList = () => {
+  const { playersLog, setFocusedPlayer } = useEvaluator();
 
-  const generateTab = playerList.map(player => {
-    const { playerName, playerId, playerAvatar } = player;
-    const avaiableName = playerName || playerId;
+  const generateTab = playersLog.map(player => {
+    const { name, id, avatar } = player;
+    const avaiableName = name || id;
 
     return (
       <ListItem
-        key={playerId}
-        onDoubleClick={() => renamePlayer(playerId)}
-        onClick={() => setSelectedPlayer(playerId)}
+        key={id}
+        onClick={() => setFocusedPlayer(id)}
+        onDoubleClick={() => renamePlayer(id)}
       >
         <Badge badgeContent={'!'} color="primary" />
         <ListItemAvatar>
-          <Avatar src={playerAvatar} />
+          <Avatar src={avatar} />
         </ListItemAvatar>
         <ListItemText>{avaiableName}</ListItemText>
       </ListItem>
@@ -42,4 +42,4 @@ const PlayerSidebar = () => {
   );
 };
 
-export default PlayerSidebar;
+export default ActivePlayersList;

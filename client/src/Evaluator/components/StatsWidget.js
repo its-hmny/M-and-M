@@ -16,7 +16,7 @@ import {
   TableBody,
 } from '@material-ui/core';
 
-const PlayerStats = () => {
+const StatsWidget = () => {
   return (
     <Card>
       <CardHeader
@@ -54,4 +54,4 @@ const PlayerStats = () => {
   );
 };
 
-export default PlayerStats;
+export default StatsWidget;

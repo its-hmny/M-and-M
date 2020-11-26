@@ -5,33 +5,22 @@ const EvaluatorContext = React.createContext();
 
 export const EvaluatorProvider = ({ children, _ }) => {
   const { storyId } = useQuery();
-  const [selectedPlayer, setSelectedPlayer] = useState(undefined);
-  const [playerList, setPlayerList] = useState([]);
+  const [focusedPlayer, setFocusedPlayer] = useState(undefined);
+  const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
 
   useEffect(() => {
-    // onMount load the story and setup the update routine
+    // onMount load the story and the player log on the server
     axios.get(`/stories/${storyId}`).then(res => setStory(res.data.payload));
-
-    const intervalId = setInterval(
-      () =>
-        axios
-          .get(`/stats/${storyId}`)
-          .then(res => setPlayerList(res.data.payload))
-          .catch(err => console.warn(err)),
-      1000
-    );
-
-    // onUnmount removes the interval
-    return () => clearInterval(intervalId);
+    axios.get(`/stats/${storyId}`).then(res => setPlayersLog(res.data.payload));
   }, [storyId]);
 
   const toProvide = {
     story,
     storyId,
-    playerList,
-    selectedPlayer,
-    setSelectedPlayer,
+    playersLog,
+    selectedPlayer: playersLog.find(player => (player.id = focusedPlayer)) || {},
+    setFocusedPlayer,
   };
 
   return (

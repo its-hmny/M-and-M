@@ -1,42 +1,43 @@
 import React, { useState } from 'react';
 import { useEvaluator } from '../context/EvaluatorContext';
+import { Chat, WidgetLauncher, StatsWidget } from '.';
 import Preview from '../../common/Preview';
-import PlayersChat from './PlayersChat';
-import PlayerStats from './PlayerStats';
-import Launcher from './Launcher';
 
-const ActionBar = () => {
+const WidgetArea = () => {
   const { selectedPlayer } = useEvaluator();
   const [currentOpen, setCurrentOpen] = useState(undefined);
+  const { currentQuestion, stats } = selectedPlayer;
 
-  const toggleContained = (nToggle, callback) =>
+  const toggleContained = nToggle =>
     setCurrentOpen(nPrev => (nPrev === nToggle ? undefined : nToggle));
 
   return (
     <div style={{ display: selectedPlayer ? undefined : 'none' }}>
-      <PlayersChat onOpen={() => toggleContained(0)} />
+      <Chat onOpen={() => toggleContained(0)} />
 
-      <Launcher
+      <WidgetLauncher
         icon="http://localhost:8000/smartphone.svg"
         buttonColor="#121212"
         marginRight="21vw"
         open={currentOpen === 1}
         toggleContainer={() => toggleContained(1)}
       >
+        {/*ToDo change this line once currenQuestion has default value*/}
         <Preview storyNode={{ components: [] }} />
-      </Launcher>
+      </WidgetLauncher>
 
-      <Launcher
+      <WidgetLauncher
         icon="http://localhost:8000/info.svg"
         buttonColor="#d3d3d3"
         marginRight="40vw"
         open={currentOpen === 2}
         toggleContainer={() => toggleContained(2)}
       >
-        <PlayerStats></PlayerStats>
-      </Launcher>
+        {/*ToDo change this line once stats has default value*/}
+        <StatsWidget />
+      </WidgetLauncher>
     </div>
   );
 };
 
-export default ActionBar;
+export default WidgetArea;

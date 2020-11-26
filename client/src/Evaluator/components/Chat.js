@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
 import ChatWidget, {
   deleteMessages,
   addResponseMessage,
@@ -6,38 +7,43 @@ import ChatWidget, {
   setBadgeCount,
 } from '../../common/ChatWidget';
 import { useEvaluator } from '../context/EvaluatorContext';
-import io from 'socket.io-client';
 
 const socket = io('http://localhost:8000');
 
-const PlayersChat = ({ onOpen }) => {
-  const { playerList, selectedPlayer, storyId } = useEvaluator();
+const Chat = ({ onOpen }) => {
+  const { selectedPlayer, storyId } = useEvaluator();
+  // ToDo change with the conversation saved in the server here under
   const [conversations, setConversations] = useState({});
 
-  const { playerName, playerAvatar } =
-    playerList.find(item => item.playerId === selectedPlayer) || {};
+  const { name, id, avatar } = selectedPlayer;
 
   const sendHandler = msg => {
-    if (conversations[selectedPlayer] !== undefined)
-      conversations[selectedPlayer].push({ id: `evaluator${storyId}`, msg });
-    else conversations[selectedPlayer] = [{ id: `evaluator${storyId}`, msg }];
+    // Saves the new message in the storage
+    const toSave = { senderId: `evaluator${storyId}`, content: msg };
+    const currentChat = conversations[selectedPlayer.id];
+    conversations[selectedPlayer.id] =
+      currentChat !== undefined ? [...currentChat, toSave] : [toSave];
 
     socket.emit('chat-msg-send', {
       story: storyId,
       senderId: `evaluator${storyId}`,
-      receiverId: selectedPlayer,
+      receiverId: selectedPlayer.id,
       msg,
     });
+
     setConversations({ ...conversations });
   };
 
   useEffect(() => {
     deleteMessages();
-    if (conversations[selectedPlayer] !== undefined)
-      conversations[selectedPlayer].forEach(item => {
-        if (item.id === `evaluator${storyId}`) addUserMessage(item.msg);
-        else addResponseMessage(item.msg);
-      });
+    if (!selectedPlayer.chatLog) return;
+
+    selectedPlayer.chatLog.forEach(msg => {
+      const { senderId, content } = msg;
+      senderId === `evaluator${storyId}`
+        ? addUserMessage(content)
+        : addResponseMessage(content);
+    });
     setBadgeCount(0);
   }, [conversations, selectedPlayer, storyId]);
 
@@ -45,10 +51,11 @@ const PlayersChat = ({ onOpen }) => {
     socket.on('chat-msg-recv', payload => {
       const { story, senderId, receiverId, msg } = payload;
       if (story === storyId && receiverId === `evaluator${storyId}`) {
-        if (conversations[senderId] !== undefined)
-          conversations[senderId].push({ id: senderId, msg });
-        else conversations[senderId] = [{ id: senderId, msg }];
-
+        // Saves the new message in the storage
+        const toSave = { senderId, content: msg };
+        const currentChat = conversations[senderId];
+        conversations[senderId] =
+          currentChat !== undefined ? [...currentChat, toSave] : [toSave];
         setConversations({ ...conversations });
       }
     });
@@ -59,12 +66,12 @@ const PlayersChat = ({ onOpen }) => {
     <ChatWidget
       automaticToggle={false}
       setOpen={onOpen}
-      title={playerName || selectedPlayer}
+      title={name || id}
       subtitle="Respond to the player's request"
       handleNewUserMessage={sendHandler}
-      profileAvatar={playerAvatar || undefined}
+      profileAvatar={avatar || undefined}
     />
   );
 };
 
-export default PlayersChat;
+export default Chat;

@@ -7,7 +7,7 @@ import {
 import { useEvaluator } from '../context/EvaluatorContext';
 import '../../Editor/components/GraphCanvas/styles.css';
 
-const PlayerProgressGraph = () => {
+const ProgressGraph = () => {
   const { story } = useEvaluator();
   return (
     <div id="graphcanvas-container">
@@ -16,4 +16,4 @@ const PlayerProgressGraph = () => {
   );
 };
 
-export default PlayerProgressGraph;
+export default ProgressGraph;
