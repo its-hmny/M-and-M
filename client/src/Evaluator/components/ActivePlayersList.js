@@ -2,14 +2,13 @@ import React from 'react';
 import { Badge, Avatar, Paper } from '@material-ui/core';
 import { Grid, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import { useEvaluator } from '../context/EvaluatorContext';
-import axios from '../../common/shared';
 
 const ActivePlayersList = () => {
-  const { storyId, playersLog, setFocusedPlayer } = useEvaluator();
+  const { storyId, playersLog, setFocusedPlayer, updatePlayerLog } = useEvaluator();
 
   const renamePlayer = playerId => {
     const newName = prompt('Choose a new name for this player');
-    axios.patch(`stats/${storyId}/${playerId}`, { name: newName });
+    updatePlayerLog(playerId, { name: newName });
   };
 
   const generateTab = playersLog.map(player => {

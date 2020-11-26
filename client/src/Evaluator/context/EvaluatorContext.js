@@ -8,13 +8,27 @@ export const EvaluatorProvider = ({ children, _ }) => {
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
-  console.log(playersLog);
 
-  useEffect(() => {
+  useEffect(async () => {
     // onMount load the story and the player log on the server
-    axios.get(`/stories/${storyId}`).then(res => setStory(res.data.payload));
-    axios.get(`/stats/${storyId}`).then(res => setPlayersLog(res.data.payload));
+    try {
+      const loadedStory = (await axios.get(`/stories/${storyId}`)).data.payload;
+      const serverLog = (await axios.get(`/stats/${storyId}`)).data.payload;
+      setStory(loadedStory);
+      setPlayersLog(serverLog);
+    } catch (err) {
+      console.warn('Error loading log and story from server', err);
+    }
   }, [storyId]);
+
+  const updatePlayerLog = async (player_id, patch) => {
+    try {
+      const response = await axios.patch(`/stats/${storyId}/${player_id}`, patch);
+      setPlayersLog(response.data.payload);
+    } catch (err) {
+      console.warn('Error applying the patch to player', err);
+    }
+  };
 
   const toProvide = {
     story,
@@ -22,6 +36,7 @@ export const EvaluatorProvider = ({ children, _ }) => {
     playersLog,
     selectedPlayer: playersLog.find(player => player.id === focusedPlayer) || {},
     setFocusedPlayer,
+    updatePlayerLog,
   };
 
   return (

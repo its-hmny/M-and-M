@@ -59,7 +59,7 @@ router.patch('/:story_uuid/:player_uuid', (req, res) => {
   res.send({
     status: true,
     message: 'Updated stats sent!',
-    payload: toUpdate,
+    payload: database[story_uuid],
   });
 });
 
