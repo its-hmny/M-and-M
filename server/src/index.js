@@ -2,9 +2,10 @@ const cors = require('cors');
 const app = require('express')();
 const express = require('express');
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+
+const io = require('./shared')(http);
 
 // Endpoint routers
 const resourcesRouter = require('./routes/resources');
@@ -19,9 +20,11 @@ app.use(fileUpload({ createParentPath: true }));
 
 io.on('connection', socket => {
   socket.on('chat-msg-send', payload => io.emit('chat-msg-recv', payload));
+
   socket.on('update:position', data => {
     console.log(data);
   });
+
   socket.on('update:stats', data => {
     console.log(data);
   });

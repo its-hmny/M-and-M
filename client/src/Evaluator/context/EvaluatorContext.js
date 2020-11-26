@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import axios, { useQuery } from '../../common/shared';
 
 const EvaluatorContext = React.createContext();
@@ -8,6 +8,7 @@ export const EvaluatorProvider = ({ children, _ }) => {
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
+  console.log(playersLog);
 
   useEffect(() => {
     // onMount load the story and the player log on the server
@@ -19,7 +20,7 @@ export const EvaluatorProvider = ({ children, _ }) => {
     story,
     storyId,
     playersLog,
-    selectedPlayer: playersLog.find(player => (player.id = focusedPlayer)) || {},
+    selectedPlayer: playersLog.find(player => player.id === focusedPlayer) || {},
     setFocusedPlayer,
   };
 

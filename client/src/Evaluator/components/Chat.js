@@ -17,42 +17,40 @@ const Chat = ({ onOpen }) => {
 
   const { name, id, avatar } = selectedPlayer;
 
+  useEffect(() => {
+    deleteMessages();
+    if (conversations[id])
+      conversations[id].forEach(msg => {
+        const { sender, content } = msg;
+        sender === `evaluator${storyId}`
+          ? addUserMessage(content)
+          : addResponseMessage(content);
+      });
+    setBadgeCount(0);
+  }, [conversations, selectedPlayer, storyId]);
+
   const sendHandler = msg => {
     // Saves the new message in the storage
-    const toSave = { senderId: `evaluator${storyId}`, content: msg };
-    const currentChat = conversations[selectedPlayer.id];
-    conversations[selectedPlayer.id] =
-      currentChat !== undefined ? [...currentChat, toSave] : [toSave];
+    const toSave = { sender: `evaluator${storyId}`, content: msg };
+    const currentChat = conversations[id];
+    conversations[id] = currentChat !== undefined ? [...currentChat, toSave] : [toSave];
 
     socket.emit('chat-msg-send', {
       story: storyId,
       senderId: `evaluator${storyId}`,
-      receiverId: selectedPlayer.id,
+      receiverId: id,
       msg,
     });
 
-    setConversations({ ...conversations });
+    //setConversations({ ...conversations });
   };
-
-  useEffect(() => {
-    deleteMessages();
-    if (!selectedPlayer.chatLog) return;
-
-    selectedPlayer.chatLog.forEach(msg => {
-      const { senderId, content } = msg;
-      senderId === `evaluator${storyId}`
-        ? addUserMessage(content)
-        : addResponseMessage(content);
-    });
-    setBadgeCount(0);
-  }, [conversations, selectedPlayer, storyId]);
 
   useEffect(() => {
     socket.on('chat-msg-recv', payload => {
       const { story, senderId, receiverId, msg } = payload;
       if (story === storyId && receiverId === `evaluator${storyId}`) {
         // Saves the new message in the storage
-        const toSave = { senderId, content: msg };
+        const toSave = { sender: senderId, content: msg };
         const currentChat = conversations[senderId];
         conversations[senderId] =
           currentChat !== undefined ? [...currentChat, toSave] : [toSave];

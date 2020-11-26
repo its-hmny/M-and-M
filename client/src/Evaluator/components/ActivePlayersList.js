@@ -4,13 +4,13 @@ import { Grid, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui
 import { useEvaluator } from '../context/EvaluatorContext';
 import axios from '../../common/shared';
 
-const renamePlayer = playerId => {
-  const newName = prompt('Choose a new name for this player');
-  axios.patch(`stats/test/${playerId}`, { playerName: newName });
-};
-
 const ActivePlayersList = () => {
-  const { playersLog, setFocusedPlayer } = useEvaluator();
+  const { storyId, playersLog, setFocusedPlayer } = useEvaluator();
+
+  const renamePlayer = playerId => {
+    const newName = prompt('Choose a new name for this player');
+    axios.patch(`stats/${storyId}/${playerId}`, { name: newName });
+  };
 
   const generateTab = playersLog.map(player => {
     const { name, id, avatar } = player;
