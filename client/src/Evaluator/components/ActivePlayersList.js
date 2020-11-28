@@ -4,7 +4,12 @@ import { Grid, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui
 import { useEvaluator } from '../context/EvaluatorContext';
 
 const ActivePlayersList = () => {
-  const { storyId, playersLog, setFocusedPlayer, updatePlayerLog } = useEvaluator();
+  const {
+    selectedPlayer,
+    playersLog,
+    setFocusedPlayer,
+    updatePlayerLog,
+  } = useEvaluator();
 
   const renamePlayer = playerId => {
     const newName = prompt('Choose a new name for this player');
@@ -18,6 +23,7 @@ const ActivePlayersList = () => {
     return (
       <ListItem
         key={id}
+        selected={id === selectedPlayer.id}
         onClick={() => setFocusedPlayer(id)}
         onDoubleClick={() => renamePlayer(id)}
       >
