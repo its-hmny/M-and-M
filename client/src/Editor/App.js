@@ -41,6 +41,7 @@ const App = () => {
   const classes = useStyles();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { story, workingActivity, saveStory } = useEditor();
+  console.log(story);
   const currentNode = story.nodes.find(node => node.id === workingActivity);
 
   const addNode = template => {
