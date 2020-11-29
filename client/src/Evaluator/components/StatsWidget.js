@@ -16,16 +16,11 @@ import {
   TableBody,
 } from '@material-ui/core';
 
-const StatsWidget = () => {
+const StatsWidget = ({ player }) => {
+  const { avatar, name, id, stats } = player;
   return (
     <Card>
-      <CardHeader
-        avatar={
-          <Avatar src="https://images2.corriereobjects.it/methode_image/2020/07/21/Salute/Foto%20Salute%20-%20Trattate/GettyImages-1220925841-kixF-U3200732353417mED-656x492@Corriere-Web-Sezioni.jpg?v=20200721162605" />
-        }
-        title="Platername here"
-        subheader="playerID here"
-      />
+      <CardHeader avatar={<Avatar src={avatar} />} title={name || id} subheader={id} />
       <CardContent>
         <Typography variant="h6">Some shit stats for the foking player</Typography>
         <TableContainer component={Paper}>
@@ -38,14 +33,12 @@ const StatsWidget = () => {
             </TableHead>
 
             <TableBody>
-              <TableRow>
-                <TableCell align="center">xxx</TableCell>
-                <TableCell align="center">yyy</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell align="center">xxx</TableCell>
-                <TableCell align="center">yyy</TableCell>
-              </TableRow>
+              {Object.keys(stats).map(statName => (
+                <TableRow>
+                  <TableCell align="center">{statName}</TableCell>
+                  <TableCell align="center">{stats[statName]}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useEvaluator } from '../context/EvaluatorContext';
-import { Chat, WidgetLauncher, StatsWidget } from '.';
+import { ChatWidget, WidgetLauncher, StatsWidget } from '.';
 import Preview from '../../common/Preview';
 
 const WidgetArea = () => {
   const { selectedPlayer } = useEvaluator();
   const [currentOpen, setCurrentOpen] = useState(undefined);
-  const { currentQuestion, stats } = selectedPlayer;
+  const { currentQuestion } = selectedPlayer;
 
   const toggleContained = nToggle =>
     setCurrentOpen(nPrev => (nPrev === nToggle ? undefined : nToggle));
 
   return (
     <div style={{ display: selectedPlayer ? undefined : 'none' }}>
-      <Chat onOpen={() => toggleContained(0)} />
+      <ChatWidget onOpen={() => toggleContained(0)} />
 
       <WidgetLauncher
         icon="http://localhost:8000/smartphone.svg"
@@ -34,7 +34,7 @@ const WidgetArea = () => {
         toggleContainer={() => toggleContained(2)}
       >
         {/*ToDo change this line once stats has default value*/}
-        <StatsWidget />
+        <StatsWidget player={selectedPlayer} />
       </WidgetLauncher>
     </div>
   );

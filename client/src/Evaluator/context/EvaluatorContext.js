@@ -16,6 +16,7 @@ export const EvaluatorProvider = ({ children, _ }) => {
       const serverLog = (await axios.get(`/stats/${storyId}`)).data.payload;
       setStory(loadedStory);
       setPlayersLog(serverLog);
+      setFocusedPlayer(serverLog[0].id);
     } catch (err) {
       console.warn('Error loading log and story from server', err);
     }
