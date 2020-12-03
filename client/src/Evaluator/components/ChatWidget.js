@@ -11,11 +11,18 @@ import { useEvaluator } from '../context/EvaluatorContext';
 const socket = io('http://localhost:8000');
 
 const Chat = ({ onOpen }) => {
-  const { selectedPlayer, storyId } = useEvaluator();
-  // ToDo change with the conversation saved in the server here under
+  const { selectedPlayer, storyId, playersLog } = useEvaluator();
+  const { name, id, avatar } = selectedPlayer;
   const [conversations, setConversations] = useState({});
 
-  const { name, id, avatar } = selectedPlayer;
+  useEffect(() => {
+    const savedChats = {};
+    playersLog.forEach(player => {
+      const { id, chatLog } = player;
+      savedChats[id] = chatLog;
+    });
+    setConversations(savedChats);
+  }, [playersLog]);
 
   useEffect(() => {
     deleteMessages();
@@ -42,7 +49,7 @@ const Chat = ({ onOpen }) => {
       msg,
     });
 
-    //setConversations({ ...conversations });
+    setConversations({ ...conversations });
   };
 
   useEffect(() => {

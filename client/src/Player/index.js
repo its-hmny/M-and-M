@@ -136,7 +136,7 @@ const Player = () => {
           story: storyId,
           senderId: ids.player,
           receiverId: ids.evaluator,
-          payload: { currentNode: node },
+          payload: { currentNodeId: node },
         });
       },
       updateStats: payload => {
