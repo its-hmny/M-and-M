@@ -130,14 +130,14 @@ const Player = () => {
     () => ({
       currentNodeId,
       moveTo: node => {
-        setCurrentNodeId(node);
         // whenever position changes evaluator is updated
         socket.emit('update:position', {
           story: storyId,
           senderId: ids.player,
           receiverId: ids.evaluator,
-          payload: { currentNodeId: node },
+          payload: { currentNodeId },
         });
+        setCurrentNodeId(node);
       },
       updateStats: payload => {
         socket.emit('update:stats', {

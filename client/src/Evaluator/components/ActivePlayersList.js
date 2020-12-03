@@ -1,7 +1,14 @@
 import React from 'react';
-import { Badge, Avatar, Paper } from '@material-ui/core';
+import { Badge, Avatar, Paper, makeStyles } from '@material-ui/core';
 import { Grid, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import { useEvaluator } from '../context/EvaluatorContext';
+
+const useStyles = makeStyles({
+  container: {
+    zIndex: 100,
+    position: 'absolute',
+  },
+});
 
 const ActivePlayersList = () => {
   const {
@@ -10,6 +17,7 @@ const ActivePlayersList = () => {
     setFocusedPlayer,
     updatePlayerLog,
   } = useEvaluator();
+  const { container } = useStyles();
 
   const renamePlayer = playerId => {
     const newName = prompt('Choose a new name for this player');
@@ -37,8 +45,8 @@ const ActivePlayersList = () => {
   });
 
   return (
-    <Grid item xs={2}>
-      <Paper elevation={3}>
+    <Grid item xs={2} className={container}>
+      <Paper elevation={3} className={container}>
         <List orientation="vertical" indicatorColor="primary">
           {generateTab}
         </List>

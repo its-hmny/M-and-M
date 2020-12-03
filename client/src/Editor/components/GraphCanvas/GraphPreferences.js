@@ -1,5 +1,3 @@
-import { CssBaseline } from '@material-ui/core';
-
 export const Options = {
   autoResize: true,
   height: '100vh',
