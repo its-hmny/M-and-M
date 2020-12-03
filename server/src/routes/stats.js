@@ -49,17 +49,17 @@ io.on('connection', socket => {
       // The player changed node in the story so removes all the data from the previous one
       delete playerLog.currentQuestion;
       playerLog.currentQuestion = { ...payload, patchs: [] };
+      io.emit('update:position', data);
     }
   });
 
   // Saves on the server the player responses and changes to the story's components
   socket.on('update:stats', data => {
-    console.log(data);
     const { story, senderId, payload } = data;
     const playerLog = (database[story] || []).find(player => player.id === senderId);
     if (playerLog) {
       const { id, data } = payload;
-      const componentToPatch = playerLog.currentQuestion.patchs.find(
+      let componentToPatch = playerLog.currentQuestion.patchs.find(
         patch => patch.componentId === id
       );
       if (componentToPatch) {
@@ -67,6 +67,7 @@ io.on('connection', socket => {
       } else {
         playerLog.currentQuestion.patchs.push({ componentId: id, value: data });
       }
+      io.emit('update:stats', data);
     }
   });
 });
