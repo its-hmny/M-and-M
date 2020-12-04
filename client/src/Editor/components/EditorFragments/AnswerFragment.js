@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { useEditor } from '../../context/EditorContext';
 import TextFieldFragment from './TextFieldFragment';
-import CheckboxboxFragment from './CheckboxFragment';
+import CheckboxFragment from './CheckboxFragment';
 import RadioFragment from './RadioFragment';
 import shortid from 'shortid';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -155,7 +155,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
                 }}
               />
             ) : (
-              <CheckboxboxFragment
+              <CheckboxFragment
                 classNames={classNames}
                 path={path}
                 fragmentSpecificProps={{
