@@ -36,23 +36,22 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  captionExpanded: {
-    opacity: '0.60',
-    backgroundColor: '#616161',
-    borderRadius: 4,
-    position: 'absolute',
-    width: '28vw',
-    marginLeft: '36vw',
-    zIndex: 1000,
-    textAlign: 'center',
-  },
   caption: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+    zIndex: 1000,
+  },
+  innerCaption: {
     opacity: '0.60',
     backgroundColor: '#616161',
     borderRadius: 4,
-    position: 'absolute',
-    marginLeft: '48.3vw',
-    zIndex: 1000,
+    textAlign: 'center',
+    padding: 15,
+    paddingBottom: 0,
   },
 }));
 
@@ -81,13 +80,13 @@ const App = () => {
         Add Node
       </Fab>
 
-      <Box className={isCaptionOpen ? classes.captionExpanded : classes.caption}>
+      <Box className={classes.caption}>
         {!isCaptionOpen ? (
           <Button onClick={() => setIsCaptionOpen(true)}>
             <ExpandMoreIcon />
           </Button>
         ) : (
-          <Box>
+          <Box className={classes.innerCaption}>
             <Typography>Clicca 2 volte su un nodo per modificarlo</Typography>
             <Typography>Trascina un nodo per spostarlo</Typography>
             <Typography>Per eliminare un nodo vai in Global - Delete node</Typography>

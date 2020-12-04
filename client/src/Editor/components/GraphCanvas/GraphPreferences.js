@@ -95,23 +95,24 @@ const setEdgesFromChildren = (root, rootId, graph) => {
 
 export const makeClusters = network => {
   const missions = getMissions(network);
-
-  missions.forEach(mission => {
-    const options = {
-      joinCondition: currentNodeOptions => {
-        return currentNodeOptions.mission === mission;
-      },
-      clusterNodeProperties: {
-        id: mission,
-        borderWidth: 3,
-        shape: 'database',
-        label: mission,
-        allowSingleNodeCluster: true,
-      },
-      clusterEdgeProperties: {},
-    };
-    network.clustering.cluster(options);
-  });
+  if (missions.length === 0) {
+    missions.forEach(mission => {
+      const options = {
+        joinCondition: currentNodeOptions => {
+          return currentNodeOptions.mission === mission;
+        },
+        clusterNodeProperties: {
+          id: mission,
+          borderWidth: 3,
+          shape: 'database',
+          label: mission,
+          allowSingleNodeCluster: true,
+        },
+        clusterEdgeProperties: {},
+      };
+      network.clustering.cluster(options);
+    });
+  }
 
   return missions;
 };
