@@ -13,12 +13,13 @@ import Panel from './components/Panel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import styles from '../data/styles.json';
+import Navbar from '../common/Navbar';
 
 const useStyles = makeStyles(theme => ({
   container: {
     position: 'relative',
-    maxWidth: '100vw',
-    maxHeight: '100vw',
+    maxWidth: '100%',
+    maxHeight: '100%',
     overflow: 'hidden',
   },
   addButton: {
@@ -53,6 +54,9 @@ const useStyles = makeStyles(theme => ({
     padding: 15,
     paddingTop: 0,
   },
+  graphStyle: {
+    height: '93vh',
+  },
 }));
 
 const App = () => {
@@ -71,49 +75,52 @@ const App = () => {
 
   return (
     <div className={classes.container}>
-      <Fab
-        variant="extended"
-        className={classes.addButton}
-        onClick={() => setIsDialogOpen(true)}
-      >
-        <AddIcon className={classes.addIcon} />
-        Add Node
-      </Fab>
+      <Navbar />
+      <div className={classes.graphStyle}>
+        <Fab
+          variant="extended"
+          className={classes.addButton}
+          onClick={() => setIsDialogOpen(true)}
+        >
+          <AddIcon className={classes.addIcon} />
+          Add Node
+        </Fab>
 
-      <Box className={classes.caption}>
-        {!isCaptionOpen ? (
-          <Button onClick={() => setIsCaptionOpen(true)}>
-            <ExpandLessIcon />
-          </Button>
-        ) : (
-          <Box className={classes.innerCaption}>
-            <Button onClick={() => setIsCaptionOpen(false)}>
-              <ExpandMoreIcon />
+        <Box className={classes.caption}>
+          {!isCaptionOpen ? (
+            <Button onClick={() => setIsCaptionOpen(true)}>
+              <ExpandLessIcon />
             </Button>
-            <Typography>Clicca 2 volte su un nodo per modificarlo</Typography>
-            <Typography>Trascina un nodo per spostarlo</Typography>
-            <Typography>Per eliminare un nodo vai in Global - Delete node</Typography>
-          </Box>
-        )}
-      </Box>
+          ) : (
+            <Box className={classes.innerCaption}>
+              <Button onClick={() => setIsCaptionOpen(false)}>
+                <ExpandMoreIcon />
+              </Button>
+              <Typography>Clicca 2 volte su un nodo per modificarlo</Typography>
+              <Typography>Trascina un nodo per spostarlo</Typography>
+              <Typography>Per eliminare un nodo vai in Global - Delete node</Typography>
+            </Box>
+          )}
+        </Box>
 
-      <Panel open={currentNode != null} position="left">
-        <div className={classes.preview}>
-          <Preview
-            components={currentNode ? currentNode.components : []}
-            styles={styles}
-          />
-        </div>
-      </Panel>
-      <GraphCanvas />
-      <Panel open={currentNode != null} position="right">
-        <Inspector />
-      </Panel>
-      <TemplatesDialog
-        open={isDialogOpen}
-        onCancel={() => setIsDialogOpen(false)}
-        onConfirm={addNode}
-      />
+        <Panel open={currentNode != null} position="left">
+          <div className={classes.preview}>
+            <Preview
+              components={currentNode ? currentNode.components : []}
+              styles={styles}
+            />
+          </div>
+        </Panel>
+        <GraphCanvas />
+        <Panel open={currentNode != null} position="right">
+          <Inspector />
+        </Panel>
+        <TemplatesDialog
+          open={isDialogOpen}
+          onCancel={() => setIsDialogOpen(false)}
+          onConfirm={addNode}
+        />
+      </div>
     </div>
   );
 };
