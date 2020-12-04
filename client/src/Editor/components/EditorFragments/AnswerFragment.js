@@ -1,5 +1,14 @@
 import React from 'react';
-import { makeStyles, Button, IconButton, Divider } from '@material-ui/core';
+import {
+  makeStyles,
+  Button,
+  IconButton,
+  Divider,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+} from '@material-ui/core';
 import { useEditor } from '../../context/EditorContext';
 import TextFieldFragment from './TextFieldFragment';
 import CheckboxboxFragment from './CheckboxFragment';
@@ -18,19 +27,50 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
+  FormSelect: {
+    marginTop: theme.spacing(2),
+  },
 }));
 const ANSWER_VALUE = {
   CORRECT: '[CORRECT]',
   WRONG: '[WRONG]',
 };
 const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
-  const { root, inputRoot, divider, answersList } = useStyles();
-  const { pathAlternative, valToChange, singleCorrectAnswer } = fragmentSpecificProps;
-  const { getFromPath, setPathToValue } = useEditor();
+  const { divider, FormSelect } = useStyles();
+  const {
+    pathAlternative,
+    valToChange,
+    singleCorrectAnswer,
+    selectPath,
+    correctStory,
+    wrongStory,
+    data,
+    dataName,
+    correctLabel,
+    wrongLabel,
+  } = fragmentSpecificProps;
+  const { story, getFromPath, setPathToValue } = useEditor();
   const [correctAnswerValue, setCorrectAnswerValue] = React.useState([]);
+
   //Additional field to modify objects or array
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
   const answers = getFromPath(path || [])[valToChange];
+  const selectCompletePath = (path || []).concat(selectPath);
+
+  const correctSelectValue = getFromPath(selectCompletePath)[correctStory];
+  const wrongSelectValue = getFromPath(selectCompletePath)[wrongStory];
+  var items = [];
+  const menuItems = story.nodes.map(node => {
+    if (!items.includes(node[data])) {
+      items.push(node[data]);
+      return (
+        <MenuItem key={node[data]} value={node[data]}>
+          {node[dataName]}
+        </MenuItem>
+      );
+    }
+  });
+
   //Initialize correctAnswerValue if singleCorrectAnswer == true only the first time
   React.useEffect(() => {
     if (singleCorrectAnswer) {
@@ -72,7 +112,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   };
 
   return (
-    <div>
+    <div className={classNames.InspectorElement}>
       <Button
         color="primary"
         variant="contained"
@@ -133,6 +173,35 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
           </div>
         );
       })}
+      <Divider />
+      <FormControl className={`${classNames.FormControl} ${FormSelect}`}>
+        <InputLabel>{correctLabel}</InputLabel>
+        <Select
+          value={correctSelectValue}
+          onChange={event =>
+            setPathToValue(selectCompletePath, correctStory, event.target.value)
+          }
+        >
+          {menuItems}
+          <MenuItem key={story.nodes.length} value="">
+            Undefined
+          </MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl className={`${classNames.FormControl} ${FormSelect}`}>
+        <InputLabel>{wrongLabel}</InputLabel>
+        <Select
+          value={wrongSelectValue}
+          onChange={event =>
+            setPathToValue(selectCompletePath, wrongStory, event.target.value)
+          }
+        >
+          {menuItems}
+          <MenuItem key={story.nodes.length} value="">
+            Undefined
+          </MenuItem>
+        </Select>
+      </FormControl>
     </div>
   );
 };

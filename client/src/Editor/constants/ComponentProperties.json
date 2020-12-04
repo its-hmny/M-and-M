@@ -126,34 +126,50 @@
   "Spacer": [],
   "Background": [],
   "SingleAnsChoices": [
+    
+    {
+      "fragment": "AnswerFragment",
+      "props": {
+        "valToChange": "answers",
+        "singleCorrectAnswer": false,
+        "selectPath": ["story","nextNode"],
+        "data": "id",
+        "dataName": "name",
+        "correctStory": "[CORRECT]",
+        "wrongStory": "[WRONG]",
+        "correctLabel": "Correct Destination",
+        "wrongLabel": "Wrong Destination"
+      }
+    },
     {
       "fragment": "CheckboxFragment",
       "props": {
         "valToChange": "withSubmit",
         "label": "Submit Button"
-      }
-    },
-    {
-      "fragment": "AnswerFragment",
-      "props": {
-        "valToChange": "answers",
-        "singleCorrectAnswer": true
       }
     }
   ],
   "MultiAnsChoices": [
+    
+    {
+      "fragment": "AnswerFragment",
+      "props": {
+        "valToChange": "answers",
+        "singleCorrectAnswer": false,
+        "selectPath": ["story","nextNode"],
+        "data": "id",
+        "dataName": "name",
+        "correctStory": "[CORRECT]",
+        "wrongStory": "[WRONG]",
+        "correctLabel": "Correct Destination",
+        "wrongLabel": "Wrong Destination"
+      }
+    },
     {
       "fragment": "CheckboxFragment",
       "props": {
         "valToChange": "withSubmit",
         "label": "Submit Button"
-      }
-    },
-    {
-      "fragment": "AnswerFragment",
-      "props": {
-        "valToChange": "answers",
-        "singleCorrectAnswer": false
       }
     }
   ]

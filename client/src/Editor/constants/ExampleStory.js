@@ -178,6 +178,12 @@ const ExampleStory = {
               text: 'Risposta 2',
             },
           ],
+          story: {
+            nextNode: {
+              '[CORRECT]': 'stringid7',
+              '[WRONG]': 'stringid7',
+            },
+          },
         },
       ],
     },
@@ -201,6 +207,12 @@ const ExampleStory = {
               text: 'Risposta 2',
             },
           ],
+          story: {
+            nextNode: {
+              '[CORRECT]': 'stringid7',
+              '[WRONG]': 'stringid7',
+            },
+          },
         },
       ],
     },
