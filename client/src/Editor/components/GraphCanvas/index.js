@@ -1,4 +1,11 @@
-import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react';
+import React, {
+  useCallback,
+  useRef,
+  useState,
+  useMemo,
+  useEffect,
+  useLayoutEffect,
+} from 'react';
 import Graph from '../../../common/Graph';
 
 import {
@@ -94,15 +101,6 @@ const GraphCanvas = () => {
             setClusteredMissions(() => {
               return missions;
             });
-            /* Graph library has problems with some clustered edges,
-                cleanClusteredEdges solves the problem but because data is not
-                instantly updated in the graph, there is the need to wait some
-                milliseconds to execute the function. After that the graph needs
-                to be redrawn*/
-            setTimeout(() => {
-              cleanClusterEdges(networkRef.current, missions);
-              networkRef.current.redraw();
-            }, 5);
           }
         }
         //Zooming in
@@ -115,6 +113,18 @@ const GraphCanvas = () => {
     },
     [lastClusterZoomLevel, clusteredMissions]
   );
+  /*Clean graph library errors on automatic cluster edge creation */
+  useLayoutEffect(() => {
+    if (networkRef.current !== undefined) {
+      const handler = () => {
+        cleanClusterEdges(networkRef.current, clusteredMissions);
+      };
+      networkRef.current.on('afterDrawing', handler);
+      return () => {
+        networkRef.current.off('afterDrawing', handler);
+      };
+    }
+  }, [clusteredMissions, cleanClusterEdges]);
 
   //Enable drag-n-drop for nodes
   const onDropAddNode = useCallback(
@@ -152,7 +162,9 @@ const GraphCanvas = () => {
         data={getGraphFromStory(story)}
         options={Options}
         events={events}
-        getNetwork={network => (networkRef.current = network)}
+        getNetwork={network => {
+          networkRef.current = network;
+        }}
       />
     </div>
   );
