@@ -1,11 +1,12 @@
 import React from 'react';
-import { ActivePlayersList, WidgetArea } from './components/';
+import { ActivePlayersList, ProgressGraph, WidgetArea } from './components/';
 
 const App = () => {
   return (
     <>
       <ActivePlayersList />
       <WidgetArea />
+      <ProgressGraph />
     </>
   );
 };

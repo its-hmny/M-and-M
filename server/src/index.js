@@ -18,18 +18,6 @@ app.use(bodyParser.json());
 app.use(express.static('static'));
 app.use(fileUpload({ createParentPath: true }));
 
-io.on('connection', socket => {
-  socket.on('chat-msg-send', payload => io.emit('chat-msg-recv', payload));
-
-  socket.on('update:position', data => {
-    console.log(data);
-  });
-
-  socket.on('update:stats', data => {
-    console.log(data);
-  });
-});
-
 // API endpoints
 app.use('/resources', resourcesRouter);
 app.use('/templates', templatesRouter);

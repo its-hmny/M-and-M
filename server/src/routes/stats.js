@@ -1,5 +1,6 @@
 const express = require('express');
 const shortid = require('shortid');
+const io = require('../shared')();
 
 const router = express.Router();
 // Allowed characters for resource uuid generation
@@ -14,7 +15,8 @@ const initialPlayerLog = {
   hasFinished: false,
   chatLog: [],
   currentQuestion: {
-    components: [],
+    currentNodeId: undefined,
+    patchs: [],
   },
   stats: {
     timeAtStart: undefined,
@@ -23,6 +25,52 @@ const initialPlayerLog = {
     // And so on...
   },
 };
+
+// Realtime update with socket
+io.on('connection', socket => {
+  socket.on('chat-msg-send', data => {
+    // Saves on the server the received messages
+    const { story, senderId, receiverId, msg } = data;
+    const player_id = senderId === `evaluator${story}` ? receiverId : senderId;
+    const playerLog = (database[story] || []).find(player => player.id === player_id);
+    if (playerLog) {
+      const toSave = { sender: senderId, content: msg };
+      playerLog.chatLog = [...playerLog.chatLog, toSave];
+    }
+    // Propagate the message
+    io.emit('chat-msg-recv', data);
+  });
+
+  // Saves on the server the player position in the story
+  socket.on('update:position', data => {
+    const { story, senderId, payload } = data;
+    const playerLog = (database[story] || []).find(player => player.id === senderId);
+    if (playerLog) {
+      // The player changed node in the story so removes all the data from the previous one
+      delete playerLog.currentQuestion;
+      playerLog.currentQuestion = { ...payload, patchs: [] };
+      io.emit('update:position', data);
+    }
+  });
+
+  // Saves on the server the player responses and changes to the story's components
+  socket.on('update:stats', data => {
+    const { story, senderId, payload } = data;
+    const playerLog = (database[story] || []).find(player => player.id === senderId);
+    if (playerLog) {
+      const { id, data } = payload;
+      let componentToPatch = playerLog.currentQuestion.patchs.find(
+        patch => patch.componentId === id
+      );
+      if (componentToPatch) {
+        componentToPatch = { componentId: id, value: data };
+      } else {
+        playerLog.currentQuestion.patchs.push({ componentId: id, value: data });
+      }
+      io.emit('update:stats', data);
+    }
+  });
+});
 
 // Get the updated stats for every player currently in the story
 router.get('/:story_uuid', (req, res) => {
@@ -111,11 +159,14 @@ router.delete('/:story_uuid', (req, res) => {
     res.statusCode = 409;
     res.send({ status: false, message: 'Some player are still active' });
   } else {
+    // Saves locally the log for the given story then deallocates the memory
+    const payload = { ...database[story_uuid] };
+    delete database[story_uuid];
     res.statusCode = 200;
     res.send({
       status: true,
       message: 'Stats dump created successfully!',
-      payload: database[story_uuid],
+      payload,
     });
   }
 });
