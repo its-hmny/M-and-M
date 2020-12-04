@@ -21,11 +21,15 @@ const createStoryProps = (component, storyContext) => {
       };
     case 'SingleAnsChoices':
     case 'MultiAnsChoices':
+      // if more than one answer, we sum all point values
       return {
         onSubmit: (isCorrect, selectedAnswers) => {
           const nextNode = storyProps.nextNode[isCorrect];
           storyContext.moveTo(nextNode);
           storyContext.updateStats({ id, name, data: selectedAnswers });
+          storyContext.updateScore(
+            selectedAnswers.reduce((points, answer) => points + answer.points, 0)
+          );
         },
       };
     case 'Input':
@@ -73,21 +77,27 @@ const Player = () => {
   const [viewContent, setViewContent] = useState(null);
   // current position in story
   const [currentNodeId, setCurrentNodeId] = useState(null);
+  // point total
+  const [score, setScore] = useState(0);
 
   /* =========================== SOCKET STUFF ======================== */
   useEffect(() => {
+    let msgReceivedListener;
     // generate IDs for player and paired evaluator and save them
     const initChat = async () => {
       try {
         const res = await axios.put(`stats/${storyId}`);
         const { player, evaluator } = res.data.payload;
         setIds({ player, evaluator });
+
         // Update chat when message is received
-        socket.on('chat-msg-recv', payload => {
+        msgReceivedListener = payload => {
           const { story, senderId, receiverId, msg } = payload;
           if (story === storyId && senderId === evaluator && receiverId === player)
             addResponseMessage(msg);
-        });
+        };
+
+        socket.on('chat-msg-recv', msgReceivedListener);
       } catch (err) {
         console.error(err);
       }
@@ -95,8 +105,20 @@ const Player = () => {
 
     initChat();
 
-    return () => socket.removeListener('chat-msg-recv');
+    return () => socket.removeListener('chat-msg-recv', msgReceivedListener);
   }, [storyId]);
+
+  useEffect(() => {
+    const onEvalPts = payload => {
+      const { story, senderId, receiverId, points } = payload;
+      if (story === storyId && senderId === ids.evaluator && receiverId === ids.player) {
+        setScore(score => score + points);
+      }
+    };
+
+    socket.on('eval-pts', onEvalPts);
+    return () => socket.removeListener('eval-pts', onEvalPts);
+  }, [storyId, ids]);
 
   const handleSend = msg =>
     socket.emit('chat-msg-send', {
@@ -125,8 +147,8 @@ const Player = () => {
     fetchStory();
   }, [storyId]);
 
-  // create "context" for accessing stories and story props
-  const storyContext = useMemo(
+  // story runtime provides functions and data for accessing stories and story props
+  const storyRuntime = useMemo(
     () => ({
       currentNodeId,
       moveTo: node => {
@@ -147,6 +169,15 @@ const Player = () => {
           payload,
         });
       },
+      updateScore: points => {
+        setScore(score => score + points);
+        socket.emit('update:score', {
+          story: storyId,
+          senderId: ids.player,
+          receiverId: ids.evaluator,
+          payload: { score },
+        });
+      },
     }),
     [currentNodeId]
   );
@@ -157,10 +188,10 @@ const Player = () => {
     // Stupid JS! I miss you Option<T>...sigh
     if (currentNodeId != null) {
       const { components } = story.nodes.find(node => node.id === currentNodeId);
-      const content = buildViewContent(components, storyContext);
+      const content = buildViewContent(components, storyRuntime);
       setViewContent(content);
     }
-  }, [currentNodeId, story, storyContext]);
+  }, [currentNodeId, story, storyRuntime]);
 
   if (status === 'LOADING') {
     return <p>Loading story...</p>;
