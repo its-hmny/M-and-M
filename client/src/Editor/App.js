@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   },
   caption: {
     position: 'absolute',
-    top: 0,
+    bottom: 0,
     left: 0,
     display: 'flex',
     justifyContent: 'center',
@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 4,
     textAlign: 'center',
     padding: 15,
-    paddingBottom: 0,
+    paddingTop: 0,
   },
 }));
 
@@ -83,16 +83,16 @@ const App = () => {
       <Box className={classes.caption}>
         {!isCaptionOpen ? (
           <Button onClick={() => setIsCaptionOpen(true)}>
-            <ExpandMoreIcon />
+            <ExpandLessIcon />
           </Button>
         ) : (
           <Box className={classes.innerCaption}>
+            <Button onClick={() => setIsCaptionOpen(false)}>
+              <ExpandMoreIcon />
+            </Button>
             <Typography>Clicca 2 volte su un nodo per modificarlo</Typography>
             <Typography>Trascina un nodo per spostarlo</Typography>
             <Typography>Per eliminare un nodo vai in Global - Delete node</Typography>
-            <Button onClick={() => setIsCaptionOpen(false)}>
-              <ExpandLessIcon />
-            </Button>
           </Box>
         )}
       </Box>

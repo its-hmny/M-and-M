@@ -93,7 +93,7 @@ const setEdgesFromChildren = (root, rootId, graph) => {
 
 export const makeClusters = network => {
   const missions = getMissions(network);
-  if (missions.length === 0) {
+  if (missions.length !== 0) {
     missions.forEach(mission => {
       const options = {
         joinCondition: currentNodeOptions => {
