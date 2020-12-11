@@ -39,10 +39,8 @@ export const EvaluatorProvider = ({ children, _ }) => {
   };
 
   useEffect(() => {
-    console.log(socket, playersLog);
     // Saves in the context the player position in the story
     socket.on('update:position', data => {
-      console.log(data);
       const { story, senderId, payload } = data;
       if (story === storyId) {
         const playerLog = playersLog.find(player => player.id === senderId);

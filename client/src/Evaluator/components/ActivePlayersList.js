@@ -50,8 +50,6 @@ const ActivePlayersList = () => {
       );
     });
 
-  console.log(playersLog.length);
-
   return (
     <Grid item xs={2} className={container}>
       {playersLog.length === 0 ? (

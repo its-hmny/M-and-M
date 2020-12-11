@@ -11,6 +11,7 @@ let database = {};
 const initialPlayerLog = {
   name: undefined,
   id: undefined,
+  score: 0,
   avatar: undefined,
   hasFinished: false,
   chatLog: [],
@@ -68,6 +69,16 @@ io.on('connection', socket => {
         playerLog.currentQuestion.patchs.push({ componentId: id, value: data });
       }
       io.emit('update:stats', data);
+    }
+  });
+
+  // Saves on the server the score assigned by the evaluator on a human-only evaluable question
+  socket.on('eval-pts', data => {
+    const { story, receiverId, points } = data;
+    const playerLog = (database[story] || []).find(player => player.id === receiverId);
+    if (playerLog) {
+      playerLog.score += points;
+      io.emit('eval-pts', data);
     }
   });
 });
