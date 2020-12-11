@@ -1,4 +1,5 @@
 export { default as ActivePlayersList } from './ActivePlayersList';
+export { default as EvaluationWidget } from './EvaluationWidget';
 export { default as WidgetLauncher } from './WidgetLauncher';
 export { default as ProgressGraph } from './ProgressGraph';
 export { default as StatsWidget } from './StatsWidget';

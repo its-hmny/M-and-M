@@ -12,7 +12,7 @@ const socket = io('http://localhost:8000');
 
 const Chat = ({ onOpen }) => {
   const { selectedPlayer, storyId, playersLog } = useEvaluator();
-  const { name, id, avatar } = selectedPlayer;
+  const { name, id, avatar } = selectedPlayer || {};
   const [conversations, setConversations] = useState({});
 
   useEffect(() => {

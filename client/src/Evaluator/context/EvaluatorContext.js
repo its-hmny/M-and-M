@@ -83,7 +83,7 @@ export const EvaluatorProvider = ({ children, _ }) => {
     story,
     storyId,
     playersLog,
-    selectedPlayer: playersLog.find(player => player.id === focusedPlayer) || {},
+    selectedPlayer: playersLog.find(player => player.id === focusedPlayer),
     setFocusedPlayer,
     updatePlayerLog,
   };
