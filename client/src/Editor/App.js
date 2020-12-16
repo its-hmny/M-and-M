@@ -13,6 +13,7 @@ import Panel from './components/Panel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Navbar from '../common/Navbar';
+import SaveButton from './components/SaveButton';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -22,21 +23,31 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
+    backgroundColor: '#3d3d3d',
+  },
+  buttonContainer: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'row',
   },
   addButton: {
-    position: 'absolute',
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(2),
-    zIndex: 1000,
+    marginRight: theme.spacing(2),
   },
   addIcon: {
     marginRight: theme.spacing(1),
   },
+  saveButton: {},
+  saveIcon: {
+    marginRight: theme.spacing(1),
+  },
   preview: {
-    marginLeft: theme.spacing(4),
+    marginLeft: theme.spacing(2),
     height: '100%',
     display: 'flex',
-    justifyContent: 'center',
+    alignItems: 'end',
+    '& > *': {
+      marginBottom: theme.spacing(5),
+    },
   },
   caption: {
     position: 'absolute',
@@ -60,7 +71,9 @@ const useStyles = makeStyles(theme => ({
   },
   graphStyle: {
     flexGrow: 1,
-    // height: '93vh',
+    '& .vis-network': {
+      outline: 'none',
+    },
   },
 }));
 
@@ -82,17 +95,23 @@ const App = () => {
     <div className={classes.container}>
       <div className={classes.navbar}>
         <Navbar />
+        <div className={classes.buttonContainer}>
+          <Fab
+            variant="extended"
+            className={classes.addButton}
+            onClick={() => setIsDialogOpen(true)}
+          >
+            <AddIcon className={classes.addIcon} />
+            Add Node
+          </Fab>
+          {/* <Fab variant="extended" className={classes.saveButton} onClick={uploadStory}>
+            <SaveIcon className={classes.saveIcon} />
+            Save Story
+          </Fab> */}
+          <SaveButton />
+        </div>
       </div>
       <div className={classes.graphStyle}>
-        <Fab
-          variant="extended"
-          className={classes.addButton}
-          onClick={() => setIsDialogOpen(true)}
-        >
-          <AddIcon className={classes.addIcon} />
-          Add Node
-        </Fab>
-
         <Box className={classes.caption}>
           {!isCaptionOpen ? (
             <Button onClick={() => setIsCaptionOpen(true)}>

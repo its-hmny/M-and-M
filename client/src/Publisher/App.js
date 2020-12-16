@@ -126,42 +126,35 @@ const App = () => {
     setEditMode(false);
     setContent(currUUID, false);
     let storyToSend = stories.find(e => e.uuid === currUUID);
-    delete storyToSend['uuid'];
+    console.log(storyToSend);
     axios.patch(`stories/${currUUID}`, storyToSend).then(values => {
       //Reload stories
       axios.get(`stories/list`).then(res => {
         const stories = res.data.payload;
-
         setStories(stories);
       });
     });
   };
 
   const addStory = () => {
-    axios
-      .put('stories/', {
-        story: {
-          title: 'Placeholder',
-          description: 'Placeholder',
-          target: 'ADULT',
-          gameplay: 'SINGLE',
-          accessible: false,
-          nodes: [],
-        },
-      })
-      .then(res => {
-        axios.get(`stories/list`).then(res => {
-          const stories = res.data.payload;
+    const newStory = {
+      title: 'Placeholder',
+      description: 'Placeholder',
+      target: 'ADULT',
+      gameplay: 'SINGLE',
+      accessible: false,
+      nodes: [],
+    };
 
-          setStories(stories);
-        });
-      });
+    axios.put('stories/', { story: newStory }).then(res => {
+      setStories(stories => [{ uuid: res.data.uuid, ...newStory }, ...stories]);
+    });
   };
 
   const duplicateStory = uuid => {
     const storyToSend = stories.find(e => e.uuid === currUUID);
-    delete storyToSend['uuid'];
-    axios.put('stories/', { story: storyToSend }).then(values => {
+    // delete storyToSend['uuid'];
+    axios.put('stories/', storyToSend).then(values => {
       //Reload stories
       axios.get(`stories/list`).then(res => {
         const stories = res.data.payload;

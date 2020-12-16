@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'hidden',
     zIndex: 6, // keep it above caption
     maxWidth: '25vw',
+    borderRadius: 0,
   },
   titleContainer: {
     overflow: 'hidden',

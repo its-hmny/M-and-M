@@ -6,7 +6,7 @@ import * as Elements from './Elements';
 const useStyles = makeStyles({
   smartphoneFrame: {
     position: 'relative',
-    margin: 'auto',
+    // margin: 'auto',
     border: '2vh black solid',
     borderTopWidth: '5vh',
     borderBottomWidth: '6vh',

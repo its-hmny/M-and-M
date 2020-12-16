@@ -12,7 +12,7 @@ router.get('/', (_, res) => {
   fs.readdir(basePath, (err, dir_content) => {
     if (err) {
       res.statusCode = 500;
-      res.send({ status: false, message: 'Could not open stories directory' });
+      res.json({ status: false, message: 'Could not open stories directory' });
     } else {
       const stories_list = dir_content.map(filename => {
         const story_object = JSON.parse(
@@ -22,7 +22,7 @@ router.get('/', (_, res) => {
         return { uuid: story_uuid, story: story_object };
       });
       res.statusCode = 200;
-      res.send({ status: true, message: 'Stories list returned', payload: stories_list });
+      res.json({ status: true, message: 'Stories list returned', payload: stories_list });
     }
   });
 });
@@ -38,7 +38,7 @@ router.get('/list', (_, res) => {
     };
   });
   //res.statusCode = 200;
-  res.send({ status: true, message: 'Story list sent correctly', payload: result });
+  res.json({ status: true, message: 'Story list sent correctly', payload: result });
 });
 
 router.get('/:uuid', (req, res) => {
@@ -46,10 +46,10 @@ router.get('/:uuid', (req, res) => {
   fs.readFile(`${basePath}${story_uuid}.json`, 'utf8', (err, data) => {
     if (err) {
       res.statusCode = 404;
-      res.send({ status: false, message: 'Story JSON not found' });
+      res.json({ status: false, message: 'Story JSON not found' });
     } else {
       res.statusCode = 200;
-      res.send({ status: true, message: 'Story JSON found', payload: JSON.parse(data) });
+      res.json({ status: true, message: 'Story JSON found', payload: JSON.parse(data) });
     }
   });
 });
@@ -57,7 +57,7 @@ router.get('/:uuid', (req, res) => {
 router.put('/', (req, res) => {
   if (!req.body) {
     res.statusCode = 400;
-    res.send({ status: false, message: 'A JSON of the story object must be provided' });
+    res.json({ status: false, message: 'A JSON of the story object must be provided' });
   } else {
     newstory_uuid = shortid.generate();
     // newstory_uuid collision handling, another uuid will be generated
@@ -66,15 +66,15 @@ router.put('/', (req, res) => {
     }
     fs.writeFile(
       `${basePath}${newstory_uuid}.json`,
-      JSON.stringify(req.body.story),
+      JSON.stringify({ uuid: newstory_uuid, ...req.body.story }),
       { encoding: 'utf8' },
       err => {
         if (err) {
           res.statusCode = 500;
-          res.send({ status: false, message: 'Could not write JSON file on server' });
+          res.json({ status: false, message: 'Could not write JSON file on server' });
         } else {
           res.statusCode = 200;
-          res.send({
+          res.json({
             status: true,
             message: 'Story JSON written successfully',
             uuid: newstory_uuid,
@@ -102,25 +102,25 @@ router.patch('/:uuid', (req, res) => {
   const story_uuid = req.params.uuid;
   if (!req.body || !story_uuid) {
     res.statusCode = 400;
-    res.send({
+    res.json({
       status: false,
       message: 'A JSON of the story object and the story UUID must be provided',
     });
   } else {
     fs.writeFile(
       `${basePath}${story_uuid}.json`,
-      JSON.stringify(req.body),
+      JSON.stringify({ ...req.body, uuid: story_uuid }),
       { encoding: 'utf8' },
       err => {
         if (err) {
           res.statusCode = 500;
-          res.send({
+          res.json({
             status: false,
             message: 'Could not overwrite the JSON file on server',
           });
         } else {
           res.statusCode = 200;
-          res.send({
+          res.json({
             status: true,
             message: 'Story JSON overwritten successfully',
             uuid: story_uuid,

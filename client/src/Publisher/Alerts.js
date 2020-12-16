@@ -28,6 +28,9 @@ export default function DeleteAlert(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            No
+          </Button>
           <Button
             onClick={() => {
               handleClose();
@@ -36,9 +39,6 @@ export default function DeleteAlert(props) {
             color="primary"
           >
             Yes
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            No
           </Button>
         </DialogActions>
       </Dialog>
