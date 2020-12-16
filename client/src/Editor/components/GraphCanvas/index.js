@@ -154,10 +154,7 @@ const GraphCanvas = () => {
   ]);
 
   return (
-    <div
-      onDrop={event => onDropAddNode(event)}
-      onDragOver={event => event.preventDefault()}
-    >
+    <div>
       <Graph
         data={getGraphFromStory(story)}
         options={Options}

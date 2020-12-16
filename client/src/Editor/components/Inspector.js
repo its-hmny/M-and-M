@@ -13,17 +13,25 @@ const useStyles = makeStyles(theme => ({
     boxSizing: 'border-box',
     overflowY: 'auto',
     overflowX: 'hidden',
+    zIndex: 6, // keep it above caption
+    maxWidth: '25vw',
+  },
+  titleContainer: {
+    overflow: 'hidden',
   },
   DefaultTitleStyle: {
     paddingLeft: 15,
     paddingRight: 15,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   content: {},
 }));
 
 const Inspector = () => {
   const { story, workingActivity } = useEditor();
-  const { InspectorPaperStyle, DefaultTitleStyle, content } = useStyles();
+  const { InspectorPaperStyle, titleContainer, DefaultTitleStyle, content } = useStyles();
   const [openBox, setOpenBox] = useState({});
 
   const setCollapsed = uuid => {

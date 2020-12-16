@@ -7,6 +7,7 @@ import Creator from './Creator';
 import Player from './Player';
 import Evaluator from './Evaluator';
 import Publisher from './Publisher';
+import NotFound from './NotFound';
 import * as ROUTES from './routes';
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
         <Route path={ROUTES.PLAYER} component={Player} />
         <Route path={ROUTES.EVALUATOR} component={Evaluator} />
         <Route path={ROUTES.PUBLISHER} component={Publisher} />
+        <Route component={NotFound} />
       </Switch>
     </Router>
   );

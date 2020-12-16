@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles, Typography, Box, Collapse, Button } from '@material-ui/core';
+import { makeStyles, Typography, Box, Button } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import { Add as AddIcon } from '@material-ui/icons';
 import shortid from 'shortid';
@@ -12,15 +12,16 @@ import TemplatesDialog from './components/TemplatesDialog';
 import Panel from './components/Panel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import styles from '../data/styles.json';
 import Navbar from '../common/Navbar';
 
 const useStyles = makeStyles(theme => ({
   container: {
     position: 'relative',
-    maxWidth: '100%',
-    maxHeight: '100%',
+    maxWidth: '100vw',
+    maxHeight: '100vh',
     overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
   },
   addButton: {
     position: 'absolute',
@@ -44,18 +45,22 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    zIndex: 1000,
+    zIndex: 5, // keep it above graph but under ispector
   },
   innerCaption: {
-    opacity: '0.60',
+    opacity: '0.75',
     backgroundColor: '#616161',
     borderRadius: 4,
     textAlign: 'center',
     padding: 15,
     paddingTop: 0,
   },
+  navbar: {
+    flexShrink: 0,
+  },
   graphStyle: {
-    height: '93vh',
+    flexGrow: 1,
+    // height: '93vh',
   },
 }));
 
@@ -75,7 +80,9 @@ const App = () => {
 
   return (
     <div className={classes.container}>
-      <Navbar />
+      <div className={classes.navbar}>
+        <Navbar />
+      </div>
       <div className={classes.graphStyle}>
         <Fab
           variant="extended"
@@ -105,10 +112,7 @@ const App = () => {
 
         <Panel open={currentNode != null} position="left">
           <div className={classes.preview}>
-            <Preview
-              components={currentNode ? currentNode.components : []}
-              styles={styles}
-            />
+            <Preview components={currentNode ? currentNode.components : []} />
           </div>
         </Panel>
         <GraphCanvas />

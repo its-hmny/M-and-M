@@ -126,13 +126,12 @@
   "Spacer": [],
   "Background": [],
   "SingleAnsChoices": [
-    
     {
       "fragment": "AnswerFragment",
       "props": {
         "valToChange": "answers",
-        "singleCorrectAnswer": false,
-        "selectPath": ["story","nextNode"],
+        "singleCorrectAnswer": true,
+        "selectPath": ["story", "nextNode"],
         "data": "id",
         "dataName": "name",
         "correctStory": "[CORRECT]",
@@ -150,13 +149,12 @@
     }
   ],
   "MultiAnsChoices": [
-    
     {
       "fragment": "AnswerFragment",
       "props": {
         "valToChange": "answers",
         "singleCorrectAnswer": false,
-        "selectPath": ["story","nextNode"],
+        "selectPath": ["story", "nextNode"],
         "data": "id",
         "dataName": "name",
         "correctStory": "[CORRECT]",

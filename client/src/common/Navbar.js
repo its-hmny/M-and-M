@@ -24,7 +24,7 @@ const Navbar = () => (
         </Button>
       </Typography>
       <Typography variant="h6">
-        <Button color="inherit" component={Link} to={ROUTES.EDITOR}>
+        <Button color="inherit" component={Link} to={`${ROUTES.EDITOR}?storyId=test`}>
           Editor
         </Button>
       </Typography>

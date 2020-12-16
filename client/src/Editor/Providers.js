@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { orange, pink } from '@material-ui/core/colors';
 import {
   createMuiTheme,
@@ -8,8 +9,8 @@ import {
 } from '@material-ui/core';
 
 import { EditorProvider } from './context/EditorContext';
-import ExampleStory from './constants/ExampleStory';
 import axios, { useQuery } from '../common/shared';
+import * as ROUTES from '../routes';
 
 const customTheme = createMuiTheme({
   palette: {
@@ -21,8 +22,10 @@ const customTheme = createMuiTheme({
 
 const Providers = ({ children }) => {
   const { storyId } = useQuery();
+  const location = useLocation();
 
-  const [story, setStory] = React.useState(ExampleStory);
+  const history = useHistory();
+  const [story, setStory] = React.useState();
   const [loadedStory, setLoadedStory] = React.useState(false);
 
   React.useEffect(() => {
@@ -39,6 +42,7 @@ const Providers = ({ children }) => {
         }
       } catch (err) {
         console.error(err);
+        history.push(`/not-found?route=${location.pathname}${location.search}`);
       }
     };
 

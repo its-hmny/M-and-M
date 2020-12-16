@@ -24,14 +24,14 @@ const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
       <FormControl className={classNames.FormControl}>
         <InputLabel>{label}</InputLabel>
         <Select
-          value={getFromPath(completePath)[valToChange]}
+          value={getFromPath(completePath)[valToChange] || ''}
           onChange={event =>
             setPathToValue(completePath, valToChange, event.target.value)
           }
         >
           {menuItems}
           <MenuItem key={story.nodes.length} value="">
-            Undefined
+            {' '}
           </MenuItem>
         </Select>
       </FormControl>

@@ -17,10 +17,14 @@ export const EditorProvider = ({ children, userStory }) => {
     setWorkingActivity: activityID => setFocusedNode(activityID),
 
     getFromPath: path => {
-      console.log(path);
-
       let current = inProgressStory.nodes.find(node => node.id === focusedNode);
-      path.forEach(key => (current = current[key]));
+      path.forEach(key => {
+        if (!current[key]) {
+          current[key] = {};
+        }
+
+        current = current[key];
+      });
       return current;
     },
 
@@ -31,9 +35,14 @@ export const EditorProvider = ({ children, userStory }) => {
         value is the value that has to overwrite the previous one
         Ex. components -> 0 (first component) -> children -> 1 (second component)
       */
-
       let current = inProgressStory.nodes.find(node => node.id === focusedNode);
-      path.forEach(key => (current = current[key]));
+      path.forEach(key => {
+        if (!current[key]) {
+          current[key] = {};
+        }
+
+        current = current[key];
+      });
       current[field] = value;
       setStory({ ...inProgressStory });
     },

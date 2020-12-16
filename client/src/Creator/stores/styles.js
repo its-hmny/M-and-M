@@ -79,7 +79,7 @@ const useStylesStore = createStore(set => ({
       color: 'white',
     },
     DefaultButtonGroup: {
-      backgroundColor: 'yellow',
+      backgroundColor: 'transparent',
     },
     SpaceButtonGroup: {
       backgroundColor: 'white',

@@ -123,7 +123,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
       </Button>
       {answers.map((answer, i) => {
         return (
-          <div key={`answer-${i}-${shortid.generate()}`}>
+          <div key={`answer-${i}`}>
             <Divider className={divider} />
             <div style={{ display: 'flex', alignItems: 'bottom' }}>
               <TextFieldFragment
