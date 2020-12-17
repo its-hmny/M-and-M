@@ -10,7 +10,6 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Formatting with prettier and push
-        run: npx prettier 
         uses: creyD/prettier_action@v3.1
         with:
           prettier_options: --config ./.prettierrc --ignore-path ./.prettierignore --write .
