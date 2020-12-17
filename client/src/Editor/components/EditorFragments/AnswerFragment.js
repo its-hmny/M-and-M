@@ -69,6 +69,8 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
         </MenuItem>
       );
     }
+
+    return null;
   });
 
   //Initialize correctAnswerValue if singleCorrectAnswer == true only the first time

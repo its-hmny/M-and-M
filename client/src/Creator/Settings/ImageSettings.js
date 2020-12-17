@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
-import InputLabel from '@material-ui/core/InputLabel';
-import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { Height as HeightIcon } from '@material-ui/icons';
-import shortid from 'shortid';
 
-import ColorPickerInput from './atoms/ColorPicker';
 import useStylesStore from '../stores/styles';
 
 const useStyles = makeStyles({

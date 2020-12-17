@@ -179,7 +179,7 @@ const Player = () => {
         });
       },
     }),
-    [currentNodeId]
+    [currentNodeId, ids, score, storyId]
   );
 
   // load components for this position whenever position changes

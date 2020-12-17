@@ -11,10 +11,6 @@ const base = css`
   padding: 5 5px;
 `;
 
-const figcaptionStyle = css`
-  color: black;
-`;
-
 const Image = ({ fallback, imgURL, style }) => {
   return (
     <div>

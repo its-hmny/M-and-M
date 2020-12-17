@@ -22,7 +22,7 @@ const Chat = ({ onOpen }) => {
       savedChats[id] = chatLog;
     });
     setConversations(savedChats);
-  }, [playersLog]);
+  }, [id, playersLog]);
 
   useEffect(() => {
     deleteMessages();
@@ -34,7 +34,7 @@ const Chat = ({ onOpen }) => {
           : addResponseMessage(content);
       });
     setBadgeCount(0);
-  }, [conversations, selectedPlayer, storyId]);
+  }, [conversations, selectedPlayer, storyId, id]);
 
   const sendHandler = msg => {
     // Saves the new message in the storage

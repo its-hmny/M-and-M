@@ -30,7 +30,7 @@ const GraphCanvas = () => {
 
   const [clusteredMissions, setClusteredMissions] = useState([]);
   //How much zoom is needed, relative to lastClusterZoomLevel, for clustering
-  const { story, saveStory, setWorkingActivity } = useEditor();
+  const { story, /*saveStory,*/ setWorkingActivity } = useEditor();
 
   const nodeExists = nodeId => {
     var res = false;
@@ -124,27 +124,27 @@ const GraphCanvas = () => {
         networkRef.current.off('afterDrawing', handler);
       };
     }
-  }, [clusteredMissions, cleanClusterEdges]);
+  }, [clusteredMissions]);
 
-  //Enable drag-n-drop for nodes
-  const onDropAddNode = useCallback(
-    event => {
-      event.preventDefault();
+  // Enable drag-n-drop for nodes
+  // const onDropAddNode = useCallback(
+  //   event => {
+  //     event.preventDefault();
 
-      try {
-        const newNode = JSON.parse(event.dataTransfer.getData('text'));
-        const { nodes, ...others } = story;
-        saveStory({ nodes: [...nodes, newNode], ...others });
-      } catch (Error) {
-        return;
-      }
-    },
-    [saveStory, story]
-  );
+  //     try {
+  //       const newNode = JSON.parse(event.dataTransfer.getData('text'));
+  //       const { nodes, ...others } = story;
+  //       saveStory({ nodes: [...nodes, newNode], ...others });
+  //     } catch (Error) {
+  //       return;
+  //     }
+  //   },
+  //   [saveStory, story]
+  // );
 
   const selectEdge = useCallback(event => {
     console.log(event);
-  });
+  }, []);
 
   const events = useMemo(() => ({ doubleClick, selectEdge, zoom, deselectNode }), [
     doubleClick,

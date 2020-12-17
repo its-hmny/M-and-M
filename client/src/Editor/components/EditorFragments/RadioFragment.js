@@ -18,7 +18,7 @@ const RadioFragment = ({ classNames, path, fragmentSpecificProps }) => {
     index,
   } = fragmentSpecificProps;
 
-  const { getFromPath, setPathToValue } = useEditor();
+  const { setPathToValue } = useEditor();
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
 
   return (

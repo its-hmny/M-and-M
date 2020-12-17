@@ -29,7 +29,7 @@ const EvaluationWidget = () => {
       toChange.initialValue = value;
     });
     return components;
-  }, [currentQuestion]);
+  }, [currentQuestion, story.nodes]);
 
   const sendVote = () => {
     socket.emit('eval-pts', {

@@ -3,8 +3,6 @@ import React from 'react';
 import ColorPickerInput from './atoms/ColorPicker';
 import useStylesStore from '../stores/styles';
 import Slider from '@material-ui/core/Slider';
-import InputLabel from '@material-ui/core/InputLabel';
-import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 

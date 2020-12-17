@@ -17,9 +17,6 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '25vw',
     borderRadius: 0,
   },
-  titleContainer: {
-    overflow: 'hidden',
-  },
   DefaultTitleStyle: {
     paddingLeft: 15,
     paddingRight: 15,
@@ -32,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 const Inspector = () => {
   const { story, workingActivity } = useEditor();
-  const { InspectorPaperStyle, titleContainer, DefaultTitleStyle, content } = useStyles();
+  const { InspectorPaperStyle, DefaultTitleStyle, content } = useStyles();
   const [openBox, setOpenBox] = useState({});
 
   const setCollapsed = uuid => {

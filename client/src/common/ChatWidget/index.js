@@ -1,5 +1,5 @@
 import React from 'react';
-import { Widget, toggleWidget } from 'react-chat-widget';
+import { Widget } from 'react-chat-widget';
 
 import 'react-chat-widget/lib/styles.css';
 import './styles.css';

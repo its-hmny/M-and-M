@@ -10,7 +10,6 @@ import {
 
 import { EditorProvider } from './context/EditorContext';
 import axios, { useQuery } from '../common/shared';
-import * as ROUTES from '../routes';
 
 const customTheme = createMuiTheme({
   palette: {
@@ -23,8 +22,8 @@ const customTheme = createMuiTheme({
 const Providers = ({ children }) => {
   const { storyId } = useQuery();
   const location = useLocation();
-
   const history = useHistory();
+
   const [story, setStory] = React.useState();
   const [loadedStory, setLoadedStory] = React.useState(false);
 
@@ -47,7 +46,7 @@ const Providers = ({ children }) => {
     };
 
     fetchStory();
-  }, [storyId]);
+  }, [storyId, history, location]);
 
   return (
     <ThemeProvider theme={customTheme}>

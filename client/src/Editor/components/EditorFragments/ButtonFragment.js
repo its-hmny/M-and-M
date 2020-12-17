@@ -7,15 +7,13 @@ const ButtonFragment = props => {
   const { story, workingActivity, saveStory, setWorkingActivity } = useEditor();
   /* Switch to check which predefined button function to use */
   var onClick;
-  switch (fragmentSpecificProps.onClick) {
-    case 'removeNode':
-      onClick = () => {
-        let { nodes, ...others } = story;
-        nodes = nodes.filter(node => node.id !== workingActivity);
-        saveStory({ nodes, ...others });
-        setWorkingActivity(undefined);
-      };
-      break;
+  if (fragmentSpecificProps.onClick === 'removeNode') {
+    onClick = () => {
+      let { nodes, ...others } = story;
+      nodes = nodes.filter(node => node.id !== workingActivity);
+      saveStory({ nodes, ...others });
+      setWorkingActivity(undefined);
+    };
   }
 
   return (

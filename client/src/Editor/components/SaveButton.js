@@ -60,8 +60,6 @@ const SaveButton = () => {
 
   useInterval(() => uploadStory(), 60000);
 
-  console.log(story);
-
   const uploadStory = async () => {
     if (!loading) {
       setSuccess(false);

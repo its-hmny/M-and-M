@@ -1,17 +1,15 @@
 import React from 'react';
-import { TextField, makeStyles, Divider } from '@material-ui/core';
-import { useEditor } from '../../context/EditorContext';
+import { makeStyles, Divider } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     marginTop: 15,
     marginBottom: 10,
   },
 }));
 
-const DividerFragment = ({ classNames, path, fragmentSpecificProps }) => {
+const DividerFragment = () => {
   const { root } = useStyles();
-
   return <Divider variant="middle" className={root} />;
 };
 

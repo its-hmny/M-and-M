@@ -17,6 +17,8 @@ const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
         </MenuItem>
       );
     }
+
+    return null;
   });
 
   return (
