@@ -3,7 +3,6 @@ import React from 'react';
 import ColorPickerInput from './atoms/ColorPicker';
 import useStylesStore from '../stores/styles';
 
-
 // Choices style object reference:
 // {
 //   Root: { /* root styles */ },
@@ -13,7 +12,6 @@ import useStylesStore from '../stores/styles';
 // }
 
 function ChoicesSettings({ styleId }) {
-
   // Choices styles
   const { styles, updateStyle } = useStylesStore(state => ({
     styles: state.styles,
