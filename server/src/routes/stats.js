@@ -135,6 +135,8 @@ router.put('/:story_uuid', (req, res) => {
   const newEntry = { ...initialPlayerLog, ...req.body, id: requested_uuid };
   newEntry.stats.timeAtStart = new Date();
   database[story_uuid].push(newEntry);
+  // Sends a message to the evaluator
+  io.emit('add:player', { story: story_uuid, payload: newEntry });
   // Packetize player uuid and evaluator uuid for the story
   const data = { player: requested_uuid, evaluator: `evaluator${story_uuid}` };
   res.statusCode = 200;

@@ -20,7 +20,7 @@ export const EvaluatorProvider = ({ children, _ }) => {
         const serverLog = (await axios.get(`/stats/${storyId}`)).data.payload;
         setStory(loadedStory);
         setPlayersLog(serverLog);
-        setFocusedPlayer(serverLog[0].id);
+        setFocusedPlayer((serverLog[0] || {}).id);
       } catch (err) {
         console.warn('Error loading log and story from server', err);
       }
@@ -71,6 +71,12 @@ export const EvaluatorProvider = ({ children, _ }) => {
           setPlayersLog([...playersLog]);
         }
       }
+    });
+
+    socket.on('add:player', data => {
+      console.log('New Player conneted');
+      const { story, payload } = data;
+      if (story === storyId) setPlayersLog([...playersLog, payload]);
     });
 
     // This has to be checked
