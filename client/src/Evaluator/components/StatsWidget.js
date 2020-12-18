@@ -33,10 +33,10 @@ const StatsWidget = ({ player }) => {
             </TableHead>
 
             <TableBody>
-              {Object.keys(stats).map(statName => (
-                <TableRow>
-                  <TableCell align="center">{statName}</TableCell>
-                  <TableCell align="center">{stats[statName]}</TableCell>
+              {Object.values(stats).map(stat => (
+                <TableRow key={`${stat.label}-${id}`}>
+                  <TableCell align="center">{stat.label}</TableCell>
+                  <TableCell align="center">{stat.value || 'No data avaiable'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -130,7 +130,7 @@ export const openClusters = network => {
 };
 
 const getMissions = network => {
-  var missions = [];
+  const missions = [];
   /*Populating mission database 
     (there isn't a central db because it wasn't necessary)
   */
@@ -147,13 +147,9 @@ const getMissions = network => {
 };
 
 export const cleanClusterEdges = (network, missions) => {
-  if (network !== undefined) {
-    for (const [key, edge] of Object.entries(network.body.edges)) {
-      if (key.includes('clusterEdge')) {
-        if (!missions.includes(edge.toId)) {
-          edge.options.hidden = true;
-        }
-      }
-    }
-  }
+  if (network !== undefined)
+    Object.entries(network.body.edges).forEach(([key, edge]) => {
+      if (key.includes('clusterEdge') && !missions.includes(edge.toId))
+        edge.options.hidden = true;
+    });
 };

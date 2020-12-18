@@ -20,9 +20,9 @@ const initialPlayerLog = {
     patchs: [],
   },
   stats: {
-    timeAtStart: undefined,
-    timeAtLastResponse: 0,
-    nQuestionDone: 0,
+    timeAtStart: { label: 'Started', value: undefined },
+    timeAtLastResponse: { label: 'Time at last response', value: undefined },
+    nQuestionDone: { label: 'Question done', value: 0 },
     // And so on...
   },
 };
@@ -44,13 +44,15 @@ io.on('connection', socket => {
 
   // Saves on the server the player position in the story
   socket.on('update:position', data => {
-    const { story, senderId, payload } = data;
+    const { story, senderId, receiverId, payload } = data;
     const playerLog = (database[story] || []).find(player => player.id === senderId);
     if (playerLog) {
       // The player changed node in the story so removes all the data from the previous one
       delete playerLog.currentQuestion;
       playerLog.currentQuestion = { ...payload, patchs: [] };
-      io.emit('update:position', data);
+      playerLog.stats.nQuestionDone.value++;
+      playerLog.stats.timeAtLastResponse.value = new Date().toLocaleTimeString();
+      io.emit('update:position', { story, senderId, receiverId, payload: playerLog });
     }
   });
 
@@ -133,7 +135,7 @@ router.put('/:story_uuid', (req, res) => {
   }
   // Keep track of the new player in the DB
   const newEntry = { ...initialPlayerLog, ...req.body, id: requested_uuid };
-  newEntry.stats.timeAtStart = new Date();
+  newEntry.stats.timeAtStart.value = new Date().toLocaleTimeString();
   database[story_uuid].push(newEntry);
   // Sends a message to the evaluator
   io.emit('add:player', { story: story_uuid, payload: newEntry });

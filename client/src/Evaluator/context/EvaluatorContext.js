@@ -43,12 +43,16 @@ export const EvaluatorProvider = ({ children, _ }) => {
     socket.on('update:position', data => {
       const { story, senderId, payload } = data;
       if (story === storyId) {
-        const playerLog = playersLog.find(player => player.id === senderId);
+        let playerLog = playersLog.find(player => player.id === senderId);
         if (playerLog) {
           // The player changed node in the story so removes all the data from the previous one
-          delete playerLog.currentQuestion;
-          playerLog.currentQuestion = { ...payload, patchs: [] };
-          setPlayersLog([...playersLog]);
+          playerLog = { ...playerLog, ...payload }; // Merge the changes
+          setPlayersLog(
+            playersLog.map(log => {
+              if (log.id === playerLog.id) return playerLog;
+              else return log;
+            })
+          );
         }
       }
     });
@@ -74,7 +78,6 @@ export const EvaluatorProvider = ({ children, _ }) => {
     });
 
     socket.on('add:player', data => {
-      console.log('New Player conneted');
       const { story, payload } = data;
       if (story === storyId) setPlayersLog([...playersLog, payload]);
     });
