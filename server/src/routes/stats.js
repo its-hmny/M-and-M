@@ -58,7 +58,7 @@ io.on('connection', socket => {
 
   // Saves on the server the player responses and changes to the story's components
   socket.on('update:stats', data => {
-    const { story, senderId, payload } = data;
+    /*const { story, senderId, payload } = data;
     const playerLog = (database[story] || []).find(player => player.id === senderId);
     if (playerLog) {
       const { id, data } = payload;
@@ -69,9 +69,9 @@ io.on('connection', socket => {
         componentToPatch = { componentId: id, value: data };
       } else {
         playerLog.currentQuestion.patchs.push({ componentId: id, value: data });
-      }
-      io.emit('update:stats', data);
-    }
+      }*/ // THIS IS PRETTY USELESS AT THE MOMENT, NEEDS TO BE REPOURPOSED
+    io.emit('update:stats', data);
+    //}
   });
 
   // Saves on the server the score assigned by the evaluator on a human-only evaluable question
@@ -133,9 +133,13 @@ router.put('/:story_uuid', (req, res) => {
   while (database[story_uuid].find(player => player.id === requested_uuid)) {
     requested_uuid = shortid.generate();
   }
-  // Keep track of the new player in the DB
-  const newEntry = { ...initialPlayerLog, ...req.body, id: requested_uuid };
+  // Due to reference issue this is the only method to share a template without occuring
+  // in reference issues due to object reference handling in JS
+  const newEntry = JSON.parse(
+    JSON.stringify({ ...initialPlayerLog, ...req.body, id: requested_uuid })
+  );
   newEntry.stats.timeAtStart.value = new Date().toLocaleTimeString();
+  // Keep track of the new player in the DB
   database[story_uuid].push(newEntry);
   // Sends a message to the evaluator
   io.emit('add:player', { story: story_uuid, payload: newEntry });
