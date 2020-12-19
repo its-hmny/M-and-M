@@ -9,7 +9,7 @@ const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const completePath = specificPath ? [...path, ...specificPath] : [...path];
   var items = [];
   const menuItems = story.nodes.map(node => {
-    if (!items.includes(node[data])) {
+    if (node[data] && !items.includes(node[data])) {
       items.push(node[data]);
       return (
         <MenuItem key={node[data]} value={node[data]}>
@@ -33,7 +33,7 @@ const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
         >
           {menuItems}
           <MenuItem key={story.nodes.length} value="">
-            {' '}
+            {'\u00A0'}
           </MenuItem>
         </Select>
       </FormControl>

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useEvaluator } from '../context/EvaluatorContext';
 import { ChatWidget, WidgetLauncher, StatsWidget, EvaluationWidget } from '.';
 
+import smartphoneIcon from '../assets/svgs/smartphone.svg';
+import infoIcon from '../assets/svgs/info.svg';
+
 const WidgetArea = () => {
   const { selectedPlayer } = useEvaluator();
   const [currentOpen, setCurrentOpen] = useState(undefined);
@@ -9,14 +12,19 @@ const WidgetArea = () => {
   const toggleContained = nToggle =>
     setCurrentOpen(nPrev => (nPrev === nToggle ? undefined : nToggle));
 
+  if (!selectedPlayer) {
+    return null;
+  }
+
   return (
-    <div style={{ display: selectedPlayer ? undefined : 'none' }}>
-      <ChatWidget onOpen={() => toggleContained(0)} />
+    <>
+      <ChatWidget isOpen={currentOpen === 0} onOpen={() => toggleContained(0)} />
 
       <WidgetLauncher
-        icon="http://localhost:8000/smartphone.svg"
+        icon={smartphoneIcon}
         buttonColor="#121212"
         marginRight="21vw"
+        width={currentOpen !== 1 && 'unset'}
         open={currentOpen === 1}
         toggleContainer={() => toggleContained(1)}
       >
@@ -24,16 +32,17 @@ const WidgetArea = () => {
       </WidgetLauncher>
 
       <WidgetLauncher
-        icon="http://localhost:8000/info.svg"
+        icon={infoIcon}
         buttonColor="#d3d3d3"
         marginRight="40vw"
+        width={currentOpen !== 2 && 'unset'}
         open={currentOpen === 2}
         toggleContainer={() => toggleContained(2)}
       >
         {/*ToDo change this line once stats has default value*/}
-        <StatsWidget player={selectedPlayer || {}} />
+        <StatsWidget player={selectedPlayer} />
       </WidgetLauncher>
-    </div>
+    </>
   );
 };
 

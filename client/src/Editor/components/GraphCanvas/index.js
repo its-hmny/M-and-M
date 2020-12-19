@@ -154,16 +154,14 @@ const GraphCanvas = () => {
   ]);
 
   return (
-    <div>
-      <Graph
-        data={getGraphFromStory(story)}
-        options={Options}
-        events={events}
-        getNetwork={network => {
-          networkRef.current = network;
-        }}
-      />
-    </div>
+    <Graph
+      data={getGraphFromStory(story)}
+      options={Options}
+      events={events}
+      getNetwork={network => {
+        networkRef.current = network;
+      }}
+    />
   );
 };
 

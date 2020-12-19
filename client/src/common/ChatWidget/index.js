@@ -1,10 +1,20 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core';
 import { Widget } from 'react-chat-widget';
 
 import 'react-chat-widget/lib/styles.css';
 import './styles.css';
 
-const ChatWidget = ({ automaticToggle, setOpen, ...forwardProps }) => {
+const useStyles = makeStyles({
+  wrapper: {
+    '& > .rcw-widget-container': {
+      width: props => !props.isOpen && 'unset',
+    },
+  },
+});
+
+const ChatWidget = ({ automaticToggle, isOpen, setOpen, ...forwardProps }) => {
+  const classes = useStyles({ isOpen });
   const baseComponent = (
     <Widget
       senderPlaceHolder="Type here your message"
@@ -20,7 +30,15 @@ const ChatWidget = ({ automaticToggle, setOpen, ...forwardProps }) => {
   );
 
   return (
-    <>{automaticToggle ? baseComponent : <div onClick={setOpen}>{baseComponent}</div>}</>
+    <>
+      {automaticToggle ? (
+        baseComponent
+      ) : (
+        <div onClick={setOpen} className={classes.wrapper}>
+          {baseComponent}
+        </div>
+      )}
+    </>
   );
 };
 

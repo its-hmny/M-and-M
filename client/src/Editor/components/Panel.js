@@ -5,9 +5,8 @@ import Slide from '@material-ui/core/Slide';
 const useStyles = makeStyles({
   common: {
     position: 'absolute',
-    top: 0,
-    bottom: 0,
     zIndex: 100,
+    bottom: 0,
   },
   left: {
     left: 0,
@@ -17,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Panel = ({ open, position, children }) => {
+const Panel = ({ open, position, style, children }) => {
   const classes = useStyles();
   const direction = position === 'left' ? 'right' : 'left';
   return (
@@ -25,6 +24,7 @@ const Panel = ({ open, position, children }) => {
       className={`${classes.common} ${classes[position]}`}
       in={open}
       direction={direction}
+      style={style}
     >
       <div>{children}</div>
     </Slide>

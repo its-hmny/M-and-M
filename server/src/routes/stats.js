@@ -83,6 +83,8 @@ io.on('connection', socket => {
       io.emit('eval-pts', data);
     }
   });
+
+  socket.on('disconnect', () => {});
 });
 
 // Get the updated stats for every player currently in the story
@@ -124,7 +126,7 @@ router.patch('/:story_uuid/:player_uuid', (req, res) => {
   });
 });
 
-// Connect return <player_id, evaluator_id> tuple to the player that beginned a story
+// Connect return <player_id, evaluator_id> tuple to the player that began a story
 router.put('/:story_uuid', (req, res) => {
   const story_uuid = req.params.story_uuid;
   const requested_uuid = shortid.generate();

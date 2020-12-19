@@ -13,23 +13,22 @@ const useStyles = makeStyles({
    the modifiable component properties in <DynamicLoadFragments> */
 const CollapsableBox = ({
   name,
-  uuid,
   isOpen,
-  handler,
+  onClick,
   indentLevel,
   fieldsToSet,
   ...specificProps
 }) => {
   const { InspectorElementStyle } = useStyles();
 
-  var ListComponent = fieldsToSet.length > 0 && (
+  const ListComponent = fieldsToSet.length > 0 && (
     <List className={InspectorElementStyle}>
-      <ListItem button onClick={() => handler(uuid)} divider>
+      <ListItem button onClick={onClick} divider>
         <Typography variant="h6" component="h6">
           {name}
         </Typography>
       </ListItem>
-      <Collapse in={isOpen[uuid]} unmountOnExit>
+      <Collapse in={isOpen} unmountOnExit>
         <Box borderLeft={1} borderColor="primary.main">
           <DynamicLoadFragments fieldsToSet={fieldsToSet} {...specificProps} />
         </Box>

@@ -1,0 +1,98 @@
+{
+  "name": "cacca trattino",
+  "description": "aaaaaaa",
+  "components": [
+    {
+      "id": "qFp2m0VQn",
+      "name": "Text",
+      "text": "Di che colore è il cavallo bianco di Napoleone?",
+      "styleId": "DefaultText",
+      "style": {
+        "fontFamily": "Arial",
+        "fontSize": "16px",
+        "color": "#000"
+      }
+    },
+    {
+      "id": "sQoJfwhG4",
+      "name": "Input",
+      "placeholder": "Default placeholder text",
+      "styleId": "DefaultInput",
+      "style": {
+        "color": "black",
+        "backgroundColor": "white"
+      }
+    },
+    {
+      "id": "DDiJwQtYqT",
+      "name": "Button",
+      "text": "Some Button inside ButtonGroup",
+      "styleId": "DefaultButton",
+      "style": {
+        "color": "#000",
+        "backgroundColor": "#8cceb3"
+      }
+    },
+    {
+      "id": "NZVDC93vl9",
+      "name": "ButtonGroup",
+      "styleId": "ButtonGroup-hs2h-FaYw",
+      "children": [
+        {
+          "id": "Cy8EDqcxzo",
+          "name": "Button",
+          "text": "Ritenta",
+          "styleId": "DefaultButton"
+        },
+        {
+          "id": "6d-Q7LtgEm",
+          "name": "Button",
+          "text": "Abbandona",
+          "styleId": "UnderwaterButton"
+        },
+        {
+          "id": "q2luTZTH6",
+          "name": "Button",
+          "text": "im a beautiful Button",
+          "styleId": "DefaultButton"
+        },
+        {
+          "id": "pJ4lcschCZ",
+          "name": "Button",
+          "text": "im a javascript Button",
+          "styleId": "DefaultButton"
+        },
+        {
+          "id": "zXXQhK2wH",
+          "name": "Button",
+          "text": "im a loving Button",
+          "styleId": "DefaultButton"
+        },
+        {
+          "id": "3T--ahXLo",
+          "name": "Button",
+          "text": "im a javascript Button",
+          "styleId": "DefaultButton"
+        },
+        {
+          "id": "6sAcIs2hE",
+          "name": "Button",
+          "text": "im a beautiful Button",
+          "styleId": "Button-fFWxGhEaz"
+        }
+      ],
+      "style": {
+        "backgroundColor": "#cd4c4c",
+        "color": "#f92828"
+      }
+    },
+    {
+      "id": "oO1hcodZ_",
+      "name": "Background",
+      "styleId": "DefaultBackground",
+      "style": {
+        "backgroundImage": "url(http://localhost:8000/default_background.jpg)"
+      }
+    }
+  ]
+}
