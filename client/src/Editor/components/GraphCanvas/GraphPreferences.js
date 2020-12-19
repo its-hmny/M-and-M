@@ -91,9 +91,17 @@ export const getGraphFromStory = story => {
 
 const setEdgesFromChildren = (root, rootId, graph) => {
   root.forEach(child => {
-    if (child.story && child.story.nextNode)
-      graph.edges = [...graph.edges, { from: rootId, to: child.story.nextNode }];
-    else if (child.children instanceof Array)
+    if (child.story && child.story.nextNode) {
+      if (child.story.nextNode === 'string') {
+        graph.edges = [...graph.edges, { from: rootId, to: child.story.nextNode }];
+      } else {
+        graph.edges = [
+          ...graph.edges,
+          { from: rootId, to: child.story.nextNode['[CORRECT]'] },
+          { from: rootId, to: child.story.nextNode['[WRONG]'] },
+        ];
+      }
+    } else if (child.children instanceof Array)
       setEdgesFromChildren(child.children, rootId, graph);
   });
 };

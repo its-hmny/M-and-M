@@ -5,6 +5,7 @@ import { useEditor } from '../../context/EditorContext';
 const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { specificPath, valToChange, label, data, dataName } = fragmentSpecificProps;
   const { story, getFromPath, setPathToValue } = useEditor();
+  console.log(story);
   path = path || [];
   const completePath = specificPath ? [...path, ...specificPath] : [...path];
   var items = [];

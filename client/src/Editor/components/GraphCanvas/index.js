@@ -142,13 +142,8 @@ const GraphCanvas = () => {
   //   [saveStory, story]
   // );
 
-  const selectEdge = useCallback(event => {
-    console.log(event);
-  }, []);
-
-  const events = useMemo(() => ({ doubleClick, selectEdge, zoom, deselectNode }), [
+  const events = useMemo(() => ({ doubleClick, zoom, deselectNode }), [
     doubleClick,
-    selectEdge,
     zoom,
     deselectNode,
   ]);
