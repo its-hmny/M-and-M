@@ -1,1 +1,8 @@
-{"title":"Placeholderaaaa","description":"Placeholder","target":"ADULT","gameplay":"SINGLE","accessible":false,"nodes":[]}
+{
+  "title": "Placeholderaaaa",
+  "description": "Placeholder",
+  "target": "ADULT",
+  "gameplay": "SINGLE",
+  "accessible": false,
+  "nodes": []
+}
