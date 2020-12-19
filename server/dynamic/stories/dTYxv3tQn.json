@@ -1,0 +1,74 @@
+{
+  "nodes": [
+    {
+      "id": "qpKE0_opG",
+      "name": "saaaaaaabackground and spacer",
+      "description": "",
+      "components": [
+        {
+          "id": "g1T7F7s1vn",
+          "name": "Button",
+          "text": "sfafsafsfasfasfsfasfsSome Button inside ButtonGroup",
+          "styleId": "DefaultButton",
+          "style": { "color": "#000", "backgroundColor": "#8cceb3" },
+          "story": {}
+        },
+        {
+          "id": "JjFLyi1SJ",
+          "name": "Background",
+          "styleId": "DefaultBackground",
+          "style": {
+            "backgroundImage": "url(http://localhost:8000/default_background.jpg)"
+          }
+        },
+        {
+          "id": "sflhMVHRc",
+          "name": "Text",
+          "text": "Di che colore è il cavallo biancoeeeee di Napoleone?eeasfdafafasfasfasfafafafssafaffsafasfasfasfasfasfasfasfasfafasfasfasfafafafs",
+          "styleId": "DefaultText",
+          "style": { "fontFamily": "Arial", "fontSize": "16px", "color": "#000" }
+        },
+        {
+          "id": "fVlBOK88D",
+          "name": "Spacer",
+          "styleId": "DefaultSpacer",
+          "style": {
+            "color": "white",
+            "backgroundColor": "white",
+            "height": "20%",
+            "width": "100%"
+          }
+        },
+        {
+          "id": "_2UwosoLwE",
+          "name": "ButtonGroup",
+          "styleId": "DefaultButtonGroup",
+          "children": [
+            {
+              "id": "kGodRnel7Q",
+              "name": "Button",
+              "text": "Ritentaaaaaaa",
+              "styleId": "DefaultButton",
+              "story": {}
+            },
+            {
+              "id": "lq9VvAzokE",
+              "name": "Button",
+              "text": "Abbandonaaaaaa",
+              "styleId": "DefaultButton",
+              "story": { "nextNode": "qpKE0_opG" }
+            }
+          ],
+          "style": { "backgroundColor": "yellow" }
+        }
+      ],
+      "mission": "asfa"
+    }
+  ],
+  "uuid": "dTYxv3tQn",
+  "title": "Placeholder",
+  "description": "Placeholder",
+  "target": "ADULT",
+  "gameplay": "SINGLE",
+  "accessible": false
+}

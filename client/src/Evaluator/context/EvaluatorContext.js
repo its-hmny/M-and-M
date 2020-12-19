@@ -2,11 +2,12 @@ import React, { useContext, useState, useEffect } from 'react';
 import axios, { useQuery } from '../../common/shared';
 
 import io from 'socket.io-client';
+
 const socket = io('http://localhost:8000');
 
 const EvaluatorContext = React.createContext();
 
-export const EvaluatorProvider = ({ children, _ }) => {
+export const EvaluatorProvider = ({ children }) => {
   const { storyId } = useQuery();
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [focusedNode, setFocusedNode] = useState(undefined);
@@ -89,7 +90,9 @@ export const EvaluatorProvider = ({ children, _ }) => {
   };
 
   return (
-    <EvaluatorContext.Provider value={toProvide}>{children}</EvaluatorContext.Provider>
+    <EvaluatorContext.Provider value={toProvide}>
+      {story ? children : <div>Loading...</div>}
+    </EvaluatorContext.Provider>
   );
 };
 

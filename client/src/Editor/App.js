@@ -19,16 +19,19 @@ const useStyles = makeStyles(theme => ({
   container: {
     position: 'relative',
     maxWidth: '100vw',
-    maxHeight: '100vh',
+    height: '100vh',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#3d3d3d',
   },
-  buttonContainer: {
-    padding: theme.spacing(2),
+  buttonsContainer: {
+    position: 'absolute',
+    top: theme.spacing(2),
+    left: theme.spacing(2),
     display: 'flex',
     flexDirection: 'row',
+    zIndex: 1,
   },
   addButton: {
     marginRight: theme.spacing(2),
@@ -70,8 +73,10 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0,
   },
   graphStyle: {
-    flexGrow: 1,
+    position: 'relative',
     '& .vis-network': {
+      width: '100%',
+      height: 'calc(100vh - 64px)', // 64px is navbar height
       outline: 'none',
     },
   },
@@ -95,7 +100,9 @@ const App = () => {
     <div className={classes.container}>
       <div className={classes.navbar}>
         <Navbar />
-        <div className={classes.buttonContainer}>
+      </div>
+      <div className={classes.graphStyle}>
+        <div className={classes.buttonsContainer}>
           <Fab
             variant="extended"
             className={classes.addButton}
@@ -104,14 +111,8 @@ const App = () => {
             <AddIcon className={classes.addIcon} />
             Add Node
           </Fab>
-          {/* <Fab variant="extended" className={classes.saveButton} onClick={uploadStory}>
-            <SaveIcon className={classes.saveIcon} />
-            Save Story
-          </Fab> */}
           <SaveButton />
         </div>
-      </div>
-      <div className={classes.graphStyle}>
         <Box className={classes.caption}>
           {!isCaptionOpen ? (
             <Button onClick={() => setIsCaptionOpen(true)}>
@@ -135,7 +136,7 @@ const App = () => {
           </div>
         </Panel>
         <GraphCanvas />
-        <Panel open={currentNode != null} position="right">
+        <Panel open={currentNode != null} position="right" style={{ top: 0 }}>
           <Inspector />
         </Panel>
         <TemplatesDialog

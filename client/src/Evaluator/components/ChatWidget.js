@@ -10,7 +10,7 @@ import { useEvaluator } from '../context/EvaluatorContext';
 
 const socket = io('http://localhost:8000');
 
-const Chat = ({ onOpen }) => {
+const Chat = ({ onOpen, isOpen }) => {
   const { selectedPlayer, storyId, playersLog } = useEvaluator();
   const { name, id, avatar } = selectedPlayer || {};
   const [conversations, setConversations] = useState({});
@@ -71,6 +71,7 @@ const Chat = ({ onOpen }) => {
     <ChatWidget
       automaticToggle={false}
       setOpen={onOpen}
+      isOpen={isOpen}
       title={name || id}
       subtitle="Respond to the player's request"
       handleNewUserMessage={sendHandler}

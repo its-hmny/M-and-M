@@ -9,14 +9,13 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     width: '100vw',
     height: '100vh',
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
   },
   main: {
-    flexGrow: 1,
+    height: 'calc(100vh - 64px)',
     display: 'flex',
-    alignItems: 'stretch',
+    '& .vis-network': {
+      outline: 'none',
+    },
   },
 }));
 

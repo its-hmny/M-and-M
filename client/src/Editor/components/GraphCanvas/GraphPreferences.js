@@ -1,11 +1,13 @@
 export const Options = {
   autoResize: true,
-  height: '100vh',
+  /* Capolavoro d'ingegneria del software, dovrebbe
+      essere mostrato ad un museo d'arte */
   width: '100vw',
+  height: '100vh',
 
   configure: {
     enabled: false,
-    filter: 'manipulation',
+
     /* nodes, edges, layout, interaction, manipulation, physics, selection, renderer */
     showButton: false,
   },
@@ -33,7 +35,6 @@ export const Options = {
 
   layout: {
     improvedLayout: true,
-
     hierarchical: {
       enabled: false,
       direction: 'LR',
@@ -66,7 +67,13 @@ export const Options = {
     },
   },
 
-  physics: { enabled: false },
+  physics: {
+    enabled: false,
+    solver: 'repulsion',
+    repulsion: {
+      nodeDistance: 400, // Put more distance between the nodes.
+    },
+  },
 };
 
 export const getGraphFromStory = story => {
@@ -84,20 +91,31 @@ export const getGraphFromStory = story => {
 
 const setEdgesFromChildren = (root, rootId, graph) => {
   root.forEach(child => {
-    if (child.story && child.story.nextNode)
-      graph.edges = [...graph.edges, { from: rootId, to: child.story.nextNode }];
-    else if (child.children instanceof Array)
+    if (child.story && child.story.nextNode) {
+      if (child.story.nextNode === 'string') {
+        graph.edges = [...graph.edges, { from: rootId, to: child.story.nextNode }];
+      } else {
+        graph.edges = [
+          ...graph.edges,
+          { from: rootId, to: child.story.nextNode['[CORRECT]'] },
+          { from: rootId, to: child.story.nextNode['[WRONG]'] },
+        ];
+      }
+    } else if (child.children instanceof Array)
       setEdgesFromChildren(child.children, rootId, graph);
   });
 };
 
 export const makeClusters = network => {
   const missions = getMissions(network);
+
   if (missions.length !== 0) {
     missions.forEach(mission => {
       const options = {
         joinCondition: currentNodeOptions => {
-          return currentNodeOptions.mission === mission;
+          if (currentNodeOptions.mission === undefined) {
+            return false;
+          } else return currentNodeOptions.mission === mission;
         },
         clusterNodeProperties: {
           id: mission,
@@ -127,6 +145,14 @@ export const openClusters = network => {
       });
     }
   });
+
+  if (network.isCluster(undefined)) {
+    network.openCluster(undefined, {
+      releaseFunction: (clusterPosition, containedNodesPositions) => {
+        return containedNodesPositions;
+      },
+    });
+  }
 };
 
 const getMissions = network => {
