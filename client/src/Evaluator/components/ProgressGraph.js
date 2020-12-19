@@ -8,10 +8,18 @@ import { useEvaluator } from '../context/EvaluatorContext';
 import '../../Editor/components/GraphCanvas/styles.css';
 
 const ProgressGraph = () => {
-  const { story } = useEvaluator();
+  const { story, setFocusedNode } = useEvaluator();
+
+  const selectNode = event => setFocusedNode(event.nodes[0]);
+  const deselectNode = () => setFocusedNode(undefined);
+
   return (
     <div id="graphcanvas-container">
-      <Graph data={getGraphFromStory(story)} options={Options} />
+      <Graph
+        data={getGraphFromStory(story)}
+        options={Options}
+        events={{ selectNode, deselectNode }}
+      />
     </div>
   );
 };

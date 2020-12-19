@@ -46,17 +46,24 @@ const VoteSlider = ({ story, player }) => {
 };
 
 const EvaluationWidget = () => {
-  const { story, storyId, selectedPlayer } = useEvaluator();
-  const { id, currentQuestion } = selectedPlayer;
+  const { story, storyId, focusedNode, selectedPlayer } = useEvaluator();
+  const { id, history } = selectedPlayer;
 
-  const playerNode = useMemo(() => {
-    if (!currentQuestion) {
-      return { components: [] };
+  //TODO CHANGE THIS SHIT
+  /*const patchedComponents = useMemo(() => {
+    const activityNode = story.nodes.find(node => node.id === focusedNode);
+    const activityRecord = history.find(
+      ({ activityNodeId }) => activityNodeId === focusedNode
+    );
+
+    if (!activityRecord) {
+      return [];
+    } else if (!activityNode && !history.lenght) {
+      return activityRecord.components;
     }
-    const { currentNodeId, patchs } = currentQuestion;
-    // Get the story node in wich the player is (its components array)
-    const defaultStoryNode = story.nodes.find(node => node.id === currentNodeId);
-    const components = defaultStoryNode ? defaultStoryNode.components : [];
+
+    const { patchs } = activityRecord;
+    const components = activityNode ? activityNode.components : [];
     // Apply the patches to the relative component before display
     patchs.forEach(patch => {
       const { componentId, value } = patch;
@@ -64,12 +71,12 @@ const EvaluationWidget = () => {
       toChange.initialValue = value;
     });
     return components;
-  }, [currentQuestion, story.nodes]);
+  }, [focusedNode, story.nodes]);*/
 
   return (
     <Paper>
       <VoteSlider story={storyId} player={id} />
-      <Preview components={playerNode} />
+      <Preview components={[]} />
     </Paper>
   );
 };

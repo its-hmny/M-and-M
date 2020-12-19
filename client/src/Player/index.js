@@ -157,13 +157,14 @@ const Player = () => {
           story: storyId,
           senderId: ids.player,
           receiverId: ids.evaluator,
-          payload: { currentNodeId },
+          payload: { activityNodeId: currentNodeId },
         });
         setCurrentNodeId(node);
       },
       updateStats: payload => {
         socket.emit('update:stats', {
           story: storyId,
+          nodeId: currentNodeId,
           senderId: ids.player,
           receiverId: ids.evaluator,
           payload,
