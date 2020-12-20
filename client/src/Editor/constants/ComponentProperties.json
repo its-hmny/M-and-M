@@ -4,7 +4,9 @@
       "fragment": "TextFieldFragment",
       "props": {
         "valToChange": "name",
-        "label": "Node name"
+        "label": "Node name",
+        "pointsPath": ["story", "points"],
+        "pointsValToChange": "[CORRECT]"
       }
     },
     {
@@ -137,7 +139,8 @@
         "correctStory": "[CORRECT]",
         "wrongStory": "[WRONG]",
         "correctLabel": "Correct Destination",
-        "wrongLabel": "Wrong Destination"
+        "wrongLabel": "Wrong Destination",
+        "pointsPath": ["story", "points"]
       }
     },
     {
@@ -160,7 +163,8 @@
         "correctStory": "[CORRECT]",
         "wrongStory": "[WRONG]",
         "correctLabel": "Correct Destination",
-        "wrongLabel": "Wrong Destination"
+        "wrongLabel": "Wrong Destination",
+        "pointsPath": ["story", "points"]
       }
     },
     {

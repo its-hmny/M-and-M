@@ -8,6 +8,7 @@ import {
   Select,
   FormControl,
   InputLabel,
+  TextField,
 } from '@material-ui/core';
 import { useEditor } from '../../context/EditorContext';
 import TextFieldFragment from './TextFieldFragment';
@@ -25,10 +26,12 @@ const useStyles = makeStyles(theme => ({
   },
   divider: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
   },
   FormSelect: {
     marginTop: theme.spacing(2),
+  },
+  deleteStyle: {
+    marginTop: theme.spacing(1),
   },
 }));
 const ANSWER_VALUE = {
@@ -36,7 +39,7 @@ const ANSWER_VALUE = {
   WRONG: '[WRONG]',
 };
 const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
-  const { divider, FormSelect } = useStyles();
+  const { divider, FormSelect, deleteStyle } = useStyles();
   const {
     pathAlternative,
     valToChange,
@@ -48,6 +51,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
     dataName,
     correctLabel,
     wrongLabel,
+    pointsPath,
   } = fragmentSpecificProps;
   const { story, getFromPath, setPathToValue } = useEditor();
   const [correctAnswerValue, setCorrectAnswerValue] = React.useState([]);
@@ -55,10 +59,15 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   //Additional field to modify objects or array
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
   const answers = getFromPath(path || [])[valToChange];
-  const selectCompletePath = (path || []).concat(selectPath);
 
+  const selectCompletePath = (path || []).concat(selectPath);
   const correctSelectValue = getFromPath(selectCompletePath)[correctStory];
   const wrongSelectValue = getFromPath(selectCompletePath)[wrongStory];
+
+  const PointsCompletePath = (path || []).concat(pointsPath);
+  const correctPoints = getFromPath(PointsCompletePath)[correctStory];
+  const wrongPoints = getFromPath(PointsCompletePath)[wrongStory];
+
   var items = [];
   const menuItems = story.nodes.map(node => {
     if (!items.includes(node[data])) {
@@ -113,6 +122,17 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
     );
   };
 
+  const setNumberField = (value, story) => {
+    console.log(value);
+    console.log(story);
+    if ((value.length === 1 && value === '-') || value === '') {
+      value = '0';
+    }
+    if (!isNaN(value)) {
+      setPathToValue(PointsCompletePath || [], story, parseInt(value));
+    }
+  };
+
   return (
     <div className={classNames.InspectorElement}>
       <Button
@@ -128,17 +148,19 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
           <div key={`answer-${i}`}>
             <Divider className={divider} />
             <div style={{ display: 'flex', alignItems: 'bottom' }}>
-              <TextFieldFragment
-                classNames={classNames}
-                path={path}
-                fragmentSpecificProps={{
-                  pathAlternative: ['answers', i],
-                  valToChange: 'text',
-                  label: 'Answer text',
-                }}
+              <TextField
+                className={classNames.InspectorElement}
+                label={'Answer text'}
+                onChange={event =>
+                  setPathToValue(
+                    path.concat('answers', i) || [],
+                    'text',
+                    event.target.value
+                  )
+                }
               />
               <IconButton onClick={() => deleteChoice(i)}>
-                <DeleteIcon></DeleteIcon>
+                <DeleteIcon className={deleteStyle}></DeleteIcon>
               </IconButton>
             </div>
             {singleCorrectAnswer ? (
@@ -176,7 +198,9 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
         );
       })}
       <Divider />
-      <FormControl className={`${classNames.FormControl} ${FormSelect}`}>
+      <FormControl
+        className={`${classNames.FormControl} ${FormSelect} ${classNames.InspectorElement}`}
+      >
         <InputLabel>{correctLabel}</InputLabel>
         <Select
           value={correctSelectValue}
@@ -190,7 +214,16 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
           </MenuItem>
         </Select>
       </FormControl>
-      <FormControl className={`${classNames.FormControl} ${FormSelect}`}>
+      <TextField
+        label={'Correct answer points'}
+        value={correctPoints}
+        className={classNames.InspectorElement}
+        onChange={event => setNumberField(event.target.value, correctStory)}
+      />
+
+      <FormControl
+        className={`${classNames.FormControl} ${FormSelect} ${classNames.InspectorElement}`}
+      >
         <InputLabel>{wrongLabel}</InputLabel>
         <Select
           value={wrongSelectValue}
@@ -204,6 +237,12 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
           </MenuItem>
         </Select>
       </FormControl>
+      <TextField
+        label={'Wrong answer points'}
+        value={wrongPoints}
+        className={classNames.InspectorElement}
+        onChange={event => setNumberField(event.target.value, wrongStory)}
+      />
     </div>
   );
 };
