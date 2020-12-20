@@ -146,8 +146,10 @@
             { "value": "[CORRECT]", "id": 19, "text": "Risposta 1" },
             { "value": "[WRONG]", "id": 20, "text": "Risposta 2" }
           ],
-          "story": { "nextNode": { "[CORRECT]": "stringid7", "[WRONG]": "stringid7" }, 
-                      "points": {"[CORRECT]": 10, "[WRONG]": -5} }
+          "story": {
+            "nextNode": { "[CORRECT]": "stringid7", "[WRONG]": "stringid7" },
+            "points": { "[CORRECT]": 10, "[WRONG]": -5 }
+          }
         }
       ]
     },
@@ -163,8 +165,10 @@
             { "value": "[CORRECT]", "id": 22, "text": "Risposta 1" },
             { "value": "[CORRECT]", "id": 23, "text": "Risposta 2" }
           ],
-          "story": { "nextNode": { "[CORRECT]": "stringid3", "[WRONG]": "stringid3" }, 
-                      "points": {"[CORRECT]": 10, "[WRONG]": -5} }
+          "story": {
+            "nextNode": { "[CORRECT]": "stringid3", "[WRONG]": "stringid3" },
+            "points": { "[CORRECT]": 10, "[WRONG]": -5 }
+          }
         }
       ]
     }
