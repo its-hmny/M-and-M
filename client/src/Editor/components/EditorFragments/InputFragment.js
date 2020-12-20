@@ -28,12 +28,19 @@ const InputFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const PointsCompletePath = path.concat(pointsPath) || [];
   const pointsValue = getFromPath(PointsCompletePath)[pointsValToChange];
   const setNumberField = (value, story) => {
-    if ((value.length === 1 && value === '-') || value === '') {
+    if (value === '') {
       value = '0';
+    }
+    let minusIndex = value.lastIndexOf('-');
+    if (minusIndex > 0) {
+      value = value.replace('-', '');
+      value = '-' + value;
     }
 
     if (!isNaN(value)) {
       setPathToValue(PointsCompletePath || [], story, parseInt(value));
+    } else if (value === '-') {
+      setPathToValue(PointsCompletePath || [], story, 0);
     }
   };
   return (
