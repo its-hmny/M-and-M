@@ -13,21 +13,12 @@ const useStyles = makeStyles(theme => ({
 
 const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { root, inputRoot } = useStyles();
-  const {
-    pathAlternative,
-    valToChange,
-    label,
-    onChange,
-    pointsPath,
-    pointsValToChange,
-  } = fragmentSpecificProps;
+  const { pathAlternative, valToChange, label, onChange } = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
 
   //Additional field to modify objects or array
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
   const value = getFromPath(path || [])[valToChange];
-  const completePointsPath = path.concat(pointsPath) || [];
-  const pointsValue = getFromPath(completePointsPath)[pointsValToChange];
 
   return (
     <div>
@@ -47,20 +38,6 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
           onChange !== undefined
             ? onChange(event)
             : setPathToValue(path || [], valToChange, event.target.value)
-        }
-      />
-      <TextField
-        className={classNames.InspectorElement}
-        classes={{ root }}
-        InputProps={{
-          className: inputRoot,
-        }}
-        label={'Answer Points'}
-        value={pointsValue}
-        variant="outlined"
-        size="small"
-        onChange={event =>
-          setPathToValue(completePointsPath, pointsValToChange, event.target.value)
         }
       />
     </div>

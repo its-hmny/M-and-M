@@ -123,8 +123,6 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   };
 
   const setNumberField = (value, story) => {
-    console.log(value);
-    console.log(story);
     if ((value.length === 1 && value === '-') || value === '') {
       value = '0';
     }
