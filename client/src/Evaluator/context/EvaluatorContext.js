@@ -10,6 +10,7 @@ const EvaluatorContext = React.createContext();
 export const EvaluatorProvider = ({ children }) => {
   const { storyId } = useQuery();
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
+  const [focusedNode, setFocusedNode] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
 
@@ -40,21 +41,22 @@ export const EvaluatorProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    const mergePlayerLog = (playerLog, patch) => {
+      playerLog = { ...playerLog, ...patch }; // Merge the changes
+      setPlayersLog(
+        playersLog.map(log => {
+          if (log.id === playerLog.id) return playerLog;
+          else return log;
+        })
+      );
+    };
+
     // Saves in the context the player position in the story
     socket.on('update:position', data => {
       const { story, senderId, payload } = data;
       if (story === storyId) {
         let playerLog = playersLog.find(player => player.id === senderId);
-        if (playerLog) {
-          // The player changed node in the story so removes all the data from the previous one
-          playerLog = { ...playerLog, ...payload }; // Merge the changes
-          setPlayersLog(
-            playersLog.map(log => {
-              if (log.id === playerLog.id) return playerLog;
-              else return log;
-            })
-          );
-        }
+        if (playerLog) mergePlayerLog(playerLog, payload);
       }
     });
 
@@ -63,18 +65,7 @@ export const EvaluatorProvider = ({ children }) => {
       const { story, senderId, payload } = data;
       if (story === storyId) {
         const playerLog = playersLog.find(player => player.id === senderId);
-        if (playerLog) {
-          const { id, data } = payload;
-          let componentToPatch = playerLog.currentQuestion.patchs.find(
-            patch => patch.componentId === id
-          );
-          if (componentToPatch) {
-            componentToPatch = { componentId: id, value: data };
-          } else {
-            playerLog.currentQuestion.patchs.push({ componentId: id, value: data });
-          }
-          setPlayersLog([...playersLog]);
-        }
+        if (playerLog) mergePlayerLog(playerLog, payload);
       }
     });
 
@@ -91,7 +82,9 @@ export const EvaluatorProvider = ({ children }) => {
     story,
     storyId,
     playersLog,
+    focusedNode,
     selectedPlayer: playersLog.find(player => player.id === focusedPlayer),
+    setFocusedNode,
     setFocusedPlayer,
     updatePlayerLog,
   };

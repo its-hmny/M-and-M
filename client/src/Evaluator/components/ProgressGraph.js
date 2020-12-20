@@ -7,9 +7,12 @@ import {
 import { useEvaluator } from '../context/EvaluatorContext';
 
 const ProgressGraph = () => {
-  const { story } = useEvaluator();
+  const { story, setFocusedNode } = useEvaluator();
   const networkRef = useRef();
   const containerRef = useRef();
+
+  const selectNode = event => setFocusedNode(event.nodes[0]);
+  const deselectNode = () => setFocusedNode(undefined);
 
   useEffect(() => {
     const resizeHandler = () => {

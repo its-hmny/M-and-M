@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Paper, Slider, Button, Grid } from '@material-ui/core';
 import io from 'socket.io-client';
 
@@ -47,16 +47,29 @@ const VoteSlider = ({ story, player }) => {
 
 const EvaluationWidget = () => {
   const { story, storyId, selectedPlayer } = useEvaluator();
-  const { id, currentQuestion } = selectedPlayer;
+  const { id, history } = selectedPlayer;
+  const [evaluationNode, setEvalNode] = useState(undefined);
 
-  const playerNode = useMemo(() => {
-    if (!currentQuestion) {
-      return { components: [] };
-    }
-    const { currentNodeId, patchs } = currentQuestion;
-    // Get the story node in wich the player is (its components array)
-    const defaultStoryNode = story.nodes.find(node => node.id === currentNodeId);
-    const components = defaultStoryNode ? defaultStoryNode.components : [];
+  useEffect(() => {
+    const lastCompletedNode =
+      history === [] ? history.slice(-1).pop().activityNodeId : undefined;
+    setEvalNode(lastCompletedNode);
+  }, [history]);
+
+  //TODO CHANGE THIS SHIT
+  const patchedComponents = useMemo(() => {
+    const plainNode = story.nodes.find(node => node.id === evaluationNode);
+    const activityRecord = history.find(
+      ({ activityNodeId }) => activityNodeId === evaluationNode
+    );
+
+    // The evaluationNode id doesn't exist in this story or is undefined
+    if (!plainNode) return [];
+    // The player hasn't submitted the patch to apply yet
+    else if (!activityRecord) return plainNode.components;
+
+    const { patchs } = activityRecord;
+    const { components } = plainNode;
     // Apply the patches to the relative component before display
     patchs.forEach(patch => {
       const { componentId, value } = patch;
@@ -64,12 +77,12 @@ const EvaluationWidget = () => {
       toChange.initialValue = value;
     });
     return components;
-  }, [currentQuestion, story.nodes]);
+  }, [evaluationNode, story.nodes, history]);
 
   return (
     <Paper>
       <VoteSlider story={storyId} player={id} />
-      <Preview components={playerNode} />
+      <Preview components={patchedComponents} />
     </Paper>
   );
 };

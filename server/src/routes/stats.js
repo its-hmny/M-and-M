@@ -14,11 +14,19 @@ const initialPlayerLog = {
   score: 0,
   avatar: undefined,
   hasFinished: false,
+  // Log of the chat
   chatLog: [],
-  currentQuestion: {
-    currentNodeId: undefined,
-    patchs: [],
-  },
+
+  // Hystory of all the activities done by the user (chronologically)
+  history: [
+    // Template for activity obeject
+    // {
+    //   activityNodeId: undefined,
+    //   patchs: [],
+    // },
+  ],
+
+  // Stats aout the player performance in the activities and overall story
   stats: {
     timeAtStart: { label: 'Started', value: undefined },
     timeAtLastResponse: { label: 'Time at last response', value: undefined },
@@ -48,8 +56,7 @@ io.on('connection', socket => {
     const playerLog = (database[story] || []).find(player => player.id === senderId);
     if (playerLog) {
       // The player changed node in the story so removes all the data from the previous one
-      delete playerLog.currentQuestion;
-      playerLog.currentQuestion = { ...payload, patchs: [] };
+      playerLog.history.push({ ...payload, patchs: [] });
       playerLog.stats.nQuestionDone.value++;
       playerLog.stats.timeAtLastResponse.value = new Date().toLocaleTimeString();
       io.emit('update:position', { story, senderId, receiverId, payload: playerLog });
@@ -58,20 +65,24 @@ io.on('connection', socket => {
 
   // Saves on the server the player responses and changes to the story's components
   socket.on('update:stats', data => {
-    /*const { story, senderId, payload } = data;
+    const { story, senderId, receiverId, nodeId, payload } = data;
     const playerLog = (database[story] || []).find(player => player.id === senderId);
-    if (playerLog) {
+    const activityToUpdate = (playerLog.history || []).find(
+      ({ activityNodeId }) => activityNodeId === nodeId
+    );
+
+    if (activityToUpdate) {
       const { id, data } = payload;
-      let componentToPatch = playerLog.currentQuestion.patchs.find(
-        patch => patch.componentId === id
+      const componentToPatch = activityToUpdate.patchs.find(
+        ({ componentId }) => componentId === id
       );
       if (componentToPatch) {
         componentToPatch = { componentId: id, value: data };
       } else {
-        playerLog.currentQuestion.patchs.push({ componentId: id, value: data });
-      }*/ // THIS IS PRETTY USELESS AT THE MOMENT, NEEDS TO BE REPOURPOSED
-    io.emit('update:stats', data);
-    //}
+        activityToUpdate.patchs.push({ componentId: id, value: data });
+      }
+      io.emit('update:stats', { story, senderId, receiverId, payload: playerLog });
+    }
   });
 
   // Saves on the server the score assigned by the evaluator on a human-only evaluable question
