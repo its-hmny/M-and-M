@@ -123,8 +123,7 @@
           "id": 16,
           "name": "Input",
           "placeholder": "Scrivi la tua risposta qui",
-          "story": { "nextNode": "stringid6", "points":{"[CORRECT]": 6} }
-          
+          "story": { "nextNode": "stringid6", "points": { "[CORRECT]": 6 } }
         },
         {
           "id": 17,
