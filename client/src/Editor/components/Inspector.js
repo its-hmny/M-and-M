@@ -68,7 +68,8 @@ const Inspector = () => {
 
     const absPath = previousPath || ['components'];
     // This must be generated only once at the first recursive call (when previousPath is undefined)
-    const global = previousPath && (
+
+    const global = !previousPath && (
       <CollapsableBox
         key="Global"
         name="Global"
@@ -78,7 +79,7 @@ const Inspector = () => {
       />
     );
 
-    const missions = previousPath && (
+    const missions = !previousPath && (
       <CollapsableBox
         key="Missions"
         name="Missions"
