@@ -48,12 +48,13 @@ const VoteSlider = ({ story, player }) => {
 const EvaluationWidget = () => {
   const { story, storyId, selectedPlayer } = useEvaluator();
   const [showedNodeId, setNodeToShow] = useState(undefined);
-  
+
   useEffect(() => {
     const { history } = selectedPlayer;
     // Every time a new player is selected the last completed activity is selected
-    const lastCompletedNode =
-      history.length ? history.slice(-1).pop().activityNodeId : undefined;
+    const lastCompletedNode = history.length
+      ? history.slice(-1).pop().activityNodeId
+      : undefined;
     setNodeToShow(lastCompletedNode);
   }, [selectedPlayer]);
 
@@ -63,17 +64,17 @@ const EvaluationWidget = () => {
     let toShow = undefined;
     const plainNode = story.nodes.find(node => node.id === showedNodeId);
     if (!plainNode) return [];
-    else toShow = JSON.parse(JSON.stringify(plainNode))
+    else toShow = JSON.parse(JSON.stringify(plainNode));
     // Get the patch for that node, the patch contains the information added by the player
     let { patchs } = history.find(node => node.activityNodeId === showedNodeId) || {};
     patchs = patchs || [];
-    // Apply the patchs to each  modified component in the plain node 
+    // Apply the patchs to each  modified component in the plain node
     // before showing  it to the evaluator
-    patchs.forEach(({componentId, value}) => {
+    patchs.forEach(({ componentId, value }) => {
       const toPatch = toShow.components.find(component => component.id === componentId);
       if (toPatch) toPatch.initialValue = value;
     });
-    return (toShow.components);
+    return toShow.components;
   }, [showedNodeId, story.nodes, selectedPlayer]);
 
   return (
