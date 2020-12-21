@@ -47,41 +47,38 @@ const VoteSlider = ({ story, player }) => {
 
 const EvaluationWidget = () => {
   const { story, storyId, selectedPlayer } = useEvaluator();
-  const { id, history } = selectedPlayer;
-  const [evaluationNode, setEvalNode] = useState(undefined);
-
+  const [showedNodeId, setNodeToShow] = useState(undefined);
+  
   useEffect(() => {
+    const { history } = selectedPlayer;
+    // Every time a new player is selected the last completed activity is selected
     const lastCompletedNode =
-      history === [] ? history.slice(-1).pop().activityNodeId : undefined;
-    setEvalNode(lastCompletedNode);
-  }, [history]);
+      history.length ? history.slice(-1).pop().activityNodeId : undefined;
+    setNodeToShow(lastCompletedNode);
+  }, [selectedPlayer]);
 
-  //TODO CHANGE THIS SHIT
   const patchedComponents = useMemo(() => {
-    const plainNode = story.nodes.find(node => node.id === evaluationNode);
-    const activityRecord = history.find(
-      ({ activityNodeId }) => activityNodeId === evaluationNode
-    );
-
-    // The evaluationNode id doesn't exist in this story or is undefined
+    const { history } = selectedPlayer;
+    // Get the plain node in the story object
+    let toShow = undefined;
+    const plainNode = story.nodes.find(node => node.id === showedNodeId);
     if (!plainNode) return [];
-    // The player hasn't submitted the patch to apply yet
-    else if (!activityRecord) return plainNode.components;
-
-    const { patchs } = activityRecord;
-    const { components } = plainNode;
-    // Apply the patches to the relative component before display
-    patchs.forEach(patch => {
-      const { componentId, value } = patch;
-      const toChange = components.find(comp => comp.id === componentId);
-      toChange.initialValue = value;
+    else toShow = JSON.parse(JSON.stringify(plainNode))
+    // Get the patch for that node, the patch contains the information added by the player
+    let { patchs } = history.find(node => node.activityNodeId === showedNodeId) || {};
+    patchs = patchs || [];
+    // Apply the patchs to each  modified component in the plain node 
+    // before showing  it to the evaluator
+    patchs.forEach(({componentId, value}) => {
+      const toPatch = toShow.components.find(component => component.id === componentId);
+      if (toPatch) toPatch.initialValue = value;
     });
-    return components;
-  }, [evaluationNode, story.nodes, history]);
+    return (toShow.components);
+  }, [showedNodeId, story.nodes, selectedPlayer]);
 
   return (
     <Paper>
-      <VoteSlider story={storyId} player={id} />
+      <VoteSlider story={storyId} player={selectedPlayer.id} />
       <Preview components={patchedComponents} />
     </Paper>
   );

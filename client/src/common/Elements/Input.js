@@ -27,8 +27,8 @@ const base = css`
 
 const noop = () => {};
 
-const Input = ({ placeholder, onSubmit = noop, style }) => {
-  const [answer, setAnswer] = useState('');
+const Input = ({ placeholder, onSubmit = noop, style, initialValue = '' }) => {
+  const [answer, setAnswer] = useState(initialValue);
   return (
     <div css={[base, style]}>
       <input

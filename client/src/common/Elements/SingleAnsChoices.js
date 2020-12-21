@@ -33,8 +33,8 @@ const base = css`
 
 const noop = () => {};
 
-function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) {
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop, initialValue = null }) {
+  const [selectedAnswer, setSelectedAnswer] = useState(initialValue ? initialValue[0] : null);
 
   //let's only work with IDs
   const correctAnswer = useMemo(

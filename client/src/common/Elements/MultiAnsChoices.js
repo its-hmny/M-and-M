@@ -33,8 +33,8 @@ const base = css`
 
 const noop = () => {};
 
-function MultiAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) {
-  const [selectedAnswers, setSelectedAnswers] = useState([]);
+function MultiAnsChoices({ name, answers, withSubmit, style, onSubmit = noop, initialValue = [] }) {
+  const [selectedAnswers, setSelectedAnswers] = useState(initialValue);
 
   const correctAnswers = useMemo(
     () =>

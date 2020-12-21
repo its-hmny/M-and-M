@@ -14,8 +14,8 @@ const base = css`
 
 const noop = () => {};
 
-const TextArea = ({ placeholder, rows, onSubmit = noop, style }) => {
-  const [value, setValue] = useState('');
+const TextArea = ({ placeholder, rows, onSubmit = noop, initialValue = '', style }) => {
+  const [value, setValue] = useState(initialValue);
   return (
     <div>
       <textarea
