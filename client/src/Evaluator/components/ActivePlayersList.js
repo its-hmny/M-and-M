@@ -32,7 +32,7 @@ const ActivePlayersList = () => {
 
   const generatedTab = () =>
     playersLog.map(player => {
-      const { name, id, avatar } = player;
+      const { name, id, avatar, hasFinished } = player;
       const avaiableName = name || id;
 
       return (
@@ -41,6 +41,7 @@ const ActivePlayersList = () => {
           selected={selectedPlayer && id === selectedPlayer.id}
           onClick={() => setFocusedPlayer(id)}
           onDoubleClick={() => renamePlayer(id)}
+          disabled={hasFinished}
           className={listItem}
         >
           <Badge badgeContent={'!'} color="primary" />

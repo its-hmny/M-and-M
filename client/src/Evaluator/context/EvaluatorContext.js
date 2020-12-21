@@ -10,7 +10,6 @@ const EvaluatorContext = React.createContext();
 export const EvaluatorProvider = ({ children }) => {
   const { storyId } = useQuery();
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
-  const [focusedNode, setFocusedNode] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
 
@@ -31,6 +30,7 @@ export const EvaluatorProvider = ({ children }) => {
     fetchAll();
   }, [storyId]);
 
+  // This could be changed to work only locally
   const updatePlayerLog = async (player_id, patch) => {
     try {
       const response = await axios.patch(`/stats/${storyId}/${player_id}`, patch);
@@ -82,9 +82,7 @@ export const EvaluatorProvider = ({ children }) => {
     story,
     storyId,
     playersLog,
-    focusedNode,
     selectedPlayer: playersLog.find(player => player.id === focusedPlayer),
-    setFocusedNode,
     setFocusedPlayer,
     updatePlayerLog,
   };
