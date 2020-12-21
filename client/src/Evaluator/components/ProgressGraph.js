@@ -3,11 +3,14 @@ import Graph from '../../common/Graph';
 import {
   Options,
   getGraphFromStory,
+  highlightPath
 } from '../../Editor/components/GraphCanvas/GraphPreferences';
 import { useEvaluator } from '../context/EvaluatorContext';
 
 const ProgressGraph = () => {
-  const { story } = useEvaluator();
+  const { story, selectedPlayer } = useEvaluator();
+  const playerPath = selectedPlayer ? selectedPlayer.history : [];
+
   const networkRef = useRef();
   const containerRef = useRef();
 
@@ -32,7 +35,7 @@ const ProgressGraph = () => {
   return (
     <div ref={containerRef}>
       <Graph
-        data={getGraphFromStory(story)}
+        data={highlightPath({...getGraphFromStory(story)}, playerPath)}
         options={Options}
         getNetwork={network => {
           networkRef.current = network;
