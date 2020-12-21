@@ -1,0 +1,50 @@
+{
+  "name": "tasteira",
+  "description": "",
+  "components": [
+    {
+      "id": "0BmJXopCE-",
+      "name": "SingleAnsChoices",
+      "styleId": "DefaultSingleAnsChoices",
+      "withSubmit": true,
+      "answers": [
+        {
+          "id": "Q72ziCJOz",
+          "text": "Bianco",
+          "value": "[CORRECT]",
+          "points": 0
+        },
+        {
+          "id": "jbbOqHmAaY",
+          "text": "Rosso",
+          "value": "[WRONG]",
+          "points": 0
+        },
+        {
+          "id": "ZrpW-nc_uT",
+          "text": "Blu",
+          "value": "[WRONG]",
+          "points": 0
+        },
+        {
+          "id": "zhWNJ5O77w",
+          "text": "Verde",
+          "value": "[WRONG]",
+          "points": 0
+        }
+      ],
+      "style": {
+        "Root": {},
+        "Radio": {
+          "color": "#100",
+          "backgroundColor": "#8cceb3"
+        },
+        "Checkbox": {},
+        "Button": {
+          "color": "#100",
+          "backgroundColor": "#8cceb3"
+        }
+      }
+    }
+  ]
+}

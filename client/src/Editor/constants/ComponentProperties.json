@@ -142,8 +142,7 @@
         "correctStory": "[CORRECT]",
         "wrongStory": "[WRONG]",
         "correctLabel": "Correct Destination",
-        "wrongLabel": "Wrong Destination",
-        "pointsPath": ["story", "points"]
+        "wrongLabel": "Wrong Destination"
       }
     },
     {
@@ -166,8 +165,7 @@
         "correctStory": "[CORRECT]",
         "wrongStory": "[WRONG]",
         "correctLabel": "Correct Destination",
-        "wrongLabel": "Wrong Destination",
-        "pointsPath": ["story", "points"]
+        "wrongLabel": "Wrong Destination"
       }
     },
     {

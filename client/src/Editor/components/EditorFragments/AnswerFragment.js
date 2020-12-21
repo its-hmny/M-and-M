@@ -11,7 +11,6 @@ import {
   TextField,
 } from '@material-ui/core';
 import { useEditor } from '../../context/EditorContext';
-import TextFieldFragment from './TextFieldFragment';
 import CheckboxFragment from './CheckboxFragment';
 import RadioFragment from './RadioFragment';
 import shortid from 'shortid';
@@ -51,7 +50,6 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
     dataName,
     correctLabel,
     wrongLabel,
-    pointsPath,
   } = fragmentSpecificProps;
   const { story, getFromPath, setPathToValue } = useEditor();
   const [correctAnswerValue, setCorrectAnswerValue] = React.useState([]);
@@ -59,14 +57,10 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   //Additional field to modify objects or array
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
   const answers = getFromPath(path || [])[valToChange];
-
+  const pointsPath = path.concat(valToChange) || [];
   const selectCompletePath = (path || []).concat(selectPath);
   const correctSelectValue = getFromPath(selectCompletePath)[correctStory];
   const wrongSelectValue = getFromPath(selectCompletePath)[wrongStory];
-
-  const PointsCompletePath = (path || []).concat(pointsPath);
-  const correctPoints = getFromPath(PointsCompletePath)[correctStory];
-  const wrongPoints = getFromPath(PointsCompletePath)[wrongStory];
 
   var items = [];
   const menuItems = story.nodes.map(node => {
@@ -108,6 +102,12 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const name = shortid.generate();
 
   const checkSingleAnswer = (event, value, answerPath, truthValues) => {
+    const oldAnswerPath = [...answerPath.slice(0, -1), correctAnswerValue];
+    setPathToValue(
+      oldAnswerPath,
+      'value',
+      truthValues !== undefined ? truthValues[1] : false
+    );
     setCorrectAnswerValue(value);
     setPathToValue(
       answerPath,
@@ -122,21 +122,19 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
     );
   };
 
-  const setNumberField = (value, story) => {
-    if (value === '') {
-      value = '0';
-    }
-    let minusIndex = value.lastIndexOf('-');
-    if (minusIndex > 0) {
-      value = value.replace('-', '');
-      value = '-' + value;
+  const setNumberField = (value, index) => {
+    const parsed = parseInt(value);
+
+    const newVal = answers[index];
+    if (!isNaN(parsed)) {
+      newVal.points = parsed;
+    } else if (value === '' || value === '-') {
+      newVal.points = value;
+    } else {
+      newVal.points = 0;
     }
 
-    if (!isNaN(value)) {
-      setPathToValue(PointsCompletePath || [], story, parseInt(value));
-    } else if (value === '-') {
-      setPathToValue(PointsCompletePath || [], story, 0);
-    }
+    setPathToValue(pointsPath, index, newVal);
   };
 
   return (
@@ -169,6 +167,12 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
                 <DeleteIcon className={deleteStyle}></DeleteIcon>
               </IconButton>
             </div>
+            <TextField
+              label={'Answer points'}
+              value={answer.points}
+              className={classNames.InspectorElement}
+              onChange={event => setNumberField(event.target.value, i)}
+            />
             {singleCorrectAnswer ? (
               <RadioFragment
                 classNames={classNames}
@@ -220,12 +224,6 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
           </MenuItem>
         </Select>
       </FormControl>
-      <TextField
-        label={'Correct answer points'}
-        value={correctPoints}
-        className={classNames.InspectorElement}
-        onChange={event => setNumberField(event.target.value, correctStory)}
-      />
 
       <FormControl
         className={`${classNames.FormControl} ${FormSelect} ${classNames.InspectorElement}`}
@@ -243,12 +241,6 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
           </MenuItem>
         </Select>
       </FormControl>
-      <TextField
-        label={'Wrong answer points'}
-        value={wrongPoints}
-        className={classNames.InspectorElement}
-        onChange={event => setNumberField(event.target.value, wrongStory)}
-      />
     </div>
   );
 };

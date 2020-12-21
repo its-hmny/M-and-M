@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Navbar from '../common/Navbar';
 import SaveButton from './components/SaveButton';
+import { MultiAnsChoices } from '../common/Elements';
 
 const useStyles = makeStyles(theme => ({
   container: {

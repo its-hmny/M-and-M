@@ -1,0 +1,62 @@
+{
+  "nodes": [
+    {
+      "id": "i3VsTAemr",
+      "name": "tastiera",
+      "description": "",
+      "components": [
+        {
+          "id": "g7NKOALJHr",
+          "name": "SingleAnsChoices",
+          "styleId": "DefaultSingleAnsChoices",
+          "withSubmit": true,
+          "answers": [
+            { "id": "3lyCYCw-k", "text": "a1", "value": "[CORRECT]", "points": -5 },
+            { "id": "1J_jw916E_", "text": "a2", "value": "[WRONG]", "points": 10 },
+            { "id": "sv7fCa2mRS", "text": "a3", "value": "[WRONG]", "points": "" },
+            { "id": "gCjGxpmSqi", "text": "a4", "value": "[CORRECT]", "points": "-" }
+          ],
+          "style": {
+            "Root": {},
+            "Radio": { "color": "#100", "backgroundColor": "#8cceb3" },
+            "Checkbox": {},
+            "Button": { "color": "#100", "backgroundColor": "#8cceb3" }
+          },
+          "story": { "nextNode": { "[CORRECT]": "X5CAe90d6", "[WRONG]": "X5CAe90d6" } }
+        }
+      ]
+    },
+    {
+      "id": "X5CAe90d6",
+      "name": "Choices",
+      "description": "Blaaaaaaaaaaaaaaaaaaaaa",
+      "components": [
+        {
+          "id": "K0Jid4t1tF",
+          "name": "MultiAnsChoices",
+          "styleId": "DefaultMultiAnsChoices",
+          "withSubmit": true,
+          "answers": [
+            { "id": "jJC_41UQe", "text": "1", "value": "[CORRECT]", "points": 10 },
+            { "id": "RCuXKHB_JG", "text": "2", "value": "[CORRECT]", "points": "-" },
+            { "id": "P38joReOuG", "text": "3", "value": "[WRONG]", "points": -30 },
+            { "id": "sXObNBtPaj", "text": "4", "value": "[WRONG]", "points": 40 }
+          ],
+          "style": {
+            "Root": {},
+            "Radio": { "color": "#000", "backgroundColor": "#8cceb3" },
+            "Checkbox": {},
+            "Button": { "color": "#000", "backgroundColor": "#8cceb3" }
+          },
+          "story": { "nextNode": { "[CORRECT]": "X5CAe90d6", "[WRONG]": "X5CAe90d6" } }
+        }
+      ]
+    }
+  ],
+  "uuid": "EdpsO1GHj",
+  "title": "Placeholder",
+  "description": "Placeholder",
+  "target": "ADULT",
+  "gameplay": "SINGLE",
+  "accessible": false
+}

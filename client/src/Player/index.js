@@ -28,7 +28,10 @@ const createStoryProps = (component, storyContext) => {
           storyContext.moveTo(nextNode);
           storyContext.updateStats({ id, name, data: selectedAnswers });
           storyContext.updateScore(
-            selectedAnswers.reduce((points, answer) => points + answer.points, 0)
+            selectedAnswers.reduce(
+              (points, answer) => points + (Number(answer.points) || 0),
+              0
+            )
           );
         },
       };
