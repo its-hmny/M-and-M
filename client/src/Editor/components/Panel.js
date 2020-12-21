@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Panel = ({ open, position, style, children }) => {
+const Panel = ({ open, position, style, onClose, children }) => {
   const classes = useStyles();
   const direction = position === 'left' ? 'right' : 'left';
   return (
@@ -25,6 +25,7 @@ const Panel = ({ open, position, style, children }) => {
       in={open}
       direction={direction}
       style={style}
+      onExited={onClose}
     >
       <div>{children}</div>
     </Slide>

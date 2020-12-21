@@ -63,7 +63,7 @@ function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop })
 
   useEffect(() => {
     if (!withSubmit && selectedAnswer) {
-      onSubmit(isCorrect, [selectedAnswer]);
+      onSubmit(isCorrect, [answers.find(answer => answer.id === selectedAnswer)]);
     }
   }, [withSubmit, onSubmit, isCorrect, correctAnswer, selectedAnswer]);
 
@@ -86,7 +86,9 @@ function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop })
       {withSubmit && (
         <Button
           disabled={selectedAnswer === null}
-          onClick={() => onSubmit(isCorrect, [selectedAnswer])}
+          onClick={() =>
+            onSubmit(isCorrect, [answers.find(answer => answer.id === selectedAnswer)])
+          }
           style={style && style.Button}
           text="Conferma"
         />

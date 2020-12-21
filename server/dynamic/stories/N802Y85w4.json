@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    {
+      "id": "bJSbVyEw7",
+      "name": "tasteira",
+      "description": "",
+      "components": [
+        {
+          "id": "0BmJXopCE-",
+          "name": "SingleAnsChoices",
+          "styleId": "DefaultSingleAnsChoices",
+          "withSubmit": true,
+          "answers": [
+            { "id": "Q72ziCJOz", "text": "Bianco", "value": "[WRONG]", "points": 10 },
+            { "id": "jbbOqHmAaY", "text": "Rosso", "value": "[CORRECT]", "points": -5 },
+            { "id": "ZrpW-nc_uT", "text": "Blu", "value": "[WRONG]", "points": "-" },
+            { "id": "zhWNJ5O77w", "text": "Verde", "value": "[WRONG]", "points": "" }
+          ],
+          "style": {
+            "Root": {},
+            "Radio": { "color": "#100", "backgroundColor": "#8cceb3" },
+            "Checkbox": {},
+            "Button": { "color": "#100", "backgroundColor": "#8cceb3" }
+          },
+          "story": { "nextNode": {} }
+        }
+      ]
+    }
+  ],
+  "uuid": "N802Y85w4",
+  "title": "Placeholder",
+  "description": "Placeholder",
+  "target": "ADULT",
+  "gameplay": "SINGLE",
+  "accessible": false
+}

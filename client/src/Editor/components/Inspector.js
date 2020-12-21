@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 const MAX_CONCURRENTLY_OPENED = 2;
 
-const Inspector = () => {
+const Inspector = ({ onClose }) => {
   const { story, workingActivity } = useEditor();
   const { InspectorPaperStyle, DefaultTitleStyle, content } = useStyles();
   const [opened, setOpened] = useState([]);

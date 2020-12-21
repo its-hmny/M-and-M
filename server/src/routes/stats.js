@@ -73,7 +73,7 @@ io.on('connection', socket => {
 
     if (activityToUpdate) {
       const { id, data } = payload;
-      const componentToPatch = activityToUpdate.patchs.find(
+      let componentToPatch = activityToUpdate.patchs.find(
         ({ componentId }) => componentId === id
       );
       if (componentToPatch) {
