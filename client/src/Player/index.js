@@ -123,7 +123,7 @@ const Player = () => {
     return () => {
       socket.removeListener('eval-pts', onEvalPts);
       axios.delete(`stats/${storyId}/${ids.player}`).catch(err => console.warn(err));
-    }
+    };
   }, [storyId, ids]);
 
   const handleSend = msg =>

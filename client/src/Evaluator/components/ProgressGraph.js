@@ -3,7 +3,7 @@ import Graph from '../../common/Graph';
 import {
   Options,
   getGraphFromStory,
-  highlightPath
+  highlightPath,
 } from '../../Editor/components/GraphCanvas/GraphPreferences';
 import { useEvaluator } from '../context/EvaluatorContext';
 
@@ -35,7 +35,7 @@ const ProgressGraph = () => {
   return (
     <div ref={containerRef}>
       <Graph
-        data={highlightPath({...getGraphFromStory(story)}, playerPath)}
+        data={highlightPath({ ...getGraphFromStory(story) }, playerPath)}
         options={Options}
         getNetwork={network => {
           networkRef.current = network;

@@ -170,7 +170,11 @@ router.delete('/:story_uuid/:player_uuid', (req, res) => {
   if (player) {
     player.hasFinished = true;
     // Sends disconnection message to the evaluator for the given player
-    io.emit('update:stats', { story: story_uuid, senderId: player_uuid, payload: player });
+    io.emit('update:stats', {
+      story: story_uuid,
+      senderId: player_uuid,
+      payload: player,
+    });
     res.statusCode = 200;
     res.send({ status: true, message: 'Disconnected successfully' });
   } else {

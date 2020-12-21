@@ -110,18 +110,18 @@ export const highlightPath = (graph, path) => {
   const touchedNodes = path.map(node => node.activityNodeId);
   // Al the reached node became triangles
   graph.nodes.forEach(node => {
-    if (touchedNodes.find(id => id === node.id))
-      node.shape = 'triangleDown';
+    if (touchedNodes.find(id => id === node.id)) node.shape = 'triangleDown';
     else node.shape = 'dot';
   });
   // Edge highlighting part
-  graph.edges.forEach(edge => edge.dashed = false); // Resets to default
+  graph.edges.forEach(edge => (edge.dashed = false)); // Resets to default
   for (let prev = 0, next = 1; next < touchedNodes.length; prev++, next++) {
-    const edgeToHighlight = graph.edges.find(edge =>
-      edge.to === prev && edge.from === next);
+    const edgeToHighlight = graph.edges.find(
+      edge => edge.to === prev && edge.from === next
+    );
     if (edgeToHighlight) edgeToHighlight.dashes = true;
-  }      
-  return (graph)
+  }
+  return graph;
 };
 
 export const makeClusters = network => {
