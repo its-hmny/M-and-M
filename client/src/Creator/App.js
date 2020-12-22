@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Navbar from '../common/Navbar';
@@ -41,6 +41,9 @@ const App = () => {
       <Navbar />
       <Grid container>
         <Grid item xs={6}>
+          <Typography variant="h6" color="secondary">
+            Creator
+          </Typography>
           <Inspector />
         </Grid>
         <Grid item xs={6}>

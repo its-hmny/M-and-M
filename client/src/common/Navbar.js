@@ -1,50 +1,78 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Typography,
+  makeStyles,
+  colors,
+} from '@material-ui/core';
 
 import logo from '../assets/logo.svg';
 import * as ROUTES from '../routes';
 
-const Navbar = () => (
-  <AppBar position="static" color="secondary">
-    <Toolbar>
-      <img
-        src={logo}
-        alt="Application Logo"
-        style={{ height: '5vh', marginRight: '1vw' }}
-      />
-      <Typography variant="h6">
-        <Button color="inherit" component={Link} to={ROUTES.HOME}>
+const useStyles = makeStyles(theme => ({
+  navLink: {
+    backgroundColor: colors.deepOrange[500],
+    '&:hover': {
+      backgroundColor: colors.deepOrange[700],
+    },
+  },
+}));
+
+const Navbar = () => {
+  const classes = useStyles();
+  return (
+    <AppBar position="static" color="secondary">
+      <Toolbar>
+        <img
+          src={logo}
+          alt="Application Logo"
+          style={{ height: '5vh', marginRight: '1vw' }}
+        />
+        <Button
+          component={NavLink}
+          activeClassName={classes.navLink}
+          exact
+          to={ROUTES.HOME}
+        >
           Home
         </Button>
-      </Typography>
-      <Typography variant="h6">
-        <Button color="inherit" component={Link} to={ROUTES.CREATOR}>
+        <Button component={NavLink} activeClassName={classes.navLink} to={ROUTES.CREATOR}>
           Creator
         </Button>
-      </Typography>
-      <Typography variant="h6">
-        <Button color="inherit" component={Link} to={`${ROUTES.EDITOR}?storyId=test`}>
+        <Button
+          component={NavLink}
+          activeClassName={classes.navLink}
+          to={`${ROUTES.EDITOR}?storyId=test`}
+        >
           Editor
         </Button>
-      </Typography>
-      <Typography variant="h6">
-        <Button color="inherit" component={Link} to={ROUTES.PLAYER + '?storyId=1'}>
+        <Button
+          component={NavLink}
+          activeClassName={classes.navLink}
+          to={ROUTES.PLAYER + '?storyId=1'}
+        >
           Player
         </Button>
-      </Typography>
-      <Typography variant="h6">
-        <Button color="inherit" component={Link} to={ROUTES.EVALUATOR + '?storyId=1'}>
+        <Button
+          component={NavLink}
+          activeClassName={classes.navLink}
+          to={ROUTES.EVALUATOR + '?storyId=1'}
+        >
           Evaluator
         </Button>
-      </Typography>
-      <Typography variant="h6">
-        <Button color="inherit" component={Link} to={ROUTES.PUBLISHER}>
+        <Button
+          component={NavLink}
+          activeClassName={classes.navLink}
+          to={ROUTES.PUBLISHER}
+        >
           Publisher
         </Button>
-      </Typography>
-    </Toolbar>
-  </AppBar>
-);
+      </Toolbar>
+    </AppBar>
+  );
+};
 
 export default Navbar;

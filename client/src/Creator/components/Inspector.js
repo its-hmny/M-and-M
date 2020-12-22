@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { Container, Typography, makeStyles } from '@material-ui/core';
+import { Container, makeStyles } from '@material-ui/core';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { DraggableList } from './DraggableList';
 
@@ -56,9 +56,6 @@ function Inspector() {
 
   return (
     <Container className={classes.root}>
-      <Typography variant="h6" color="secondary">
-        Inspector
-      </Typography>
       <DragDropContext onDragEnd={handleDragEnd}>
         <DraggableList
           id={inspectorDragId}
