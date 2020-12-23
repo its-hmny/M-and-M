@@ -20,13 +20,9 @@ export const EvaluatorProvider = ({ children }) => {
     const fetchAll = async () => {
       try {
         const loadedStory = (await axios.get(`/stories/${storyId}`)).data.payload;
-        // Possible way to make it come on connection with the server
-        const serverLog = (await axios.get(`/stats/${storyId}`)).data.payload;
         setStory(loadedStory);
-        setPlayersLog(serverLog);
-        setFocusedPlayer((serverLog[0] || {}).id);
       } catch (err) {
-        console.warn('Error loading log and story from server', err);
+        console.warn('Error loading the story from server', err);
       }
     };
 
@@ -77,6 +73,14 @@ export const EvaluatorProvider = ({ children }) => {
     socket.on('add:player', data => {
       const { story, payload } = data;
       if (story === storyId) setPlayersLog([...playersLog, payload]);
+    });
+
+    socket.on('get:log', data => {
+      const { story, payload } = data;
+      if (story === storyId && payload) {
+        setPlayersLog(payload);
+        setFocusedPlayer((payload[0] || {}).id);
+      }
     });
 
     socket.on('rm:player', data => {

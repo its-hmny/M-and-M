@@ -56,8 +56,8 @@ io.on('connection', socket => {
   }
   // The user connected is an evaluator
   else if (type === 'evaluator') {
-    // Se fosse possibile qui mi piacerebbe tornare il log fino a quel momento
-    // per la storia richiesta dal valutatore
+    // Sends the updated story log to the evaluator
+    io.emit('get:log', { story: storyId, payload: database[storyId] });
   } else socket.disconnect();
 
   socket.on('chat-msg-send', data => {
@@ -122,27 +122,12 @@ io.on('connection', socket => {
     // The user disconnected is a player
     if (type === 'player') {
       // Remove the entry from the DB, and the story itself if no one is left
-      delete database[storyId].find(player => player.id === userId);
+      database[storyId] = database[storyId].filter(player => player.id !== userId);
       if (database[storyId].lenght === 0) delete database[storyId];
       // Notify the evaluaor to purge all the log relatives to the player
       io.emit('rm:player', { story: storyId, playerId: userId });
     }
   });
-});
-
-// Get the updated stats for every player currently in the story
-router.get('/:story_uuid', (req, res) => {
-  const story_uuid = req.params.story_uuid;
-  database[story_uuid] = database[story_uuid] || [];
-  if (database[story_uuid]) {
-    // Filters the remaining online players
-    const payload = database[story_uuid].filter(player => !player.hasFinished);
-    res.statusCode = 200;
-    res.send({ status: true, message: 'Updated stats sent!', payload });
-  } else {
-    res.statusCode = 404;
-    res.send({ status: false, message: 'Stats fot the given StoryId not found' });
-  }
 });
 
 // Used by the player or the evaluator to provide update about himself or a player
@@ -167,82 +152,6 @@ router.patch('/:story_uuid/:player_uuid', (req, res) => {
     message: 'Updated stats sent!',
     payload: database[story_uuid],
   });
-});
-
-// Connect return <player_id, evaluator_id> tuple to the player that began a story
-/*
-router.put('/:story_uuid', (req, res) => {
-  const story_uuid = req.params.story_uuid;
-  const requested_uuid = shortid.generate();
-  database[story_uuid] = database[story_uuid] || [];
-  // Collision handling
-  while (database[story_uuid].find(player => player.id === requested_uuid)) {
-    requested_uuid = shortid.generate();
-  }
-  // Due to reference issue this is the only method to share a template without occuring
-  // in reference issues due to object reference handling in JS
-  const newEntry = JSON.parse(
-    JSON.stringify({ ...initialPlayerLog, ...req.body, id: requested_uuid })
-  );
-  newEntry.stats.timeAtStart.value = new Date().toLocaleTimeString();
-  // Keep track of the new player in the DB
-  database[story_uuid].push(newEntry);
-  // Sends a message to the evaluator
-  io.emit('add:player', { story: story_uuid, payload: newEntry });
-  // Packetize player uuid and evaluator uuid for the story
-  const data = { player: requested_uuid, evaluator: `evaluator${story_uuid}` };
-  res.statusCode = 200;
-  res.send({ status: true, message: 'UUID allocated successfully', payload: data });
-});
-*/
-
-// Used by the player to submit its disconnection from the game
-/*
-router.delete('/:story_uuid/:player_uuid', (req, res) => {
-  const { story_uuid, player_uuid } = req.params;
-  // Set that the current player has finished
-  const player = database[story_uuid].find(player => player.id === player_uuid);
-  if (player) {
-    player.hasFinished = true;
-    // Sends disconnection message to the evaluator for the given player
-    io.emit('update:stats', {
-      story: story_uuid,
-      senderId: player_uuid,
-      payload: player,
-    });
-    res.statusCode = 200;
-    res.send({ status: true, message: 'Disconnected successfully' });
-  } else {
-    res.statusCode = 404;
-    res.send({ status: true, message: 'Player not found in the database' });
-  }
-});
-*/
-
-// Used by the evaluator to retrieve a complete log of the match
-router.delete('/:story_uuid', (req, res) => {
-  const story_uuid = req.params.story_uuid;
-  if (database[story_uuid]) {
-    res.statusCode = 404;
-    res.send({ status: false, message: 'StoryId not found in database' });
-    return;
-  }
-  // Only if all the player have finished a complete log is returned
-  const stillPlaying = database[story_uuid].filter(player => !player.hasFinished);
-  if (stillPlaying.length !== 0) {
-    res.statusCode = 409;
-    res.send({ status: false, message: 'Some player are still active' });
-  } else {
-    // Saves locally the log for the given story then deallocates the memory
-    const payload = { ...database[story_uuid] };
-    delete database[story_uuid];
-    res.statusCode = 200;
-    res.send({
-      status: true,
-      message: 'Stats dump created successfully!',
-      payload,
-    });
-  }
 });
 
 module.exports = router;

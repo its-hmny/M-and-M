@@ -4,13 +4,17 @@ import { ChatWidget, WidgetLauncher, StatsWidget, EvaluationWidget } from '.';
 
 import smartphoneIcon from '../assets/svgs/smartphone.svg';
 import infoIcon from '../assets/svgs/info.svg';
+import { toggleWidget } from 'react-chat-widget';
 
 const WidgetArea = () => {
   const { selectedPlayer, socket } = useEvaluator();
   const [currentOpen, setCurrentOpen] = useState(undefined);
 
   const toggleContained = nToggle =>
-    setCurrentOpen(nPrev => (nPrev === nToggle ? undefined : nToggle));
+    setCurrentOpen(nPrev => {
+      if (nPrev === 0 && nToggle !== 0) toggleWidget();
+      return nPrev === nToggle ? undefined : nToggle;
+    });
 
   if (!selectedPlayer) {
     return null;
@@ -27,7 +31,7 @@ const WidgetArea = () => {
       <WidgetLauncher
         icon={smartphoneIcon}
         buttonColor="#121212"
-        marginRight="21vw"
+        marginRight="10vw"
         width={currentOpen !== 1 && 'unset'}
         open={currentOpen === 1}
         toggleContainer={() => toggleContained(1)}
@@ -38,7 +42,7 @@ const WidgetArea = () => {
       <WidgetLauncher
         icon={infoIcon}
         buttonColor="#d3d3d3"
-        marginRight="40vw"
+        marginRight="20vw"
         width={currentOpen !== 2 && 'unset'}
         open={currentOpen === 2}
         toggleContainer={() => toggleContained(2)}
