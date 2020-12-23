@@ -37,6 +37,29 @@ const initialPlayerLog = {
 
 // Realtime update with socket
 io.on('connection', socket => {
+  const { type, storyId } = socket.handshake.query;
+  const userId = socket.id;
+  if (!type || !storyId) socket.disconnect(); // Invalid params
+
+  // The user connected is a player
+  if (type === 'player') {
+    database[storyId] = database[storyId] || [];
+    // Due to reference issue this is the only method to share a template without occuring
+    // in reference issues due to object reference handling in JS
+    const newEntry = JSON.parse(JSON.stringify({ ...initialPlayerLog, id: userId }));
+    newEntry.stats.timeAtStart.value = new Date().toLocaleTimeString();
+    // Keep track of the new player in the DB
+    database[storyId].push(newEntry);
+    socket.send({ player: userId, evaluator: `evaluator${storyId}` });
+    // Sends a message to the evaluator
+    io.emit('add:player', { story: storyId, payload: newEntry });
+  }
+  // The user connected is an evaluator
+  else if (type === 'evaluator') {
+    // Se fosse possibile qui mi piacerebbe tornare il log fino a quel momento
+    // per la storia richiesta dal valutatore
+  } else socket.disconnect();
+
   socket.on('chat-msg-send', data => {
     // Saves on the server the received messages
     const { story, senderId, receiverId, msg } = data;
@@ -95,7 +118,16 @@ io.on('connection', socket => {
     }
   });
 
-  socket.on('disconnect', () => {});
+  socket.on('disconnect', () => {
+    // The user disconnected is a player
+    if (type === 'player') {
+      // Remove the entry from the DB, and the story itself if no one is left
+      delete database[storyId].find(player => player.id === userId);
+      if (database[storyId].lenght === 0) delete database[storyId];
+      // Notify the evaluaor to purge all the log relatives to the player
+      io.emit('rm:player', { story: storyId, playerId: userId });
+    }
+  });
 });
 
 // Get the updated stats for every player currently in the story
@@ -138,6 +170,7 @@ router.patch('/:story_uuid/:player_uuid', (req, res) => {
 });
 
 // Connect return <player_id, evaluator_id> tuple to the player that began a story
+/*
 router.put('/:story_uuid', (req, res) => {
   const story_uuid = req.params.story_uuid;
   const requested_uuid = shortid.generate();
@@ -161,8 +194,10 @@ router.put('/:story_uuid', (req, res) => {
   res.statusCode = 200;
   res.send({ status: true, message: 'UUID allocated successfully', payload: data });
 });
+*/
 
 // Used by the player to submit its disconnection from the game
+/*
 router.delete('/:story_uuid/:player_uuid', (req, res) => {
   const { story_uuid, player_uuid } = req.params;
   // Set that the current player has finished
@@ -182,6 +217,7 @@ router.delete('/:story_uuid/:player_uuid', (req, res) => {
     res.send({ status: true, message: 'Player not found in the database' });
   }
 });
+*/
 
 // Used by the evaluator to retrieve a complete log of the match
 router.delete('/:story_uuid', (req, res) => {

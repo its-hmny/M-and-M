@@ -6,7 +6,7 @@ import smartphoneIcon from '../assets/svgs/smartphone.svg';
 import infoIcon from '../assets/svgs/info.svg';
 
 const WidgetArea = () => {
-  const { selectedPlayer } = useEvaluator();
+  const { selectedPlayer, socket } = useEvaluator();
   const [currentOpen, setCurrentOpen] = useState(undefined);
 
   const toggleContained = nToggle =>
@@ -18,7 +18,11 @@ const WidgetArea = () => {
 
   return (
     <>
-      <ChatWidget isOpen={currentOpen === 0} onOpen={() => toggleContained(0)} />
+      <ChatWidget
+        isOpen={currentOpen === 0}
+        onOpen={() => toggleContained(0)}
+        socket={socket}
+      />
 
       <WidgetLauncher
         icon={smartphoneIcon}
@@ -39,7 +43,6 @@ const WidgetArea = () => {
         open={currentOpen === 2}
         toggleContainer={() => toggleContained(2)}
       >
-        {/*ToDo change this line once stats has default value*/}
         <StatsWidget player={selectedPlayer} />
       </WidgetLauncher>
     </>

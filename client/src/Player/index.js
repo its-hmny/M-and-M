@@ -6,7 +6,6 @@ import Chat from './components/Chat';
 import { addResponseMessage } from '../common/ChatWidget';
 
 import io from 'socket.io-client';
-const socket = io('http://localhost:8000');
 
 // `Story` param is an object that stores properties needed for computing
 // storyProps for this specific component
@@ -83,33 +82,25 @@ const Player = () => {
   // point total
   const [score, setScore] = useState(0);
 
+  const socket = useMemo(() => {
+    const tmp = io('http://localhost:8000', { query: { type: 'player', storyId } });
+    // Once the connection is established the socket id became the player id
+    tmp.on('connect', () => setIds({ player: tmp.id, evaluator: `evaluator${storyId}` }));
+    return tmp;
+  }, [storyId]);
+
   /* =========================== SOCKET STUFF ======================== */
   useEffect(() => {
-    let msgReceivedListener;
-    // generate IDs for player and paired evaluator and save them
-    const initChat = async () => {
-      try {
-        const res = await axios.put(`stats/${storyId}`);
-        const { player, evaluator } = res.data.payload;
-        setIds({ player, evaluator });
+    socket.on('chat-msg-recv', payload => {
+      const { player, evaluator } = ids;
+      const { story, senderId, receiverId, msg } = payload;
+      console.log(storyId, senderId, receiverId === player, evaluator, msg);
+      if (story === storyId && senderId === evaluator && receiverId === player)
+        addResponseMessage(msg);
+    });
 
-        // Update chat when message is received
-        msgReceivedListener = payload => {
-          const { story, senderId, receiverId, msg } = payload;
-          if (story === storyId && senderId === evaluator && receiverId === player)
-            addResponseMessage(msg);
-        };
-
-        socket.on('chat-msg-recv', msgReceivedListener);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    initChat();
-
-    return () => socket.removeListener('chat-msg-recv', msgReceivedListener);
-  }, [storyId]);
+    return () => socket.removeListener('chat-msg-recv');
+  }, [storyId, ids]);
 
   useEffect(() => {
     const onEvalPts = payload => {
@@ -211,7 +202,7 @@ const Player = () => {
   return (
     <>
       <div>{viewContent}</div>
-      <Chat onSend={handleSend} />
+      <Chat onSend={handleSend} socket={socket} />
     </>
   );
 };

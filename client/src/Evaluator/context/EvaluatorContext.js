@@ -1,9 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import axios, { useQuery } from '../../common/shared';
 
 import io from 'socket.io-client';
-
-const socket = io('http://localhost:8000');
 
 const EvaluatorContext = React.createContext();
 
@@ -12,12 +10,17 @@ export const EvaluatorProvider = ({ children }) => {
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
+  const socket = useMemo(
+    () => io('http://localhost:8000', { query: { type: 'evaluator', storyId } }),
+    [storyId]
+  );
 
   useEffect(() => {
     // onMount load the story and the player log on the server
     const fetchAll = async () => {
       try {
         const loadedStory = (await axios.get(`/stories/${storyId}`)).data.payload;
+        // Possible way to make it come on connection with the server
         const serverLog = (await axios.get(`/stats/${storyId}`)).data.payload;
         setStory(loadedStory);
         setPlayersLog(serverLog);
@@ -41,6 +44,8 @@ export const EvaluatorProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (!socket) return;
+
     const mergePlayerLog = (playerLog, patch) => {
       playerLog = { ...playerLog, ...patch }; // Merge the changes
       setPlayersLog(
@@ -74,9 +79,15 @@ export const EvaluatorProvider = ({ children }) => {
       if (story === storyId) setPlayersLog([...playersLog, payload]);
     });
 
+    socket.on('rm:player', data => {
+      const { story, playerId } = data;
+      if (story === storyId)
+        setPlayersLog(list => list.filter(player => player.id !== playerId));
+    });
+
     // This has to be checked
     return () => socket.removeAllListeners();
-  }, [playersLog, storyId]);
+  }, [socket, playersLog, storyId]);
 
   const toProvide = {
     story,
@@ -85,6 +96,7 @@ export const EvaluatorProvider = ({ children }) => {
     selectedPlayer: playersLog.find(player => player.id === focusedPlayer),
     setFocusedPlayer,
     updatePlayerLog,
+    socket,
   };
 
   return (

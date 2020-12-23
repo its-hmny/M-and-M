@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
 import ChatWidget, {
   deleteMessages,
   addResponseMessage,
@@ -8,9 +7,7 @@ import ChatWidget, {
 } from '../../common/ChatWidget';
 import { useEvaluator } from '../context/EvaluatorContext';
 
-const socket = io('http://localhost:8000');
-
-const Chat = ({ onOpen, isOpen }) => {
+const Chat = ({ onOpen, isOpen, socket }) => {
   const { selectedPlayer, storyId, playersLog } = useEvaluator();
   const { name, id, avatar } = selectedPlayer || {};
   const [conversations, setConversations] = useState({});
@@ -65,7 +62,7 @@ const Chat = ({ onOpen, isOpen }) => {
       }
     });
     return () => socket.removeListener('chat-msg-recv');
-  }, [conversations, storyId]);
+  }, [socket, conversations, storyId]);
 
   return (
     <ChatWidget
