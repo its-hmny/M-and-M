@@ -120,7 +120,6 @@ export const highlightPath = (graph, path) => {
       edge => edge.from === touchedNodes[prev] && edge.to === touchedNodes[next]
     );
     if (edgeToHighlight) edgeToHighlight.color = 'black';
-    console.log(edgeToHighlight);
   }
   return graph;
 };

@@ -41,7 +41,9 @@ function MultiAnsChoices({
   onSubmit = noop,
   initialValue = [],
 }) {
-  const [selectedAnswers, setSelectedAnswers] = useState(initialValue);
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
+
+  useEffect(() => setSelectedAnswers(initialValue), [initialValue]);
 
   const correctAnswers = useMemo(
     () =>

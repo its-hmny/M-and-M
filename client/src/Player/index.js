@@ -100,7 +100,7 @@ const Player = () => {
     });
 
     return () => socket.removeListener('chat-msg-recv');
-  }, [storyId, ids]);
+  }, [socket, storyId, ids]);
 
   useEffect(() => {
     const onEvalPts = payload => {
@@ -115,7 +115,7 @@ const Player = () => {
       socket.removeListener('eval-pts', onEvalPts);
       axios.delete(`stats/${storyId}/${ids.player}`).catch(err => console.warn(err));
     };
-  }, [storyId, ids]);
+  }, [socket, storyId, ids]);
 
   const handleSend = msg =>
     socket.emit('chat-msg-send', {
@@ -177,7 +177,7 @@ const Player = () => {
         });
       },
     }),
-    [currentNodeId, ids, score, storyId]
+    [socket, currentNodeId, ids, score, storyId]
   );
 
   // load components for this position whenever position changes

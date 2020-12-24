@@ -5,14 +5,7 @@ const WidgetLauncher = props => {
 
   return (
     <div className="rcw-widget-container" style={{ ...style }}>
-      {open && (
-        <div
-          className="rcw-conversation-container active"
-          style={{ display: open || 'none' }}
-        >
-          {children}
-        </div>
-      )}
+      {open && <div style={{ display: open || 'none' }}>{children}</div>}
       <button
         type="button"
         className="rcw-launcher"

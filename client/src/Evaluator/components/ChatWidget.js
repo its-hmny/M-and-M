@@ -4,7 +4,6 @@ import ChatWidget, {
   addResponseMessage,
   addUserMessage,
   setBadgeCount,
-  toggleWidget,
 } from '../../common/ChatWidget';
 import { useEvaluator } from '../context/EvaluatorContext';
 

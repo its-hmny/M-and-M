@@ -77,10 +77,27 @@ const EvaluationWidget = () => {
     return toShow.components;
   }, [showedNodeId, story.nodes, selectedPlayer]);
 
+  const changeNodeToShow = delta => {
+    const { history } = selectedPlayer;
+    const currentIndex = history.findIndex(
+      ({ activityNodeId }) => activityNodeId === showedNodeId
+    );
+    const updatedIndex = currentIndex + delta;
+    if (updatedIndex >= 0 && updatedIndex < history.length) {
+      setNodeToShow(history[updatedIndex].activityNodeId);
+    }
+  };
+
   return (
     <Paper>
       <VoteSlider story={storyId} player={selectedPlayer.id} />
+      <Button variant="text" small onClick={() => changeNodeToShow(-1)}>
+        {'<<'}
+      </Button>
       <Preview components={patchedComponents} />
+      <Button variant="text" small onClick={() => changeNodeToShow(+1)}>
+        {'>>'}
+      </Button>
     </Paper>
   );
 };
