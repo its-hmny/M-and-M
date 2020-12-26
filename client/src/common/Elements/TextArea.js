@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const base = css`
   5rem 0;
@@ -15,7 +15,10 @@ const base = css`
 const noop = () => {};
 
 const TextArea = ({ placeholder, rows, onSubmit = noop, initialValue = '', style }) => {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState('');
+
+  useEffect(() => setValue(initialValue), [initialValue]);
+
   return (
     <div>
       <textarea

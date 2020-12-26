@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
   listItem: {
     padding: 10,
+    wordWrap: 'break-word',
   },
 }));
 
@@ -32,8 +33,9 @@ const ActivePlayersList = () => {
 
   const generatedTab = () =>
     playersLog.map(player => {
-      const { name, id, avatar, hasFinished } = player;
+      const { name, id, avatar, hasFinished, pendingEvaluation, unreadMessages } = player;
       const avaiableName = name || id;
+      const showBadge = Boolean(pendingEvaluation.length || unreadMessages);
 
       return (
         <ListItem
@@ -44,7 +46,7 @@ const ActivePlayersList = () => {
           disabled={hasFinished}
           className={listItem}
         >
-          <Badge badgeContent={'!'} color="primary" />
+          {showBadge && <Badge badgeContent={'!'} color="primary" />}
           <ListItemAvatar>
             <Avatar src={avatar} />
           </ListItemAvatar>

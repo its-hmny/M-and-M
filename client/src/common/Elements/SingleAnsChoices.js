@@ -41,9 +41,9 @@ function SingleAnsChoices({
   onSubmit = noop,
   initialValue = null,
 }) {
-  const [selectedAnswer, setSelectedAnswer] = useState(
-    initialValue ? initialValue[0] : null
-  );
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+
+  useEffect(() => setSelectedAnswer(initialValue), [initialValue]);
 
   //let's only work with IDs
   const correctAnswer = useMemo(

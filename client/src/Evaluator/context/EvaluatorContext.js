@@ -1,29 +1,30 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import { useSnackbar } from 'notistack';
 import axios, { useQuery } from '../../common/shared';
 
 import io from 'socket.io-client';
-
-const socket = io('http://localhost:8000');
 
 const EvaluatorContext = React.createContext();
 
 export const EvaluatorProvider = ({ children }) => {
   const { storyId } = useQuery();
+  const { enqueueSnackbar } = useSnackbar();
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
+  const socket = useMemo(
+    () => io('http://localhost:8000', { query: { type: 'evaluator', storyId } }),
+    [storyId]
+  );
 
   useEffect(() => {
     // onMount load the story and the player log on the server
     const fetchAll = async () => {
       try {
         const loadedStory = (await axios.get(`/stories/${storyId}`)).data.payload;
-        const serverLog = (await axios.get(`/stats/${storyId}`)).data.payload;
         setStory(loadedStory);
-        setPlayersLog(serverLog);
-        setFocusedPlayer((serverLog[0] || {}).id);
       } catch (err) {
-        console.warn('Error loading log and story from server', err);
+        console.warn('Error loading the story from server', err);
       }
     };
 
@@ -40,7 +41,14 @@ export const EvaluatorProvider = ({ children }) => {
     }
   };
 
+  const pushNotification = useCallback(
+    msg => enqueueSnackbar(msg, { variant: 'default' }),
+    [enqueueSnackbar]
+  );
+
   useEffect(() => {
+    if (!socket) return;
+
     const mergePlayerLog = (playerLog, patch) => {
       playerLog = { ...playerLog, ...patch }; // Merge the changes
       setPlayersLog(
@@ -65,7 +73,13 @@ export const EvaluatorProvider = ({ children }) => {
       const { story, senderId, payload } = data;
       if (story === storyId) {
         const playerLog = playersLog.find(player => player.id === senderId);
-        if (playerLog) mergePlayerLog(playerLog, payload);
+        if (playerLog) {
+          // There's a new ending evaluation for that player
+          const { name, id } = playerLog;
+          if (playerLog.pendingEvaluation.length < payload.pendingEvaluation.length)
+            pushNotification(`New evaluation requested by ${name || id}`);
+          mergePlayerLog(playerLog, payload);
+        }
       }
     });
 
@@ -74,17 +88,33 @@ export const EvaluatorProvider = ({ children }) => {
       if (story === storyId) setPlayersLog([...playersLog, payload]);
     });
 
+    socket.on('get:log', data => {
+      const { story, payload } = data;
+      if (story === storyId && payload) {
+        setPlayersLog(payload);
+        setFocusedPlayer((payload[0] || {}).id);
+      }
+    });
+
+    socket.on('rm:player', data => {
+      const { story, playerId } = data;
+      if (story === storyId)
+        setPlayersLog(list => list.filter(player => player.id !== playerId));
+    });
+
     // This has to be checked
     return () => socket.removeAllListeners();
-  }, [playersLog, storyId]);
+  }, [socket, playersLog, storyId, pushNotification]);
 
   const toProvide = {
     story,
     storyId,
     playersLog,
+    pushNotification,
     selectedPlayer: playersLog.find(player => player.id === focusedPlayer),
     setFocusedPlayer,
     updatePlayerLog,
+    socket,
   };
 
   return (

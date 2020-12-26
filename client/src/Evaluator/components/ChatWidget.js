@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
 import ChatWidget, {
   deleteMessages,
   addResponseMessage,
@@ -8,10 +7,8 @@ import ChatWidget, {
 } from '../../common/ChatWidget';
 import { useEvaluator } from '../context/EvaluatorContext';
 
-const socket = io('http://localhost:8000');
-
-const Chat = ({ onOpen, isOpen }) => {
-  const { selectedPlayer, storyId, playersLog } = useEvaluator();
+const Chat = ({ onOpen, isOpen, socket }) => {
+  const { selectedPlayer, storyId, playersLog, pushNotification } = useEvaluator();
   const { name, id, avatar } = selectedPlayer || {};
   const [conversations, setConversations] = useState({});
 
@@ -22,18 +19,19 @@ const Chat = ({ onOpen, isOpen }) => {
       savedChats[id] = chatLog;
     });
     setConversations(savedChats);
-  }, [id, playersLog]);
+  }, [playersLog]);
 
   useEffect(() => {
     deleteMessages();
-    if (conversations[id])
+    if (conversations[id]) {
       conversations[id].forEach(msg => {
         const { sender, content } = msg;
         sender === `evaluator${storyId}`
           ? addUserMessage(content)
           : addResponseMessage(content);
       });
-    setBadgeCount(0);
+    }
+    setBadgeCount(selectedPlayer.unreadMessages);
   }, [conversations, selectedPlayer, storyId, id]);
 
   const sendHandler = msg => {
@@ -61,16 +59,22 @@ const Chat = ({ onOpen, isOpen }) => {
         const currentChat = conversations[senderId];
         conversations[senderId] =
           currentChat !== undefined ? [...currentChat, toSave] : [toSave];
+        const sender = playersLog.find(player => player.id === senderId);
+        sender.unreadMessages++;
+        pushNotification(`New message from ${sender.name || sender.id}`);
         setConversations({ ...conversations });
       }
     });
     return () => socket.removeListener('chat-msg-recv');
-  }, [conversations, storyId]);
+  }, [socket, conversations, storyId, playersLog]);
 
   return (
     <ChatWidget
       automaticToggle={false}
-      setOpen={onOpen}
+      setOpen={() => {
+        selectedPlayer.unreadMessages = 0;
+        onOpen();
+      }}
       isOpen={isOpen}
       title={name || id}
       subtitle="Respond to the player's request"

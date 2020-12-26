@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const base = css`
   input {
@@ -28,7 +28,10 @@ const base = css`
 const noop = () => {};
 
 const Input = ({ placeholder, onSubmit = noop, style, initialValue = '' }) => {
-  const [answer, setAnswer] = useState(initialValue);
+  const [answer, setAnswer] = useState('');
+
+  useEffect(() => setAnswer(initialValue), [initialValue]);
+
   return (
     <div css={[base, style]}>
       <input

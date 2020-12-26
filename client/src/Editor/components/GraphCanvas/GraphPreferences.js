@@ -92,7 +92,7 @@ export const getGraphFromStory = story => {
 const setEdgesFromChildren = (root, rootId, graph) => {
   root.forEach(child => {
     if (child.story && child.story.nextNode) {
-      if (child.story.nextNode === 'string') {
+      if (typeof child.story.nextNode === 'string') {
         graph.edges = [...graph.edges, { from: rootId, to: child.story.nextNode }];
       } else {
         graph.edges = [
@@ -110,16 +110,16 @@ export const highlightPath = (graph, path) => {
   const touchedNodes = path.map(node => node.activityNodeId);
   // Al the reached node became triangles
   graph.nodes.forEach(node => {
-    if (touchedNodes.find(id => id === node.id)) node.shape = 'triangleDown';
+    if (touchedNodes.find(id => id === node.id)) node.shape = 'hexagon';
     else node.shape = 'dot';
   });
   // Edge highlighting part
-  graph.edges.forEach(edge => (edge.dashed = false)); // Resets to default
+  graph.edges.forEach(edge => (edge.color = '#ffffff')); // Resets to default
   for (let prev = 0, next = 1; next < touchedNodes.length; prev++, next++) {
     const edgeToHighlight = graph.edges.find(
-      edge => edge.to === prev && edge.from === next
+      edge => edge.from === touchedNodes[prev] && edge.to === touchedNodes[next]
     );
-    if (edgeToHighlight) edgeToHighlight.dashes = true;
+    if (edgeToHighlight) edgeToHighlight.color = 'black';
   }
   return graph;
 };
