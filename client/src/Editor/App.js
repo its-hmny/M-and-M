@@ -13,7 +13,7 @@ import Panel from './components/Panel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Navbar from '../common/Navbar';
-import SaveButton from './components/SaveButton';
+import SaveButton from '../common/SaveButton';
 import { MultiAnsChoices } from '../common/Elements';
 
 const useStyles = makeStyles(theme => ({
@@ -112,7 +112,7 @@ const App = () => {
             <AddIcon className={classes.addIcon} />
             Add Node
           </Fab>
-          <SaveButton />
+          <SaveButton story={story} />
         </div>
         <Box className={classes.caption}>
           {!isCaptionOpen ? (

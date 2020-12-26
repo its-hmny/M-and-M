@@ -5,8 +5,7 @@ import { Fab, CircularProgress } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/Save';
 import ErrorIcon from '@material-ui/icons/Error';
-import { useEditor } from '../context/EditorContext';
-import axios from '../../common/shared';
+import axios from './shared';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -51,9 +50,8 @@ const useInterval = (callback, delay) => {
   }, [delay]);
 };
 
-const SaveButton = () => {
+const SaveButton = ({ story }) => {
   const classes = useStyles();
-  const { story } = useEditor();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [failure, setFailure] = useState(false);
@@ -65,7 +63,7 @@ const SaveButton = () => {
     };
   }, []);
 
-  useInterval(() => uploadStory(), 60000);
+  useInterval(() => uploadStory(), 30000);
 
   const uploadStory = async () => {
     if (!loading) {
@@ -96,6 +94,7 @@ const SaveButton = () => {
     <div className={classes.wrapper}>
       <Fab
         variant="extended"
+        color="primary"
         className={success ? classes.buttonSuccess : failure ? classes.buttonFailure : ''}
         onClick={uploadStory}
       >

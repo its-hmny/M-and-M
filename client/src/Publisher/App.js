@@ -12,12 +12,14 @@ import {
   Tabs,
   Tab,
   Fab,
+  Tooltip,
 } from '@material-ui/core';
 import {
   Add as AddIcon,
   Delete as DeleteIcon,
   Edit as EditIcon,
   FileCopy as FileCopyIcon,
+  ExitToApp as ExitToAppIcon,
 } from '@material-ui/icons';
 import shortid from 'shortid';
 import { Link } from 'react-router-dom';
@@ -41,22 +43,31 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   list: {
-    flexBasis: 300,
+    maxHeight: 'calc(100vh - 64px)',
+    overflow: 'auto',
+    minWidth: 350,
     background: theme.palette.background.paper,
   },
   listItem: {
+    paddingTop: 2,
+    paddingBottom: 2,
     paddingRight: theme.spacing(2),
     display: 'flex',
     alignItems: 'center',
   },
+  selected: {
+    paddingRight: theme.spacing(2) - 3,
+    borderRight: `3px solid ${theme.palette.secondary.main}`,
+    color: theme.palette.secondary.main,
+  },
   listSecondary: {
-    paddingRight: theme.spacing(2),
+    paddingRight: 0,
   },
   listItemText: {
-    maxWidth: 168,
-    whiteSpace: 'nowrap',
     '& > .MuiListItemText-primary': {
+      maxWidth: 174,
       overflow: 'hidden',
+      whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
     },
   },
@@ -71,23 +82,7 @@ const useStyles = makeStyles(theme => ({
   addButton: {
     position: 'absolute',
     bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  },
-  tabs: {
-    minWidth: '20vw',
-    height: 'calc(100vh - 64px)',
-    display: 'flex',
-    flexDirection: 'row',
-    background: theme.palette.background.paper,
-    '& .MuiTab-root': {
-      maxWidth: 'unset',
-      '&.Mui-selected': {
-        background: theme.palette.background.default,
-      },
-    },
-  },
-  ripple: {
-    backgroundColor: theme.palette.background.default,
+    left: theme.spacing(2),
   },
   buttonContainer: {
     display: 'flex',
@@ -119,20 +114,31 @@ const App = () => {
     fetchStories();
   }, []);
 
-  const handleChange = (key, value) => {
+  const handleChange = async (key, value) => {
     const update = { ...selected, [key]: value };
     setSelected(update);
     setStories(stories =>
       stories.map(story => (story.uuid === update.uuid ? update : story))
     );
+
+    if (key !== 'title' && key !== 'description') {
+      saveChanges(update);
+    }
+  };
+  const saveChanges = async update => {
+    try {
+      await axios.patch(`stories/${update.uuid}`, update);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const addStory = async () => {
     const newStory = {
-      title: `Story ${storyCount++}`,
-      description: 'Placeholder',
-      target: 'ADULT',
-      gameplay: 'SINGLE',
+      title: `Story ${++storyCount}`,
+      description: '',
+      targets: [],
+      modes: [],
       accessible: false,
       nodes: [],
     };
@@ -184,28 +190,42 @@ const App = () => {
               <React.Fragment key={story.uuid}>
                 <ListItem
                   classes={{
-                    container: classes.listItem,
+                    container: `${classes.listItem} ${
+                      selected && selected.uuid === story.uuid ? classes.selected : ''
+                    }`,
                     secondaryAction: classes.listSecondary,
+                    selected: classes.selected,
                   }}
                   onClick={() => setSelected(story)}
                 >
                   <ListItemText
                     className={classes.listItemText}
                     primary={story.title}
-                    secondary={story.description}
+                    primaryTypographyProps={{ variant: 'subtitle1' }}
                   />
                   <ListItemSecondaryAction className={classes.listItemIcons}>
-                    <IconButton onClick={() => duplicateStory(story)}>
-                      <FileCopyIcon />
-                    </IconButton>
-                    <IconButton
-                      edge="end"
-                      onClick={() =>
-                        dontAskAgain ? executeDeleteStory(story) : setToDelete(story)
-                      }
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <Tooltip title="Duplicate" placement="top-end">
+                      <IconButton onClick={() => duplicateStory(story)}>
+                        <FileCopyIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete" placement="top">
+                      <IconButton
+                        onClick={() =>
+                          dontAskAgain ? executeDeleteStory(story) : setToDelete(story)
+                        }
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit in Editor" placement="top-start">
+                      <IconButton
+                        component={Link}
+                        to={`${ROUTES.EDITOR}?storyId=${story.uuid}`}
+                      >
+                        <ExitToAppIcon />
+                      </IconButton>
+                    </Tooltip>
                   </ListItemSecondaryAction>
                 </ListItem>
                 {index !== stories.length - 1 && <Divider />}

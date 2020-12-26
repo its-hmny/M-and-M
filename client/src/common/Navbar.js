@@ -19,6 +19,10 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: colors.deepOrange[700],
     },
   },
+  logo: {
+    height: 40,
+    marginRight: theme.spacing(2),
+  },
 }));
 
 const Navbar = () => {
@@ -26,11 +30,7 @@ const Navbar = () => {
   return (
     <AppBar position="static" color="secondary">
       <Toolbar>
-        <img
-          src={logo}
-          alt="Application Logo"
-          style={{ height: '5vh', marginRight: '1vw' }}
-        />
+        <img className={classes.logo} src={logo} alt="Application Logo" />
         <Button
           component={NavLink}
           activeClassName={classes.navLink}
