@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import {
   Typography,
   Box,
-  Button,
-  Paper,
   makeStyles,
   List,
   ListItem,
   ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
   Divider,
   Tabs,
   Tab,
@@ -38,11 +38,35 @@ const useStyles = makeStyles(theme => ({
   content: {
     position: 'relative',
     flexGrow: 1,
-  },
-  tabPanel: {
     display: 'flex',
-    flexDirection: 'row',
-    flexGrow: 1,
+  },
+  list: {
+    flexBasis: 300,
+    background: theme.palette.background.paper,
+  },
+  listItem: {
+    paddingRight: theme.spacing(2),
+    display: 'flex',
+    alignItems: 'center',
+  },
+  listSecondary: {
+    paddingRight: theme.spacing(2),
+  },
+  listItemText: {
+    maxWidth: 168,
+    whiteSpace: 'nowrap',
+    '& > .MuiListItemText-primary': {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
+  },
+  listItemIcons: {
+    position: 'static',
+    transform: 'none',
+    display: 'flex',
+    '& > .MuiButtonBase-root': {
+      height: 'fit-content',
+    },
   },
   addButton: {
     position: 'absolute',
@@ -71,21 +95,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TabPanel = ({ isSelected, children }) => {
-  return (
-    <div role="tabpanel" hidden={!isSelected}>
-      {isSelected && <Box p={3}>{children}</Box>}
-    </div>
-  );
-};
+let storyCount = 0;
 
 //TODO add alert if wanting to exit without saving
 const App = () => {
   const [editMode, setEditMode] = useState(false);
   const [stories, setStories] = useState([]);
-  const [selectedId, setSelectedId] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [selected, setSelected] = useState(0);
+  const [toDelete, setToDelete] = useState(false);
   const [contentForm, setContentForm] = useState(<></>);
+  const [dontAskAgain, setDontAskAgain] = useState(false);
 
   const classes = useStyles();
 
@@ -94,36 +113,23 @@ const App = () => {
       const res = await axios.get(`stories/list`);
       const stories = res.data.payload;
       setStories(stories);
-      setSelectedId(stories[0].uuid);
+      setSelected(stories[0]);
     };
 
     fetchStories();
   }, []);
 
   const handleChange = (key, value) => {
+    const update = { ...selected, [key]: value };
+    setSelected(update);
     setStories(stories =>
-      stories.map(story =>
-        story.uuid === selectedId ? { ...story, [key]: value } : story
-      )
+      stories.map(story => (story.uuid === update.uuid ? update : story))
     );
   };
 
-  const saveChanges = () => {
-    setEditMode(false);
-    // setContent(selected, false);
-    let storyToSend = stories.find(e => e.uuid === selectedId);
-    console.log(storyToSend);
-    axios.patch(`stories/${selectedId}`, storyToSend).then(values => {
-      axios.get(`stories/list`).then(res => {
-        const stories = res.data.payload;
-        setStories(stories);
-      });
-    });
-  };
-
-  const addStory = () => {
+  const addStory = async () => {
     const newStory = {
-      title: 'Placeholder',
+      title: `Story ${storyCount++}`,
       description: 'Placeholder',
       target: 'ADULT',
       gameplay: 'SINGLE',
@@ -131,178 +137,100 @@ const App = () => {
       nodes: [],
     };
 
-    axios.put('stories/', { story: newStory }).then(res => {
-      setStories(stories => [{ uuid: res.data.uuid, ...newStory }, ...stories]);
-    });
+    try {
+      const res = await axios.put('stories/', { story: newStory });
+      const withUuid = { ...newStory, uuid: res.data.uuid };
+      setStories(stories => [withUuid, ...stories]);
+      setSelected(withUuid);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const duplicateStory = () => {
-    const storyToSend = stories.find(e => e.uuid === selectedId);
-    // delete storyToSend['uuid'];
-    axios.put('stories/', storyToSend).then(values => {
-      //Reload stories
-      axios.get(`stories/list`).then(res => {
-        const stories = res.data.payload;
-        setStories(stories);
-      });
-    });
+  const duplicateStory = async story => {
+    const duplicate = {
+      ...story,
+      uuid: null,
+      title: `${story.title} Copy`,
+    };
+
+    try {
+      const res = await axios.put('stories', { story: duplicate });
+      setStories(stories => [...stories, { ...duplicate, uuid: res.data.uuid }]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const executeDeleteStory = () => {
-    axios.delete(`stories/${selectedId}`).then(res => {
-      axios.get(`stories/list`).then(res => {
-        const stories = res.data.payload;
-        setSelectedId(null);
-        setStories(stories);
-      });
-    });
+  const executeDeleteStory = async toDelete => {
+    try {
+      await axios.delete(`stories/${toDelete.uuid}`);
+      setStories(stories => stories.filter(story => story.uuid !== toDelete.uuid));
+      if (selected && selected.uuid === toDelete.uuid) {
+        setSelected(null);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
-
-  // const setContent = (uuid, editMode) => {
-  //   return (
-
-  //   );
-  //   } else {
-  //     setContentForm(
-  //       <Box>
-  //         <Typography className={classes.dataText}>
-  //           <b>Title:</b> {story.title}
-  //         </Typography>
-  //         <Typography className={classes.dataText}>
-  //           <b>Description:</b> {story.description}
-  //         </Typography>
-  //         <Typography className={classes.dataText}>
-  //           <b>Target:</b> {story.target}
-  //         </Typography>
-  //         <Typography className={classes.dataText}>
-  //           <b>Gameplay:</b> {story.gameplay}
-  //         </Typography>
-  //         <Typography className={classes.dataText}>
-  //           <b>Accessible:</b> {story.accessible ? 'Yes' : 'No'}
-  //         </Typography>
-  //       </Box>
-  //     );
-  //   }
-  // };
 
   return (
     <div className={classes.container}>
       <Navbar />
       <div className={classes.content}>
-        <div className={classes.tabPanel}>
-          <Tabs
-            orientation="vertical"
-            variant="scrollable"
-            value={selectedId}
-            onChange={(_, selected) => setSelectedId(selected)}
-            aria-label="Vertical tabs example"
-            className={classes.tabs}
-          >
-            {stories.map(story => (
-              <Tab
-                key={story.uuid}
-                label={story.title}
-                value={story.uuid}
-                TouchRippleProps={{ classes: { child: classes.ripple } }}
-              />
-            ))}
-          </Tabs>
-          {stories.map(story => (
-            <TabPanel key={story.uuid} isSelected={selectedId === story.uuid}>
-              <Form story={story} handleChange={handleChange} />
-            </TabPanel>
-          ))}
-          <div className={classes.buttonContainer}>
-            <Button className={classes.duplicateBtn} onClick={() => setIsDeleting(true)}>
-              <DeleteIcon onClick={() => setIsDeleting(true)} />
-            </Button>
-            <Button className={classes.duplicateBtn} onClick={duplicateStory}>
-              <FileCopyIcon />
-            </Button>
-          </div>
-        </div>
-        <Fab color="primary" className={classes.addButton} onClick={addStory}>
-          <AddIcon />
-        </Fab>
-        {/* <Box className={classes.storiesContainer}>
-          <Box className={classes.storyList}>
-            <List>
-              {stories.map(story => (
+        <div className={classes.list}>
+          <List dense>
+            {stories.map((story, index) => (
+              <React.Fragment key={story.uuid}>
                 <ListItem
-                  button
-                  key={shortid.generate()}
-                  onClick={() => setContent(story.uuid, editMode)}
-                  className={
-                    currUUID === story.uuid ? classes.selectedListItem : undefined
-                  }
+                  classes={{
+                    container: classes.listItem,
+                    secondaryAction: classes.listSecondary,
+                  }}
+                  onClick={() => setSelected(story)}
                 >
-                  <ListItemText>{story.uuid}</ListItemText>
+                  <ListItemText
+                    className={classes.listItemText}
+                    primary={story.title}
+                    secondary={story.description}
+                  />
+                  <ListItemSecondaryAction className={classes.listItemIcons}>
+                    <IconButton onClick={() => duplicateStory(story)}>
+                      <FileCopyIcon />
+                    </IconButton>
+                    <IconButton
+                      edge="end"
+                      onClick={() =>
+                        dontAskAgain ? executeDeleteStory(story) : setToDelete(story)
+                      }
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
-              ))}
-              <ListItem button onClick={() => addStory()}>
-                <AddIcon></AddIcon>
-              </ListItem>
-            </List>
-          </Box>
-          <Divider orientation="vertical" flexItem />
-          <Box className={classes.content}><Form story={stories.find(e => e.uuid === uuid)} handleChange={handleChange} /></Box>
-        </Box> */}
-        {/* <Box className={classes.submits}>
-          {selected !== undefined ? (
-            editMode ? (
-              <Button onClick={() => saveChanges()} className={classes.editBtns}>
-                Save
-              </Button>
-            ) : (
-              <Box>
-                <Button
-                  className={classes.duplicateBtn}
-                  onClick={() => setIsDeleting(true)}
-                >
-                  Remove
-                  <DeleteIcon />
-                </Button>
-                <Button
-                  className={classes.duplicateBtn}
-                  onClick={() => {
-                    duplicateStory(selected);
-                  }}
-                >
-                  Duplicate
-                  <FileCopyIcon />
-                </Button>
-                <Button
-                  className={classes.editBtns}
-                  component={Link}
-                  to={`${ROUTES.EDITOR}?storyId=${selected}`}
-                >
-                  GO TO EDITOR
-                </Button>
-                <Button
-                  onClick={() => {
-                    setEditMode(true);
-                    setContent(selected, true);
-                  }}
-                  className={classes.editBtns}
-                >
-                  Edit Informations
-                  <EditIcon />
-                </Button>
-              </Box>
-            )
-          ) : (
-            <></>
-          )}
-        </Box> */}
+                {index !== stories.length - 1 && <Divider />}
+              </React.Fragment>
+            ))}
+          </List>
+        </div>
+        <div className={classes.content}>
+          {selected && <Form story={selected} handleChange={handleChange} />}
+        </div>
+      </div>
+      <Fab color="primary" className={classes.addButton} onClick={addStory}>
+        <AddIcon />
+      </Fab>
+      {!dontAskAgain && (
         <AreYouSureDialog
-          open={isDeleting}
-          onCancel={() => setIsDeleting(false)}
-          onConfirm={() => {
-            setIsDeleting(false);
-            executeDeleteStory(selectedId);
+          open={toDelete}
+          onCancel={() => setToDelete(null)}
+          onConfirm={dontAskAgain => {
+            setDontAskAgain(dontAskAgain);
+            executeDeleteStory(toDelete);
+            setToDelete(null);
           }}
         />
-      </div>
+      )}
     </div>
   );
 };

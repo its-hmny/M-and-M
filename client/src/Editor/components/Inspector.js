@@ -8,7 +8,7 @@ import properties from '../constants/ComponentProperties.json';
 const useStyles = makeStyles(theme => ({
   InspectorPaperStyle: {
     padding: 15,
-    height: '100vh',
+    height: '100%',
     paddingBottom: theme.spacing(4),
     boxSizing: 'border-box',
     overflowY: 'auto',
@@ -27,29 +27,24 @@ const useStyles = makeStyles(theme => ({
   content: {},
 }));
 
-const Inspector = () => {
+const MAX_CONCURRENTLY_OPENED = 2;
+
+const Inspector = ({ onClose }) => {
   const { story, workingActivity } = useEditor();
   const { InspectorPaperStyle, DefaultTitleStyle, content } = useStyles();
-  const [openBox, setOpenBox] = useState({});
+  const [opened, setOpened] = useState([]);
 
-  const setCollapsed = uuid => {
-    let tmp = { ...openBox }; // A temporary object to store all the changes made
-    const maxOpenBoxes = 2;
-
-    // Set the user selected box to be open
-    if (openBox[uuid] === undefined) tmp[uuid] = true;
-    else delete tmp[uuid];
-
-    // Get the all the elements in the same columns that are already open
-    const alreadyOpen = Object.keys(tmp).filter(
-      other_uuid => other_uuid.includes(`${workingActivity}`) && tmp[other_uuid]
-    );
-
-    // If there are more than maxOpenBox then the first to be opened gets closed
-    if (alreadyOpen.length > maxOpenBoxes) delete tmp[alreadyOpen[0]];
-
-    // Set the new state
-    setOpenBox(tmp);
+  const toggleBox = boxId => {
+    const isOpen = opened.some(item => item === boxId);
+    if (isOpen) {
+      setOpened(opened.filter(item => item !== boxId));
+    } else {
+      setOpened(
+        opened.length >= MAX_CONCURRENTLY_OPENED
+          ? [...opened.slice(1), boxId]
+          : [...opened, boxId]
+      );
+    }
   };
 
   // const getComponentName = node => {
@@ -73,23 +68,23 @@ const Inspector = () => {
 
     const absPath = previousPath || ['components'];
     // This must be generated only once at the first recursive call (when previousPath is undefined)
-    const global = previousPath ? undefined : (
+
+    const global = !previousPath && (
       <CollapsableBox
-        uuid={`Global-${workingActivity}`}
-        key={`Global-${workingActivity}`}
+        key="Global"
         name="Global"
-        isOpen={openBox}
-        handler={setCollapsed}
+        isOpen={opened.some(item => item === 'Global')}
+        onClick={() => toggleBox('Global')}
         fieldsToSet={properties['Global']}
       />
     );
-    const missions = previousPath ? undefined : (
+
+    const missions = !previousPath && (
       <CollapsableBox
-        uuid={`Missions-${workingActivity}`}
-        key={`Missions-${workingActivity}`}
+        key="Missions"
         name="Missions"
-        isOpen={openBox}
-        handler={setCollapsed}
+        isOpen={opened.some(item => item === 'Missions')}
+        onClick={() => toggleBox('Missions')}
         fieldsToSet={properties['Missions']}
       />
     );
@@ -99,14 +94,12 @@ const Inspector = () => {
       missions,
       components.map((component, index) => {
         const { name } = component;
-
         return [
           <CollapsableBox
-            uuid={`${name}-${index}-${workingActivity}`}
-            key={`${name}-${index}-${workingActivity}`}
+            key={component.id}
             name={name}
-            isOpen={openBox}
-            handler={setCollapsed}
+            isOpen={opened.some(item => item === component.id)}
+            onClick={() => toggleBox(component.id)}
             indentLevel={level}
             fieldsToSet={properties[name]}
             pathToVal={[...absPath, index]}

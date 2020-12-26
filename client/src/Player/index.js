@@ -28,7 +28,10 @@ const createStoryProps = (component, storyContext) => {
           storyContext.moveTo(nextNode);
           storyContext.updateStats({ id, name, data: selectedAnswers });
           storyContext.updateScore(
-            selectedAnswers.reduce((points, answer) => points + answer.points, 0)
+            selectedAnswers.reduce(
+              (points, answer) => points + (Number(answer.points) || 0),
+              0
+            )
           );
         },
       };
@@ -117,7 +120,10 @@ const Player = () => {
     };
 
     socket.on('eval-pts', onEvalPts);
-    return () => socket.removeListener('eval-pts', onEvalPts);
+    return () => {
+      socket.removeListener('eval-pts', onEvalPts);
+      axios.delete(`stats/${storyId}/${ids.player}`).catch(err => console.warn(err));
+    };
   }, [storyId, ids]);
 
   const handleSend = msg =>
@@ -157,13 +163,14 @@ const Player = () => {
           story: storyId,
           senderId: ids.player,
           receiverId: ids.evaluator,
-          payload: { currentNodeId },
+          payload: { activityNodeId: currentNodeId },
         });
         setCurrentNodeId(node);
       },
       updateStats: payload => {
         socket.emit('update:stats', {
           story: storyId,
+          nodeId: currentNodeId,
           senderId: ids.player,
           receiverId: ids.evaluator,
           payload,

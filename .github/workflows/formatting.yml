@@ -1,0 +1,18 @@
+name: Automated Code Formatting
+on: push
+jobs:
+  Formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Formatting with prettier and push
+        uses: creyD/prettier_action@v3.1
+        with:
+          prettier_options: --config ./.prettierrc --ignore-path ./.prettierignore --write .
+          commit_message: "Automated code formatting"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -52,14 +52,14 @@ const Navbar = () => {
         <Button
           component={NavLink}
           activeClassName={classes.navLink}
-          to={ROUTES.PLAYER + '?storyId=1'}
+          to={ROUTES.PLAYER + '?storyId=test'}
         >
           Player
         </Button>
         <Button
           component={NavLink}
           activeClassName={classes.navLink}
-          to={ROUTES.EVALUATOR + '?storyId=1'}
+          to={ROUTES.EVALUATOR + '?storyId=test'}
         >
           Evaluator
         </Button>

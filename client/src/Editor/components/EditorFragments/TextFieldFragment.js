@@ -21,24 +21,26 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const value = getFromPath(path || [])[valToChange];
 
   return (
-    <TextField
-      className={classNames.InspectorElement}
-      classes={{ root }}
-      InputProps={{
-        className: inputRoot,
-      }}
-      label={label}
-      multiline={true}
-      rowsMax={3}
-      value={value}
-      variant="outlined"
-      size="small"
-      onChange={event =>
-        onChange !== undefined
-          ? onChange(event)
-          : setPathToValue(path || [], valToChange, event.target.value)
-      }
-    />
+    <div>
+      <TextField
+        className={classNames.InspectorElement}
+        classes={{ root }}
+        InputProps={{
+          className: inputRoot,
+        }}
+        label={label}
+        multiline={true}
+        rowsMax={3}
+        value={value}
+        variant="outlined"
+        size="small"
+        onChange={event =>
+          onChange !== undefined
+            ? onChange(event)
+            : setPathToValue(path || [], valToChange, event.target.value)
+        }
+      />
+    </div>
   );
 };
 

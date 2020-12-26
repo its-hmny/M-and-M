@@ -1,13 +1,15 @@
 import React from 'react';
 import { Badge, Avatar, Typography, makeStyles } from '@material-ui/core';
-import { Grid, List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
+import { List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import { useEvaluator } from '../context/EvaluatorContext';
 
 const useStyles = makeStyles(theme => ({
   container: {
-    flexGrow: 1,
+    minWidth: 200,
+    width: 200,
     background: '#3f3f3e',
     boxShadow: theme.shadows[6],
+    overflowY: 'auto',
   },
   listItem: {
     padding: 10,
@@ -30,7 +32,7 @@ const ActivePlayersList = () => {
 
   const generatedTab = () =>
     playersLog.map(player => {
-      const { name, id, avatar } = player;
+      const { name, id, avatar, hasFinished } = player;
       const avaiableName = name || id;
 
       return (
@@ -39,6 +41,7 @@ const ActivePlayersList = () => {
           selected={selectedPlayer && id === selectedPlayer.id}
           onClick={() => setFocusedPlayer(id)}
           onDoubleClick={() => renamePlayer(id)}
+          disabled={hasFinished}
           className={listItem}
         >
           <Badge badgeContent={'!'} color="primary" />
@@ -51,21 +54,17 @@ const ActivePlayersList = () => {
     });
 
   return (
-    <Grid item xs={2} className={container}>
+    <div className={container}>
       {playersLog.length === 0 ? (
         <Typography centered variant="h6">
           Nobody is currently playing your story
         </Typography>
       ) : (
-        <List
-          orientation="vertical"
-          indicatorColor="primary"
-          style={{ maxHeight: '100vh', overflow: 'auto' }}
-        >
+        <List orientation="vertical" indicatorColor="primary">
           {generatedTab()}
         </List>
       )}
-    </Grid>
+    </div>
   );
 };
 

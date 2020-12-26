@@ -142,28 +142,21 @@ const GraphCanvas = () => {
   //   [saveStory, story]
   // );
 
-  const selectEdge = useCallback(event => {
-    console.log(event);
-  }, []);
-
-  const events = useMemo(() => ({ doubleClick, selectEdge, zoom, deselectNode }), [
+  const events = useMemo(() => ({ doubleClick, zoom, deselectNode }), [
     doubleClick,
-    selectEdge,
     zoom,
     deselectNode,
   ]);
 
   return (
-    <div>
-      <Graph
-        data={getGraphFromStory(story)}
-        options={Options}
-        events={events}
-        getNetwork={network => {
-          networkRef.current = network;
-        }}
-      />
-    </div>
+    <Graph
+      data={getGraphFromStory(story)}
+      options={Options}
+      events={events}
+      getNetwork={network => {
+        networkRef.current = network;
+      }}
+    />
   );
 };
 

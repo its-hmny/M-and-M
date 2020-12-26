@@ -33,8 +33,17 @@ const base = css`
 
 const noop = () => {};
 
-function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) {
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+function SingleAnsChoices({
+  name,
+  answers,
+  withSubmit,
+  style,
+  onSubmit = noop,
+  initialValue = null,
+}) {
+  const [selectedAnswer, setSelectedAnswer] = useState(
+    initialValue ? initialValue[0] : null
+  );
 
   //let's only work with IDs
   const correctAnswer = useMemo(
@@ -63,7 +72,7 @@ function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop })
 
   useEffect(() => {
     if (!withSubmit && selectedAnswer) {
-      onSubmit(isCorrect, [selectedAnswer]);
+      onSubmit(isCorrect, [answers.find(answer => answer.id === selectedAnswer)]);
     }
   }, [withSubmit, onSubmit, isCorrect, correctAnswer, selectedAnswer]);
 
@@ -86,7 +95,9 @@ function SingleAnsChoices({ name, answers, withSubmit, style, onSubmit = noop })
       {withSubmit && (
         <Button
           disabled={selectedAnswer === null}
-          onClick={() => onSubmit(isCorrect, [selectedAnswer])}
+          onClick={() =>
+            onSubmit(isCorrect, [answers.find(answer => answer.id === selectedAnswer)])
+          }
           style={style && style.Button}
           text="Conferma"
         />

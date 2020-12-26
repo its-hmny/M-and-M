@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Providers from './Providers';
+import { EvaluatorProvider } from './context/EvaluatorContext';
 import App from './App';
 
 const Evaluator = () => (
-  <Providers>
+  <EvaluatorProvider>
     <App />
-  </Providers>
+  </EvaluatorProvider>
 );
 
 export default Evaluator;

@@ -11,7 +11,11 @@ const ColorPickerFragment = props => {
 
   return (
     <div className={classNames.InspectorElement}>
-      <Typography variant="caption" className={classNames.colorLabel} htmlFor="colorpicker">
+      <Typography
+        variant="caption"
+        className={classNames.colorLabel}
+        htmlFor="colorpicker"
+      >
         Color:
       </Typography>
       <input

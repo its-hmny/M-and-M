@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
+import { green, red } from '@material-ui/core/colors';
 import { Fab, CircularProgress } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/Save';
-
+import ErrorIcon from '@material-ui/icons/Error';
 import { useEditor } from '../context/EditorContext';
 import axios from '../../common/shared';
 
@@ -16,6 +16,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: green[500],
     '&:hover': {
       backgroundColor: green[700],
+    },
+  },
+  buttonFailure: {
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
     },
   },
   fabProgress: {
@@ -50,6 +56,7 @@ const SaveButton = () => {
   const { story } = useEditor();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [failure, setFailure] = useState(false);
   const resetTimer = useRef();
 
   useEffect(() => {
@@ -63,20 +70,24 @@ const SaveButton = () => {
   const uploadStory = async () => {
     if (!loading) {
       setSuccess(false);
+      setFailure(false);
       setLoading(true);
       try {
         const res = await axios.patch(`stories/${story.uuid}`, story);
         if (res.data.status) {
           setSuccess(true);
-          setLoading(false);
           resetTimer.current = setTimeout(() => {
             setSuccess(false);
           }, 3000);
         }
       } catch (err) {
-        if (err.response) {
-          console.error(err.response.data.message);
-        }
+        setFailure(true);
+        resetTimer.current = setTimeout(() => {
+          setFailure(false);
+        }, 3000);
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -85,17 +96,19 @@ const SaveButton = () => {
     <div className={classes.wrapper}>
       <Fab
         variant="extended"
-        className={success ? classes.buttonSuccess : ''}
+        className={success ? classes.buttonSuccess : failure ? classes.buttonFailure : ''}
         onClick={uploadStory}
       >
         {success ? (
           <CheckIcon className={classes.icon} />
+        ) : failure ? (
+          <ErrorIcon className={classes.icon} />
         ) : loading ? (
           <CircularProgress size={24} className={classes.fabProgress} />
         ) : (
           <SaveIcon className={classes.icon} />
         )}
-        {success ? 'Saved' : loading ? 'Saving' : 'Save Story'}
+        {success ? 'Saved' : failure ? 'Failed' : loading ? 'Saving' : 'Save Story'}
       </Fab>
     </div>
   );

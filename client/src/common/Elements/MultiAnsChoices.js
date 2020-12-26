@@ -33,8 +33,15 @@ const base = css`
 
 const noop = () => {};
 
-function MultiAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) {
-  const [selectedAnswers, setSelectedAnswers] = useState([]);
+function MultiAnsChoices({
+  name,
+  answers,
+  withSubmit,
+  style,
+  onSubmit = noop,
+  initialValue = [],
+}) {
+  const [selectedAnswers, setSelectedAnswers] = useState(initialValue);
 
   const correctAnswers = useMemo(
     () =>
@@ -65,7 +72,10 @@ function MultiAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) 
 
   useEffect(() => {
     if (!withSubmit && correctAnswers.length === selectedAnswers.length) {
-      onSubmit(isCorrect, selectedAnswers);
+      onSubmit(
+        isCorrect,
+        answers.filter(answer => selectedAnswers.includes(answer.id))
+      );
     }
   }, [withSubmit, onSubmit, isCorrect, correctAnswers, selectedAnswers]);
 
@@ -88,7 +98,12 @@ function MultiAnsChoices({ name, answers, withSubmit, style, onSubmit = noop }) 
       {withSubmit && (
         <Button
           disabled={!(selectedAnswers.length > 0)}
-          onClick={() => onSubmit(isCorrect, selectedAnswers)}
+          onClick={() =>
+            onSubmit(
+              isCorrect,
+              answers.filter(answer => selectedAnswers.includes(answer.id))
+            )
+          }
           style={style && style.Button}
           text="Conferma"
         />

@@ -1,0 +1,46 @@
+{
+  "name": "tastiera",
+  "description": "",
+  "components": [
+    {
+      "id": "g7NKOALJHr",
+      "name": "SingleAnsChoices",
+      "styleId": "DefaultSingleAnsChoices",
+      "withSubmit": true,
+      "answers": [
+        {
+          "id": "3lyCYCw-k",
+          "text": "Bianco",
+          "value": "[CORRECT]"
+        },
+        {
+          "id": "1J_jw916E_",
+          "text": "Rosso",
+          "value": "[WRONG]"
+        },
+        {
+          "id": "sv7fCa2mRS",
+          "text": "Blu",
+          "value": "[WRONG]"
+        },
+        {
+          "id": "gCjGxpmSqi",
+          "text": "Verde",
+          "value": "[WRONG]"
+        }
+      ],
+      "style": {
+        "Root": {},
+        "Radio": {
+          "color": "#100",
+          "backgroundColor": "#8cceb3"
+        },
+        "Checkbox": {},
+        "Button": {
+          "color": "#100",
+          "backgroundColor": "#8cceb3"
+        }
+      }
+    }
+  ]
+}

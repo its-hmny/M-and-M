@@ -14,15 +14,23 @@ const initialPlayerLog = {
   score: 0,
   avatar: undefined,
   hasFinished: false,
+  // Log of the chat
   chatLog: [],
-  currentQuestion: {
-    currentNodeId: undefined,
-    patchs: [],
-  },
+
+  // Hystory of all the activities done by the user (chronologically)
+  history: [
+    // Template for activity obeject
+    // {
+    //   activityNodeId: undefined,
+    //   patchs: [],
+    // },
+  ],
+
+  // Stats aout the player performance in the activities and overall story
   stats: {
-    timeAtStart: undefined,
-    timeAtLastResponse: 0,
-    nQuestionDone: 0,
+    timeAtStart: { label: 'Started', value: undefined },
+    timeAtLastResponse: { label: 'Time at last response', value: undefined },
+    nQuestionDone: { label: 'Question done', value: 0 },
     // And so on...
   },
 };
@@ -44,31 +52,36 @@ io.on('connection', socket => {
 
   // Saves on the server the player position in the story
   socket.on('update:position', data => {
-    const { story, senderId, payload } = data;
+    const { story, senderId, receiverId, payload } = data;
     const playerLog = (database[story] || []).find(player => player.id === senderId);
     if (playerLog) {
       // The player changed node in the story so removes all the data from the previous one
-      delete playerLog.currentQuestion;
-      playerLog.currentQuestion = { ...payload, patchs: [] };
-      io.emit('update:position', data);
+      playerLog.history.push({ ...payload, patchs: [] });
+      playerLog.stats.nQuestionDone.value++;
+      playerLog.stats.timeAtLastResponse.value = new Date().toLocaleTimeString();
+      io.emit('update:position', { story, senderId, receiverId, payload: playerLog });
     }
   });
 
   // Saves on the server the player responses and changes to the story's components
   socket.on('update:stats', data => {
-    const { story, senderId, payload } = data;
+    const { story, senderId, receiverId, nodeId, payload } = data;
     const playerLog = (database[story] || []).find(player => player.id === senderId);
-    if (playerLog) {
+    const activityToUpdate = (playerLog.history || []).find(
+      ({ activityNodeId }) => activityNodeId === nodeId
+    );
+
+    if (activityToUpdate) {
       const { id, data } = payload;
-      let componentToPatch = playerLog.currentQuestion.patchs.find(
-        patch => patch.componentId === id
+      let componentToPatch = activityToUpdate.patchs.find(
+        ({ componentId }) => componentId === id
       );
       if (componentToPatch) {
         componentToPatch = { componentId: id, value: data };
       } else {
-        playerLog.currentQuestion.patchs.push({ componentId: id, value: data });
+        activityToUpdate.patchs.push({ componentId: id, value: data });
       }
-      io.emit('update:stats', data);
+      io.emit('update:stats', { story, senderId, receiverId, payload: playerLog });
     }
   });
 
@@ -81,6 +94,8 @@ io.on('connection', socket => {
       io.emit('eval-pts', data);
     }
   });
+
+  socket.on('disconnect', () => {});
 });
 
 // Get the updated stats for every player currently in the story
@@ -122,7 +137,7 @@ router.patch('/:story_uuid/:player_uuid', (req, res) => {
   });
 });
 
-// Connect return <player_id, evaluator_id> tuple to the player that beginned a story
+// Connect return <player_id, evaluator_id> tuple to the player that began a story
 router.put('/:story_uuid', (req, res) => {
   const story_uuid = req.params.story_uuid;
   const requested_uuid = shortid.generate();
@@ -131,10 +146,16 @@ router.put('/:story_uuid', (req, res) => {
   while (database[story_uuid].find(player => player.id === requested_uuid)) {
     requested_uuid = shortid.generate();
   }
+  // Due to reference issue this is the only method to share a template without occuring
+  // in reference issues due to object reference handling in JS
+  const newEntry = JSON.parse(
+    JSON.stringify({ ...initialPlayerLog, ...req.body, id: requested_uuid })
+  );
+  newEntry.stats.timeAtStart.value = new Date().toLocaleTimeString();
   // Keep track of the new player in the DB
-  const newEntry = { ...initialPlayerLog, ...req.body, id: requested_uuid };
-  newEntry.stats.timeAtStart = new Date();
   database[story_uuid].push(newEntry);
+  // Sends a message to the evaluator
+  io.emit('add:player', { story: story_uuid, payload: newEntry });
   // Packetize player uuid and evaluator uuid for the story
   const data = { player: requested_uuid, evaluator: `evaluator${story_uuid}` };
   res.statusCode = 200;
@@ -148,6 +169,12 @@ router.delete('/:story_uuid/:player_uuid', (req, res) => {
   const player = database[story_uuid].find(player => player.id === player_uuid);
   if (player) {
     player.hasFinished = true;
+    // Sends disconnection message to the evaluator for the given player
+    io.emit('update:stats', {
+      story: story_uuid,
+      senderId: player_uuid,
+      payload: player,
+    });
     res.statusCode = 200;
     res.send({ status: true, message: 'Disconnected successfully' });
   } else {

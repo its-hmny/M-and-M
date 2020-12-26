@@ -66,7 +66,7 @@ router.put('/', (req, res) => {
     }
     fs.writeFile(
       `${basePath}${newstory_uuid}.json`,
-      JSON.stringify({ uuid: newstory_uuid, ...req.body.story }),
+      JSON.stringify({ ...req.body.story, uuid: newstory_uuid }),
       { encoding: 'utf8' },
       err => {
         if (err) {

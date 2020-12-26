@@ -1,2 +1,12 @@
-# ignore markdown
+# Ignore markdown, HTML, css, txt and lock
 *.md
+*.html
+*.css
+*.txt
+*.lock
+
+# Ignore build folders and others
+.github
+.random-stuff
+.vscode
+node_modules

@@ -11,7 +11,6 @@ import useStylesStore from '../stores/styles';
 // }
 
 function ChoicesSettings({ styleId }) {
-
   // Choices styles
   const { styles, updateStyle } = useStylesStore(state => ({
     styles: state.styles,

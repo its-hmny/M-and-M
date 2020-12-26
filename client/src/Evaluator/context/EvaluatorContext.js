@@ -2,11 +2,12 @@ import React, { useContext, useState, useEffect } from 'react';
 import axios, { useQuery } from '../../common/shared';
 
 import io from 'socket.io-client';
+
 const socket = io('http://localhost:8000');
 
 const EvaluatorContext = React.createContext();
 
-export const EvaluatorProvider = ({ children, _ }) => {
+export const EvaluatorProvider = ({ children }) => {
   const { storyId } = useQuery();
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
@@ -20,7 +21,7 @@ export const EvaluatorProvider = ({ children, _ }) => {
         const serverLog = (await axios.get(`/stats/${storyId}`)).data.payload;
         setStory(loadedStory);
         setPlayersLog(serverLog);
-        setFocusedPlayer(serverLog[0].id);
+        setFocusedPlayer((serverLog[0] || {}).id);
       } catch (err) {
         console.warn('Error loading log and story from server', err);
       }
@@ -29,6 +30,7 @@ export const EvaluatorProvider = ({ children, _ }) => {
     fetchAll();
   }, [storyId]);
 
+  // This could be changed to work only locally
   const updatePlayerLog = async (player_id, patch) => {
     try {
       const response = await axios.patch(`/stats/${storyId}/${player_id}`, patch);
@@ -39,17 +41,22 @@ export const EvaluatorProvider = ({ children, _ }) => {
   };
 
   useEffect(() => {
+    const mergePlayerLog = (playerLog, patch) => {
+      playerLog = { ...playerLog, ...patch }; // Merge the changes
+      setPlayersLog(
+        playersLog.map(log => {
+          if (log.id === playerLog.id) return playerLog;
+          else return log;
+        })
+      );
+    };
+
     // Saves in the context the player position in the story
     socket.on('update:position', data => {
       const { story, senderId, payload } = data;
       if (story === storyId) {
-        const playerLog = playersLog.find(player => player.id === senderId);
-        if (playerLog) {
-          // The player changed node in the story so removes all the data from the previous one
-          delete playerLog.currentQuestion;
-          playerLog.currentQuestion = { ...payload, patchs: [] };
-          setPlayersLog([...playersLog]);
-        }
+        let playerLog = playersLog.find(player => player.id === senderId);
+        if (playerLog) mergePlayerLog(playerLog, payload);
       }
     });
 
@@ -58,19 +65,13 @@ export const EvaluatorProvider = ({ children, _ }) => {
       const { story, senderId, payload } = data;
       if (story === storyId) {
         const playerLog = playersLog.find(player => player.id === senderId);
-        if (playerLog) {
-          const { id, data } = payload;
-          let componentToPatch = playerLog.currentQuestion.patchs.find(
-            patch => patch.componentId === id
-          );
-          if (componentToPatch) {
-            componentToPatch = { componentId: id, value: data };
-          } else {
-            playerLog.currentQuestion.patchs.push({ componentId: id, value: data });
-          }
-          setPlayersLog([...playersLog]);
-        }
+        if (playerLog) mergePlayerLog(playerLog, payload);
       }
+    });
+
+    socket.on('add:player', data => {
+      const { story, payload } = data;
+      if (story === storyId) setPlayersLog([...playersLog, payload]);
     });
 
     // This has to be checked
@@ -87,7 +88,9 @@ export const EvaluatorProvider = ({ children, _ }) => {
   };
 
   return (
-    <EvaluatorContext.Provider value={toProvide}>{children}</EvaluatorContext.Provider>
+    <EvaluatorContext.Provider value={toProvide}>
+      {story ? children : <div>Loading...</div>}
+    </EvaluatorContext.Provider>
   );
 };
 

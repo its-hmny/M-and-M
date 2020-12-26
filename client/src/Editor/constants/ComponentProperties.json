@@ -79,10 +79,15 @@
       }
     },
     {
-      "fragment": "TextFieldFragment",
+      "fragment": "InputFragment",
       "props": {
         "valToChange": "correctAnswer",
-        "label": "Correct answer"
+        "label": "Correct answer",
+        "correctStory": "[CORRECT]",
+        "wrongStory": "[WRONG]",
+        "selectPath": ["story", "nextNode"],
+        "pointsPath": ["story", "points"],
+        "pointsValToChange": "[CORRECT]"
       }
     }
   ],
