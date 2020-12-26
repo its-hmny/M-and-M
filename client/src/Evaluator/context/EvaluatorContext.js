@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect, useMemo } from 'react';
+import React, { useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import { useSnackbar } from 'notistack';
 import axios, { useQuery } from '../../common/shared';
 
 import io from 'socket.io-client';
@@ -7,6 +8,7 @@ const EvaluatorContext = React.createContext();
 
 export const EvaluatorProvider = ({ children }) => {
   const { storyId } = useQuery();
+  const { enqueueSnackbar } = useSnackbar();
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
@@ -39,6 +41,11 @@ export const EvaluatorProvider = ({ children }) => {
     }
   };
 
+  const pushNotification = useCallback(
+    msg => enqueueSnackbar(msg, { variant: 'default' }),
+    [enqueueSnackbar]
+  );
+
   useEffect(() => {
     if (!socket) return;
 
@@ -66,7 +73,13 @@ export const EvaluatorProvider = ({ children }) => {
       const { story, senderId, payload } = data;
       if (story === storyId) {
         const playerLog = playersLog.find(player => player.id === senderId);
-        if (playerLog) mergePlayerLog(playerLog, payload);
+        if (playerLog) {
+          // There's a new ending evaluation for that player
+          const { name, id } = playerLog;
+          if (playerLog.pendingEvaluation.length < payload.pendingEvaluation.length)
+            pushNotification(`New evaluation requested by ${name || id}`);
+          mergePlayerLog(playerLog, payload);
+        }
       }
     });
 
@@ -91,12 +104,13 @@ export const EvaluatorProvider = ({ children }) => {
 
     // This has to be checked
     return () => socket.removeAllListeners();
-  }, [socket, playersLog, storyId]);
+  }, [socket, playersLog, storyId, pushNotification]);
 
   const toProvide = {
     story,
     storyId,
     playersLog,
+    pushNotification,
     selectedPlayer: playersLog.find(player => player.id === focusedPlayer),
     setFocusedPlayer,
     updatePlayerLog,

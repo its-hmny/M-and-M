@@ -1,12 +1,10 @@
 const express = require('express');
-const shortid = require('shortid');
 const io = require('../shared')();
 
 const router = express.Router();
-// Allowed characters for resource uuid generation
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]');
-// Array of playerLog object (see under)
+// Array of playerLog object (see under) for each story
 let database = {};
+const humanValuableComponent = ['TextArea', 'Input'];
 // Initial values in a newly allocated playerLg object
 const initialPlayerLog = {
   name: undefined,
@@ -14,6 +12,8 @@ const initialPlayerLog = {
   score: 0,
   avatar: undefined,
   hasFinished: false,
+  pendingEvaluation: [],
+  unreadMessages: 0,
   // Log of the chat
   chatLog: [],
 
@@ -95,14 +95,21 @@ io.on('connection', socket => {
     );
 
     if (activityToUpdate) {
-      const { id, data } = payload;
+      const { id, name, data } = payload;
+      // If the patch received is for a human only valuable component
+      // a notification is displayed on client
+      if (humanValuableComponent.includes(name)) playerLog.pendingEvaluation.push(nodeId);
       let componentToPatch = activityToUpdate.patchs.find(
         ({ componentId }) => componentId === id
       );
       if (componentToPatch) {
-        componentToPatch = { componentId: id, value: data };
+        componentToPatch = { componentId: id, componentName: name, value: data };
       } else {
-        activityToUpdate.patchs.push({ componentId: id, value: data });
+        activityToUpdate.patchs.push({
+          componentId: id,
+          componentName: name,
+          value: data,
+        });
       }
       io.emit('update:stats', { story, senderId, receiverId, payload: playerLog });
     }
