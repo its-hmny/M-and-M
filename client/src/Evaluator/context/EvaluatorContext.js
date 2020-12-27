@@ -31,15 +31,10 @@ export const EvaluatorProvider = ({ children }) => {
     fetchAll();
   }, [storyId]);
 
-  // This could be changed to work only locally
-  const updatePlayerLog = async (player_id, patch) => {
-    try {
-      const response = await axios.patch(`/stats/${storyId}/${player_id}`, patch);
-      setPlayersLog(response.data.payload);
-    } catch (err) {
-      console.warn('Error applying the patch to player', err);
-    }
-  };
+  const updatePlayerLog = useCallback(
+    (playerId, patch) => socket.emit('update:eval', { story: storyId, playerId, patch }),
+    [socket, storyId]
+  );
 
   const pushNotification = useCallback(
     msg => enqueueSnackbar(msg, { variant: 'default' }),
@@ -80,6 +75,14 @@ export const EvaluatorProvider = ({ children }) => {
             pushNotification(`New evaluation requested by ${name || id}`);
           mergePlayerLog(playerLog, payload);
         }
+      }
+    });
+
+    socket.on('update:eval', data => {
+      const { story, playerId, newLog } = data;
+      if (story === storyId) {
+        const playerLog = playersLog.find(player => player.id === playerId);
+        if (playerLog) mergePlayerLog(playerLog, newLog);
       }
     });
 

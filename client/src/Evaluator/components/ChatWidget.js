@@ -8,7 +8,13 @@ import ChatWidget, {
 import { useEvaluator } from '../context/EvaluatorContext';
 
 const Chat = ({ onOpen, isOpen, socket }) => {
-  const { selectedPlayer, storyId, playersLog, pushNotification } = useEvaluator();
+  const {
+    selectedPlayer,
+    storyId,
+    playersLog,
+    pushNotification,
+    updatePlayerLog,
+  } = useEvaluator();
   const { name, id, avatar } = selectedPlayer || {};
   const [conversations, setConversations] = useState({});
 
@@ -61,18 +67,19 @@ const Chat = ({ onOpen, isOpen, socket }) => {
           currentChat !== undefined ? [...currentChat, toSave] : [toSave];
         const sender = playersLog.find(player => player.id === senderId);
         sender.unreadMessages++;
+        updatePlayerLog(senderId, { unreadMessages: sender.unreadMessages });
         pushNotification(`New message from ${sender.name || sender.id}`);
         setConversations({ ...conversations });
       }
     });
     return () => socket.removeListener('chat-msg-recv');
-  }, [socket, conversations, storyId, playersLog]);
+  }, [socket, conversations, storyId, playersLog, updatePlayerLog, pushNotification]);
 
   return (
     <ChatWidget
       automaticToggle={false}
       setOpen={() => {
-        selectedPlayer.unreadMessages = 0;
+        updatePlayerLog(selectedPlayer.id, { unreadMessages: 0 });
         onOpen();
       }}
       isOpen={isOpen}

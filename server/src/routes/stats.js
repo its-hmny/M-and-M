@@ -86,6 +86,14 @@ io.on('connection', socket => {
     }
   });
 
+  // Used bu the evaluator to update/share information with others evaluator on the same story
+  socket.on('update:eval', data => {
+    const { story, playerId, patch } = data;
+    const playerLog = (database[story] || []).find(player => player.id === playerId);
+    if (playerLog) Object.keys(patch).forEach(key => (playerLog[key] = patch[key]));
+    io.emit('update:eval', { story, playerId, newLog: playerLog });
+  });
+
   // Saves on the server the player responses and changes to the story's components
   socket.on('update:stats', data => {
     const { story, senderId, receiverId, nodeId, payload } = data;
@@ -117,10 +125,14 @@ io.on('connection', socket => {
 
   // Saves on the server the score assigned by the evaluator on a human-only evaluable question
   socket.on('eval-pts', data => {
-    const { story, receiverId, points } = data;
+    const { story, receiverId, points, nodeId } = data;
     const playerLog = (database[story] || []).find(player => player.id === receiverId);
     if (playerLog) {
       playerLog.score += points;
+      playerLog.pendingEvaluation = playerLog.pendingEvaluation.filter(
+        item => item !== nodeId
+      );
+      io.emit('update:eval', { story, playerId: receiverId, newLog: playerLog });
       io.emit('eval-pts', data);
     }
   });

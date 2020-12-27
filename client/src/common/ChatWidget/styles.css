@@ -1,15 +1,14 @@
-@media only screen and (max-width: 800px) {
+@media only screen and (min-width: 1000px) {
   .rcw-widget-container {
-    height: fit-content;
+    /* Needed for evaluator */
+    width: 90vw !important;
   }
-  .rcw-conversation-container .rcw-title {
-    padding: 15px 0 15px;
-  }
-  .rcw-conversation-container {
-    height: 0%;
-  }
-  .rcw-conversation-container .active {
-    height: 100vh;
+}
+
+@media only screen and (max-width: 1000px) {
+  .rcw-widget-container .active {
+    /* Needed for player */
+    width: 100vw !important;
   }
 }
 

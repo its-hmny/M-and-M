@@ -1,13 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Paper, Slider, Button, Grid } from '@material-ui/core';
-import io from 'socket.io-client';
 
 import { useEvaluator } from '../context/EvaluatorContext';
 import Preview from '../../common/Preview';
 
-const socket = io('http://localhost:8000');
-
-const VoteSlider = ({ story, player }) => {
+const VoteSlider = ({ story, player, nodeId }) => {
+  const { socket } = useEvaluator();
   const [vote, setVote] = useState(50);
 
   const sendVote = () => {
@@ -16,6 +14,7 @@ const VoteSlider = ({ story, player }) => {
       senderId: `evaluator${story}`,
       receiverId: player,
       points: vote,
+      nodeId,
     });
   };
 
@@ -90,7 +89,7 @@ const EvaluationWidget = () => {
 
   return (
     <Paper>
-      <VoteSlider story={storyId} player={selectedPlayer.id} />
+      <VoteSlider story={storyId} player={selectedPlayer.id} nodeId={showedNodeId} />
       <Button variant="text" small onClick={() => changeNodeToShow(-1)}>
         {'<<'}
       </Button>
