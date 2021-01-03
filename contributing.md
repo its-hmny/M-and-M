@@ -3,9 +3,9 @@
 ## Adding new components
 Here's some help if you need to add a new component.
 ### Adding the component (across all views)
-- add component file in common/elements:
-	- REMEMBER to include z-index: 1 in base css
+- add component file in common/elements
 - add component export in common/index
+- include prop initialValue for default value
 ### Adding new Settings (Creator component) for a component
 - add component settings file in Creator/Settings
 - add component settings export in Creator/Settings/index
@@ -19,3 +19,7 @@ ex:
 			styleId: 'DefaultTextArea',
 			placeholder: 'Default placeholder text',
 		})
+### Creating the editor part
+- combine fragments from `Editor/components/EditorFragments`
+- edit `Editor/constants/ComponentProperties.json`
+- import file in `Editor/components/EditorFragments/index.js` and add to export
