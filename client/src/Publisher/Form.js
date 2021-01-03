@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import logo from '../assets/logo.png';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import { CLIENT_URL } from '../common/constants';
 
 import SaveButton from '../common/SaveButton';
 
@@ -207,7 +208,7 @@ const Form = ({ story, handleChange }) => {
         <div className={classes.qrcode}>
           <QRCode
             id="qrcode"
-            value={`http://localhost:3000/player?storyId=${story.uuid}`}
+            value={`${CLIENT_URL}/player?storyId=${story.uuid}`}
             renderAs="canvas"
             bgColor="transparent"
             fgColor={colors.orange[500]}

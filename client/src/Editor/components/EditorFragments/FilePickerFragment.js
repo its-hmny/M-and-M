@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { useEditor } from '../../context/EditorContext';
 import axios from '../../../common/shared';
+import { SERVER_URL } from '../../../common/constants';
 
 // TODO find a way to implement server upload and make the image a static resource
 const FilePickerFragment = props => {
@@ -31,7 +32,7 @@ const FilePickerFragment = props => {
         setPathToValue(
           path,
           valToChange,
-          `http://localhost:8000/resources/${response.data.uuid}`
+          `${SERVER_URL}/resources/${response.data.uuid}`
         );
         setOutcome('File uploaded successfully!');
       })

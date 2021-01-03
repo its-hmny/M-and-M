@@ -11,10 +11,21 @@ import useTemplateStore from './stores/template';
 import useStylesStore from './stores/styles';
 
 const useStyles = makeStyles(theme => ({
-  saveButton: {
-    position: 'absolute',
-    bottom: theme.spacing(3),
-    right: theme.spacing(3),
+  container: {
+    width: '100vw',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  grid: {
+    flexGrow: 1,
+  },
+  previewPanel: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
 }));
 
@@ -25,7 +36,6 @@ const App = () => {
   const components = useTemplateStore(state => state.components);
   const saveTemplate = meta => {
     setIsSaving(false);
-    console.log(`About to save template ${meta.name}...`);
     const styledComponents = components.map(component => ({
       ...component,
       style: styles[component.styleId],
@@ -37,30 +47,31 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className={classes.container}>
       <Navbar />
-      <Grid container>
+      <Grid container className={classes.grid}>
         <Grid item xs={6}>
           <Inspector />
         </Grid>
-        <Grid item xs={6}>
-          <Preview components={components} styles={styles} />
-          <Button
-            color="primary"
-            variant="contained"
-            className={classes.saveButton}
-            onClick={() => setIsSaving(true)}
-          >
-            Save Template
-          </Button>
-          <SaveDialog
-            open={isSaving}
-            onCancel={() => {
-              console.log('cancel');
-              setIsSaving(false);
-            }}
-            onSave={saveTemplate}
-          />
+        <Grid xs={6} item>
+          <div className={classes.previewPanel}>
+            <Preview components={components} styles={styles} />
+            <Button
+              color="primary"
+              variant="contained"
+              className={classes.saveButton}
+              onClick={() => setIsSaving(true)}
+            >
+              Save Template
+            </Button>
+            <SaveDialog
+              open={isSaving}
+              onCancel={() => {
+                setIsSaving(false);
+              }}
+              onSave={saveTemplate}
+            />
+          </div>
         </Grid>
       </Grid>
     </div>

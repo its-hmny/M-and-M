@@ -1,0 +1,39 @@
+{
+  "name": "camera bg",
+  "description": "",
+  "components": [
+    {
+      "id": "VLpVoYK-K",
+      "name": "Text",
+      "text": "im a beautiful Text",
+      "styleId": "DefaultText",
+      "style": {
+        "fontFamily": "Arial",
+        "fontSize": "16px",
+        "color": "#000"
+      }
+    },
+    {
+      "id": "ggqOTY-sx",
+      "name": "Background",
+      "styleId": "DefaultBackground",
+      "style": {
+        "backgroundImage": "url(http://localhost:8000/default_background.jpg)"
+      }
+    },
+    {
+      "id": "b9eYdRaQn",
+      "name": "Camera",
+      "styleId": "DefaultCamera",
+      "style": {
+        "Root": {
+          "color": "#000"
+        },
+        "Button": {
+          "color": "#000",
+          "backgroundColor": "#8cceb3"
+        }
+      }
+    }
+  ]
+}

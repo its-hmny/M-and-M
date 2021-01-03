@@ -130,6 +130,10 @@ export const componentBuilders = {
     name: 'Spacer',
     styleId: 'DefaultSpacer',
   }),
+  Camera: () => ({
+    name: 'Camera',
+    styleId: 'DefaultCamera',
+  }),
 };
 
 const recursiveFind = (components, targetId) => {

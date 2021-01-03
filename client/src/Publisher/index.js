@@ -1,100 +1,103 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Typography,
   Box,
-  Button,
-  Paper,
   makeStyles,
   List,
   ListItem,
   ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
   Divider,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Checkbox,
-  TextField,
-  FormControlLabel,
+  Tabs,
+  Tab,
+  Fab,
+  Tooltip,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-// import DeleteAlert from './Alerts';
+import {
+  Add as AddIcon,
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  FileCopy as FileCopyIcon,
+  ExitToApp as ExitToAppIcon,
+} from '@material-ui/icons';
 import shortid from 'shortid';
 import { Link } from 'react-router-dom';
+
+import AreYouSureDialog from './AreYouSureDialog';
+import Form from './Form';
 import * as ROUTES from '../routes';
 import axios from '../common/shared';
+import Navbar from '../common/Navbar';
 
 const useStyles = makeStyles(theme => ({
-  paperBox: {
-    padding: 50,
-    marginTop: '30vh',
-    marginLeft: '30vw',
-    marginRight: '30vw',
+  container: {
+    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
-  },
-  buttonLink: {
-    marginLeft: '2vw',
-    marginRight: '2vw',
-  },
-  storyBrowserText: {
-    textAlign: 'center',
-    fontSize: 24,
-  },
-  storyBrowser: {
-    margin: '5vw',
-
-    height: '80vh',
-    alignItems: 'center',
-  },
-  storyList: {
-    height: '67vh',
+    overflow: 'hidden',
   },
   content: {
-    height: '67vh',
-    margin: '10px',
+    position: 'relative',
+    flexGrow: 1,
+    display: 'flex',
   },
-  storiesContainer: {
+  list: {
+    maxHeight: 'calc(100vh - 64px)',
+    overflow: 'auto',
+    minWidth: 350,
+    background: theme.palette.background.paper,
+  },
+  listItem: {
+    paddingTop: 2,
+    paddingBottom: 2,
+    paddingRight: theme.spacing(2),
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+  },
+  selected: {
+    paddingRight: theme.spacing(2) - 3,
+    borderRight: `3px solid ${theme.palette.secondary.main}`,
+    color: theme.palette.secondary.main,
+  },
+  listSecondary: {
+    paddingRight: 0,
+  },
+  listItemText: {
+    '& > .MuiListItemText-primary': {
+      maxWidth: 174,
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis',
+    },
+  },
+  listItemIcons: {
+    position: 'static',
+    transform: 'none',
+    display: 'flex',
+    '& > .MuiButtonBase-root': {
+      height: 'fit-content',
+    },
+  },
+  addButton: {
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    left: theme.spacing(2),
+  },
+  buttonContainer: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-  },
-  dataText: {
-    margin: '5px',
-  },
-  labelStyle: {},
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  formElements: {
-    margin: 10,
-  },
-  submits: {},
-  duplicateBtn: {
-    float: 'left',
-    margin: 5,
-  },
-  editBtns: {
-    float: 'right',
-    margin: 5,
-  },
-  selectedListItem: {
-    backgroundColor: '#e91e63',
   },
 }));
 
-//TODO add alert if wanting to exit without saving
+let storyCount = 0;
+
 const App = () => {
-  const [editMode, setEditMode] = React.useState(false);
-  const [stories, setStories] = React.useState([]);
-  const [currUUID, setCurrUUID] = React.useState(undefined);
-  const [contentForm, setContentForm] = React.useState(<></>);
-  const [currentDialog, setCurrentDialog] = React.useState(<></>);
+  const [stories, setStories] = useState([]);
+  const [selected, setSelected] = useState(0);
+  const [toDelete, setToDelete] = useState(false);
+  const [dontAskAgain, setDontAskAgain] = useState(false);
 
   const classes = useStyles();
 
@@ -102,253 +105,151 @@ const App = () => {
     const fetchStories = async () => {
       const res = await axios.get(`stories/list`);
       const stories = res.data.payload;
-
       setStories(stories);
+      setSelected(stories[0]);
     };
+
     fetchStories();
   }, []);
 
-  const handleChange = (key, value, uuid) => {
-    let storyChange = stories.find(e => e.uuid === uuid);
+  const handleChange = async (key, value) => {
+    const update = { ...selected, [key]: value };
+    setSelected(update);
+    setStories(stories =>
+      stories.map(story => (story.uuid === update.uuid ? update : story))
+    );
 
-    let index = stories.findIndex(e => e.uuid === uuid);
-    let localStories = stories;
-
-    storyChange[key] = value;
-
-    localStories.splice(index, 1, storyChange);
-
-    setStories(localStories);
-    setContent(uuid, true);
+    if (key !== 'title' && key !== 'description') {
+      saveChanges(update);
+    }
   };
-  //TODO api call
-  const saveChanges = () => {
-    setEditMode(false);
-    setContent(currUUID, false);
-    let storyToSend = stories.find(e => e.uuid === currUUID);
-    console.log(storyToSend);
-    axios.patch(`stories/${currUUID}`, storyToSend).then(values => {
-      //Reload stories
-      axios.get(`stories/list`).then(res => {
-        const stories = res.data.payload;
-        setStories(stories);
-      });
-    });
+  const saveChanges = async update => {
+    try {
+      await axios.patch(`stories/${update.uuid}`, update);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const addStory = () => {
+  const addStory = async () => {
     const newStory = {
-      title: 'Placeholder',
-      description: 'Placeholder',
-      target: 'ADULT',
-      gameplay: 'SINGLE',
+      title: `Story ${++storyCount}`,
+      description: '',
+      targets: [],
+      modes: [],
       accessible: false,
       nodes: [],
     };
 
-    axios.put('stories/', { story: newStory }).then(res => {
-      setStories(stories => [{ uuid: res.data.uuid, ...newStory }, ...stories]);
-    });
+    try {
+      const res = await axios.put('stories/', { story: newStory });
+      const withUuid = { ...newStory, uuid: res.data.uuid };
+      setStories(stories => [withUuid, ...stories]);
+      setSelected(withUuid);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const duplicateStory = uuid => {
-    const storyToSend = stories.find(e => e.uuid === currUUID);
-    // delete storyToSend['uuid'];
-    axios.put('stories/', storyToSend).then(values => {
-      //Reload stories
-      axios.get(`stories/list`).then(res => {
-        const stories = res.data.payload;
+  const duplicateStory = async story => {
+    const duplicate = {
+      ...story,
+      uuid: null,
+      title: `${story.title} Copy`,
+    };
 
-        setStories(stories);
-      });
-    });
+    try {
+      const res = await axios.put('stories', { story: duplicate });
+      setStories(stories => [...stories, { ...duplicate, uuid: res.data.uuid }]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const closeDialog = () => {
-    setCurrentDialog(<></>);
-  };
-
-  const deleteStory = uuid => {
-    // setCurrentDialog(
-    //   <DeleteAlert
-    //     uuid={uuid}
-    //     deleteFunction={executeDeleteStory}
-    //     closeDialog={closeDialog}
-    //   ></DeleteAlert>
-    // );
-  };
-
-  const executeDeleteStory = uuid => {
-    axios.delete(`stories/${uuid}`).then(res => {
-      axios.get(`stories/list`).then(res => {
-        const stories = res.data.payload;
-        setCurrUUID(0);
-        setContentForm(<></>);
-        setStories(stories);
-      });
-    });
-  };
-
-  const setContent = (uuid, editMode) => {
-    const story = stories.find(e => e.uuid === uuid);
-    setCurrUUID(uuid);
-    if (editMode) {
-      setContentForm(
-        <Box className={classes.form}>
-          <FormControl className={classes.formElements}>
-            <TextField
-              value={story.title}
-              onChange={e => {
-                handleChange('title', e.target.value, uuid);
-              }}
-              label={'Title'}
-            />
-          </FormControl>
-          <FormControl className={classes.formElements}>
-            <TextField
-              value={story.description}
-              onChange={e => handleChange('description', e.target.value, uuid)}
-              label={'Description'}
-            />
-          </FormControl>
-          <FormControl className={classes.formElements}>
-            <InputLabel className={classes.labelStyle}>Target</InputLabel>
-            <Select
-              value={story.target}
-              onChange={e => handleChange('target', e.target.value, uuid)}
-            >
-              <MenuItem value={'KID'}>Kid</MenuItem>
-              <MenuItem value={'TEEN'}>Teen</MenuItem>
-              <MenuItem value={'ADULT'}>Adult</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formElements}>
-            <InputLabel className={classes.labelStyle}>Gameplay</InputLabel>
-            <Select
-              value={story.gameplay}
-              onChange={e => handleChange('gameplay', e.target.value, uuid)}
-            >
-              <MenuItem value={'SINGLE'}>Single</MenuItem>
-              <MenuItem value={'GROUP'}>Group</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formElements}>
-            <FormControlLabel
-              label="Accessible"
-              control={
-                <Checkbox
-                  checked={story.accessible}
-                  onChange={e => handleChange('accessible', e.target.checked, uuid)}
-                />
-              }
-            />
-          </FormControl>
-        </Box>
-      );
-    } else {
-      setContentForm(
-        <Box>
-          <Typography className={classes.dataText}>
-            <b>Title:</b> {story.title}
-          </Typography>
-          <Typography className={classes.dataText}>
-            <b>Description:</b> {story.description}
-          </Typography>
-          <Typography className={classes.dataText}>
-            <b>Target:</b> {story.target}
-          </Typography>
-          <Typography className={classes.dataText}>
-            <b>Gameplay:</b> {story.gameplay}
-          </Typography>
-          <Typography className={classes.dataText}>
-            <b>Accessible:</b> {story.accessible ? 'Yes' : 'No'}
-          </Typography>
-        </Box>
-      );
+  const executeDeleteStory = async toDelete => {
+    try {
+      await axios.delete(`stories/${toDelete.uuid}`);
+      setStories(stories => stories.filter(story => story.uuid !== toDelete.uuid));
+      if (selected && selected.uuid === toDelete.uuid) {
+        setSelected(null);
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
   return (
-    <>
-      {currentDialog}
-      <Paper className={classes.storyBrowser} elevation={1}>
-        <Typography className={classes.storyBrowserText}>Story Browser</Typography>
-        <Divider />
-        <Box className={classes.storiesContainer}>
-          <Box className={classes.storyList}>
-            <List>
-              {stories.map(story => (
+    <div className={classes.container}>
+      <Navbar />
+      <div className={classes.content}>
+        <div className={classes.list}>
+          <List dense>
+            {stories.map((story, index) => (
+              <React.Fragment key={story.uuid}>
                 <ListItem
-                  button
-                  key={shortid.generate()}
-                  onClick={() => setContent(story.uuid, editMode)}
-                  className={
-                    currUUID === story.uuid ? classes.selectedListItem : undefined
-                  }
+                  classes={{
+                    container: `${classes.listItem} ${
+                      selected && selected.uuid === story.uuid ? classes.selected : ''
+                    }`,
+                    secondaryAction: classes.listSecondary,
+                    selected: classes.selected,
+                  }}
+                  onClick={() => setSelected(story)}
                 >
-                  <ListItemText>{story.uuid}</ListItemText>
+                  <ListItemText
+                    className={classes.listItemText}
+                    primary={story.title}
+                    primaryTypographyProps={{ variant: 'subtitle1' }}
+                  />
+                  <ListItemSecondaryAction className={classes.listItemIcons}>
+                    <Tooltip title="Duplicate" placement="top-end">
+                      <IconButton onClick={() => duplicateStory(story)}>
+                        <FileCopyIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete" placement="top">
+                      <IconButton
+                        onClick={() =>
+                          dontAskAgain ? executeDeleteStory(story) : setToDelete(story)
+                        }
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit in Editor" placement="top-start">
+                      <IconButton
+                        component={Link}
+                        to={`${ROUTES.EDITOR}?storyId=${story.uuid}`}
+                      >
+                        <ExitToAppIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </ListItemSecondaryAction>
                 </ListItem>
-              ))}
-              <ListItem button onClick={() => addStory()}>
-                <AddIcon></AddIcon>
-              </ListItem>
-            </List>
-          </Box>
-          <Divider orientation="vertical" flexItem />
-          <Box className={classes.content}>{contentForm}</Box>
-        </Box>
-        <Box className={classes.submits}>
-          {currUUID !== undefined ? (
-            editMode ? (
-              <Button onClick={() => saveChanges()} className={classes.editBtns}>
-                Save
-              </Button>
-            ) : (
-              <Box>
-                <Button
-                  className={classes.duplicateBtn}
-                  onClick={() => {
-                    deleteStory(currUUID);
-                  }}
-                >
-                  Remove
-                  <DeleteIcon></DeleteIcon>
-                </Button>
-                <Button
-                  className={classes.duplicateBtn}
-                  onClick={() => {
-                    duplicateStory(currUUID);
-                  }}
-                >
-                  Duplicate
-                  <FileCopyIcon></FileCopyIcon>
-                </Button>
-                <Button
-                  className={classes.editBtns}
-                  component={Link}
-                  to={`${ROUTES.EDITOR}?storyId=${currUUID}`}
-                >
-                  GO TO EDITOR
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    setEditMode(true);
-                    setContent(currUUID, true);
-                  }}
-                  className={classes.editBtns}
-                >
-                  Edit Informations
-                  <EditIcon></EditIcon>
-                </Button>
-              </Box>
-            )
-          ) : (
-            <></>
-          )}
-        </Box>
-      </Paper>
-    </>
+                {index !== stories.length - 1 && <Divider />}
+              </React.Fragment>
+            ))}
+          </List>
+        </div>
+        <div className={classes.content}>
+          {selected && <Form story={selected} handleChange={handleChange} />}
+        </div>
+      </div>
+      <Fab color="primary" className={classes.addButton} onClick={addStory}>
+        <AddIcon />
+      </Fab>
+      {!dontAskAgain && (
+        <AreYouSureDialog
+          open={toDelete}
+          onCancel={() => setToDelete(null)}
+          onConfirm={dontAskAgain => {
+            setDontAskAgain(dontAskAgain);
+            executeDeleteStory(toDelete);
+            setToDelete(null);
+          }}
+        />
+      )}
+    </div>
   );
 };
 

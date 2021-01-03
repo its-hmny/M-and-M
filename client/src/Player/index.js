@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import axios, { useQuery } from '../common/shared';
+import { SERVER_URL } from '../common/constants';
 
 import * as Elements from '../common/Elements';
 import Chat from './components/Chat';
@@ -9,14 +10,14 @@ import io from 'socket.io-client';
 
 // `Story` param is an object that stores properties needed for computing
 // storyProps for this specific component
-const createStoryProps = (component, storyContext) => {
+const createStoryProps = (component, storyRuntime) => {
   const { id, name, story: storyProps } = component;
 
   switch (name) {
     case 'Button':
       // Button has 1 story related prop: onClick
       return {
-        onClick: () => storyContext.moveTo(storyProps.nextNode),
+        onClick: () => storyRuntime.moveTo(storyProps.nextNode),
       };
     case 'SingleAnsChoices':
     case 'MultiAnsChoices':
@@ -24,9 +25,9 @@ const createStoryProps = (component, storyContext) => {
       return {
         onSubmit: (isCorrect, selectedAnswers) => {
           const nextNode = storyProps.nextNode[isCorrect];
-          storyContext.moveTo(nextNode);
-          storyContext.updateStats({ id, name, data: selectedAnswers });
-          storyContext.updateScore(
+          storyRuntime.moveTo(nextNode);
+          storyRuntime.updateStats({ id, name, data: selectedAnswers });
+          storyRuntime.updateScore(
             selectedAnswers.reduce(
               (points, answer) => points + (Number(answer.points) || 0),
               0
@@ -34,12 +35,19 @@ const createStoryProps = (component, storyContext) => {
           );
         },
       };
+    case 'Camera':
+      return {
+        onSendPhoto: pic => {
+          storyRuntime.moveTo(storyProps.nextNode);
+          storyRuntime.updateStats({ id, name, data: pic });
+        },
+      };
     case 'Input':
     case 'TextArea':
       return {
         onSubmit: answer => {
-          storyContext.moveTo(storyProps.nextNode);
-          storyContext.updateStats({ id, name, data: answer });
+          storyRuntime.moveTo(storyProps.nextNode);
+          storyRuntime.updateStats({ id, name, data: answer });
         },
       };
     default:
@@ -50,16 +58,16 @@ const createStoryProps = (component, storyContext) => {
 };
 
 // create component tree
-const buildViewContent = (components, storyContext) =>
+const buildViewContent = (components, storyRuntime) =>
   components.map(component => {
     const { story, children, ...rest } = component;
-    const storyProps = story ? createStoryProps(component, storyContext) : {};
+    const storyProps = story ? createStoryProps(component, storyRuntime) : {};
     // compound components must keep their "atoms" in children prop, or we can't
     // know what to load (i.e. what is a prop and what is a renderable component)
     const props = {
       ...storyProps,
       ...rest,
-      children: children && buildViewContent(children, storyContext),
+      children: children && buildViewContent(children, storyRuntime),
     };
     const Element = Elements[component.name];
     return <Element key={component.id} {...props} />;
@@ -83,7 +91,7 @@ const Player = () => {
   const [score, setScore] = useState(0);
 
   const socket = useMemo(() => {
-    const tmp = io('http://localhost:8000', { query: { type: 'player', storyId } });
+    const tmp = io(SERVER_URL, { query: { type: 'player', storyId } });
     // Once the connection is established the socket id became the player id
     tmp.on('connect', () => setIds({ player: tmp.id, evaluator: `evaluator${storyId}` }));
     return tmp;
@@ -94,7 +102,6 @@ const Player = () => {
     socket.on('chat-msg-recv', payload => {
       const { player, evaluator } = ids;
       const { story, senderId, receiverId, msg } = payload;
-      console.log(storyId, senderId, receiverId === player, evaluator, msg);
       if (story === storyId && senderId === evaluator && receiverId === player)
         addResponseMessage(msg);
     });

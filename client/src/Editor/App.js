@@ -94,7 +94,12 @@ const App = () => {
   const addNode = template => {
     setIsDialogOpen(false);
     const { nodes, ...others } = story;
-    saveStory({ nodes: [...nodes, { id: shortid.generate(), ...template }], ...others });
+    const nodeId = shortid.generate();
+    const components = template.components.map(component => ({
+      ...component,
+      id: `${nodeId}-${component.id}`,
+    }));
+    saveStory({ nodes: [...nodes, { id: nodeId, ...template, components }], ...others });
   };
 
   return (

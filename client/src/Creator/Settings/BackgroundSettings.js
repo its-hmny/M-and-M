@@ -6,6 +6,7 @@ import { Camera as CameraIcon } from '@material-ui/icons';
 
 import useStylesStore from '../stores/styles';
 import axios from '../../common/shared';
+import { SERVER_URL } from '../../common/constants';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -35,7 +36,7 @@ const BackgroundSettings = ({ styleId }) => {
       });
       updateStyle({
         styleId,
-        backgroundImage: `url(http://localhost:8000/resources/${res.data.uuid})`,
+        backgroundImage: `url(${SERVER_URL}/resources/${res.data.uuid})`,
       });
       setOutcome('File uploaded successfully!');
     } catch (err) {
@@ -62,7 +63,6 @@ const BackgroundSettings = ({ styleId }) => {
         ref={inputRef}
         type="file"
         onChange={evt => {
-          console.log('hello');
           upload(evt.target.files[0]);
         }}
       />

@@ -35,7 +35,6 @@ export const DraggableList = ({ id, list, disabled }) => {
   return (
     <Droppable key={id} droppableId={id} type={id}>
       {(provided, snapshot) => {
-        console.log(provided.placeholder);
         return (
           <List ref={provided.innerRef} {...provided.droppableProps}>
             {renderList(list)}

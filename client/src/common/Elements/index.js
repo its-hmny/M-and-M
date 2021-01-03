@@ -10,3 +10,4 @@ export { default as Text } from './Text';
 export { default as TextArea } from './TextArea';
 export { default as Spacer } from './Spacer';
 export { default as Background } from './Background';
+export { default as Camera } from './Camera';

@@ -53,7 +53,6 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
 
       {templates.length > 0 && (
         <Fragment>
-          <DialogTitle id="max-width-dialog-title">Templates</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Choose one of the available templates or create a new one with our{' '}

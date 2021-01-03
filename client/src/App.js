@@ -6,7 +6,7 @@ import Editor from './Editor';
 import Creator from './Creator';
 import Player from './Player';
 import Evaluator from './Evaluator';
-import Publisher from './Publisher/App';
+import Publisher from './Publisher';
 import NotFound from './NotFound';
 import * as ROUTES from './routes';
 

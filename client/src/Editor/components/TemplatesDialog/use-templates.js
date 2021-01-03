@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useReducer } from 'react';
-import axios from 'axios';
-
-const ENDPOINT = 'http://localhost:8000/templates';
+import axios from '../../../common/shared';
 
 const templatesFetchReducer = (state, action) => {
   switch (action.type) {
@@ -35,7 +33,7 @@ const useTemplates = () => {
   const retry = useCallback(async () => {
     dispatch({ type: 'FETCH_INIT' });
     try {
-      const { data } = await axios.get(ENDPOINT);
+      const { data } = await axios.get('templates');
       dispatch({ type: 'FETCH_SUCCESS', payload: data.templates });
     } catch (error) {
       dispatch({ type: 'FETCH_FAILURE' });

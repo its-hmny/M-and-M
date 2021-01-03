@@ -1,5 +1,7 @@
 import createStore from './createStore';
 
+import { SERVER_URL } from '../../common/constants';
+
 const useStylesStore = createStore(set => ({
   styleIds: {
     Text: ['DefaultText', 'SpaceText'],
@@ -15,6 +17,7 @@ const useStylesStore = createStore(set => ({
     AudioPlayer: ['DefaultAudioPlayer'],
     Spacer: ['DefaultSpacer'],
     Background: ['DefaultBackground'],
+    Camera: ['DefaultCamera'],
   },
   styles: {
     DefaultRadio: {},
@@ -68,16 +71,6 @@ const useStylesStore = createStore(set => ({
       color: '#000',
       backgroundColor: '#8cceb3',
     },
-    SpaceButton: {
-      fontFamily: 'Arial',
-      backgroundColor: 'blue',
-      color: 'white',
-    },
-    UnderwaterButton: {
-      fontFamily: 'Arial',
-      backgroundColor: 'aqua',
-      color: 'white',
-    },
     DefaultButtonGroup: {
       backgroundColor: 'transparent',
     },
@@ -108,7 +101,16 @@ const useStylesStore = createStore(set => ({
       width: '100%',
     },
     DefaultBackground: {
-      backgroundImage: 'url(http://localhost:8000/default_background.jpg)',
+      backgroundImage: `url(${SERVER_URL}/default_background.jpg)`,
+    },
+    DefaultCamera: {
+      CameraButton: {
+        color: '#000',
+      },
+      Button: {
+        color: '#000',
+        backgroundColor: '#8cceb3',
+      },
     },
   },
   addStyle: ({ componentName, styleId, baseStyleId }) => {
@@ -120,7 +122,6 @@ const useStylesStore = createStore(set => ({
   updateStyle: ({ styleId, ...subStyle }, parentStyleId) => {
     set(state => {
       if (parentStyleId) {
-        console.log(parentStyleId, styleId, subStyle);
         state.styles[parentStyleId][styleId] = {
           ...state.styles[parentStyleId][styleId],
           ...subStyle,
