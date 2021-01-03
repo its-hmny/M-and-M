@@ -53,9 +53,7 @@
     {
       "fragment": "SelectFragment",
       "props": {
-        "specificPath": [
-          "story"
-        ],
+        "specificPath": ["story"],
         "valToChange": "nextNode",
         "label": "Destination",
         "data": "id",
@@ -87,14 +85,8 @@
         "label": "Correct answer",
         "correctStory": "[CORRECT]",
         "wrongStory": "[WRONG]",
-        "selectPath": [
-          "story",
-          "nextNode"
-        ],
-        "pointsPath": [
-          "story",
-          "points"
-        ],
+        "selectPath": ["story", "nextNode"],
+        "pointsPath": ["story", "points"],
         "pointsValToChange": "[CORRECT]"
       }
     }
@@ -144,10 +136,7 @@
       "props": {
         "valToChange": "answers",
         "singleCorrectAnswer": true,
-        "selectPath": [
-          "story",
-          "nextNode"
-        ],
+        "selectPath": ["story", "nextNode"],
         "data": "id",
         "dataName": "name",
         "correctStory": "[CORRECT]",
@@ -170,10 +159,7 @@
       "props": {
         "valToChange": "answers",
         "singleCorrectAnswer": false,
-        "selectPath": [
-          "story",
-          "nextNode"
-        ],
+        "selectPath": ["story", "nextNode"],
         "data": "id",
         "dataName": "name",
         "correctStory": "[CORRECT]",
@@ -194,9 +180,7 @@
     {
       "fragment": "SelectFragment",
       "props": {
-        "specificPath": [
-          "story"
-        ],
+        "specificPath": ["story"],
         "valToChange": "nextNode",
         "label": "Destination",
         "data": "id",
