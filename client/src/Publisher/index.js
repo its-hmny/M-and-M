@@ -45,16 +45,20 @@ const useStyles = makeStyles(theme => ({
   list: {
     maxHeight: 'calc(100vh - 64px)',
     overflow: 'auto',
-    minWidth: 350,
+    flexBasis: 350,
+    flexShrink: 0,
     background: theme.palette.background.paper,
   },
   listItem: {
+    boxSizing: 'border-box',
+    maxWidth: 350,
     paddingTop: 2,
     paddingBottom: 2,
     paddingRight: theme.spacing(2),
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
+    overflow: 'hidden',
   },
   selected: {
     paddingRight: theme.spacing(2) - 3,
@@ -63,16 +67,17 @@ const useStyles = makeStyles(theme => ({
   },
   listSecondary: {
     paddingRight: 0,
+    overflow: 'hidden',
   },
   listItemText: {
     '& > .MuiListItemText-primary': {
-      maxWidth: 174,
       overflow: 'hidden',
       whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
     },
   },
   listItemIcons: {
+    flexShrink: 0,
     position: 'static',
     transform: 'none',
     display: 'flex',
