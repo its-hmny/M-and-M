@@ -1,16 +1,18 @@
-import React, { Fragment, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import { default as MuiLink } from '@material-ui/core/Link';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Link as MuiLink,
+  Tabs,
+  Tab,
+  Typography,
+} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import ReadOnly from '../ReadOnly';
@@ -33,12 +35,56 @@ const useStyles = makeStyles(theme => ({
   grid: {
     padding: theme.spacing(2),
   },
+  emptyContainer: {
+    width: 'min-content',
+  },
+  emptyTitle: {
+    minWidth: 'max-content',
+  },
 }));
 
 const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
   const classes = useStyles();
   const [current, setCurrent] = useState(0);
   const [{ templates, isError, isLoading }, retry] = useTemplates();
+
+  const alternativeContent = useMemo(() => {
+    if (isError) {
+      return <Failure onRetry={retry} />;
+    }
+
+    if (isLoading) {
+      return <Loading />;
+    }
+
+    if (templates.length === 0) {
+      return (
+        <div className={classes.emptyContainer}>
+          <div className={classes.emptyTitle}>
+            <DialogTitle variant="h6">
+              Wooops, seems you've never created any template...{' '}
+              <span role="img" aria-label="thinking emoji">
+                🤔
+              </span>
+            </DialogTitle>
+          </div>
+          <DialogContent>
+            <Typography>
+              What are you waiting for? Get to the Template Creator and build something
+              amazing!
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button color="primary" component={Link} to={CREATOR}>
+              Jump to Creator
+            </Button>
+          </DialogActions>
+        </div>
+      );
+    }
+
+    return null;
+  }, [templates, isError, isLoading, retry, classes]);
 
   return (
     <Dialog
@@ -47,12 +93,9 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
       onClose={onCancel}
       aria-labelledby="max-width-dialog-title"
     >
-      {isLoading && <Loading />}
-
-      {isError && <Failure onRetry={retry} />}
-
-      {templates.length > 0 && (
-        <Fragment>
+      {alternativeContent || (
+        <>
+          <DialogTitle>Templates</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Choose one of the available templates or create a new one with our{' '}
@@ -96,7 +139,7 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
               Confirm
             </Button>
           </DialogActions>
-        </Fragment>
+        </>
       )}
     </Dialog>
   );

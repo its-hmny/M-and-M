@@ -74,7 +74,7 @@ function SingleAnsChoices({
     if (!withSubmit && selectedAnswer) {
       onSubmit(isCorrect, [answers.find(answer => answer.id === selectedAnswer)]);
     }
-  }, [withSubmit, onSubmit, isCorrect, correctAnswer, selectedAnswer]);
+  }, [withSubmit, onSubmit, isCorrect, answers, selectedAnswer]);
 
   return (
     <div css={[base, style]}>

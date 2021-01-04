@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Typography,
-  Box,
   makeStyles,
   List,
   ListItem,
@@ -9,19 +7,15 @@ import {
   ListItemSecondaryAction,
   IconButton,
   Divider,
-  Tabs,
-  Tab,
   Fab,
   Tooltip,
 } from '@material-ui/core';
 import {
   Add as AddIcon,
   Delete as DeleteIcon,
-  Edit as EditIcon,
   FileCopy as FileCopyIcon,
   ExitToApp as ExitToAppIcon,
 } from '@material-ui/icons';
-import shortid from 'shortid';
 import { Link } from 'react-router-dom';
 
 import AreYouSureDialog from './AreYouSureDialog';

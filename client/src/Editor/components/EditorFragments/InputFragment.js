@@ -17,8 +17,6 @@ const InputFragment = ({ classNames, path, fragmentSpecificProps }) => {
     valToChange,
     label,
     onChange,
-    correctStory,
-    wrongStory,
     pointsPath,
     pointsValToChange,
   } = fragmentSpecificProps;

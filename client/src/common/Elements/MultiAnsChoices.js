@@ -79,7 +79,7 @@ function MultiAnsChoices({
         answers.filter(answer => selectedAnswers.includes(answer.id))
       );
     }
-  }, [withSubmit, onSubmit, isCorrect, correctAnswers, selectedAnswers]);
+  }, [withSubmit, onSubmit, isCorrect, correctAnswers, answers, selectedAnswers]);
 
   return (
     <div css={[base, style]}>

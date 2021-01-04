@@ -1,13 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Typography,
-  makeStyles,
-  colors,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Button, makeStyles, colors } from '@material-ui/core';
 
 import logo from '../assets/logo.svg';
 import * as ROUTES from '../routes';

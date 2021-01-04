@@ -55,7 +55,7 @@ const Graph = ({
     if (getEdges) {
       getEdges(edges.current);
     }
-  }, []);
+  }, [getNetwork, getNodes, getEdges, options]);
 
   useEffect(() => {
     const nodesChange = !isEqual(nodes.current, data.nodes);

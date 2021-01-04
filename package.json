@@ -9,9 +9,9 @@
     "Paolo Marzolo"
   ],
   "scripts": {
-    "start": "concurrently --kill-others \"yarn start:client\" \"yarn start:server\"",
-    "start:server": "yarn workspace @mnm/server start",
-    "start:client": "yarn workspace @mnm/client start"
+    "start": "concurrently -k -c cyan,magenta -n server,client \"yarn:start-server\" \"yarn:start-client\"",
+    "start-server": "yarn workspace @mnm/server start",
+    "start-client": "yarn workspace @mnm/client start"
   },
   "workspaces": [
     "client",

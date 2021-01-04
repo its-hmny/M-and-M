@@ -11,7 +11,6 @@ import {
   colors,
   Button,
 } from '@material-ui/core';
-import { useLocation } from 'react-router-dom';
 import QRCode from 'qrcode.react';
 import logo from '../assets/logo.png';
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -63,7 +62,6 @@ const useStyles = makeStyles(theme => ({
 
 const Form = ({ story, handleChange }) => {
   const classes = useStyles();
-  const location = useLocation();
 
   const handleChecks = (propName, value, isOn) => {
     handleChange(

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import Graph from '../../common/Graph';
 import {
   Options,
@@ -32,14 +32,14 @@ const ProgressGraph = () => {
     return () => window.removeEventListener('resize', resizeHandler);
   }, []);
 
+  const getNetwork = useCallback(network => (networkRef.current = network), []);
+
   return (
     <div ref={containerRef}>
       <Graph
         data={highlightPath({ ...getGraphFromStory(story) }, playerPath)}
         options={Options}
-        getNetwork={network => {
-          networkRef.current = network;
-        }}
+        getNetwork={getNetwork}
       />
     </div>
   );

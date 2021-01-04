@@ -1,3 +1,5 @@
+/* eslint jsx-a11y/img-redundant-alt: "off" */
+
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useState, useRef } from 'react';
@@ -63,7 +65,9 @@ const Camera = ({ style, initialValue, onSendPhoto }) => {
         capture
         onChange={handleTakePhoto}
       />
-      {photoUrl && <img src={photoUrl} alt="Your photo" width="100%" />}
+      {photoUrl && (
+        <img src={photoUrl} alt="The photo you take with your camera" width="100%" />
+      )}
       <Button
         onClick={handleClick}
         text={

@@ -148,14 +148,14 @@ const GraphCanvas = () => {
     deselectNode,
   ]);
 
+  const getNetwork = useCallback(network => (networkRef.current = network), []);
+
   return (
     <Graph
       data={getGraphFromStory(story)}
       options={Options}
       events={events}
-      getNetwork={network => {
-        networkRef.current = network;
-      }}
+      getNetwork={getNetwork}
     />
   );
 };

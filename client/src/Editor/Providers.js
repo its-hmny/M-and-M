@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { orange, pink } from '@material-ui/core/colors';
 import { Typography } from '@material-ui/core';
 
 import { EditorProvider } from './context/EditorContext';
@@ -20,7 +19,6 @@ const Providers = ({ children }) => {
         if (storyId !== undefined) {
           const res = await axios.get(`stories/${storyId}`);
           const newStory = res.data.payload;
-          console.log(newStory);
           setStory(newStory);
           setLoadedStory(true);
         } else {
