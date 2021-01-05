@@ -27,10 +27,11 @@ router.get('/', (_, res) => {
   });
 });
 router.get('/list', (_, res) => {
-  const storyFiles = fs.readdirSync(basePath);
-
+  let storyFiles = fs.readdirSync(basePath);
+  storyFiles = storyFiles.filter(story => story.includes('.json'));
   const result = storyFiles.map(story => {
     const data = fs.readFileSync(`${basePath}${story}`, 'utf8');
+
     const parsedData = JSON.parse(data);
     return {
       uuid: story.split('.')[0],

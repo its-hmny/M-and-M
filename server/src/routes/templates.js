@@ -13,6 +13,7 @@ shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX
 router.get('/', async (_, res) => {
   try {
     const fileNames = await fs.readdir(basePath);
+    fileNames = fileNames.filter(story => story.includes('.json'));
     const templates = await Promise.all(
       fileNames.map(fileName =>
         fs.readFile(path.join(basePath, fileName)).then(result => JSON.parse(result))
