@@ -41,9 +41,7 @@ function SingleAnsChoices({
   onSubmit = noop,
   initialValue = null,
 }) {
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-
-  useEffect(() => setSelectedAnswer(initialValue), [initialValue]);
+  const [selectedAnswer, setSelectedAnswer] = useState(initialValue);
 
   //let's only work with IDs
   const correctAnswer = useMemo(
@@ -85,7 +83,7 @@ function SingleAnsChoices({
             id={id}
             name={name}
             label={text}
-            selected={!!(id === selectedAnswer)}
+            selected={id === selectedAnswer}
             onSelected={handleSelected}
             style={style && style['Radio']}
           />

@@ -89,7 +89,7 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
   const addChoice = () => {
     setPathToValue(path || [], 'answers', [
       ...answers,
-      { value: ANSWER_VALUE.WRONG, id: shortid.generate(), text: 'Risposta' },
+      { value: ANSWER_VALUE.WRONG, id: shortid.generate(), imgURL: '', alt: 'image alt' },
     ]);
   };
   const deleteChoice = i => {
@@ -137,7 +137,7 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
 
     setPathToValue(pointsPath, index, newVal);
   };
-
+  console.log('wow');
   return (
     <div className={classNames.InspectorElement}>
       <Button
@@ -152,20 +152,25 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
         return (
           <div key={`answer-${i}`}>
             <Divider className={divider} />
+            <FilePickerFragment
+              className={classNames.InspectorElement}
+              classNames={classNames}
+              path={path.concat('answers', i) || []}
+              fragmentSpecificProps={{
+                acceptedFileType: 'image/*',
+                buttonLabel: 'Upload Image',
+                valToChange: 'imgURL',
+              }}
+            />
             <div style={{ display: 'flex', alignItems: 'bottom' }}>
-              <FilePickerFragment
-                acceptedFileType={'image/*'}
-                buttonLabel={'Upload Image'}
-                path={path.concat('answers', 'i') || []}
-                valToChange={'imgURL'}
-              />
               <TextField
+                value={answers[i].alt}
                 className={classNames.InspectorElement}
-                label={'Answer text'}
+                label={'Alt text'}
                 onChange={event =>
                   setPathToValue(
                     path.concat('answers', i) || [],
-                    'text',
+                    'alt',
                     event.target.value
                   )
                 }

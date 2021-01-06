@@ -17,11 +17,13 @@ export const EditorProvider = ({ children, userStory }) => {
 
     getFromPath: path => {
       let current = inProgressStory.nodes.find(node => node.id === focusedNode);
+
       path.forEach(key => {
         if (!current[key]) {
           current[key] = {};
         }
-
+        console.log(current);
+        console.log(key);
         current = current[key];
       });
       return current;

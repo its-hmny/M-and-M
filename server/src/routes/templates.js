@@ -12,7 +12,7 @@ shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX
 // Returns all templates added so far
 router.get('/', async (_, res) => {
   try {
-    const fileNames = await fs.readdir(basePath);
+    let fileNames = await fs.readdir(basePath);
     fileNames = fileNames.filter(story => story.includes('.json'));
     const templates = await Promise.all(
       fileNames.map(fileName =>

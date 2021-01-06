@@ -178,10 +178,33 @@
   ],
   "SingleAnsChoicesImages": [
     {
-      "fragment": "AnswerFragment",
+      "fragment": "AnswerFragmentImages",
       "props": {
         "valToChange": "answers",
         "singleCorrectAnswer": true,
+        "selectPath": ["story", "nextNode"],
+        "data": "id",
+        "dataName": "name",
+        "correctStory": "[CORRECT]",
+        "wrongStory": "[WRONG]",
+        "correctLabel": "Correct Destination",
+        "wrongLabel": "Wrong Destination"
+      }
+    },
+    {
+      "fragment": "CheckboxFragment",
+      "props": {
+        "valToChange": "withSubmit",
+        "label": "Submit Button"
+      }
+    }
+  ],
+  "MultiAnsChoicesImages": [
+    {
+      "fragment": "AnswerFragmentImages",
+      "props": {
+        "valToChange": "answers",
+        "singleCorrectAnswer": false,
         "selectPath": ["story", "nextNode"],
         "data": "id",
         "dataName": "name",

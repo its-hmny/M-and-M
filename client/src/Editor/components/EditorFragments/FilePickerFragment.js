@@ -15,9 +15,8 @@ const FilePickerFragment = props => {
   const loadToServer = toUpload => {
     const formData = new FormData();
     formData.append('file', toUpload);
-    const oldResourceId = getFromPath(path, valToChange)
-      [valToChange].split('/')
-      .slice(-1)[0];
+
+    const oldResourceId = getFromPath(path)[valToChange].split('/').slice(-1)[0];
 
     axios
       .delete(`resources/${oldResourceId}`)

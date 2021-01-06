@@ -4,13 +4,13 @@ import { useState, useMemo, useEffect } from 'react';
 import { Checkbox } from './Choice';
 import Button from './Button';
 
-/** renders a multiple choice component: checkbox
+/** renders a single choice component:
  * PARTS:
- *  - Choice -> input checkbox;
+ *  - Choice -> input radio;
  *  - Button (submit);
  *
  * STYLE SECTIONS:
- *  - Checkbox
+ *  - Radio
  *  - Button
  */
 
@@ -33,7 +33,7 @@ const base = css`
 
 const noop = () => {};
 
-function MultiAnsChoices({
+function MultiAnsChoicesImages({
   name,
   answers,
   withSubmit,
@@ -78,20 +78,22 @@ function MultiAnsChoices({
       );
     }
   }, [withSubmit, onSubmit, isCorrect, correctAnswers, answers, selectedAnswers]);
-
   return (
     <div css={[base, style]}>
       <div>
-        {answers.map(({ id, text }) => (
-          <Checkbox
-            key={id}
-            id={id}
-            name={name}
-            label={text}
-            selected={selectedAnswers.find(answerId => answerId === id)}
-            onSelected={handleSelected}
-            style={style && style.Checkbox}
-          />
+        {answers.map(({ id, imgURL, alt }) => (
+          <div>
+            <img src={imgURL} style={{ width: 100, height: 100 }} />
+            <Checkbox
+              key={id}
+              id={id}
+              name={name}
+              label={alt}
+              selected={selectedAnswers.find(answerId => answerId === id)}
+              onSelected={handleSelected}
+              style={style && style['Checkbox']}
+            />
+          </div>
         ))}
       </div>
 
@@ -111,4 +113,4 @@ function MultiAnsChoices({
     </div>
   );
 }
-export default MultiAnsChoices;
+export default MultiAnsChoicesImages;

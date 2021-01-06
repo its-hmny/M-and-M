@@ -153,6 +153,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
             <Divider className={divider} />
             <div style={{ display: 'flex', alignItems: 'bottom' }}>
               <TextField
+                value={answers[i].text}
                 className={classNames.InspectorElement}
                 label={'Answer text'}
                 onChange={event =>

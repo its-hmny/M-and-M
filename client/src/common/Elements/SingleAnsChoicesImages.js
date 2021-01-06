@@ -41,9 +41,7 @@ function SingleAnsChoicesImages({
   onSubmit = noop,
   initialValue = null,
 }) {
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-
-  useEffect(() => setSelectedAnswer(initialValue), [initialValue]);
+  const [selectedAnswer, setSelectedAnswer] = useState(initialValue);
 
   //let's only work with IDs
   const correctAnswer = useMemo(
@@ -79,15 +77,15 @@ function SingleAnsChoicesImages({
   return (
     <div css={[base, style]}>
       <div>
-        {answers.map(({ id, imgURL }) => (
+        {answers.map(({ id, imgURL, alt }) => (
           <div>
             <img src={imgURL} style={{ width: 100, height: 100 }} />
             <Radio
               key={id}
               id={id}
               name={name}
-              label={text}
-              selected={!!(id === selectedAnswer)}
+              label={alt}
+              selected={id === selectedAnswer}
               onSelected={handleSelected}
               style={style && style['Radio']}
             />
