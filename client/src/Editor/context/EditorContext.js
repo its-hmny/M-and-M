@@ -22,8 +22,6 @@ export const EditorProvider = ({ children, userStory }) => {
         if (!current[key]) {
           current[key] = {};
         }
-        console.log(current);
-        console.log(key);
         current = current[key];
       });
       return current;

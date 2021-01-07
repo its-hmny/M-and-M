@@ -233,5 +233,14 @@
         "dataName": "name"
       }
     }
+  ],
+  "YoutubePlayer": [
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "srcURL",
+        "label": "Youtube Link"
+      }
+    }
   ]
 }

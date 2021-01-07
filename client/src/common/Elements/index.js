@@ -13,3 +13,4 @@ export { default as TextArea } from './TextArea';
 export { default as Spacer } from './Spacer';
 export { default as Background } from './Background';
 export { default as Camera } from './Camera';
+export { default as YoutubePlayer } from './YoutubePlayer';
