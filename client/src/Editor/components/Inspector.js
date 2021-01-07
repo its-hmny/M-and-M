@@ -4,7 +4,7 @@ import { Paper, Typography, makeStyles } from '@material-ui/core';
 import { useEditor } from '../context/EditorContext';
 import CollapsableBox from './CollapsableBox';
 import properties from '../constants/ComponentProperties.json';
-
+import shortid from 'shortid';
 const useStyles = makeStyles(theme => ({
   InspectorPaperStyle: {
     padding: 15,
@@ -71,20 +71,20 @@ const Inspector = ({ onClose }) => {
 
     const global = !previousPath && (
       <CollapsableBox
-        key="Global"
+        key={`${workingActivity}-Global`}
         name="Global"
-        isOpen={opened.some(item => item === 'Global')}
-        onClick={() => toggleBox('Global')}
+        isOpen={opened.some(item => item === `${workingActivity}-Global`)}
+        onClick={() => toggleBox(`${workingActivity}-Global`)}
         fieldsToSet={properties['Global']}
       />
     );
 
     const missions = !previousPath && (
       <CollapsableBox
-        key="Missions"
+        key={`${workingActivity}-Missions`}
         name="Missions"
-        isOpen={opened.some(item => item === 'Missions')}
-        onClick={() => toggleBox('Missions')}
+        isOpen={opened.some(item => item === `${workingActivity}-Missions`)}
+        onClick={() => toggleBox(`${workingActivity}-Missions`)}
         fieldsToSet={properties['Missions']}
       />
     );
@@ -96,10 +96,10 @@ const Inspector = ({ onClose }) => {
         const { name } = component;
         return [
           <CollapsableBox
-            key={component.id}
+            key={`${workingActivity}-${component.id}`}
             name={name}
-            isOpen={opened.some(item => item === component.id)}
-            onClick={() => toggleBox(component.id)}
+            isOpen={opened.some(item => item === `${workingActivity}-${component.id}`)}
+            onClick={() => toggleBox(`${workingActivity}-${component.id}`)}
             indentLevel={level}
             fieldsToSet={properties[name]}
             pathToVal={[...absPath, index]}
