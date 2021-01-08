@@ -31,6 +31,7 @@ const initialPlayerLog = {
     timeAtStart: { label: 'Started', value: undefined },
     timeAtLastResponse: { label: 'Time at last response', value: undefined },
     nQuestionDone: { label: 'Question done', value: 0 },
+    avgTime4Resp: { label: 'Average time for response', value: undefined },
     // And so on...
   },
 };
@@ -47,6 +48,7 @@ io.on('connection', socket => {
     // Due to reference issue this is the only method to share a template without occuring
     // in reference issues due to object reference handling in JS
     const newEntry = JSON.parse(JSON.stringify({ ...initialPlayerLog, id: userId }));
+    newEntry.stats.timeAtStart.impl = new Date();
     newEntry.stats.timeAtStart.value = new Date().toLocaleTimeString();
     // Keep track of the new player in the DB
     database[storyId].push(newEntry);
@@ -79,9 +81,13 @@ io.on('connection', socket => {
     const playerLog = (database[story] || []).find(player => player.id === senderId);
     if (playerLog) {
       // The player changed node in the story so removes all the data from the previous one
-      playerLog.history.push({ ...payload, patchs: [] });
-      playerLog.stats.nQuestionDone.value++;
-      playerLog.stats.timeAtLastResponse.value = new Date().toLocaleTimeString();
+      const { stats, history } = playerLog;
+      history.push({ ...payload, patchs: [] });
+      stats.nQuestionDone.value++;
+      stats.timeAtLastResponse.value = new Date().toLocaleTimeString();
+      let deltaTimeSecs = (new Date() - stats.timeAtStart.impl) / (stats.nQuestionDone.value * 1000);
+      deltaTimeSecs = isNaN(deltaTimeSecs) ? 0 : deltaTimeSecs;
+      stats.avgTime4Resp.value = `${Math.round(deltaTimeSecs)} sec/resp.`;
       io.emit('update:position', { story, senderId, receiverId, payload: playerLog });
     }
   });

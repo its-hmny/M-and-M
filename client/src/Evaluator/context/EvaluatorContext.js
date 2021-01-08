@@ -12,6 +12,7 @@ export const EvaluatorProvider = ({ children }) => {
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
+  const [userMessage, setUserMessage] = useState('Loading...')
   const socket = useMemo(
     () => io('http://localhost:8000', { query: { type: 'evaluator', storyId } }),
     [storyId]
@@ -24,6 +25,7 @@ export const EvaluatorProvider = ({ children }) => {
         const loadedStory = (await axios.get(`/stories/${storyId}`)).data.payload;
         setStory(loadedStory);
       } catch (err) {
+        setUserMessage('Error the story requested does not exist')
         console.warn('Error loading the story from server', err);
       }
     };
@@ -122,7 +124,7 @@ export const EvaluatorProvider = ({ children }) => {
 
   return (
     <EvaluatorContext.Provider value={toProvide}>
-      {story ? children : <div>Loading...</div>}
+      {story ? children : <div>{userMessage}</div>}
     </EvaluatorContext.Provider>
   );
 };

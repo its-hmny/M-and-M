@@ -1,6 +1,7 @@
-import React from 'react';
-import { Badge, Avatar, Typography, makeStyles } from '@material-ui/core';
-import { List, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Badge, Avatar, Typography, Button, Input, makeStyles } from '@material-ui/core';
+import { List, ListItem, ListItemText, ListItemAvatar, Chip } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import { useEvaluator } from '../context/EvaluatorContext';
 
 const useStyles = makeStyles(theme => ({
@@ -17,19 +18,41 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const RenameDialog = ({ isOpen, close }) => {
+  const { selectedPlayer, updatePlayerLog } = useEvaluator();
+  const [newName, setName] = useState(undefined);
+
+  const reset = () => {
+    setName(undefined);
+    close();
+  };
+
+  const saveChanges = () => {
+    updatePlayerLog(selectedPlayer.id, { name: newName });
+    reset();
+  };
+
+  return (
+    <Dialog open={isOpen} onClose={reset}>
+      <DialogTitle>Rename the player</DialogTitle>
+      <DialogContent>
+        <Input autoFocus={true} value={newName} onChange={e => setName(e.target.value)} />
+      </DialogContent>
+      <DialogActions>
+        <Button color="primary" variant="contained" onClick={saveChanges}>Save</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
 const ActivePlayersList = () => {
   const {
     selectedPlayer,
     playersLog,
     setFocusedPlayer,
-    updatePlayerLog,
   } = useEvaluator();
   const { container, listItem } = useStyles();
-
-  const renamePlayer = playerId => {
-    const newName = prompt('Choose a new name for this player');
-    updatePlayerLog(playerId, { name: newName });
-  };
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const generatedTab = () =>
     playersLog.map(player => {
@@ -42,7 +65,7 @@ const ActivePlayersList = () => {
           key={id}
           selected={selectedPlayer && id === selectedPlayer.id}
           onClick={() => setFocusedPlayer(id)}
-          onDoubleClick={() => renamePlayer(id)}
+          onDoubleClick={() => setDialogOpen(true)}
           disabled={hasFinished}
           className={listItem}
         >
@@ -50,7 +73,12 @@ const ActivePlayersList = () => {
           <ListItemAvatar>
             <Avatar src={avatar} />
           </ListItemAvatar>
-          <ListItemText>{avaiableName}</ListItemText>
+          <ListItemText
+            primary={avaiableName}
+            secondary={
+              <Chip color="primary" size="small" label={hasFinished ? 'Completed' : 'Online'} />
+            }
+          />
         </ListItem>
       );
     });
@@ -62,10 +90,11 @@ const ActivePlayersList = () => {
           Nobody is currently playing your story
         </Typography>
       ) : (
-        <List orientation="vertical" indicatorColor="primary">
-          {generatedTab()}
-        </List>
-      )}
+          <List orientation="vertical" indicatorColor="primary">
+            {generatedTab()}
+          </List>
+        )}
+      <RenameDialog isOpen={dialogOpen} close={() => setDialogOpen(false)} />
     </div>
   );
 };

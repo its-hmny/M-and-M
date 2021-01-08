@@ -17,12 +17,14 @@ import {
 } from '@material-ui/core';
 
 const StatsWidget = ({ player }) => {
-  const { avatar, name, id, stats } = player;
+  const { avatar, name, id, stats, score } = player;
+  const statsRow = [{ label: 'Score', value: score }, ...Object.values(stats)];
+
   return (
     <Card>
       <CardHeader avatar={<Avatar src={avatar} />} title={name || id} subheader={id} />
       <CardContent>
-        <Typography variant="h6">Some shit stats for the foking player</Typography>
+        <Typography variant="subtitle1">Here some stats about the player:</Typography>
         <TableContainer component={Paper}>
           <Table stickyHeader>
             <TableHead>
@@ -31,9 +33,8 @@ const StatsWidget = ({ player }) => {
                 <TableCell align="center">Result</TableCell>
               </TableRow>
             </TableHead>
-
             <TableBody>
-              {Object.values(stats).map(stat => (
+              {statsRow.map(stat => (
                 <TableRow key={`${stat.label}-${id}`}>
                   <TableCell align="center">{stat.label}</TableCell>
                   <TableCell align="center">{stat.value || 'No data avaiable'}</TableCell>
