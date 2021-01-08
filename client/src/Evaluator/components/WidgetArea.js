@@ -22,10 +22,7 @@ const WidgetArea = () => {
 
   return (
     <>
-      <ChatWidget
-        isOpen={currentOpen === 0}
-        onOpen={() => toggleContained(0)}
-      />
+      <ChatWidget isOpen={currentOpen === 0} onOpen={() => toggleContained(0)} />
 
       <WidgetLauncher
         icon={smartphoneIcon}
