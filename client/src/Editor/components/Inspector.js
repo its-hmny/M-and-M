@@ -4,7 +4,7 @@ import { Paper, Typography, makeStyles } from '@material-ui/core';
 import { useEditor } from '../context/EditorContext';
 import CollapsableBox from './CollapsableBox';
 import properties from '../constants/ComponentProperties.json';
-import shortid from 'shortid';
+
 const useStyles = makeStyles(theme => ({
   InspectorPaperStyle: {
     padding: 15,

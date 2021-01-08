@@ -25,7 +25,7 @@ function DialogStyleName({ open, initialId, onComplete }) {
           label="Style id"
           value={styleId}
           onChange={handleChange}
-          onKeyPress={e => e.key == 'Enter' && handleComplete()}
+          onKeyPress={e => e.key === 'Enter' && handleComplete()}
         />
       </DialogContent>
       <DialogActions>

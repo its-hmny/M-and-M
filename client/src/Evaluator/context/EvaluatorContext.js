@@ -12,7 +12,7 @@ export const EvaluatorProvider = ({ children }) => {
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
-  const [userMessage, setUserMessage] = useState('Loading...')
+  const [userMessage, setUserMessage] = useState('Loading...');
   const socket = useMemo(
     () => io('http://localhost:8000', { query: { type: 'evaluator', storyId } }),
     [storyId]
@@ -25,7 +25,7 @@ export const EvaluatorProvider = ({ children }) => {
         const loadedStory = (await axios.get(`/stories/${storyId}`)).data.payload;
         setStory(loadedStory);
       } catch (err) {
-        setUserMessage('Error the story requested does not exist')
+        setUserMessage('Error the story requested does not exist');
         console.warn('Error loading the story from server', err);
       }
     };
@@ -76,6 +76,24 @@ export const EvaluatorProvider = ({ children }) => {
           if (playerLog.pendingEvaluation.length < payload.pendingEvaluation.length)
             pushNotification(`New evaluation requested by ${name || id}`);
           mergePlayerLog(playerLog, payload);
+        }
+      }
+    });
+
+    socket.on('chat-msg-recv', data => {
+      const { story, senderId, receiverId, msg } = data;
+      if (story === storyId) {
+        const playerId = senderId === `evaluator${storyId}` ? receiverId : senderId;
+        const playerLog = playersLog.find(player => player.id === playerId);
+        if (playerLog) {
+          const toSave = { sender: senderId, content: msg };
+          playerLog.chatLog = [...playerLog.chatLog, toSave];
+          // Maybe updatePlayerLog
+          if (senderId !== `evaluator${storyId}`) {
+            pushNotification(`New message from ${playerLog.name || playerLog.id}`);
+            playerLog.unreadMessages++;
+          }
+          mergePlayerLog(playerLog, playerLog);
         }
       }
     });

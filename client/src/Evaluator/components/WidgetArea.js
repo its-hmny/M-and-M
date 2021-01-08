@@ -7,7 +7,7 @@ import infoIcon from '../assets/svgs/info.svg';
 import { toggleWidget } from 'react-chat-widget';
 
 const WidgetArea = () => {
-  const { selectedPlayer, socket } = useEvaluator();
+  const { selectedPlayer } = useEvaluator();
   const [currentOpen, setCurrentOpen] = useState(undefined);
 
   const toggleContained = nToggle =>
@@ -25,7 +25,6 @@ const WidgetArea = () => {
       <ChatWidget
         isOpen={currentOpen === 0}
         onOpen={() => toggleContained(0)}
-        socket={socket}
       />
 
       <WidgetLauncher
