@@ -39,18 +39,16 @@ const RenameDialog = ({ isOpen, close }) => {
         <Input autoFocus={true} value={newName} onChange={e => setName(e.target.value)} />
       </DialogContent>
       <DialogActions>
-        <Button color="primary" variant="contained" onClick={saveChanges}>Save</Button>
+        <Button color="primary" variant="contained" onClick={saveChanges}>
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
 const ActivePlayersList = () => {
-  const {
-    selectedPlayer,
-    playersLog,
-    setFocusedPlayer,
-  } = useEvaluator();
+  const { selectedPlayer, playersLog, setFocusedPlayer } = useEvaluator();
   const { container, listItem } = useStyles();
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -76,7 +74,11 @@ const ActivePlayersList = () => {
           <ListItemText
             primary={avaiableName}
             secondary={
-              <Chip color="primary" size="small" label={hasFinished ? 'Completed' : 'Online'} />
+              <Chip
+                color="primary"
+                size="small"
+                label={hasFinished ? 'Completed' : 'Online'}
+              />
             }
           />
         </ListItem>
@@ -90,10 +92,10 @@ const ActivePlayersList = () => {
           Nobody is currently playing your story
         </Typography>
       ) : (
-          <List orientation="vertical" indicatorColor="primary">
-            {generatedTab()}
-          </List>
-        )}
+        <List orientation="vertical" indicatorColor="primary">
+          {generatedTab()}
+        </List>
+      )}
       <RenameDialog isOpen={dialogOpen} close={() => setDialogOpen(false)} />
     </div>
   );

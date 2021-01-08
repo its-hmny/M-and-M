@@ -85,7 +85,8 @@ io.on('connection', socket => {
       history.push({ ...payload, patchs: [] });
       stats.nQuestionDone.value++;
       stats.timeAtLastResponse.value = new Date().toLocaleTimeString();
-      let deltaTimeSecs = (new Date() - stats.timeAtStart.impl) / (stats.nQuestionDone.value * 1000);
+      let deltaTimeSecs =
+        (new Date() - stats.timeAtStart.impl) / (stats.nQuestionDone.value * 1000);
       deltaTimeSecs = isNaN(deltaTimeSecs) ? 0 : deltaTimeSecs;
       stats.avgTime4Resp.value = `${Math.round(deltaTimeSecs)} sec/resp.`;
       io.emit('update:position', { story, senderId, receiverId, payload: playerLog });
