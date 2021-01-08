@@ -18,6 +18,7 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
   const classes = useStyles();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const handleComplete = () => onSave({ name, description });
 
   return (
     <Dialog open={open} onClose={onCancel} aria-labelledby="save-dialog">
@@ -37,6 +38,7 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
           fullWidth
           value={name}
           onChange={evt => setName(evt.target.value)}
+          onKeyPress={e => e.key == 'Enter' && handleComplete()}
         />
         <TextField
           variant="outlined"
@@ -48,17 +50,14 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
           rows={4}
           value={description}
           onChange={evt => setDescription(evt.target.value)}
+          onKeyPress={e => e.key == 'Enter' && handleComplete()}
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel} color="primary">
           Cancel
         </Button>
-        <Button
-          onClick={() => onSave({ name, description })}
-          color="primary"
-          disabled={!name}
-        >
+        <Button onClick={handleComplete} color="primary" disabled={!name}>
           Save
         </Button>
       </DialogActions>

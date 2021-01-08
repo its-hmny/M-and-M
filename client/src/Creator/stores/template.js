@@ -179,7 +179,7 @@ const useTemplateStore = createStore(set => ({
     {
       id: shortid.generate(),
       name: 'Button',
-      text: 'Some Button inside ButtonGroup',
+      text: 'A Button',
       styleId: 'DefaultButton',
     },
     {

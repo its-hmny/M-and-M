@@ -20,7 +20,13 @@ function DialogStyleName({ open, initialId, onComplete }) {
       <DialogTitle>Style Id</DialogTitle>
       <DialogContent>
         <Typography>What do you want to call your new style?</Typography>
-        <TextField autoFocus label="Style id" value={styleId} onChange={handleChange} />
+        <TextField
+          autoFocus
+          label="Style id"
+          value={styleId}
+          onChange={handleChange}
+          onKeyPress={e => e.key == 'Enter' && handleComplete()}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleComplete}>Ok</Button>
