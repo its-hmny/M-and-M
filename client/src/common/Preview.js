@@ -15,6 +15,7 @@ const useStyles = makeStyles({
     height: '70vh',
     overflowY: 'auto',
     zIndex: 0,
+    background: 'white',
   },
   smartphoneBg: {
     position: 'absolute',

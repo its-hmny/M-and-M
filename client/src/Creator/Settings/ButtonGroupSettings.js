@@ -22,7 +22,9 @@ function ButtonGroupSettings({ componentId, styleId }) {
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
-  const onChange = subStyle => updateStyle({ styleId, ...subStyle });
+  const onChange = subStyle => {
+    updateStyle({ styleId, ...subStyle });
+  };
 
   // contained buttons
   const [currentlyEditing, setCurrentlyEditing] = useState(0);

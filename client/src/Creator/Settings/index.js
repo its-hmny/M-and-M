@@ -11,3 +11,6 @@ export { default as AudioPlayerSettings } from './AudioPlayerSettings';
 export { default as SpacerSettings } from './SpacerSettings';
 export { default as BackgroundSettings } from './BackgroundSettings';
 export { default as CameraSettings } from './CameraSettings';
+export { default as SingleAnsChoicesImagesSettings } from './SingleAnsChoicesImagesSettings';
+export { default as MultiAnsChoicesImagesSettings } from './MultiAnsChoicesImagesSettings';
+export { default as YoutubePlayerSettings } from './YoutubePlayerSettings';

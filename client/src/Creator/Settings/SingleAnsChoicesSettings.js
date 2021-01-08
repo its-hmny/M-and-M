@@ -32,12 +32,12 @@ function ChoicesSettings({ styleId }) {
         onChange={subStyle => onChange(subStyle, 'Root')}
         value={styles[styleId]['Root']}
       />
-      <p>edit radio settings</p>
+      <p>Edit radio settings</p>
       <ColorPickerInput
         onChange={subStyle => onChange(subStyle, 'Radio')}
         value={styles[styleId]['Radio']}
       />
-      <p>edit submit settings</p>
+      <p>Edit submit settings</p>
       <ColorPickerInput
         onChange={subStyle => onChange(subStyle, 'Button')}
         value={styles[styleId]['Button']}

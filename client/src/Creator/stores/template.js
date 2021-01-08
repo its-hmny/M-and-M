@@ -134,6 +134,81 @@ export const componentBuilders = {
     name: 'Camera',
     styleId: 'DefaultCamera',
   }),
+  SingleAnsChoicesImages: () => ({
+    name: 'SingleAnsChoicesImages',
+    styleId: 'DefaultSingleAnsChoicesImages',
+    withSubmit: true,
+    answers: [
+      {
+        id: shortid.generate(),
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        alt: 'alt text',
+        value: ANSWER_VALUE.CORRECT,
+        points: 0,
+      },
+      {
+        id: shortid.generate(),
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        alt: 'alt text',
+        value: ANSWER_VALUE.WRONG,
+        points: 0,
+      },
+      {
+        id: shortid.generate(),
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        alt: 'alt text',
+        value: ANSWER_VALUE.WRONG,
+        points: 0,
+      },
+      {
+        id: shortid.generate(),
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        alt: 'alt text',
+        value: ANSWER_VALUE.WRONG,
+        points: 0,
+      },
+    ],
+  }),
+  MultiAnsChoicesImages: () => ({
+    name: 'MultiAnsChoicesImages',
+    styleId: 'DefaultMultiAnsChoicesImages',
+    withSubmit: true,
+    answers: [
+      {
+        id: shortid.generate(),
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        alt: 'alt text',
+        value: ANSWER_VALUE.CORRECT,
+        points: 0,
+      },
+      {
+        id: shortid.generate(),
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        alt: 'alt text',
+        value: ANSWER_VALUE.CORRECT,
+        points: 0,
+      },
+      {
+        id: shortid.generate(),
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        alt: 'alt text',
+        value: ANSWER_VALUE.WRONG,
+        points: 0,
+      },
+      {
+        id: shortid.generate(),
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        alt: 'alt text',
+        value: ANSWER_VALUE.WRONG,
+        points: 0,
+      },
+    ],
+  }),
+  YoutubePlayer: () => ({
+    name: 'YoutubePlayer',
+    styleId: 'DefaultYoutubePlayer',
+    srcURL: '',
+  }),
 };
 
 const recursiveFind = (components, targetId) => {

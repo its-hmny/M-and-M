@@ -10,7 +10,7 @@ const YoutubePlayer = ({ srcURL, style }) => {
     <div css={[base, style]}>
       <div className="player">
         <iframe
-          style={{ width: '100%', height: '20%' }}
+          style={style}
           src={`https://www.youtube.com/embed/${embedID}`}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; 

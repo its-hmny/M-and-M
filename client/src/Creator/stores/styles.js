@@ -18,6 +18,9 @@ const useStylesStore = createStore(set => ({
     Spacer: ['DefaultSpacer'],
     Background: ['DefaultBackground'],
     Camera: ['DefaultCamera'],
+    SingleAnsChoicesImages: ['DefaultSingleAnsChoicesImages'],
+    MultiAnsChoicesImages: ['DefaultMultiAnsChoicesImages'],
+    YoutubePlayer: ['DefaultYoutubePlayer'],
   },
   styles: {
     DefaultRadio: {},
@@ -25,78 +28,78 @@ const useStylesStore = createStore(set => ({
     DefaultChoices: {
       Root: {},
       Radio: {
-        color: '#000',
+        color: '#000000',
         backgroundColor: '#8cceb3',
       },
       Checkbox: {},
       Button: {
-        color: '#000',
+        color: '#000000',
         backgroundColor: '#8cceb3',
       },
     },
     DefaultSingleAnsChoices: {
       Root: {},
       Radio: {
-        color: '#100',
+        color: '#100000',
         backgroundColor: '#8cceb3',
       },
       Checkbox: {},
       Button: {
-        color: '#100',
+        color: '#100000',
         backgroundColor: '#8cceb3',
       },
     },
     DefaultMultiAnsChoices: {
       Root: {},
-      Radio: {
-        color: '#000',
+      Radio: {},
+      Checkbox: {
+        color: '#000000',
         backgroundColor: '#8cceb3',
       },
-      Checkbox: {},
       Button: {
-        color: '#000',
+        color: '#000000',
         backgroundColor: '#8cceb3',
       },
     },
     DefaultText: {
       fontFamily: 'Arial',
       fontSize: '16px',
-      color: '#000',
+      color: '#000000',
     },
     SpaceText: {
       fontFamily: 'Arial',
       fontSize: '30px',
     },
     DefaultButton: {
-      color: '#000',
+      color: '#000000',
       backgroundColor: '#8cceb3',
     },
     DefaultButtonGroup: {
       backgroundColor: 'transparent',
     },
     SpaceButtonGroup: {
-      backgroundColor: 'white',
+      backgroundColor: '#FFFFFF',
     },
     DefaultTextArea: {
-      color: 'black',
-      backgroundColor: 'white',
+      color: '#000000',
+      backgroundColor: '#FFFFFF',
     },
     DefaultInput: {
-      color: 'black',
-      backgroundColor: 'white',
+      color: '#000000',
+      backgroundColor: '#FFFFFF',
     },
     DefaultImage: {
       width: '100%',
-      color: 'black',
-      backgroundColor: 'white',
+      color: '#000000',
+      backgroundColor: '#FFFFFF',
     },
     DefaultAudioPlayer: {
-      color: 'black',
-      backgroundColor: 'white',
+      color: '#000000',
+      backgroundColor: '#FFFFFF',
     },
     DefaultSpacer: {
-      color: 'white',
-      backgroundColor: 'white',
+      color: '#FFFFFF',
+      backgroundColor: '#FFFFFF',
       height: '20%',
       width: '100%',
     },
@@ -105,12 +108,42 @@ const useStylesStore = createStore(set => ({
     },
     DefaultCamera: {
       CameraButton: {
-        color: '#000',
+        color: '#000000',
       },
       Button: {
-        color: '#000',
+        color: '#000000',
         backgroundColor: '#8cceb3',
       },
+    },
+    DefaultSingleAnsChoicesImages: {
+      Root: {},
+      Image: { width: '100%' },
+      Radio: {
+        color: '#000000',
+        backgroundColor: '#8cceb3',
+      },
+      Checkbox: {},
+
+      Button: {
+        color: '#000000',
+        backgroundColor: '#8cceb3',
+      },
+    },
+    DefaultMultiAnsChoicesImages: {
+      Root: {},
+      Image: { width: '100%' },
+      Radio: {},
+      Checkbox: { color: '#000000', backgroundColor: '#8cceb3' },
+      Button: {
+        color: '#000000',
+        backgroundColor: '#8cceb3',
+      },
+    },
+    DefaultYoutubePlayer: {
+      width: '100%',
+      height: '20%',
+      color: '#000000',
+      backgroundColor: '#FFFFFF',
     },
   },
   addStyle: ({ componentName, styleId, baseStyleId }) => {

@@ -29,6 +29,8 @@ const base = css`
     margin-bottom: 1rem;
     width: 100%;
   }
+  .Image {
+  }
 `;
 
 const noop = () => {};
@@ -75,11 +77,11 @@ function SingleAnsChoicesImages({
   }, [withSubmit, onSubmit, isCorrect, answers, selectedAnswer]);
 
   return (
-    <div css={[base, style]}>
+    <div css={[base, style]} style={style['Root']}>
       <div>
         {answers.map(({ id, imgURL, alt }) => (
           <div>
-            <img src={imgURL} style={{ width: 100, height: 100 }} />
+            <img class="Image" src={imgURL} style={base && style['Image']} />
             <Radio
               key={id}
               id={id}

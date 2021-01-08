@@ -29,6 +29,8 @@ const base = css`
     margin-bottom: 1rem;
     width: 100%;
   }
+  .Image {
+  }
 `;
 
 const noop = () => {};
@@ -83,7 +85,7 @@ function MultiAnsChoicesImages({
       <div>
         {answers.map(({ id, imgURL, alt }) => (
           <div>
-            <img src={imgURL} style={{ width: 100, height: 100 }} />
+            <img class="Image" src={imgURL} style={base && style['Image']} />
             <Checkbox
               key={id}
               id={id}
