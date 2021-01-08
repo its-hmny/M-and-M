@@ -80,6 +80,24 @@ export const EvaluatorProvider = ({ children }) => {
       }
     });
 
+    socket.on('chat-msg-recv', data => {
+      const { story, senderId, receiverId, msg } = data;
+      if (story === storyId) {
+        const playerId = senderId === `evaluator${storyId}` ? receiverId : senderId;
+        const playerLog = playersLog.find(player => player.id === playerId);
+        if (playerLog) {
+          const toSave = { sender: senderId, content: msg };
+          playerLog.chatLog = [...playerLog.chatLog, toSave];
+          // Maybe updatePlayerLog
+          if (senderId !== `evaluator${storyId}`) {
+            pushNotification(`New message from ${playerLog.name || playerLog.id}`);
+            playerLog.unreadMessages++;
+          }
+          mergePlayerLog(playerLog, playerLog);
+        }
+      }
+    });
+
     socket.on('update:eval', data => {
       const { story, playerId, newLog } = data;
       if (story === storyId) {

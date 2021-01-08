@@ -38,7 +38,7 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
           fullWidth
           value={name}
           onChange={evt => setName(evt.target.value)}
-          onKeyPress={e => e.key == 'Enter' && handleComplete()}
+          onKeyPress={e => e.key === 'Enter' && handleComplete()}
         />
         <TextField
           variant="outlined"
@@ -50,7 +50,7 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
           rows={4}
           value={description}
           onChange={evt => setDescription(evt.target.value)}
-          onKeyPress={e => e.key == 'Enter' && handleComplete()}
+          onKeyPress={e => e.key === 'Enter' && handleComplete()}
         />
       </DialogContent>
       <DialogActions>
