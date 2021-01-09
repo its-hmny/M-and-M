@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ColorPickerInput from './atoms/ColorPicker';
+import TextColorPicker from './atoms/TextColorPicker';
+import BackgroundColorPicker from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
@@ -21,7 +22,7 @@ const removePercent = value => Number(value.replace('%', ''));
 //   Button: { /* styles applied to submit component if present */}
 // }
 
-function ChoicesSettings({ styleId }) {
+function SingleAnsChoicesImagesSettings({ styleId }) {
   const { widthIcon } = useStyles();
   // Choices styles
   const { styles, updateStyle } = useStylesStore(state => ({
@@ -41,11 +42,6 @@ function ChoicesSettings({ styleId }) {
   };
   return (
     <div>
-      {/* edit root styles */}
-      <ColorPickerInput
-        onChange={subStyle => onChange(subStyle, 'Root')}
-        value={styles[styleId]['Root']}
-      />
       <p>Edit Image settings</p>
       <Typography id="width-slider" gutterBottom>
         Width and Height
@@ -64,12 +60,20 @@ function ChoicesSettings({ styleId }) {
         </Grid>
       </Grid>
       <p>Edit Radio settings</p>
-      <ColorPickerInput
+      <TextColorPicker
+        onChange={subStyle => onChange(subStyle, 'Radio')}
+        value={styles[styleId]['Radio']}
+      />
+      <BackgroundColorPicker
         onChange={subStyle => onChange(subStyle, 'Radio')}
         value={styles[styleId]['Radio']}
       />
       <p>Edit submit settings</p>
-      <ColorPickerInput
+      <TextColorPicker
+        onChange={subStyle => onChange(subStyle, 'Button')}
+        value={styles[styleId]['Button']}
+      />
+      <BackgroundColorPicker
         onChange={subStyle => onChange(subStyle, 'Button')}
         value={styles[styleId]['Button']}
       />
@@ -77,4 +81,4 @@ function ChoicesSettings({ styleId }) {
   );
 }
 
-export default ChoicesSettings;
+export default SingleAnsChoicesImagesSettings;

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import ColorPickerInput from './atoms/ColorPicker';
+import TextColorPicker from './atoms/TextColorPicker';
+import BackgroundColorPicker from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
@@ -23,7 +24,7 @@ const SpacerSettings = ({ styleId }) => {
   };
   return (
     <div>
-      <ColorPickerInput onChange={onChange} value={styles[styleId]} />
+      <BackgroundColorPicker onChange={onChange} value={styles[styleId]} />
       <div>
         <Typography id="height-slider" gutterBottom>
           Height

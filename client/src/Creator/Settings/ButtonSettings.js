@@ -1,5 +1,6 @@
 import React from 'react';
-import ColorPickerInput from './atoms/ColorPicker';
+import TextColorPickerInput from './atoms/TextColorPicker';
+import BackgroundColorPickerInput from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
 
 function ButtonSettings({ componentId, styleId }) {
@@ -11,7 +12,8 @@ function ButtonSettings({ componentId, styleId }) {
 
   return (
     <div>
-      <ColorPickerInput onChange={onChange} value={styles[styleId]} />
+      <TextColorPickerInput onChange={onChange} value={styles[styleId]} />
+      <BackgroundColorPickerInput onChange={onChange} value={styles[styleId]} />
     </div>
   );
 }

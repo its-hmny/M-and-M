@@ -1,6 +1,7 @@
 import React from 'react';
 
-import ColorPickerInput from './atoms/ColorPicker';
+import TextColorPicker from './atoms/TextColorPicker';
+import BackgroundColorPicker from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
 
 // Choices style object reference:
@@ -24,12 +25,16 @@ const CameraSettings = ({ styleId }) => {
     );
   return (
     <div>
-      <ColorPickerInput
+      <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'CameraButton')}
         value={styles[styleId]['CameraButton']}
       />
       <p>Edit submit Button settings</p>
-      <ColorPickerInput
+      <TextColorPicker
+        onChange={subStyle => onChange(subStyle, 'Button')}
+        value={styles[styleId]['Button']}
+      />
+      <BackgroundColorPicker
         onChange={subStyle => onChange(subStyle, 'Button')}
         value={styles[styleId]['Button']}
       />

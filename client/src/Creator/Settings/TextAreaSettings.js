@@ -1,6 +1,7 @@
 import React from 'react';
 
-import ColorPickerInput from './atoms/ColorPicker';
+import TextColorPicker from './atoms/TextColorPicker';
+import BackgroundColorPicker from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
 
 function TextAreaSettings({ styleId }) {
@@ -12,7 +13,8 @@ function TextAreaSettings({ styleId }) {
 
   return (
     <div>
-      <ColorPickerInput onChange={onChange} value={styles[styleId]} />
+      <TextColorPicker onChange={onChange} value={styles[styleId]} />
+      <BackgroundColorPicker onChange={onChange} value={styles[styleId]} />
     </div>
   );
 }

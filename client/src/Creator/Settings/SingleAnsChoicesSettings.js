@@ -1,6 +1,7 @@
 import React from 'react';
 
-import ColorPickerInput from './atoms/ColorPicker';
+import TextColorPicker from './atoms/TextColorPicker';
+import BackgroundColorPicker from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
 
 // Choices style object reference:
@@ -10,7 +11,7 @@ import useStylesStore from '../stores/styles';
 //   Button: { /* styles applied to submit component if present */}
 // }
 
-function ChoicesSettings({ styleId }) {
+function SingleAnsChoicesSettings({ styleId }) {
   // Choices styles
   const { styles, updateStyle } = useStylesStore(state => ({
     styles: state.styles,
@@ -27,23 +28,26 @@ function ChoicesSettings({ styleId }) {
 
   return (
     <div>
-      {/* edit root styles */}
-      <ColorPickerInput
-        onChange={subStyle => onChange(subStyle, 'Root')}
-        value={styles[styleId]['Root']}
-      />
       <p>Edit radio settings</p>
-      <ColorPickerInput
+      <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'Radio')}
-        value={styles[styleId]['Radio']}
+        value={styles[styleId]}
+      />
+      <BackgroundColorPicker
+        onChange={subStyle => onChange(subStyle, 'Radio')}
+        value={styles[styleId]}
       />
       <p>Edit submit settings</p>
-      <ColorPickerInput
+      <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'Button')}
-        value={styles[styleId]['Button']}
+        value={styles[styleId]}
+      />
+      <BackgroundColorPicker
+        onChange={subStyle => onChange(subStyle, 'Button')}
+        value={styles[styleId]}
       />
     </div>
   );
 }
 
-export default ChoicesSettings;
+export default SingleAnsChoicesSettings;

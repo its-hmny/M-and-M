@@ -4,7 +4,7 @@ import { Add as AddIcon } from '@material-ui/icons';
 import useTemplateStore from '../stores/template';
 import SettingsItem from '../components/SettingsItem';
 import { DraggableList } from '../components/DraggableList';
-import ColorPickerInput from './atoms/ColorPicker';
+
 import useStylesStore from '../stores/styles';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -55,7 +55,6 @@ function ButtonGroupSettings({ componentId, styleId }) {
 
   return (
     <div>
-      <ColorPickerInput onChange={onChange} value={styles[styleId]} />
       <div className={classes.buttonList}>
         <Button
           variant="contained"

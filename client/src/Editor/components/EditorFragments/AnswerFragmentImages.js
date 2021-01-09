@@ -89,7 +89,12 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
   const addChoice = () => {
     setPathToValue(path || [], 'answers', [
       ...answers,
-      { value: ANSWER_VALUE.WRONG, id: shortid.generate(), imgURL: '', alt: 'image alt' },
+      {
+        value: ANSWER_VALUE.WRONG,
+        id: shortid.generate(),
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        alt: 'image alt',
+      },
     ]);
   };
   const deleteChoice = i => {

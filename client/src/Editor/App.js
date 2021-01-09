@@ -82,6 +82,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const appendNodeId = (nodeId, components) =>
+  components.map(component => {
+    const updatedComponent = { ...component, id: `${nodeId}-${component.id}` };
+    if (updatedComponent.children) {
+      updatedComponent.children = appendNodeId(nodeId, component.children);
+    }
+
+    return updatedComponent;
+  });
+
 const App = () => {
   const classes = useStyles();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -94,10 +104,7 @@ const App = () => {
     setIsDialogOpen(false);
     const { nodes, ...others } = story;
     const nodeId = shortid.generate();
-    const components = template.components.map(component => ({
-      ...component,
-      id: `${nodeId}-${component.id}`,
-    }));
+    const components = appendNodeId(nodeId, template.components);
     saveStory({ nodes: [...nodes, { id: nodeId, ...template, components }], ...others });
   };
 

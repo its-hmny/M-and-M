@@ -1,8 +1,7 @@
 import React from 'react';
 import FontFamily from './atoms/FontFamily';
-import ColorPicker from './atoms/ColorPicker';
+import TextColorPicker from './atoms/TextColorPicker';
 import FontSize from './atoms/FontSize';
-// import ImageProp from './atoms/ImageProp';
 import TextFormat from './atoms/TextFormat';
 import TextAlignment from './atoms/TextAlignment';
 import useStylesStore from '../stores/styles';
@@ -18,8 +17,7 @@ function TextSettings({ styleId }) {
     <div>
       <FontFamily onChange={onChange} value={styles[styleId]} />
       <FontSize onChange={onChange} value={styles[styleId]} />
-      <ColorPicker onChange={onChange} value={styles[styleId]} />
-      {/*<ImageProp onChange={onChange} value={styles[styleId]} />*/}
+      <TextColorPicker onChange={onChange} value={styles[styleId]} />
       <TextFormat onChange={onChange} value={styles[styleId]} />
       <TextAlignment onChange={onChange} value={styles[styleId]} />
     </div>

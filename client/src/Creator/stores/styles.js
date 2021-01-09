@@ -4,9 +4,9 @@ import { SERVER_URL } from '../../common/constants';
 
 const useStylesStore = createStore(set => ({
   styleIds: {
-    Text: ['DefaultText', 'SpaceText'],
-    Button: ['DefaultButton', 'SpaceButton', 'UnderwaterButton'],
-    ButtonGroup: ['DefaultButtonGroup', 'SpaceButtonGroup'],
+    Text: ['DefaultText'],
+    Button: ['DefaultButton'],
+    ButtonGroup: ['DefaultButtonGroup'],
     Radio: ['DefaultRadio'],
     Checkbox: ['Checkbox'],
     SingleAnsChoices: ['DefaultSingleAnsChoices'],
@@ -25,81 +25,59 @@ const useStylesStore = createStore(set => ({
   styles: {
     DefaultRadio: {},
     DefaultCheckbox: {},
-    DefaultChoices: {
-      Root: {},
-      Radio: {
-        color: '#000000',
-        backgroundColor: '#8cceb3',
-      },
-      Checkbox: {},
-      Button: {
-        color: '#000000',
-        backgroundColor: '#8cceb3',
-      },
-    },
     DefaultSingleAnsChoices: {
       Root: {},
       Radio: {
         color: '#100000',
-        backgroundColor: '#8cceb3',
+        backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
       Checkbox: {},
       Button: {
         color: '#100000',
-        backgroundColor: '#8cceb3',
+        backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
     },
     DefaultMultiAnsChoices: {
       Root: {},
       Radio: {},
       Checkbox: {
-        color: '#000000',
-        backgroundColor: '#8cceb3',
+        color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
       Button: {
-        color: '#000000',
-        backgroundColor: '#8cceb3',
+        color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
     },
     DefaultText: {
       fontFamily: 'Arial',
       fontSize: '16px',
-      color: '#000000',
-    },
-    SpaceText: {
-      fontFamily: 'Arial',
-      fontSize: '30px',
+      color: 'rgba(0, 0, 0, 1.0)',
     },
     DefaultButton: {
-      color: '#000000',
-      backgroundColor: '#8cceb3',
+      color: 'rgba(0, 0, 0, 1.0)',
+      backgroundColor: 'rgba(140, 206, 179, 1.0)',
     },
-    DefaultButtonGroup: {
-      backgroundColor: 'transparent',
-    },
-    SpaceButtonGroup: {
-      backgroundColor: '#FFFFFF',
-    },
+    DefaultButtonGroup: {},
     DefaultTextArea: {
-      color: '#000000',
-      backgroundColor: '#FFFFFF',
+      color: 'rgba(0, 0, 0, 1.0)',
+      backgroundColor: 'rgba(255,255,255,1.0)',
     },
     DefaultInput: {
-      color: '#000000',
-      backgroundColor: '#FFFFFF',
+      color: 'rgba(0, 0, 0, 1.0)',
+      backgroundColor: 'rgba(255,255,255,1.0)',
     },
     DefaultImage: {
       width: '100%',
-      color: '#000000',
-      backgroundColor: '#FFFFFF',
+      color: 'rgba(0, 0, 0, 1.0)',
+      backgroundColor: 'rgba(255,255,255,1.0)',
     },
     DefaultAudioPlayer: {
-      color: '#000000',
-      backgroundColor: '#FFFFFF',
+      color: 'rgba(0, 0, 0, 1.0)',
+      backgroundColor: 'rgba(255,255,255,1.0)',
     },
     DefaultSpacer: {
-      color: '#FFFFFF',
-      backgroundColor: '#FFFFFF',
+      backgroundColor: 'rgba(255,255,255,1.0)',
       height: '20%',
       width: '100%',
     },
@@ -108,42 +86,45 @@ const useStylesStore = createStore(set => ({
     },
     DefaultCamera: {
       CameraButton: {
-        color: '#000000',
+        color: 'rgba(0, 0, 0, 1.0)',
       },
       Button: {
-        color: '#000000',
-        backgroundColor: '#8cceb3',
+        color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
     },
     DefaultSingleAnsChoicesImages: {
       Root: {},
       Image: { width: '100%' },
       Radio: {
-        color: '#000000',
-        backgroundColor: '#8cceb3',
+        color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
       Checkbox: {},
 
       Button: {
-        color: '#000000',
-        backgroundColor: '#8cceb3',
+        color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
     },
     DefaultMultiAnsChoicesImages: {
       Root: {},
       Image: { width: '100%' },
       Radio: {},
-      Checkbox: { color: '#000000', backgroundColor: '#8cceb3' },
+      Checkbox: {
+        color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(140, 206, 179, 1.0)',
+      },
       Button: {
-        color: '#000000',
-        backgroundColor: '#8cceb3',
+        color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
     },
     DefaultYoutubePlayer: {
       width: '100%',
       height: '20%',
-      color: '#000000',
-      backgroundColor: '#FFFFFF',
+      color: 'rgba(0, 0, 0, 1.0)',
+      backgroundColor: 'rgba(255,255,255,1.0)',
     },
   },
   addStyle: ({ componentName, styleId, baseStyleId }) => {
