@@ -22,7 +22,9 @@ export const DraggableList = ({ id, list, disabled }) => {
         return (
           <Draggable key={id} draggableId={id} index={index} isDragDisabled={disabled}>
             {(provided, snapshot) => (
-              <DragListContext.Provider value={{ provided, snapshot, isDragDisabled: disabled }}>
+              <DragListContext.Provider
+                value={{ provided, snapshot, isDragDisabled: disabled }}
+              >
                 {component}
               </DragListContext.Provider>
             )}
