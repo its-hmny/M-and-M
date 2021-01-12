@@ -138,7 +138,6 @@ const Player = () => {
         const res = await axios.get(`stories/${storyId}`);
         const newStory = res.data.payload;
         setStory(newStory);
-        setCurrentNodeId(newStory.nodes[0].id);
         //setStatus('SUCCESS');
       } catch (err) {
         console.error(err);
@@ -202,8 +201,11 @@ const Player = () => {
 
     return (
       <PlayerLobby
-        hasLoaded={story}
-        onUnmount={() => setStatus('SUCCESS')}
+        story={story}
+        onStart={node => {
+          setStatus('SUCCESS');
+          setCurrentNodeId(node.id);
+        }}
         saveChanges={saveChanges}
       />
     );

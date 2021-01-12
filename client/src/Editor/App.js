@@ -130,8 +130,8 @@ const App = () => {
       }
       // Recursive call on children
       if (comp.children)
-        setNodeDestinations(comp.children, dest, [...basepath, 'children']);*/
-    });
+        setNodeDestinations(comp.children, dest, [...basepath, 'children']);
+    });*/
   };
 
   const addNode = template => {
