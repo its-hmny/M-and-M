@@ -8,7 +8,21 @@ import SettingsItem from './SettingsItem';
 import useTemplateStore from '../stores/template';
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    padding: `${theme.spacing(2)}px 0`,
+    // aka all except navbar
+    maxHeight: 'calc(100vh - 64px)',
+    display: 'flex',
+    flexDirection: 'column',
+    '& > :first-child': {
+      overflowY: 'auto',
+      padding: `0 ${theme.spacing(2)}px`,
+    },
+    // dont shrink add button
+    '& > :last-child': {
+      flexShrink: 0,
+    },
+  },
 }));
 
 function Inspector() {
@@ -63,7 +77,7 @@ function Inspector() {
           disabled={currentlyEditing > 0}
         />
       </DragDropContext>
-      <AddComponentButton onClick={addComponent} />
+      {currentlyEditing === 0 && <AddComponentButton onClick={addComponent} />}
     </Container>
   );
 }
