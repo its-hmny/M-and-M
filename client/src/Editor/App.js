@@ -15,6 +15,8 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Navbar from '../common/Navbar';
 import SaveButton from '../common/SaveButton';
 
+import CompSettings from './constants/ComponentProperties.json';
+
 const useStyles = makeStyles(theme => ({
   container: {
     position: 'relative',
@@ -96,16 +98,51 @@ const App = () => {
   const classes = useStyles();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isCaptionOpen, setIsCaptionOpen] = useState(true);
-  const { story, workingActivity, saveStory } = useEditor();
+  const { story, workingActivity, saveStory, setPathToValue } = useEditor();
 
   const currentNode = story.nodes.find(node => node.id === workingActivity);
+
+  const setNodeDestinations = (components, dest, specificPath) => {
+    // Setup the node to point to itself onAdd
+    // THIS NEED TO BE IMPROVED AND FIXED
+    /*components.forEach((comp, index) => {
+      const basepath = [...(specificPath || ['components']), index];
+      console.log(comp);
+      const option = CompSettings[comp.name].find(
+        ({ fragment }) =>
+          fragment === 'SelectFragment' ||
+          fragment === 'AnswerFragment' ||
+          fragment === 'AnswerFragmentImages'
+      );
+      if (!option) {
+      } else if (option.fragment === 'SelectFragment') {
+        console.log('Found a buton');
+        const { specificPath, valToChange } = option.props;
+        setPathToValue([...basepath, ...specificPath], valToChange, dest, dest);
+      } else if (
+        option.fragment === 'AnswerFragmentImages' ||
+        option.fragment === 'AnswerFragment'
+      ) {
+        const { selectPath, valToChange } = option.props;
+        const dummy = { '[CORRECT]': dest, '[WRONG]': dest };
+        console.log('Find multiple choices');
+        setPathToValue([...basepath, ...selectPath], valToChange, dummy, dest);
+      }
+      // Recursive call on children
+      if (comp.children)
+        setNodeDestinations(comp.children, dest, [...basepath, 'children']);*/
+    });
+  };
 
   const addNode = template => {
     setIsDialogOpen(false);
     const { nodes, ...others } = story;
     const nodeId = shortid.generate();
     const components = appendNodeId(nodeId, template.components);
-    saveStory({ nodes: [...nodes, { id: nodeId, ...template, components }], ...others });
+    //saveStory({ nodes: [...nodes, { id: nodeId, ...template, components }], ...others });
+    nodes.push({ id: nodeId, ...template, components });
+    saveStory({ nodes: [...nodes], ...others });
+    setNodeDestinations(components, nodeId);
   };
 
   return (

@@ -90,7 +90,7 @@ const PlayerLobby = ({ hasLoaded, onUnmount, saveChanges }) => {
       <Grid container justify="center" xs={12} className={section}>
         <Button
           onClick={hasLoaded ? startGame : () => {}}
-          large
+          size="large"
           variant="contained"
           color="primary"
         >
