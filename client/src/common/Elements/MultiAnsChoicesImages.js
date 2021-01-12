@@ -85,7 +85,12 @@ function MultiAnsChoicesImages({
       <div>
         {answers.map(({ id, imgURL, alt }) => (
           <div>
-            <img class="Image" src={imgURL} style={base && style['Image']} />
+            <img
+              class="Image"
+              src={imgURL}
+              style={base && style['Image']}
+              alt="stock for style creator"
+            />
             <Checkbox
               key={id}
               id={id}

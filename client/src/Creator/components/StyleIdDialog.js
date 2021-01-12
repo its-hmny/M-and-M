@@ -19,7 +19,7 @@ function DialogStyleName({ open, initialId, onComplete, styleIds }) {
       Object.values(styleIds)
         .flat()
         .some(id => id === styleId),
-    [styleId]
+    [styleId, styleIds]
   );
 
   return (
