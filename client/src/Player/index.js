@@ -4,6 +4,7 @@ import { SERVER_URL } from '../common/constants';
 
 import * as Elements from '../common/Elements';
 import Chat from './components/Chat';
+import PlayerLobby from './components/PlayerLobby';
 import { addResponseMessage } from '../common/ChatWidget';
 
 import io from 'socket.io-client';
@@ -118,10 +119,7 @@ const Player = () => {
     };
 
     socket.on('eval-pts', onEvalPts);
-    return () => {
-      socket.removeListener('eval-pts', onEvalPts);
-      axios.delete(`stats/${storyId}/${ids.player}`).catch(err => console.warn(err));
-    };
+    return () => socket.removeListener('eval-pts', onEvalPts);
   }, [socket, storyId, ids]);
 
   const handleSend = msg =>
@@ -141,7 +139,7 @@ const Player = () => {
         const newStory = res.data.payload;
         setStory(newStory);
         setCurrentNodeId(newStory.nodes[0].id);
-        setStatus('SUCCESS');
+        //setStatus('SUCCESS');
       } catch (err) {
         console.error(err);
         setStatus('FAILURE');
@@ -199,7 +197,16 @@ const Player = () => {
   }, [currentNodeId, story, storyRuntime]);
 
   if (status === 'LOADING') {
-    return <p>Loading story...</p>;
+    const saveChanges = patch =>
+      socket.emit('update:eval', { story: storyId, playerId: ids.player, patch });
+
+    return (
+      <PlayerLobby
+        hasLoaded={story}
+        onUnmount={() => setStatus('SUCCESS')}
+        saveChanges={saveChanges}
+      />
+    );
   }
 
   if (status === 'FAILURE') {

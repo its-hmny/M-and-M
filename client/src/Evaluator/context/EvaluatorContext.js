@@ -121,8 +121,13 @@ export const EvaluatorProvider = ({ children }) => {
 
     socket.on('rm:player', data => {
       const { story, playerId } = data;
-      if (story === storyId)
-        setPlayersLog(list => list.filter(player => player.id !== playerId));
+      if (story === storyId) {
+        const playerLog = playersLog.find(player => player.id === playerId);
+        if (playerLog) {
+          playerLog.isDisconnected = true;
+          mergePlayerLog(playerLog, playerLog);
+        }
+      }
     });
 
     // This has to be checked

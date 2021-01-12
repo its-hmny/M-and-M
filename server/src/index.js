@@ -5,13 +5,14 @@ const http = require('http').Server(app);
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 
-const io = require('./shared')(http);
+require('./shared')(http);
 
 // Endpoint routers
 const resourcesRouter = require('./routes/resources');
 const storiesRouter = require('./routes/stories');
-const statsRouter = require('./routes/stats');
 const templatesRouter = require('./routes/templates');
+// on import everything is set up
+require('./routes/stats');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -22,7 +23,6 @@ app.use(fileUpload({ createParentPath: true }));
 app.use('/resources', resourcesRouter);
 app.use('/templates', templatesRouter);
 app.use('/stories', storiesRouter);
-app.use('/stats', statsRouter);
 
 app.get('/', (_, res) => res.send('Hello World from M&M server!'));
 

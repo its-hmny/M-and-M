@@ -223,6 +223,14 @@ const App = () => {
                         <ExitToAppIcon />
                       </IconButton>
                     </Tooltip>
+                    <Tooltip title="See in Evaluator" placement="top-start">
+                      <IconButton
+                        component={Link}
+                        to={`${ROUTES.EVALUATOR}?storyId=${story.uuid}`}
+                      >
+                        <ExitToAppIcon />
+                      </IconButton>
+                    </Tooltip>
                   </ListItemSecondaryAction>
                 </ListItem>
                 {index !== stories.length - 1 && <Divider />}

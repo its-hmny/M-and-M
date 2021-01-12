@@ -54,9 +54,22 @@ const ActivePlayersList = () => {
 
   const generatedTab = () =>
     playersLog.map(player => {
-      const { name, id, avatar, hasFinished, pendingEvaluation, unreadMessages } = player;
+      const {
+        name,
+        id,
+        avatar,
+        hasFinished,
+        isDisconnected,
+        pendingEvaluation,
+        unreadMessages,
+      } = player;
       const avaiableName = name || id;
       const showBadge = Boolean(pendingEvaluation.length || unreadMessages);
+      const statusLabel = hasFinished
+        ? 'Completed'
+        : isDisconnected
+        ? 'Offline'
+        : 'Online';
 
       return (
         <ListItem
@@ -64,7 +77,7 @@ const ActivePlayersList = () => {
           selected={selectedPlayer && id === selectedPlayer.id}
           onClick={() => setFocusedPlayer(id)}
           onDoubleClick={() => setDialogOpen(true)}
-          disabled={hasFinished}
+          disabled={isDisconnected || hasFinished}
           className={listItem}
         >
           {showBadge && <Badge badgeContent={'!'} color="primary" />}
@@ -73,13 +86,7 @@ const ActivePlayersList = () => {
           </ListItemAvatar>
           <ListItemText
             primary={avaiableName}
-            secondary={
-              <Chip
-                color="primary"
-                size="small"
-                label={hasFinished ? 'Completed' : 'Online'}
-              />
-            }
+            secondary={<Chip color="primary" size="small" label={statusLabel} />}
           />
         </ListItem>
       );
