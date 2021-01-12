@@ -10,13 +10,9 @@
   ],
   "scripts": {
     "start": "concurrently -k -c cyan,magenta -n server,client \"yarn:start-server\" \"yarn:start-client\"",
-    "start-server": "yarn workspace @mnm/server start",
-    "start-client": "yarn workspace @mnm/client start"
+    "start-server": "cd server && yarn start",
+    "start-client": "cd client && yarn start"
   },
-  "workspaces": [
-    "client",
-    "server"
-  ],
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "concurrently": "^5.2.0"
