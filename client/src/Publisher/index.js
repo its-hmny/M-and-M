@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import {
   Add as AddIcon,
+  Edit as EditIcon,
   Delete as DeleteIcon,
   FileCopy as FileCopyIcon,
   ExitToApp as ExitToAppIcon,
@@ -220,7 +221,7 @@ const App = () => {
                         component={Link}
                         to={`${ROUTES.EDITOR}?storyId=${story.uuid}`}
                       >
-                        <ExitToAppIcon />
+                        <EditIcon />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title="See in Evaluator" placement="top-start">

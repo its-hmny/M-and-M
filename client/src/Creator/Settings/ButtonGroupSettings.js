@@ -18,6 +18,7 @@ function ButtonGroupSettings({ componentId, styleId }) {
   const classes = useStyles();
 
   // buttonGroup styles
+  // eslint-disable-next-line
   const { styles, updateStyle } = useStylesStore(state => ({
     // buttonGroup has no styles for now, but leaving it in case someone wants to edit
     // flow, for example, or the background color of the buttonGroup. very simple!

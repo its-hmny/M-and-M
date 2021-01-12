@@ -1,6 +1,5 @@
 import React from 'react';
 
-import TextColorPicker from './atoms/TextColorPicker';
 import BackgroundColorPicker from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
 import Slider from '@material-ui/core/Slider';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -18,7 +18,19 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
   const classes = useStyles();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const handleComplete = () => onSave({ name, description });
+  const handleComplete = useCallback(() => onSave({ name, description }), [
+    name,
+    description,
+    onSave,
+  ]);
+  const handleEnter = useCallback(
+    evt => {
+      if (name && evt.key === 'Enter') {
+        handleComplete();
+      }
+    },
+    [name, handleComplete]
+  );
 
   return (
     <Dialog open={open} onClose={onCancel} aria-labelledby="save-dialog">
@@ -38,7 +50,7 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
           fullWidth
           value={name}
           onChange={evt => setName(evt.target.value)}
-          onKeyPress={e => e.key === 'Enter' && handleComplete()}
+          onKeyPress={handleEnter}
         />
         <TextField
           variant="outlined"
@@ -50,7 +62,7 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
           rows={4}
           value={description}
           onChange={evt => setDescription(evt.target.value)}
-          onKeyPress={e => e.key === 'Enter' && handleComplete()}
+          onKeyPress={handleEnter}
         />
       </DialogContent>
       <DialogActions>
