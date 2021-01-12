@@ -189,7 +189,12 @@ const SettingsItem = ({
       <Collapse className={classes.collapse} in={isEditing} timeout="auto" unmountOnExit>
         <SettingsComponent componentId={componentId} styleId={styleId} />
       </Collapse>
-      <StyleIdDialog open={isSaving} initialId={styleId} onComplete={handleComplete} />
+      <StyleIdDialog
+        open={isSaving}
+        initialId={styleId}
+        styleIds={styleIds}
+        onComplete={handleComplete}
+      />
     </>
   );
 };
