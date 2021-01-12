@@ -63,20 +63,20 @@ function MultiAnsChoicesImagesSettings({ styleId }) {
       <p>Edit Checkbox settings</p>
       <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'Checkbox')}
-        value={styles[styleId]}
+        value={styles[styleId]['Checkbox']}
       />
       <BackgroundColorPicker
         onChange={subStyle => onChange(subStyle, 'Checkbox')}
-        value={styles[styleId]}
+        value={styles[styleId]['Checkbox']}
       />
       <p>Edit submit settings</p>
       <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'Button')}
-        value={styles[styleId]}
+        value={styles[styleId]['Button']}
       />
       <BackgroundColorPicker
         onChange={subStyle => onChange(subStyle, 'Button')}
-        value={styles[styleId]}
+        value={styles[styleId]['Button']}
       />
     </div>
   );

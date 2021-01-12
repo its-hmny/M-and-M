@@ -1,6 +1,6 @@
 import createStore from './createStore';
 
-import { SERVER_URL } from '../../common/constants';
+import defaultBg from '../../assets/default_bg.jpg';
 
 const useStylesStore = createStore(set => ({
   styleIds: {
@@ -28,12 +28,12 @@ const useStylesStore = createStore(set => ({
     DefaultSingleAnsChoices: {
       Root: {},
       Radio: {
-        color: '#100000',
+        color: 'rgba(0, 0, 0, 1.0)',
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
       Checkbox: {},
       Button: {
-        color: '#100000',
+        color: 'rgba(0, 0, 0, 1.0)',
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
     },
@@ -82,7 +82,7 @@ const useStylesStore = createStore(set => ({
       width: '100%',
     },
     DefaultBackground: {
-      backgroundImage: `url(${SERVER_URL}/default_background.jpg)`,
+      backgroundImage: `url(${defaultBg})`,
     },
     DefaultCamera: {
       CameraButton: {
