@@ -8,7 +8,8 @@ import { componentBuilders } from '../stores/template';
 const useStyles = makeStyles(theme => ({
   root: {
     textAlign: 'center',
-    paddingTop: theme.spacing(2),
+    flexShrink: 0,
+    paddingBottom: theme.spacing(2),
   },
 }));
 

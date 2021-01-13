@@ -9,18 +9,16 @@ import useTemplateStore from '../stores/template';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: `${theme.spacing(2)}px 0`,
-    // aka all except navbar
-    maxHeight: 'calc(100vh - 64px)',
+    // aka all except navbar and padding
+    maxHeight: `calc(100vh - 64px)`,
     display: 'flex',
     flexDirection: 'column',
-    '& > :first-child': {
+    '& .MuiList-root': {
       overflowY: 'auto',
       padding: `0 ${theme.spacing(2)}px`,
-    },
-    // dont shrink add button
-    '& > :last-child': {
-      flexShrink: 0,
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+      // maxHeight: `calc(100vh - 64px - ${theme.spacing(2) * 2}px)`,
     },
   },
 }));
@@ -69,7 +67,7 @@ function Inspector() {
   );
 
   return (
-    <Container className={classes.root}>
+    <Container className={classes.root} disableGutters>
       <DragDropContext onDragEnd={handleDragEnd}>
         <DraggableList
           id={inspectorDragId}

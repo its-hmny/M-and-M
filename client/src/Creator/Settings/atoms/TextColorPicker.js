@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, InputLabel } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import shortid from 'shortid';
 const useStyles = makeStyles(theme => ({
-  colorInput: {
-    margin: theme.spacing(1),
-    minWidth: 80,
-    minHeight: 30,
-    display: 'block',
+  colorContainer: {
+    marginBottom: theme.spacing(2),
+    display: 'flex',
+    alignItems: 'center',
+  },
+  swatch: {
+    position: 'relative',
+    top: 1,
+    marginLeft: theme.spacing(2),
+    width: 30,
+    height: 30,
+    borderRadius: '50%',
+    backgroundColor: props => props.color,
+  },
+  input: {
+    display: 'none',
   },
 }));
 
@@ -30,10 +41,11 @@ const rgbaToHex = rgba => {
 const colorInputId = shortid.generate();
 
 function TextColorPicker({ onChange, value }) {
-  const classes = useStyles();
   const { color } = value;
+  const classes = useStyles({ color });
 
   const [textOpacity, setTextOpacity] = useState(1.0);
+  const inputRef = useRef();
 
   const handleChangeColor = event => {
     onChange({ color: hexToRgba(event.currentTarget.value, textOpacity) });
@@ -44,16 +56,22 @@ function TextColorPicker({ onChange, value }) {
     onChange({ color: hexToRgba(rgbaToHex(color), newValue / 100) });
   };
 
+  const handleClick = useCallback(() => inputRef.current.click(), []);
+
   return (
     <div>
-      <InputLabel htmlFor={colorInputId}>Text Color</InputLabel>
-      <input
-        type="color"
-        className={classes.colorInput}
-        id={colorInputId}
-        onChange={handleChangeColor}
-        value={rgbaToHex(color)}
-      />
+      <div className={classes.colorContainer}>
+        <InputLabel htmlFor={colorInputId}>Text Color</InputLabel>
+        <div className={classes.swatch} onClick={handleClick}></div>
+        <input
+          ref={inputRef}
+          type="color"
+          className={classes.input}
+          id={colorInputId}
+          value={rgbaToHex(color)}
+          onChange={handleChangeColor}
+        />
+      </div>
       <Typography id="opacity-slider">Color Opacity</Typography>
       <Slider
         value={textOpacity * 100}

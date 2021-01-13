@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Typography, makeStyles } from '@material-ui/core';
 import { useEditor } from '../../context/EditorContext';
 
@@ -12,27 +12,35 @@ const useStyles = makeStyles(theme => ({
     fontSize: 18,
     marginRight: theme.spacing(2),
   },
+  swatch: {
+    width: 20,
+    height: 20,
+    borderRadius: '50%',
+    backgroundColor: props => props.color,
+  },
   input: {
-    width: 30,
-    height: 30,
-    padding: 0,
-    border: 0,
-    clipPath: 'circle(45%)',
+    display: 'none',
   },
 }));
 
 const ColorPickerFragment = props => {
   const { path, fragmentSpecificProps } = props;
   const { valToChange } = fragmentSpecificProps;
-  const classes = useStyles();
   const { getFromPath, setPathToValue } = useEditor();
   // If undefined then it defaults to orange
   const colorValue = getFromPath(path || [])[valToChange] || '#eb8231';
 
+  const inputRef = useRef();
+  const classes = useStyles({ color: colorValue });
+
+  const handleClick = useCallback(() => inputRef.current.click(), []);
+
   return (
     <div className={classes.container}>
       <Typography className={classes.label}>Node Color</Typography>
+      <div className={classes.swatch} onClick={handleClick}></div>
       <input
+        ref={inputRef}
         className={classes.input}
         type="color"
         value={colorValue}

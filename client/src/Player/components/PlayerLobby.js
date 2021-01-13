@@ -5,7 +5,7 @@ import {
   TextField,
   Badge,
   Button,
-  IconButton,
+  Fab,
   Typography,
   CircularProgress,
   makeStyles,
@@ -24,9 +24,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   playerSection: {
-    marginBottom: theme.spacing(5),
+    marginBottom: theme.spacing(4),
     flexShrink: 0,
     display: 'flex',
     flexDirection: 'column',
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     height: '20vh',
   },
   badgeRoot: {
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(4),
   },
   badge: {
     height: 'auto',
@@ -71,17 +72,10 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(1),
   },
   startButton: {
-    height: '90%',
-    width: '90%',
+    width: '60%',
   },
-  startButtonLabel: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  playButton: {
-    fontSize: 120,
-    marginBottom: theme.spacing(2),
+  playIcon: {
+    marginRight: theme.spacing(1),
   },
 }));
 
@@ -160,41 +154,39 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
           onChange={e => setData({ ...playerData, name: e.target.value })}
         />
       </div>
-      <div className={classes.startingContainer}>
-        {!story ? (
-          <CircularProgress />
-        ) : initialNodes.length > 1 ? (
-          <>
-            <Typography variant="h6" className={classes.whereToStartHead}>
-              Where do you want to start from?
-            </Typography>
-            <div className={classes.buttons}>
-              {initialNodes.map(node => (
-                <Button
-                  className={classes.button}
-                  onClick={() => startGame(node)}
-                  large
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                >
-                  {node.name}
-                </Button>
-              ))}
-            </div>
-          </>
-        ) : (
-          <Button
-            classes={{ root: classes.startButton, label: classes.startButtonLabel }}
-            onClick={() => startGame(initialNodes[0])}
-            variant="contained"
-            color="primary"
-          >
-            <PlayCircleFilledRounded className={classes.playButton} />
-            <Typography variant="h3">Start</Typography>
-          </Button>
-        )}
-      </div>
+      {!story ? (
+        <CircularProgress />
+      ) : initialNodes.length > 1 ? (
+        <div className={classes.startingContainer}>
+          <Typography variant="h6" className={classes.whereToStartHead}>
+            Where do you want to start from?
+          </Typography>
+          <div className={classes.buttons}>
+            {initialNodes.map(node => (
+              <Button
+                className={classes.button}
+                onClick={() => startGame(node)}
+                large
+                variant="contained"
+                color="primary"
+                fullWidth
+              >
+                {node.name}
+              </Button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <Fab
+          variant="extended"
+          color="primary"
+          className={classes.startButton}
+          onClick={() => startGame(initialNodes[0])}
+        >
+          <PlayCircleFilledRounded className={classes.playIcon} />
+          Start
+        </Fab>
+      )}
     </Container>
   );
 };

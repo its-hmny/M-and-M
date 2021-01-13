@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, InputLabel } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import shortid from 'shortid';
+import { BackupRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
-  colorInput: {
-    margin: theme.spacing(1),
-    minWidth: 80,
-    minHeight: 30,
-    display: 'block',
+  colorContainer: {
+    marginBottom: theme.spacing(2),
+    display: 'flex',
+    alignItems: 'center',
+  },
+  swatch: {
+    position: 'relative',
+    top: 1,
+    marginLeft: theme.spacing(2),
+    width: 30,
+    height: 30,
+    borderRadius: '50%',
+    backgroundColor: props => props.color,
+  },
+  input: {
+    display: 'none',
   },
 }));
 
@@ -31,10 +43,11 @@ const rgbaToHex = rgba => {
 const backgroundColorInputId = shortid.generate();
 
 function BackgroundColorPicker({ onChange, value }) {
-  const classes = useStyles();
   const { backgroundColor } = value;
+  const classes = useStyles({ color: backgroundColor });
 
   const [bgOpacity, setBGOpacity] = useState(1.0);
+  const inputRef = useRef();
 
   const handleChangeBackgroundColor = event => {
     onChange({ backgroundColor: hexToRgba(event.currentTarget.value, bgOpacity) });
@@ -45,17 +58,23 @@ function BackgroundColorPicker({ onChange, value }) {
     onChange({ backgroundColor: hexToRgba(rgbaToHex(backgroundColor), newValue / 100) });
   };
 
+  const handleClick = useCallback(() => inputRef.current.click(), []);
+
   return (
     <div>
-      <InputLabel htmlFor={backgroundColorInputId}>Pick background color</InputLabel>
-      <input
-        type="color"
-        className={classes.colorInput}
-        id={backgroundColorInputId}
-        onChange={handleChangeBackgroundColor}
-        value={rgbaToHex(backgroundColor)}
-      />
-      <Typography id="opacity-slider">BackgroundColor Opacity</Typography>
+      <div className={classes.colorContainer}>
+        <InputLabel htmlFor={backgroundColorInputId}>Background Color</InputLabel>
+        <div className={classes.swatch} onClick={handleClick}></div>
+        <input
+          ref={inputRef}
+          type="color"
+          className={classes.input}
+          id={backgroundColorInputId}
+          value={rgbaToHex(backgroundColor)}
+          onChange={handleChangeBackgroundColor}
+        />
+      </div>
+      <Typography id="opacity-slider">Background Color Opacity</Typography>
       <Slider
         value={bgOpacity * 100}
         onChange={handleChangeBGOpacity}
