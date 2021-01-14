@@ -115,7 +115,7 @@ const Form = ({ story, handleChange }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={story.targets.includes('children')}
+                      checked={(story.targets || []).includes('children')}
                       onChange={evt =>
                         handleChecks('targets', 'children', evt.target.checked)
                       }
@@ -126,7 +126,7 @@ const Form = ({ story, handleChange }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={story.targets.includes('teen')}
+                      checked={(story.targets || []).includes('teen')}
                       onChange={evt =>
                         handleChecks('targets', 'teen', evt.target.checked)
                       }
@@ -137,7 +137,7 @@ const Form = ({ story, handleChange }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={story.targets.includes('adult')}
+                      checked={(story.targets || []).includes('adult')}
                       onChange={evt =>
                         handleChecks('targets', 'adult', evt.target.checked)
                       }
@@ -155,7 +155,7 @@ const Form = ({ story, handleChange }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={story.modes.includes('singleplayer')}
+                      checked={(story.modes || []).includes('singleplayer')}
                       onChange={evt =>
                         handleChecks('modes', 'singleplayer', evt.target.checked)
                       }
@@ -166,7 +166,7 @@ const Form = ({ story, handleChange }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={story.modes.includes('multiplayer')}
+                      checked={(story.modes || []).includes('multiplayer')}
                       onChange={evt =>
                         handleChecks('modes', 'multiplayer', evt.target.checked)
                       }
