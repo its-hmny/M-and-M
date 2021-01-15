@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios, { useQuery } from '../common/shared';
 import { SERVER_URL } from '../common/constants';
 
@@ -6,6 +7,7 @@ import * as Elements from '../common/Elements';
 import Chat from './components/Chat';
 import PlayerLobby from './components/PlayerLobby';
 import { addResponseMessage } from '../common/ChatWidget';
+import * as ROUTES from '../routes';
 
 import io from 'socket.io-client';
 
@@ -219,7 +221,7 @@ const Player = () => {
   }
 
   if (status === 'FAILURE') {
-    return <p>An error occured while loading story. Try refresh page.</p>;
+    return <Redirect to={ROUTES.NOTFOUND} />;
   }
 
   return (

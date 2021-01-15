@@ -18,6 +18,7 @@ const App = () => {
         <Route path={ROUTES.CREATOR} component={Creator} />
         <Route path={ROUTES.PLAYER} component={Player} />
         <Route path={ROUTES.EVALUATOR} component={Evaluator} />
+        <Route path={ROUTES.NOTFOUND} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
     </Router>

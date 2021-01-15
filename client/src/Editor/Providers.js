@@ -4,6 +4,7 @@ import { Typography } from '@material-ui/core';
 
 import { EditorProvider } from './context/EditorContext';
 import axios, { useQuery } from '../common/shared';
+import * as ROUTES from '../routes';
 
 const Providers = ({ children }) => {
   const { storyId } = useQuery();
@@ -26,7 +27,7 @@ const Providers = ({ children }) => {
         }
       } catch (err) {
         console.error(err);
-        history.push(`/not-found?route=${location.pathname}${location.search}`);
+        history.push(ROUTES.NOTFOUND);
       }
     };
 
