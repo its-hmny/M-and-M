@@ -158,6 +158,7 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
           <div key={`answer-${i}`}>
             <Divider className={divider} />
             <FilePickerFragment
+              key={`filepicker-answer-${i}`}
               className={classNames.InspectorElement}
               classNames={classNames}
               path={path.concat('answers', i) || []}

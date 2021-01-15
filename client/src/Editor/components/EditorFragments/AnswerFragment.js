@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   makeStyles,
   Button,
@@ -39,6 +39,7 @@ const ANSWER_VALUE = {
 };
 const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { divider, FormSelect, deleteStyle } = useStyles();
+  const { story, getFromPath, setPathToValue } = useEditor();
   const {
     pathAlternative,
     valToChange,
@@ -51,8 +52,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
     correctLabel,
     wrongLabel,
   } = fragmentSpecificProps;
-  const { story, getFromPath, setPathToValue } = useEditor();
-  const [correctAnswerValue, setCorrectAnswerValue] = React.useState([]);
+  const [correctAnswerValue, setCorrectAnswerValue] = useState([]);
 
   //Additional field to modify objects or array
   path = pathAlternative ? path.concat(pathAlternative || []) : path;
@@ -62,7 +62,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const correctSelectValue = getFromPath(selectCompletePath)[correctStory];
   const wrongSelectValue = getFromPath(selectCompletePath)[wrongStory];
 
-  var items = [];
+  const items = [];
   const menuItems = story.nodes.map(node => {
     if (!items.includes(node[data])) {
       items.push(node[data]);
@@ -77,7 +77,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   });
 
   //Initialize correctAnswerValue if singleCorrectAnswer == true only the first time
-  React.useEffect(() => {
+  useEffect(() => {
     if (singleCorrectAnswer) {
       answers.map((answer, i) =>
         answer.value === ANSWER_VALUE.CORRECT ? setCorrectAnswerValue(i) : null
@@ -96,7 +96,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
     setPathToValue(path || [], 'answers', answers);
   };
 
-  var cannotChooseCorrectAnswer = singleCorrectAnswer
+  const cannotChooseCorrectAnswer = singleCorrectAnswer
     ? answers.filter(answer => answer.value === ANSWER_VALUE.CORRECT).length === 1
     : false;
   const name = shortid.generate();

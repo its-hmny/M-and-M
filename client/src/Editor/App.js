@@ -104,34 +104,35 @@ const App = () => {
 
   const setNodeDestinations = (components, dest, specificPath) => {
     // Setup the node to point to itself onAdd
-    // THIS NEED TO BE IMPROVED AND FIXED
-    /*components.forEach((comp, index) => {
+    const destinationFrags = ['SelectFragment', 'AnswerFragment', 'AnswerFragmentImages'];
+    const buttonFrags = destinationFrags[0];
+    const choiceFrags = destinationFrags.slice(-2);
+
+    components.forEach((comp, index) => {
       const basepath = [...(specificPath || ['components']), index];
-      console.log(comp);
-      const option = CompSettings[comp.name].find(
-        ({ fragment }) =>
-          fragment === 'SelectFragment' ||
-          fragment === 'AnswerFragment' ||
-          fragment === 'AnswerFragmentImages'
+      const option = CompSettings[comp.name].find(({ fragment }) =>
+        destinationFrags.includes(fragment)
       );
+
       if (!option) {
-      } else if (option.fragment === 'SelectFragment') {
-        console.log('Found a buton');
-        const { specificPath, valToChange } = option.props;
-        setPathToValue([...basepath, ...specificPath], valToChange, dest, dest);
-      } else if (
-        option.fragment === 'AnswerFragmentImages' ||
-        option.fragment === 'AnswerFragment'
-      ) {
-        const { selectPath, valToChange } = option.props;
-        const dummy = { '[CORRECT]': dest, '[WRONG]': dest };
-        console.log('Find multiple choices');
-        setPathToValue([...basepath, ...selectPath], valToChange, dummy, dest);
+        if (buttonFrags.includes(option.fragment)) {
+          // Button case, simply set the story.nextNode object to itself
+          const { specificPath, valToChange } = option.props;
+          setPathToValue([...basepath, ...specificPath], valToChange, dest, dest);
+        } else if (choiceFrags.includes(option.fragment)) {
+          // MultiAnsChoice and similar case, is needed to set the whole
+          // destinaion object one level before in the object itself
+          const { selectPath } = option.props;
+          const dummy = { '[CORRECT]': dest, '[WRONG]': dest };
+          const pathToVal = [...basepath, ...selectPath.slice(0, -1)];
+          const valToChange = selectPath.slice(-1);
+          setPathToValue(pathToVal, valToChange, dummy, dest);
+        }
       }
       // Recursive call on children
       if (comp.children)
         setNodeDestinations(comp.children, dest, [...basepath, 'children']);
-    });*/
+    });
   };
 
   const addNode = template => {
