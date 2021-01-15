@@ -25,7 +25,7 @@ export const EditorProvider = ({ children, userStory }) => {
       return current;
     },
 
-    setPathToValue: (path, field, value, optNodeId) => {
+    setPathToValue: (path, field, value, optNodeId = undefined) => {
       /* 
         path is the path to the current fragment in the story, 
         field is the name of the key inside the object that has to be modified,

@@ -114,7 +114,7 @@ const App = () => {
         destinationFrags.includes(fragment)
       );
 
-      if (!option) {
+      if (option) {
         if (buttonFrags.includes(option.fragment)) {
           // Button case, simply set the story.nextNode object to itself
           const { specificPath, valToChange } = option.props;

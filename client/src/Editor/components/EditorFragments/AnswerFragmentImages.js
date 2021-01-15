@@ -142,7 +142,6 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
 
     setPathToValue(pointsPath, index, newVal);
   };
-  console.log('wow');
   return (
     <div className={classNames.InspectorElement}>
       <Button
@@ -161,7 +160,7 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
               key={`filepicker-answer-${i}`}
               className={classNames.InspectorElement}
               classNames={classNames}
-              path={path.concat('answers', i) || []}
+              path={path.concat('answers', i)}
               fragmentSpecificProps={{
                 acceptedFileType: 'image/*',
                 buttonLabel: 'Upload Image',

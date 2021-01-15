@@ -95,7 +95,7 @@ let storyCount = 0;
 
 const App = () => {
   const [stories, setStories] = useState([]);
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(undefined);
   const [toDelete, setToDelete] = useState(false);
   const [dontAskAgain, setDontAskAgain] = useState(false);
 
@@ -171,7 +171,7 @@ const App = () => {
       await axios.delete(`stories/${toDelete.uuid}`);
       setStories(stories => stories.filter(story => story.uuid !== toDelete.uuid));
       if (selected && selected.uuid === toDelete.uuid) {
-        setSelected(null);
+        setSelected(undefined);
       }
     } catch (err) {
       console.error(err);

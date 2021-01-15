@@ -13,6 +13,7 @@ const FilePickerFragment = props => {
 
   // Clearly this has to be changed
   const loadToServer = toUpload => {
+    if (!toUpload) return;
     const formData = new FormData();
     formData.append('file', toUpload);
 
