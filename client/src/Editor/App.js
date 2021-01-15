@@ -12,7 +12,6 @@ import TemplatesDialog from './components/TemplatesDialog';
 import Panel from './components/Panel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import Navbar from '../common/Navbar';
 import SaveButton from '../common/SaveButton';
 
 import CompSettings from './constants/ComponentProperties.json';
@@ -71,14 +70,11 @@ const useStyles = makeStyles(theme => ({
     padding: 15,
     paddingTop: 0,
   },
-  navbar: {
-    flexShrink: 0,
-  },
   graphStyle: {
     position: 'relative',
     '& .vis-network': {
       width: '100%',
-      height: 'calc(100vh - 64px)', // 64px is navbar height
+      height: '100vh',
       outline: 'none',
     },
   },
@@ -148,9 +144,6 @@ const App = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.navbar}>
-        <Navbar />
-      </div>
       <div className={classes.graphStyle}>
         <div className={classes.buttonsContainer}>
           <Fab

@@ -23,7 +23,6 @@ import AreYouSureDialog from './AreYouSureDialog';
 import Form from './Form';
 import * as ROUTES from '../routes';
 import axios from '../common/shared';
-import Navbar from '../common/Navbar';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -38,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   list: {
-    maxHeight: 'calc(100vh - 64px)',
+    maxHeight: '100vh',
     overflow: 'auto',
     flexBasis: 350,
     flexShrink: 0,
@@ -180,7 +179,6 @@ const App = () => {
 
   return (
     <div className={classes.container}>
-      <Navbar />
       <div className={classes.content}>
         <div className={classes.list}>
           <List dense>

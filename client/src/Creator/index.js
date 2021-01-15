@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Navbar from '../common/Navbar';
 import Preview from '../common/Preview';
 import Inspector from './components/Inspector';
 import SaveDialog from './components/SaveDialog';
@@ -48,7 +47,6 @@ const App = () => {
 
   return (
     <div className={classes.container}>
-      <Navbar />
       <Grid container className={classes.grid}>
         <Grid item xs={6}>
           <Inspector />

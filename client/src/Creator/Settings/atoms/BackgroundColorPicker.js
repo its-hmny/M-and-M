@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, InputLabel } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import shortid from 'shortid';
-import { BackupRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   colorContainer: {

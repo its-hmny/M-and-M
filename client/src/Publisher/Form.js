@@ -227,7 +227,7 @@ const Form = ({ story, handleChange }) => {
             startIcon={<GetAppIcon />}
             onClick={downloadQrCode}
           >
-            Download
+            Download QR
           </Button>
         </div>
       </div>

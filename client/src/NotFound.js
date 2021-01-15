@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 
-import Navbar from './common/Navbar';
 import { useQuery } from './common/shared';
 
 const useStyles = makeStyles(() => ({
@@ -24,7 +23,6 @@ const NotFound = () => {
 
   return (
     <div>
-      <Navbar />
       <div className={classes.main}>{content}</div>
     </div>
   );

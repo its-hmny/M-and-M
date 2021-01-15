@@ -9,8 +9,7 @@ import useTemplateStore from '../stores/template';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // aka all except navbar and padding
-    maxHeight: `calc(100vh - 64px)`,
+    maxHeight: `100vh`,
     display: 'flex',
     flexDirection: 'column',
     '& .MuiList-root': {
@@ -18,7 +17,6 @@ const useStyles = makeStyles(theme => ({
       padding: `0 ${theme.spacing(2)}px`,
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
-      // maxHeight: `calc(100vh - 64px - ${theme.spacing(2) * 2}px)`,
     },
   },
 }));
