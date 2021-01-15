@@ -152,8 +152,15 @@ const Player = () => {
   const storyRuntime = useMemo(
     () => ({
       currentNodeId,
+      // Whenever position changes evaluator is updated
       moveTo: node => {
-        // whenever position changes evaluator is updated
+        //If the node is final the player is marked as completed
+        if (story !== null && story.nodes.find(iter => iter.id === node && iter.isFinal))
+          socket.emit('update:eval', {
+            story: storyId,
+            playerId: ids.player,
+            patch: { hasFinished: true },
+          });
         socket.emit('update:position', {
           story: storyId,
           senderId: ids.player,
@@ -181,7 +188,7 @@ const Player = () => {
         });
       },
     }),
-    [socket, currentNodeId, ids, score, storyId]
+    [socket, currentNodeId, ids, score, storyId, story]
   );
 
   // load components for this position whenever position changes
