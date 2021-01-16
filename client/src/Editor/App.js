@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'end',
     '& > *': {
-      marginBottom: theme.spacing(5),
+      marginBottom: theme.spacing(7),
     },
   },
   caption: {

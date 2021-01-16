@@ -12,8 +12,8 @@ const base = css`
   z-index: -1;
 `;
 
-const Background = ({ image, style }) => {
-  return <div css={[base, style]} style={{ backgroundImage: image }}></div>;
-};
+const Background = ({ image, style }) => (
+  <div css={[base, style]} style={{ backgroundImage: image }}></div>
+);
 
 export default Background;

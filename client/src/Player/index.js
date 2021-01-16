@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { useEffect, useMemo, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios, { useQuery } from '../common/shared';
 import { SERVER_URL } from '../common/constants';
@@ -225,10 +227,18 @@ const Player = () => {
   }
 
   return (
-    <>
-      <div>{viewContent}</div>
+    <Fragment>
+      <div
+        css={css`
+          width: 100vw;
+          height: 100vh;
+          overflow-y: auto;
+        `}
+      >
+        {viewContent}
+      </div>
       <Chat onSend={handleSend} socket={socket} />
-    </>
+    </Fragment>
   );
 };
 

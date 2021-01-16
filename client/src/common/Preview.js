@@ -6,16 +6,19 @@ import * as Elements from './Elements';
 const useStyles = makeStyles({
   smartphoneFrame: {
     position: 'relative',
-    margin: 'auto',
     border: '2vh black solid',
     borderTopWidth: '5vh',
     borderBottomWidth: '6vh',
     borderRadius: '36px',
     width: 'calc(70vh * 0.5)',
     height: '70vh',
-    overflowY: 'auto',
     zIndex: 0,
     background: 'white',
+  },
+  smartphoneContent: {
+    width: '100%',
+    height: '100%',
+    overflowY: 'auto',
   },
   smartphoneBg: {
     position: 'absolute',
@@ -48,7 +51,9 @@ const Preview = ({ components, styles = {} }) => {
   return (
     <div className={classes.smartphoneFrame}>
       <div className={classes.smartphoneBg}></div>
-      {components ? buildElements(components, styles) : []}
+      <div className={classes.smartphoneContent}>
+        {components ? buildElements(components, styles) : []}
+      </div>
     </div>
   );
 };

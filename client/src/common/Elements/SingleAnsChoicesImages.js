@@ -80,15 +80,13 @@ function SingleAnsChoicesImages({
     <div css={[base, style]} style={style['Root']}>
       <div>
         {answers.map(({ id, imgURL, alt }) => (
-          <div>
+          <div key={id}>
             <img
-              class="Image"
               src={imgURL}
               style={base && style['Image']}
               alt="stock for style creator"
             />
             <Radio
-              key={id}
               id={id}
               name={name}
               label={alt}
