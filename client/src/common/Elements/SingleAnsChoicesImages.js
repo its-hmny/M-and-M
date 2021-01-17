@@ -67,7 +67,7 @@ function SingleAnsChoicesImages({
     // Uses == instead === because for some reason type(selectedAnswer) != type(correctAnswer)
     // so a conversion is needed
 
-    return selectedAnswer && selectedAnswer == correctAnswer[0]
+    return selectedAnswer && selectedAnswer === correctAnswer[0]
       ? ANSWER_VALUE.CORRECT
       : ANSWER_VALUE.WRONG;
   }, [correctAnswer, selectedAnswer]);

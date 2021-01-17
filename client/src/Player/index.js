@@ -31,8 +31,6 @@ const createStoryProps = (component, storyRuntime) => {
       // if more than one answer, we sum all point values
       return {
         onSubmit: (isCorrect, selectedAnswers) => {
-          console.log(isCorrect);
-          console.log(storyProps);
           const nextNode = storyProps.nextNode[isCorrect];
           storyRuntime.moveTo(nextNode);
           storyRuntime.updateStats({ id, name, data: selectedAnswers });
@@ -163,12 +161,17 @@ const Player = () => {
       // Whenever position changes evaluator is updated
       moveTo: node => {
         //If the node is final the player is marked as completed
-        if (story !== null && story.nodes.find(iter => iter.id === node && iter.isFinal))
+        if (
+          story !== null &&
+          story.nodes.find(iter => iter.id === node && iter.isFinal)
+        ) {
           socket.emit('update:eval', {
             story: storyId,
             playerId: ids.player,
             patch: { hasFinished: true },
           });
+        }
+
         socket.emit('update:position', {
           story: storyId,
           senderId: ids.player,
