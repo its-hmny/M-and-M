@@ -32,9 +32,6 @@ const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
           }
         >
           {menuItems}
-          <MenuItem key={story.nodes.length} value="">
-            {'\u00A0'}
-          </MenuItem>
         </Select>
       </FormControl>
     </div>

@@ -240,6 +240,8 @@ const Player = () => {
           width: 100vw;
           height: 100vh;
           overflow-y: auto;
+          padding: 20px;
+          background-color: white;
         `}
       >
         {viewContent}
