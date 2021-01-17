@@ -7,7 +7,7 @@ const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { story, getFromPath, setPathToValue } = useEditor();
   path = path || [];
   const completePath = specificPath ? [...path, ...specificPath] : [...path];
-  var items = [];
+  let items = [];
   const menuItems = story.nodes.map(node => {
     if (node[data] && !items.includes(node[data])) {
       items.push(node[data]);
