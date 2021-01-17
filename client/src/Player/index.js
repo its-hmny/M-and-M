@@ -240,6 +240,10 @@ const Player = () => {
           width: 100vw;
           height: 100vh;
           overflow-y: auto;
+          scrollbar-width: none;
+          &::-webkit-scrollbar {
+            width: 0;
+          }
         `}
       >
         {viewContent}

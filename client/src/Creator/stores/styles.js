@@ -121,12 +121,8 @@ const useStylesStore = createStore(set => ({
       },
     },
     DefaultYoutubePlayer: {
-      Player: {
-        width: '100%',
-      },
-
-      color: 'rgba(0, 0, 0, 1.0)',
-      backgroundColor: 'rgba(255,255,255,1.0)',
+      width: '100%',
+      height: '20%',
     },
   },
   addStyle: ({ componentName, styleId, baseStyleId }) => {
