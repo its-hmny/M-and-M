@@ -26,9 +26,13 @@ const createStoryProps = (component, storyRuntime) => {
       };
     case 'SingleAnsChoices':
     case 'MultiAnsChoices':
+    case 'SingleAnsChoicesImages':
+    case 'MultiAnsChoicesImages':
       // if more than one answer, we sum all point values
       return {
         onSubmit: (isCorrect, selectedAnswers) => {
+          console.log(isCorrect);
+          console.log(storyProps);
           const nextNode = storyProps.nextNode[isCorrect];
           storyRuntime.moveTo(nextNode);
           storyRuntime.updateStats({ id, name, data: selectedAnswers });

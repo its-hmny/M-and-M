@@ -25,7 +25,10 @@ function YoutubePlayerSettings({ styleId }) {
   }));
 
   const onWidthChange = (_, newWidth) => {
-    updateStyle({ styleId, width: `${newWidth}%` });
+    updateStyle({
+      styleId,
+      Player: { width: `${newWidth}%`, ...styles[styleId]['Player'] },
+    });
   };
   return (
     <div>
@@ -38,7 +41,7 @@ function YoutubePlayerSettings({ styleId }) {
         </Grid>
         <Grid item xs>
           <Slider
-            value={removePercent(styles[styleId].width)}
+            value={removePercent(styles[styleId]['Player'].width)}
             onChange={onWidthChange}
             getAriaValueText={value => `${value}%`}
             aria-labelledby="width-slider"

@@ -45,11 +45,11 @@ const App = () => {
       .post('templates', { ...meta, components: styledComponents })
       .then(value => {
         console.log('saved template ', value);
-        enqueueSnackbar('saved your template!', { variant: 'success' });
+        enqueueSnackbar('Saved your template!', { variant: 'success' });
       })
       .catch(err => {
         console.error(err);
-        enqueueSnackbar('something went wrong...', { variant: 'error' });
+        enqueueSnackbar('Something went wrong...', { variant: 'error' });
       });
   };
 

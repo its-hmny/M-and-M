@@ -95,7 +95,7 @@ const useStylesStore = createStore(set => ({
     },
     DefaultSingleAnsChoicesImages: {
       Root: {},
-      Image: { width: '100%' },
+      Image: { width: '100%', height: '50%' },
       Radio: {
         color: 'rgba(0, 0, 0, 1.0)',
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
@@ -109,7 +109,7 @@ const useStylesStore = createStore(set => ({
     },
     DefaultMultiAnsChoicesImages: {
       Root: {},
-      Image: { width: '100%' },
+      Image: { width: '100%', height: '50%' },
       Radio: {},
       Checkbox: {
         color: 'rgba(0, 0, 0, 1.0)',
@@ -121,8 +121,10 @@ const useStylesStore = createStore(set => ({
       },
     },
     DefaultYoutubePlayer: {
-      width: '100%',
-      height: '20%',
+      Player: {
+        width: '100%',
+      },
+
       color: 'rgba(0, 0, 0, 1.0)',
       backgroundColor: 'rgba(255,255,255,1.0)',
     },

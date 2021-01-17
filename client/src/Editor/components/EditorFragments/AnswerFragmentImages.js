@@ -94,6 +94,7 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
         id: shortid.generate(),
         imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'image alt',
+        text: 'answer text',
       },
     ]);
   };
@@ -176,6 +177,18 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
                   setPathToValue(
                     path.concat('answers', i) || [],
                     'alt',
+                    event.target.value
+                  )
+                }
+              />
+              <TextField
+                value={answers[i].text}
+                className={classNames.InspectorElement}
+                label={'Choice text'}
+                onChange={event =>
+                  setPathToValue(
+                    path.concat('answers', i) || [],
+                    'text',
                     event.target.value
                   )
                 }
