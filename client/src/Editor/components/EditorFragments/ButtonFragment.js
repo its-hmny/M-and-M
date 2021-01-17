@@ -6,7 +6,7 @@ const ButtonFragment = props => {
   const { classNames, fragmentSpecificProps } = props;
   const { story, workingActivity, saveStory, setWorkingActivity } = useEditor();
   /* Switch to check which predefined button function to use */
-  var onClick;
+  let onClick;
   if (fragmentSpecificProps.onClick === 'removeNode') {
     onClick = () => {
       let { nodes, ...others } = story;

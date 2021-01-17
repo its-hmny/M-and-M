@@ -103,6 +103,16 @@
         "pointsPath": ["story", "points"],
         "pointsValToChange": "[CORRECT]"
       }
+    },
+    {
+      "fragment": "SelectFragment",
+      "props": {
+        "specificPath": ["story"],
+        "valToChange": "nextNode",
+        "label": "Destination",
+        "data": "id",
+        "dataName": "name"
+      }
     }
   ],
   "ButtonGroup": [],

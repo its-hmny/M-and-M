@@ -41,6 +41,7 @@ const InputFragment = ({ classNames, path, fragmentSpecificProps }) => {
       setPathToValue(PointsCompletePath || [], story, 0);
     }
   };
+
   return (
     <div>
       <TextField
