@@ -77,6 +77,11 @@ const useStyles = makeStyles(theme => ({
   playIcon: {
     marginRight: theme.spacing(1),
   },
+  text: {
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5),
+    paddingTop: theme.spacing(4),
+  },
 }));
 
 const takePhoto = onChangeHandler => {
@@ -91,7 +96,9 @@ const takePhoto = onChangeHandler => {
 };
 
 const PlayerLobby = ({ story, onStart, saveChanges }) => {
-  const [playerData, setData] = useState({});
+  const [playerData, setData] = useState({
+    name: '',
+  });
   const classes = useStyles();
   const initialNodes = useMemo(() => {
     if (story) {
@@ -187,6 +194,12 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
           Start
         </Fab>
       )}
+      <Typography className={classes.text} variant="body1" align="center">
+        Hey! Just so you know, you can't refresh or go back one page while you're playing.
+        <br />
+        The button in the bottom opens a chat with an Evaluator, if any are online, so you
+        can ask for hints!
+      </Typography>
     </Container>
   );
 };
