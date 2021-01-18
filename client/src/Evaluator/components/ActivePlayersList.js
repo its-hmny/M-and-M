@@ -106,7 +106,7 @@ const ActivePlayersList = () => {
         </Typography>
       ) : (
         <List orientation="vertical" indicatorColor="primary">
-          {generatedTab()}
+          {generatedTab(sortedPlayerLog)}
         </List>
       )}
       <RenameDialog isOpen={dialogOpen} close={() => setDialogOpen(false)} />
