@@ -52,8 +52,16 @@ const ActivePlayersList = () => {
   const { container, listItem } = useStyles();
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const generatedTab = () =>
-    playersLog.map(player => {
+  const playerSort = (x, y) => y.score - x.score;
+  const getTeamScore = teamName =>
+    playersLog.reduce(({ score, team }) => team === teamName || score);
+  const teamSort = (x, y) => getTeamScore(y.team) - getTeamScore(x.team);
+  const sortedPlayerLog = playersLog.sort(
+    story.modes === 'teams' ? teamSort : playerSort
+  );
+
+  const generatedTab = list =>
+    list.map(player => {
       const {
         name,
         id,
@@ -100,7 +108,7 @@ const ActivePlayersList = () => {
         </Typography>
       ) : (
         <List orientation="vertical" indicatorColor="primary">
-          {generatedTab()}
+          {generatedTab(sortedPlayerLog)}
         </List>
       )}
       <RenameDialog isOpen={dialogOpen} close={() => setDialogOpen(false)} />
