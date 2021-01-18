@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
   listItem: {
     padding: 10,
     wordWrap: 'break-word',
+    cursor: 'pointer',
   },
 }));
 
