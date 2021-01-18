@@ -48,9 +48,15 @@ const RenameDialog = ({ isOpen, close }) => {
 };
 
 const ActivePlayersList = () => {
-  const { selectedPlayer, playersLog, setFocusedPlayer } = useEvaluator();
+  const { story, selectedPlayer, playersLog, setFocusedPlayer } = useEvaluator();
   const { container, listItem } = useStyles();
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const playerSort = (x, y) => y.score - x.score;
+  const getTeamScore = teamName =>
+    playersLog.reduce(({ score, team }) => team === teamName || score);
+  const teamSort = (x, y) => getTeamScore(y.team) - getTeamScore(x.team);
+  playersLog.sort((story || {}).modes === 'teams' ? teamSort : playerSort);
 
   const generatedTab = () =>
     playersLog.map(player => {
