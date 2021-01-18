@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { Fade } from '@material-ui/core';
 import { useEffect, useMemo, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios, { useQuery } from '../common/shared';
@@ -96,6 +97,8 @@ const Player = () => {
   const [currentNodeId, setCurrentNodeId] = useState(null);
   // point total
   const [score, setScore] = useState(0);
+
+  const [enter, setEnter] = useState(true);
 
   const socket = useMemo(() => {
     const tmp = io(SERVER_URL, { query: { type: 'player', storyId } });
@@ -210,6 +213,7 @@ const Player = () => {
       const { components } = story.nodes.find(node => node.id === currentNodeId);
       const content = buildViewContent(components, storyRuntime);
       setViewContent(content);
+      setEnter(true);
     }
   }, [currentNodeId, story, storyRuntime]);
 
@@ -235,19 +239,19 @@ const Player = () => {
 
   return (
     <Fragment>
-      <div
-        css={css`
-          width: 100vw;
-          height: 100vh;
-          overflow-y: auto;
-          scrollbar-width: none;
-          &::-webkit-scrollbar {
-            width: 0;
-          }
-        `}
-      >
-        {viewContent}
-      </div>
+      <Fade in={enter}>
+        <div
+          css={css`
+            width: 100vw;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: white;
+          `}
+        >
+          {viewContent}
+        </div>
+      </Fade>
       <Chat onSend={handleSend} socket={socket} />
     </Fragment>
   );
