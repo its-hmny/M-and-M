@@ -82,6 +82,9 @@ const useStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(5),
     paddingTop: theme.spacing(4),
   },
+  teamInput: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const takePhoto = onChangeHandler => {
@@ -98,6 +101,8 @@ const takePhoto = onChangeHandler => {
 const PlayerLobby = ({ story, onStart, saveChanges }) => {
   const [playerData, setData] = useState({
     name: '',
+    team: '',
+    avatar: '',
   });
   const classes = useStyles();
   const initialNodes = useMemo(() => {
@@ -160,6 +165,15 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
           value={playerData.name}
           onChange={e => setData({ ...playerData, name: e.target.value })}
         />
+        {story && story.modes.includes('teams') && (
+          <TextField
+            className={classes.teamInput}
+            variant="outlined"
+            label="Your team"
+            value={playerData.team}
+            onChange={e => setData({ ...playerData, team: e.target.value })}
+          />
+        )}
       </div>
       {!story ? (
         <CircularProgress />

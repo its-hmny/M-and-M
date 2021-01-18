@@ -174,6 +174,15 @@ const Form = ({ story, handleChange }) => {
                   }
                   label={<Typography variant="body2">Multiplayer</Typography>}
                 />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={(story.modes || []).includes('teams')}
+                      onChange={evt => handleChecks('modes', 'teams', evt.target.checked)}
+                    />
+                  }
+                  label={<Typography variant="body2">Teams</Typography>}
+                />
               </div>
             </FormGroup>
           </FormControl>

@@ -93,7 +93,9 @@ const ActivePlayersList = () => {
           </ListItemAvatar>
           <ListItemText
             primary={avaiableName}
-            secondary={<Chip color="primary" size="small" label={statusLabel} />}
+            secondary={
+              <Chip component="span" color="primary" size="small" label={statusLabel} />
+            }
           />
         </ListItem>
       );
@@ -102,13 +104,11 @@ const ActivePlayersList = () => {
   return (
     <div className={container}>
       {playersLog.length === 0 ? (
-        <Typography centered variant="h6">
+        <Typography align="center" variant="h6">
           Nobody is currently playing your story
         </Typography>
       ) : (
-        <List orientation="vertical" indicatorColor="primary">
-          {generatedTab()}
-        </List>
+        <List orientation="vertical">{generatedTab()}</List>
       )}
       <RenameDialog isOpen={dialogOpen} close={() => setDialogOpen(false)} />
     </div>

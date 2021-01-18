@@ -23,8 +23,8 @@ const useStyles = makeStyles(theme => ({
 
 const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const classes = useStyles();
-  const { story, getFromPath, setPathToValue } = useEditor();
-  const { pathAlternative, valToChange, data, dataName } = fragmentSpecificProps;
+  const { getFromPath, setPathToValue } = useEditor();
+  const { pathAlternative, valToChange } = fragmentSpecificProps;
 
   //Additional field to modify objects or array
   path = pathAlternative ? path.concat(pathAlternative || []) : path;

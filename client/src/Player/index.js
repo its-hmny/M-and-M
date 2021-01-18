@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { Fade } from '@material-ui/core';
 import { useEffect, useMemo, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import shortid from 'shortid';
