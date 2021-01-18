@@ -58,6 +58,10 @@ const createStoryProps = (component, storyRuntime) => {
           storyRuntime.updateStats({ id, name, data: answer });
         },
       };
+    case 'Points':
+      return {
+        points: storyRuntime.score,
+      };
     default:
       throw new Error(
         `Cannot compute story props for ${name} because this component does not exist.`
@@ -161,6 +165,7 @@ const Player = () => {
   const storyRuntime = useMemo(
     () => ({
       currentNodeId,
+      score,
       // Whenever position changes evaluator is updated
       moveTo: node => {
         //If the node is final the player is marked as completed

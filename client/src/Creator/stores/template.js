@@ -209,6 +209,14 @@ export const componentBuilders = {
     styleId: 'DefaultYoutubePlayer',
     srcURL: '',
   }),
+  Points: () => ({
+    name: 'Points',
+    styleId: 'DefaultPoints',
+    messages: [],
+    story: {
+      points: 0,
+    },
+  }),
 };
 
 const recursiveFind = (components, targetId) => {

@@ -266,5 +266,15 @@
         "label": "Youtube Link"
       }
     }
+  ],
+  "Points": [
+    {
+      "fragment": "PointsFragment",
+      "props": {
+        "valToChange": "messages",
+        "data": "id",
+        "dataName": "name"
+      }
+    }
   ]
 }

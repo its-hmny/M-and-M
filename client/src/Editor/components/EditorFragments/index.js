@@ -12,6 +12,7 @@ import RadioFragment from './RadioFragment';
 import DividerFragment from './DividerFragment';
 import InputFragment from './InputFragment';
 import AnswerFragmentImages from './AnswerFragmentImages';
+import PointsFragment from './PointsFragment';
 
 const fragmentsComponents = {
   ButtonFragment,
@@ -25,6 +26,7 @@ const fragmentsComponents = {
   DividerFragment,
   InputFragment,
   AnswerFragmentImages,
+  PointsFragment,
 };
 
 const useStyles = makeStyles({
