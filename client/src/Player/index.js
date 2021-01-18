@@ -3,6 +3,8 @@ import { css, jsx } from '@emotion/core';
 import { Fade } from '@material-ui/core';
 import { useEffect, useMemo, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
+import shortid from 'shortid';
+
 import axios, { useQuery } from '../common/shared';
 import { SERVER_URL } from '../common/constants';
 
@@ -102,7 +104,7 @@ const Player = () => {
   // point total
   const [score, setScore] = useState(0);
 
-  const [enter, setEnter] = useState(true);
+  const [forceUpdate, setForceUpdate] = useState(shortid.generate());
 
   const socket = useMemo(() => {
     const tmp = io(SERVER_URL, { query: { type: 'player', storyId } });
@@ -218,7 +220,7 @@ const Player = () => {
       const { components } = story.nodes.find(node => node.id === currentNodeId);
       const content = buildViewContent(components, storyRuntime);
       setViewContent(content);
-      setEnter(true);
+      setForceUpdate(shortid.generate());
     }
   }, [currentNodeId, story, storyRuntime]);
 
@@ -244,19 +246,29 @@ const Player = () => {
 
   return (
     <Fragment>
-      <Fade in={enter}>
-        <div
-          css={css`
-            width: 100vw;
-            height: 100vh;
-            overflow-y: auto;
-            padding: 10px;
-            background-color: white;
-          `}
-        >
-          {viewContent}
-        </div>
-      </Fade>
+      <div
+        key={forceUpdate}
+        css={css`
+          width: 100vw;
+          height: 100vh;
+          overflow-y: auto;
+          padding: 10px;
+          background-color: white;
+          animation-name: fade;
+          animation-duration: 2200ms;
+
+          @keyframes fade {
+            0% {
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+        `}
+      >
+        {viewContent}
+      </div>
       <Chat onSend={handleSend} socket={socket} />
     </Fragment>
   );

@@ -246,7 +246,7 @@ const App = () => {
       </Fab>
       {!dontAskAgain && (
         <AreYouSureDialog
-          open={toDelete}
+          open={!!toDelete}
           onCancel={() => setToDelete(null)}
           onConfirm={dontAskAgain => {
             setDontAskAgain(dontAskAgain);
