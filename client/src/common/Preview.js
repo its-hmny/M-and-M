@@ -19,6 +19,10 @@ const useStyles = makeStyles({
     width: '100%',
     height: '100%',
     overflowY: 'auto',
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': {
+      width: 0,
+    },
   },
   smartphoneBg: {
     position: 'absolute',

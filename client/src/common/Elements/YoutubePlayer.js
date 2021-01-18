@@ -2,7 +2,14 @@
 import { css, jsx } from '@emotion/core';
 
 const base = css`
-  padding: 0px;
+  position: relative;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const YoutubePlayer = ({ srcURL, style }) => {
@@ -10,17 +17,14 @@ const YoutubePlayer = ({ srcURL, style }) => {
 
   return (
     <div css={[base, style]}>
-      <div className="player">
-        <iframe
-          style={style['Player']}
-          src={`https://www.youtube.com/embed/${embedID}`}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+      <iframe
+        src={`https://www.youtube.com/embed/${embedID}`}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
                 gyroscope; picture-in-picture"
-          allowFullScreen
-          title="youtube player"
-        ></iframe>
-      </div>
+        allowFullScreen
+        title="youtube player"
+      ></iframe>
     </div>
   );
 };
