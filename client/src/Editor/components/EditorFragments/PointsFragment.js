@@ -27,16 +27,16 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { pathAlternative, valToChange } = fragmentSpecificProps;
 
   //Additional field to modify objects or array
-  path = pathAlternative ? path.concat(pathAlternative || []) : path;
-  const messages = getFromPath(path || [])[valToChange];
-  const thresholdPath = path.concat(valToChange) || [];
+  path = pathAlternative ? path.concat(pathAlternative) : path || [];
+  const messages = getFromPath(path)[valToChange];
+  const thresholdPath = path.concat(valToChange);
 
   const addChoice = () => {
-    setPathToValue(path || [], 'messages', [...messages, { threshold: 0, text: '' }]);
+    setPathToValue(path, 'messages', [...messages, { threshold: 0, text: '' }]);
   };
   const deleteChoice = i => {
     messages.splice(i, 1);
-    setPathToValue(path || [], 'messages', messages);
+    setPathToValue(path, 'messages', messages);
   };
 
   const setNumberField = (value, index) => {

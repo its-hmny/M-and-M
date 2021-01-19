@@ -20,6 +20,7 @@ export const EditorProvider = ({ children, userStory }) => {
         if (!current[key]) {
           current[key] = {};
         }
+
         current = current[key];
       });
       return current;
@@ -36,6 +37,7 @@ export const EditorProvider = ({ children, userStory }) => {
       let current = inProgressStory.nodes.find(
         node => node.id === (optNodeId || focusedNode)
       );
+
       path.forEach(key => {
         if (!current[key]) {
           current[key] = {};

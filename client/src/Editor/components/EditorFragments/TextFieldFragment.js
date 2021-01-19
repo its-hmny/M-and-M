@@ -17,8 +17,8 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { getFromPath, setPathToValue } = useEditor();
 
   //Additional field to modify objects or array
-  path = pathAlternative ? path.concat(pathAlternative || []) : path;
-  const value = getFromPath(path || [])[valToChange];
+  path = pathAlternative ? path.concat(pathAlternative || []) : path || [];
+  const value = getFromPath(path)[valToChange];
 
   return (
     <div>
@@ -37,7 +37,7 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
         onChange={event =>
           onChange !== undefined
             ? onChange(event)
-            : setPathToValue(path || [], valToChange, event.target.value)
+            : setPathToValue(path, valToChange, event.target.value)
         }
       />
     </div>

@@ -21,9 +21,9 @@ const InputFragment = ({ classNames, path, fragmentSpecificProps }) => {
     pointsValToChange,
   } = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
-
-  const value = getFromPath(path || [])[valToChange];
-  const PointsCompletePath = path.concat(pointsPath) || [];
+  path = path || [];
+  const value = getFromPath(path)[valToChange];
+  const PointsCompletePath = path.concat(pointsPath);
   const pointsValue = getFromPath(PointsCompletePath)[pointsValToChange];
   const setNumberField = (value, story) => {
     if (value === '') {
@@ -36,9 +36,9 @@ const InputFragment = ({ classNames, path, fragmentSpecificProps }) => {
     }
 
     if (!isNaN(value)) {
-      setPathToValue(PointsCompletePath || [], story, parseInt(value));
+      setPathToValue(PointsCompletePath, story, parseInt(value));
     } else if (value === '-') {
-      setPathToValue(PointsCompletePath || [], story, 0);
+      setPathToValue(PointsCompletePath, story, 0);
     }
   };
 
@@ -59,7 +59,7 @@ const InputFragment = ({ classNames, path, fragmentSpecificProps }) => {
         onChange={event =>
           onChange !== undefined
             ? onChange(event)
-            : setPathToValue(path || [], valToChange, event.target.value)
+            : setPathToValue(path, valToChange, event.target.value)
         }
       />
       <TextField

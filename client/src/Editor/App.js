@@ -111,6 +111,7 @@ const App = () => {
 
     components.forEach((comp, index) => {
       const basepath = [...(specificPath || ['components']), index];
+
       const option = CompSettings[comp.name].find(({ fragment }) =>
         destinationFrags.includes(fragment)
       );
@@ -119,7 +120,8 @@ const App = () => {
         if (buttonFrags.includes(option.fragment)) {
           // Button case, simply set the story.nextNode object to itself
           const { specificPath, valToChange } = option.props;
-          setPathToValue([...basepath, ...specificPath], valToChange, dest, dest);
+          console.log(specificPath);
+          setPathToValue([...basepath, ...(specificPath || [])], valToChange, dest, dest);
         } else if (choiceFrags.includes(option.fragment)) {
           // MultiAnsChoice and similar case, is needed to set the whole
           // destinaion object one level before in the object itself

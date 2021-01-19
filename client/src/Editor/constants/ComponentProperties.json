@@ -67,7 +67,7 @@
     {
       "fragment": "SelectFragment",
       "props": {
-        "specificPath": ["story"],
+        "pathAlternative": ["story"],
         "valToChange": "nextNode",
         "label": "Destination",
         "data": "id",
@@ -107,7 +107,7 @@
     {
       "fragment": "SelectFragment",
       "props": {
-        "specificPath": ["story"],
+        "pathAlternative": ["story"],
         "valToChange": "nextNode",
         "label": "Destination",
         "data": "id",
@@ -122,13 +122,6 @@
       "props": {
         "valToChange": "description",
         "label": "Image description"
-      }
-    },
-    {
-      "fragment": "TextFieldFragment",
-      "props": {
-        "valToChange": "fallback",
-        "label": "Fallback"
       }
     },
     {
@@ -250,7 +243,7 @@
     {
       "fragment": "SelectFragment",
       "props": {
-        "specificPath": ["story"],
+        "pathAlternative": ["story"],
         "valToChange": "nextNode",
         "label": "Destination",
         "data": "id",

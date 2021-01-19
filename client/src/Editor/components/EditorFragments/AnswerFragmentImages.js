@@ -56,10 +56,10 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
   const [correctAnswerValue, setCorrectAnswerValue] = React.useState([]);
 
   //Additional field to modify objects or array
-  path = pathAlternative ? path.concat(pathAlternative || []) : path;
-  const answers = getFromPath(path || [])[valToChange];
-  const pointsPath = path.concat(valToChange) || [];
-  const selectCompletePath = (path || []).concat(selectPath);
+  path = pathAlternative ? path.concat(pathAlternative) : path || [];
+  const answers = getFromPath(path)[valToChange];
+  const pointsPath = path.concat(valToChange);
+  const selectCompletePath = path.concat(selectPath);
   const correctSelectValue = getFromPath(selectCompletePath)[correctStory];
   const wrongSelectValue = getFromPath(selectCompletePath)[wrongStory];
 
@@ -87,7 +87,7 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
   }, [singleCorrectAnswer, answers]);
 
   const addChoice = () => {
-    setPathToValue(path || [], 'answers', [
+    setPathToValue(path, 'answers', [
       ...answers,
       {
         value: ANSWER_VALUE.WRONG,
@@ -99,7 +99,7 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
   };
   const deleteChoice = i => {
     answers.splice(i, 1);
-    setPathToValue(path || [], 'answers', answers);
+    setPathToValue(path, 'answers', answers);
   };
 
   var cannotChooseCorrectAnswer = singleCorrectAnswer

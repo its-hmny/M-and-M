@@ -31,24 +31,21 @@ const deleteEdges = (node, components, target) => {
 const ButtonFragment = props => {
   const { classNames, fragmentSpecificProps } = props;
   const { story, workingActivity, saveStory, setWorkingActivity } = useEditor();
-  /* Switch to check which predefined button function to use */
-  let onClick;
-  if (fragmentSpecificProps.onClick === 'removeNode') {
-    onClick = () => {
-      let { nodes, ...others } = story;
-      nodes = nodes.filter(node => node.id !== workingActivity);
-      nodes = nodes.map(node => ({
-        ...node,
-        components: deleteEdges(node, node.components, workingActivity),
-      }));
-      saveStory({ nodes, ...others });
-      setWorkingActivity(undefined);
-    };
-  }
+
+  const onClick = () => {
+    let { nodes, ...others } = story;
+    nodes = nodes.filter(node => node.id !== workingActivity);
+    nodes = nodes.map(node => ({
+      ...node,
+      components: deleteEdges(node, node.components, workingActivity),
+    }));
+    saveStory({ nodes, ...others });
+    setWorkingActivity(undefined);
+  };
 
   return (
     <Button
-      onClick={() => onClick()}
+      onClick={onClick}
       color="primary"
       variant="contained"
       className={classNames.InspectorElement}

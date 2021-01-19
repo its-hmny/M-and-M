@@ -6,9 +6,7 @@ import { useEditor } from '../../context/EditorContext';
 import axios from '../../../common/shared';
 import { SERVER_URL } from '../../../common/constants';
 
-// TODO find a way to implement server upload and make the image a static resource
 const FilePickerFragment = props => {
-  console.log('render phase ', props.path);
   const { classNames, path, fragmentSpecificProps } = props;
   const { valToChange, acceptedFileType, buttonLabel } = fragmentSpecificProps;
   const { setPathToValue, getFromPath } = useEditor();
@@ -16,7 +14,6 @@ const FilePickerFragment = props => {
 
   const inputId = useMemo(() => shortid.generate(), []);
 
-  // Clearly this has to be changed
   const loadToServer = toUpload => {
     if (!toUpload) return;
     const formData = new FormData();

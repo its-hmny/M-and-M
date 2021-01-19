@@ -11,10 +11,10 @@ const base = css`
   padding: 5 5px;
 `;
 
-const Image = ({ fallback, imgURL, style }) => {
+const Image = ({ description, imgURL, style }) => {
   return (
     <div>
-      <img src={imgURL} alt={fallback} css={[base, style]} />
+      <img src={imgURL} alt={description} css={[base, style]} />
     </div>
   );
 };

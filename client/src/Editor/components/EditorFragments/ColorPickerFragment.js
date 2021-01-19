@@ -27,6 +27,7 @@ const ColorPickerFragment = props => {
   const { path, fragmentSpecificProps } = props;
   const { valToChange } = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
+
   // If undefined then it defaults to orange
   const colorValue = getFromPath(path || [])[valToChange] || '#eb8231';
 

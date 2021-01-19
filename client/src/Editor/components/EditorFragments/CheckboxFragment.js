@@ -13,11 +13,10 @@ const CheckboxFragment = ({ classNames, path, fragmentSpecificProps }) => {
     label,
     onChange,
     truthValues,
-    disabled,
   } = fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
-  path = pathAlternative ? path.concat(pathAlternative || []) : path;
-  const value = getFromPath(path || [])[valToChange];
+  path = pathAlternative ? path.concat(pathAlternative || []) : path || [];
+  const value = getFromPath(path)[valToChange];
 
   return (
     <FormControlLabel
@@ -26,14 +25,13 @@ const CheckboxFragment = ({ classNames, path, fragmentSpecificProps }) => {
         <Checkbox
           color="primary"
           checked={value === (truthValues !== undefined ? truthValues[0] : true)}
-          disabled={disabled || false}
         />
       }
       onChange={event =>
         onChange !== undefined
           ? onChange(event)
           : setPathToValue(
-              path || [],
+              path,
               valToChange,
               event.target.checked
                 ? truthValues !== undefined
