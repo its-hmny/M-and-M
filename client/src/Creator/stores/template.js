@@ -102,7 +102,7 @@ export const componentBuilders = {
   }),
   TextArea: () => ({
     name: 'TextArea',
-    placeholder: 'Default placeholder text',
+    label: 'Default text',
     rows: 5,
     styleId: 'DefaultTextArea',
   }),

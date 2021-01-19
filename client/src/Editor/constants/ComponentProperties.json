@@ -143,7 +143,25 @@
       }
     }
   ],
-  "TextArea": [],
+  "TextArea": [
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "label",
+        "label": "Label text"
+      }
+    },
+    {
+      "fragment": "SelectFragment",
+      "props": {
+        "pathAlternative": ["story"],
+        "valToChange": "nextNode",
+        "label": "Destination",
+        "data": "id",
+        "dataName": "name"
+      }
+    }
+  ],
   "Footer": [],
   "Spacer": [],
   "Background": [],
