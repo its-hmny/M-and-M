@@ -49,62 +49,55 @@ const RenameDialog = ({ isOpen, close }) => {
 };
 
 const ActivePlayersList = () => {
-  const { story, selectedPlayer, playersLog, setFocusedPlayer } = useEvaluator();
+  const { selectedPlayer, playersLog, setFocusedPlayer } = useEvaluator();
   const { container, listItem } = useStyles();
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const playerSort = (x, y) => y.score - x.score;
-  const getTeamScore = teamName =>
-    playersLog.reduce(
-      (teamScore, { team, score }) => teamScore + (team === teamName ? score : 0),
-      0
-    );
-  const teamSort = (x, y) => getTeamScore(y.team) - getTeamScore(x.team);
-  playersLog.sort(story?.modes?.includes('teams') ? teamSort : playerSort);
-
   const generatedTab = () =>
-    playersLog.map(player => {
-      const {
-        name,
-        id,
-        team,
-        avatar,
-        hasFinished,
-        isDisconnected,
-        pendingEvaluation,
-        unreadMessages,
-      } = player;
-      const teamTag = team ? ` [${team}]` : '';
-      const avaiableName = name || id;
-      const showBadge = Boolean(pendingEvaluation.length || unreadMessages);
-      const statusLabel = hasFinished
-        ? 'Completed'
-        : isDisconnected
-        ? 'Offline'
-        : 'Online';
+    playersLog
+      .sort((a, b) => (a.name || a.id).localeCompare((b.name || b.id).toUpperCase()))
+      .map(player => {
+        const {
+          name,
+          id,
+          team,
+          avatar,
+          hasFinished,
+          isDisconnected,
+          pendingEvaluation,
+          unreadMessages,
+        } = player;
+        const teamTag = team ? ` [${team}]` : '';
+        const avaiableName = name || id;
+        const showBadge = Boolean(pendingEvaluation.length || unreadMessages);
+        const statusLabel = hasFinished
+          ? 'Completed'
+          : isDisconnected
+          ? 'Offline'
+          : 'Online';
 
-      return (
-        <ListItem
-          key={id}
-          selected={selectedPlayer && id === selectedPlayer.id}
-          onClick={() => setFocusedPlayer(id)}
-          onDoubleClick={() => setDialogOpen(true)}
-          disabled={isDisconnected || hasFinished}
-          className={listItem}
-        >
-          {showBadge && <Badge badgeContent={'!'} color="primary" />}
-          <ListItemAvatar>
-            <Avatar src={avatar} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={avaiableName + teamTag}
-            secondary={
-              <Chip component="span" color="primary" size="small" label={statusLabel} />
-            }
-          />
-        </ListItem>
-      );
-    });
+        return (
+          <ListItem
+            key={id}
+            selected={selectedPlayer && id === selectedPlayer.id}
+            onClick={() => setFocusedPlayer(id)}
+            onDoubleClick={() => setDialogOpen(true)}
+            disabled={isDisconnected || hasFinished}
+            className={listItem}
+          >
+            {showBadge && <Badge badgeContent={'!'} color="primary" />}
+            <ListItemAvatar>
+              <Avatar src={avatar} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={avaiableName + teamTag}
+              secondary={
+                <Chip component="span" color="primary" size="small" label={statusLabel} />
+              }
+            />
+          </ListItem>
+        );
+      });
 
   return (
     <div className={container}>

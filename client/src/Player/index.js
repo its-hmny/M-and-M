@@ -219,9 +219,10 @@ const Player = () => {
       const { components } = story.nodes.find(node => node.id === currentNodeId);
       const content = buildViewContent(components, storyRuntime);
       setViewContent(content);
-      setForceUpdate(shortid.generate());
     }
   }, [currentNodeId, story, storyRuntime]);
+
+  useEffect(() => setForceUpdate(shortid.generate()), [currentNodeId]);
 
   if (status === 'LOADING') {
     const saveChanges = patch =>
