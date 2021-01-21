@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useMemo } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, InputLabel } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';

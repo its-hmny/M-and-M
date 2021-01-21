@@ -55,21 +55,26 @@ const ActivePlayersList = () => {
 
   const playerSort = (x, y) => y.score - x.score;
   const getTeamScore = teamName =>
-    playersLog.reduce(({ score, team }) => team === teamName || score);
+    playersLog.reduce(
+      (teamScore, { team, score }) => teamScore + (team === teamName ? score : 0),
+      0
+    );
   const teamSort = (x, y) => getTeamScore(y.team) - getTeamScore(x.team);
-  playersLog.sort((story || {}).modes === 'teams' ? teamSort : playerSort);
+  playersLog.sort(story?.modes?.includes('teams') ? teamSort : playerSort);
 
   const generatedTab = () =>
     playersLog.map(player => {
       const {
         name,
         id,
+        team,
         avatar,
         hasFinished,
         isDisconnected,
         pendingEvaluation,
         unreadMessages,
       } = player;
+      const teamTag = team ? ` [${team}]` : '';
       const avaiableName = name || id;
       const showBadge = Boolean(pendingEvaluation.length || unreadMessages);
       const statusLabel = hasFinished
@@ -92,7 +97,7 @@ const ActivePlayersList = () => {
             <Avatar src={avatar} />
           </ListItemAvatar>
           <ListItemText
-            primary={avaiableName}
+            primary={avaiableName + teamTag}
             secondary={
               <Chip component="span" color="primary" size="small" label={statusLabel} />
             }

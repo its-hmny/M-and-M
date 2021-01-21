@@ -30,7 +30,6 @@ const base = css`
   }
 `;
 const audioID = shortid.generate();
-const playID = shortid.generate();
 const AudioPlayer = ({ srcURL, style }) => {
   const [playing, setPlaying] = React.useState(false);
   const [width, setWidth] = React.useState(0);
