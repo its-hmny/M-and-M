@@ -19,7 +19,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.1",
-    "immer": "^7.0.9",
+    "immer": "^8.0.1",
     "lodash.differencewith": "^4.5.0",
     "lodash.isequal": "^4.5.0",
     "material-ui-color-picker": "^3.5.0",
