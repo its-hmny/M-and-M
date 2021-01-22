@@ -1,5 +1,5 @@
-import { F as Fab } from '../../common/Fab-8b2c098b.js';
-export { F as default } from '../../common/Fab-8b2c098b.js';
+import { _ as __pika_web_default_export_for_treeshaking__ } from '../../common/Button-47380e0e.js';
+export { _ as default } from '../../common/Button-47380e0e.js';
 import '../../common/defaultTheme-b844222d.js';
 import '../../common/index-8732a38f.js';
 import '../../common/_commonjsHelpers-37fa8da4.js';
