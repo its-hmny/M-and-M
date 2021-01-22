@@ -5,6 +5,7 @@ node_modules
 /.pnp
 .pnp.js
 client/.npm_cache
+.npm_cache
 
 # testing
 /coverage
