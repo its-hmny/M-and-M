@@ -6,8 +6,8 @@ import { i as isDataViewLike, D as DataSet } from '../../../common/vis-data-5901
  *
  * A dynamic, browser-based visualization library.
  *
- * @version 8.5.6
- * @date    2020-12-27T14:30:18.174Z
+ * @version 8.5.3
+ * @date    2020-11-12T06:39:58.756Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -28,9 +28,18 @@ import { i as isDataViewLike, D as DataSet } from '../../../common/vis-data-5901
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
+function createCommonjsModule(fn, basedir, module) {
+	return module = {
+		path: basedir,
+		exports: {},
+		require: function (path, base) {
+			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+		}
+	}, fn(module, module.exports), module.exports;
+}
+
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
 }
 
 var check = function (it) {
@@ -38,7 +47,7 @@ var check = function (it) {
 }; // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 
 
-var global$1 = // eslint-disable-next-line no-undef
+var global_1 = // eslint-disable-next-line no-undef
 check(typeof globalThis == 'object' && globalThis) || check(typeof window == 'object' && window) || check(typeof self == 'object' && self) || check(typeof commonjsGlobal == 'object' && commonjsGlobal) || // eslint-disable-next-line no-new-func
 function () {
   return this;
@@ -135,7 +144,7 @@ var has = function (it, key) {
   return hasOwnProperty.call(it, key);
 };
 
-var document$1 = global$1.document; // typeof document.createElement is 'object' in old IE
+var document$1 = global_1.document; // typeof document.createElement is 'object' in old IE
 
 var EXISTS = isObject(document$1) && isObject(document$1.createElement);
 
@@ -308,7 +317,7 @@ var _export = function (options, source) {
   var GLOBAL = options.global;
   var STATIC = options.stat;
   var PROTO = options.proto;
-  var nativeSource = GLOBAL ? global$1 : STATIC ? global$1[TARGET] : (global$1[TARGET] || {}).prototype;
+  var nativeSource = GLOBAL ? global_1 : STATIC ? global_1[TARGET] : (global_1[TARGET] || {}).prototype;
   var target = GLOBAL ? path : path[TARGET] || (path[TARGET] = {});
   var targetPrototype = target.prototype;
   var FORCED, USE_NATIVE, VIRTUAL_PROTOTYPE;
@@ -327,7 +336,7 @@ var _export = function (options, source) {
     sourceProperty = USE_NATIVE && nativeProperty ? nativeProperty : source[key];
     if (USE_NATIVE && typeof targetProperty === typeof sourceProperty) continue; // bind timers to global for call from export context
 
-    if (options.bind && USE_NATIVE) resultProperty = functionBindContext(sourceProperty, global$1); // wrap global constructors for prevent changs in this version
+    if (options.bind && USE_NATIVE) resultProperty = functionBindContext(sourceProperty, global_1); // wrap global constructors for prevent changs in this version
     else if (options.wrap && USE_NATIVE) resultProperty = wrapConstructor(sourceProperty); // make static versions for prototype methods
       else if (PROTO && typeof sourceProperty == 'function') resultProperty = functionBindContext(Function.call, sourceProperty); // default case
         else resultProperty = sourceProperty; // add a flag to not completely full polyfills
@@ -1178,7 +1187,7 @@ var aFunction$1 = function (variable) {
 };
 
 var getBuiltIn = function (namespace, method) {
-  return arguments.length < 2 ? aFunction$1(path[namespace]) || aFunction$1(global$1[namespace]) : path[namespace] && path[namespace][method] || global$1[namespace] && global$1[namespace][method];
+  return arguments.length < 2 ? aFunction$1(path[namespace]) || aFunction$1(global_1[namespace]) : path[namespace] && path[namespace][method] || global_1[namespace] && global_1[namespace][method];
 };
 
 var hiddenKeys$1 = enumBugKeys.concat('length', 'prototype'); // `Object.getOwnPropertyNames` method
@@ -1285,23 +1294,23 @@ var html = getBuiltIn('document', 'documentElement');
 
 var setGlobal = function (key, value) {
   try {
-    createNonEnumerableProperty(global$1, key, value);
+    createNonEnumerableProperty(global_1, key, value);
   } catch (error) {
-    global$1[key] = value;
+    global_1[key] = value;
   }
 
   return value;
 };
 
 var SHARED = '__core-js_shared__';
-var store = global$1[SHARED] || setGlobal(SHARED, {});
+var store = global_1[SHARED] || setGlobal(SHARED, {});
 var sharedStore = store;
 
 var shared = createCommonjsModule(function (module) {
   (module.exports = function (key, value) {
     return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.8.1',
+    version: '3.7.0',
     mode:  'pure' ,
     copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
   });
@@ -1427,7 +1436,7 @@ var redefine = function (target, key, value, options) {
 };
 
 var WellKnownSymbolsStore = shared('wks');
-var Symbol$1 = global$1.Symbol;
+var Symbol$1 = global_1.Symbol;
 var createWellKnownSymbol = useSymbolAsUid ? Symbol$1 : Symbol$1 && Symbol$1.withoutSetter || uid;
 
 var wellKnownSymbol = function (name) {
@@ -1517,10 +1526,10 @@ if (typeof sharedStore.inspectSource != 'function') {
 
 var inspectSource = sharedStore.inspectSource;
 
-var WeakMap = global$1.WeakMap;
+var WeakMap = global_1.WeakMap;
 var nativeWeakMap = typeof WeakMap === 'function' && /native code/.test(inspectSource(WeakMap));
 
-var WeakMap$1 = global$1.WeakMap;
+var WeakMap$1 = global_1.WeakMap;
 var set, get, has$1;
 
 var enforce = function (it) {
@@ -1603,7 +1612,7 @@ var arraySpeciesCreate = function (originalArray, length) {
   return new (C === undefined ? Array : C)(length === 0 ? 0 : length);
 };
 
-var push = [].push; // `Array.prototype.{ forEach, map, filter, some, every, find, findIndex, filterOut }` methods implementation
+var push = [].push; // `Array.prototype.{ forEach, map, filter, some, every, find, findIndex }` methods implementation
 
 var createMethod$1 = function (TYPE) {
   var IS_MAP = TYPE == 1;
@@ -1611,7 +1620,6 @@ var createMethod$1 = function (TYPE) {
   var IS_SOME = TYPE == 3;
   var IS_EVERY = TYPE == 4;
   var IS_FIND_INDEX = TYPE == 6;
-  var IS_FILTER_OUT = TYPE == 7;
   var NO_HOLES = TYPE == 5 || IS_FIND_INDEX;
   return function ($this, callbackfn, that, specificCreate) {
     var O = toObject($this);
@@ -1620,7 +1628,7 @@ var createMethod$1 = function (TYPE) {
     var length = toLength(self.length);
     var index = 0;
     var create = specificCreate || arraySpeciesCreate;
-    var target = IS_MAP ? create($this, length) : IS_FILTER || IS_FILTER_OUT ? create($this, 0) : undefined;
+    var target = IS_MAP ? create($this, length) : IS_FILTER ? create($this, 0) : undefined;
     var value, result;
 
     for (; length > index; index++) if (NO_HOLES || index in self) {
@@ -1645,15 +1653,7 @@ var createMethod$1 = function (TYPE) {
             case 2:
               push.call(target, value);
             // filter
-          } else switch (TYPE) {
-            case 4:
-              return false;
-            // every
-
-            case 7:
-              push.call(target, value);
-            // filterOut
-          }
+          } else if (IS_EVERY) return false; // every
       }
     }
 
@@ -1682,10 +1682,7 @@ var arrayIteration = {
   find: createMethod$1(5),
   // `Array.prototype.findIndex` method
   // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
-  findIndex: createMethod$1(6),
-  // `Array.prototype.filterOut` method
-  // https://github.com/tc39/proposal-array-filtering
-  filterOut: createMethod$1(7)
+  findIndex: createMethod$1(6)
 };
 
 var $forEach = arrayIteration.forEach;
@@ -1696,7 +1693,7 @@ var TO_PRIMITIVE = wellKnownSymbol('toPrimitive');
 var setInternalState = internalState.set;
 var getInternalState = internalState.getterFor(SYMBOL);
 var ObjectPrototype = Object[PROTOTYPE$1];
-var $Symbol = global$1.Symbol;
+var $Symbol = global_1.Symbol;
 var $stringify = getBuiltIn('JSON', 'stringify');
 var nativeGetOwnPropertyDescriptor$2 = objectGetOwnPropertyDescriptor.f;
 var nativeDefineProperty$1 = objectDefineProperty.f;
@@ -1707,7 +1704,7 @@ var ObjectPrototypeSymbols = shared('op-symbols');
 var StringToSymbolRegistry = shared('string-to-symbol-registry');
 var SymbolToStringRegistry = shared('symbol-to-string-registry');
 var WellKnownSymbolsStore$1 = shared('wks');
-var QObject = global$1.QObject; // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
+var QObject = global_1.QObject; // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
 
 var USE_SETTER = !QObject || !QObject[PROTOTYPE$1] || !QObject[PROTOTYPE$1].findChild; // fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
 
@@ -2299,7 +2296,7 @@ var domIterables = {
 var TO_STRING_TAG$3 = wellKnownSymbol('toStringTag');
 
 for (var COLLECTION_NAME in domIterables) {
-  var Collection = global$1[COLLECTION_NAME];
+  var Collection = global_1[COLLECTION_NAME];
   var CollectionPrototype = Collection && Collection.prototype;
 
   if (CollectionPrototype && classof(CollectionPrototype) !== TO_STRING_TAG$3) {
@@ -2513,11 +2510,11 @@ _export({
   from: arrayFrom
 });
 
-var from = path.Array.from;
+var from_1 = path.Array.from;
 
-var from$1 = from;
+var from_1$1 = from_1;
 
-var from$2 = from$1;
+var from_1$2 = from_1$1;
 
 // https://tc39.github.io/ecma262/#sec-object.create
 
@@ -2691,7 +2688,7 @@ var forEach_1 = function (it) {
 var forEach$2 = forEach_1;
 
 var trim$1 = stringTrim.trim;
-var $parseInt = global$1.parseInt;
+var $parseInt = global_1.parseInt;
 var hex = /^[+-]?0[Xx]/;
 var FORCED$1 = $parseInt(whitespaces + '08') !== 8 || $parseInt(whitespaces + '0x16') !== 22; // `parseInt` method
 // https://tc39.github.io/ecma262/#sec-parseint-string-radix
@@ -2764,7 +2761,7 @@ var values = path.Object.values;
 
 var engineUserAgent = getBuiltIn('navigator', 'userAgent') || '';
 
-var process = global$1.process;
+var process = global_1.process;
 var versions = process && process.versions;
 var v8 = versions && versions.v8;
 var match, version;
@@ -3032,7 +3029,7 @@ defineWellKnownSymbol('unscopables');
 
 // https://tc39.github.io/ecma262/#sec-json-@@tostringtag
 
-setToStringTag(global$1.JSON, 'JSON', true);
+setToStringTag(global_1.JSON, 'JSON', true);
 
 var symbol = path.Symbol;
 
@@ -3087,9 +3084,9 @@ function _iterableToArrayLimit(arr, i) {
 
 var iterableToArrayLimit = _iterableToArrayLimit;
 
-var from$3 = from;
+var from_1$3 = from_1;
 
-var from$4 = from$3;
+var from_1$4 = from_1$3;
 
 var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport('slice');
 var USES_TO_LENGTH$3 = arrayMethodUsesToLength('slice', {
@@ -3174,7 +3171,7 @@ function _unsupportedIterableToArray(o, minLen) {
   var n = slice$3(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
 
   if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return from$4(o);
+  if (n === "Map" || n === "Set") return from_1$4(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
 }
 
@@ -3314,7 +3311,7 @@ function _arrayWithoutHoles(arr) {
 var arrayWithoutHoles = _arrayWithoutHoles;
 
 function _iterableToArray(iter) {
-  if (typeof symbol$2 !== "undefined" && isIterable$1(Object(iter))) return from$4(iter);
+  if (typeof symbol$2 !== "undefined" && isIterable$1(Object(iter))) return from_1$4(iter);
 }
 
 var iterableToArray = _iterableToArray;
@@ -3350,7 +3347,7 @@ var symbol$4 = symbol$3;
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$1(o, minLen) { var _context13; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = slice$5(_context13 = Object.prototype.toString.call(o)).call(_context13, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+function _unsupportedIterableToArray$1(o, minLen) { var _context13; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = slice$5(_context13 = Object.prototype.toString.call(o)).call(_context13, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
 
 function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -3825,6 +3822,38 @@ function getAbsoluteLeft(elem) {
 
 function getAbsoluteTop(elem) {
   return elem.getBoundingClientRect().top;
+}
+/**
+ * Add a className to the given elements style.
+ *
+ * @param elem - The element to which the classes will be added.
+ * @param classNames - Space separated list of classes.
+ */
+
+
+function addClassName(elem, classNames) {
+  var classes = elem.className.split(" ");
+  var newClasses = classNames.split(" ");
+  classes = concat$2(classes).call(classes, filter$2(newClasses).call(newClasses, function (className) {
+    return indexOf$3(classes).call(classes, className) < 0;
+  }));
+  elem.className = classes.join(" ");
+}
+/**
+ * Remove a className from the given elements style.
+ *
+ * @param elem - The element from which the classes will be removed.
+ * @param classNames - Space separated list of classes.
+ */
+
+
+function removeClassName(elem, classNames) {
+  var classes = elem.className.split(" ");
+  var oldClasses = classNames.split(" ");
+  classes = filter$2(classes).call(classes, function (className) {
+    return indexOf$3(oldClasses).call(oldClasses, className) < 0;
+  });
+  elem.className = classes.join(" ");
 }
 /**
  * For each method for both arrays and objects.
@@ -6371,36 +6400,291 @@ function parseGephi(gephiJSON, optionsObj) {
   };
 }
 
-var nativeReverse = [].reverse;
-var test$1 = [1, 2]; // `Array.prototype.reverse` method
-// https://tc39.github.io/ecma262/#sec-array.prototype.reverse
-// fix for Safari 12.0 bug
-// https://bugs.webkit.org/show_bug.cgi?id=188794
+/**
+ * Created by Alex on 11/6/2014.
+ */
+function keycharm(options) {
+  var preventDefault = options && options.preventDefault || false;
+  var container = options && options.container || window;
+  var _exportFunctions = {};
+  var _bound = {
+    keydown: {},
+    keyup: {}
+  };
+  var _keys = {};
+  var i; // a - z
 
-_export({
-  target: 'Array',
-  proto: true,
-  forced: String(test$1) === String(test$1.reverse())
-}, {
-  reverse: function reverse() {
-    // eslint-disable-next-line no-self-assign
-    if (isArray(this)) this.length = this.length;
-    return nativeReverse.call(this);
-  }
-});
+  for (i = 97; i <= 122; i++) {
+    _keys[String.fromCharCode(i)] = {
+      code: 65 + (i - 97),
+      shift: false
+    };
+  } // A - Z
 
-var reverse = entryVirtual('Array').reverse;
 
-var ArrayPrototype$9 = Array.prototype;
+  for (i = 65; i <= 90; i++) {
+    _keys[String.fromCharCode(i)] = {
+      code: i,
+      shift: true
+    };
+  } // 0 - 9
 
-var reverse_1 = function (it) {
-  var own = it.reverse;
-  return it === ArrayPrototype$9 || it instanceof Array && own === ArrayPrototype$9.reverse ? reverse : own;
-};
 
-var reverse$1 = reverse_1;
+  for (i = 0; i <= 9; i++) {
+    _keys['' + i] = {
+      code: 48 + i,
+      shift: false
+    };
+  } // F1 - F12
 
-var reverse$2 = reverse$1;
+
+  for (i = 1; i <= 12; i++) {
+    _keys['F' + i] = {
+      code: 111 + i,
+      shift: false
+    };
+  } // num0 - num9
+
+
+  for (i = 0; i <= 9; i++) {
+    _keys['num' + i] = {
+      code: 96 + i,
+      shift: false
+    };
+  } // numpad misc
+
+
+  _keys['num*'] = {
+    code: 106,
+    shift: false
+  };
+  _keys['num+'] = {
+    code: 107,
+    shift: false
+  };
+  _keys['num-'] = {
+    code: 109,
+    shift: false
+  };
+  _keys['num/'] = {
+    code: 111,
+    shift: false
+  };
+  _keys['num.'] = {
+    code: 110,
+    shift: false
+  }; // arrows
+
+  _keys['left'] = {
+    code: 37,
+    shift: false
+  };
+  _keys['up'] = {
+    code: 38,
+    shift: false
+  };
+  _keys['right'] = {
+    code: 39,
+    shift: false
+  };
+  _keys['down'] = {
+    code: 40,
+    shift: false
+  }; // extra keys
+
+  _keys['space'] = {
+    code: 32,
+    shift: false
+  };
+  _keys['enter'] = {
+    code: 13,
+    shift: false
+  };
+  _keys['shift'] = {
+    code: 16,
+    shift: undefined
+  };
+  _keys['esc'] = {
+    code: 27,
+    shift: false
+  };
+  _keys['backspace'] = {
+    code: 8,
+    shift: false
+  };
+  _keys['tab'] = {
+    code: 9,
+    shift: false
+  };
+  _keys['ctrl'] = {
+    code: 17,
+    shift: false
+  };
+  _keys['alt'] = {
+    code: 18,
+    shift: false
+  };
+  _keys['delete'] = {
+    code: 46,
+    shift: false
+  };
+  _keys['pageup'] = {
+    code: 33,
+    shift: false
+  };
+  _keys['pagedown'] = {
+    code: 34,
+    shift: false
+  }; // symbols
+
+  _keys['='] = {
+    code: 187,
+    shift: false
+  };
+  _keys['-'] = {
+    code: 189,
+    shift: false
+  };
+  _keys[']'] = {
+    code: 221,
+    shift: false
+  };
+  _keys['['] = {
+    code: 219,
+    shift: false
+  };
+
+  var down = function (event) {
+    handleEvent(event, 'keydown');
+  };
+
+  var up = function (event) {
+    handleEvent(event, 'keyup');
+  }; // handle the actualy bound key with the event
+
+
+  var handleEvent = function (event, type) {
+    if (_bound[type][event.keyCode] !== undefined) {
+      var bound = _bound[type][event.keyCode];
+
+      for (var i = 0; i < bound.length; i++) {
+        if (bound[i].shift === undefined) {
+          bound[i].fn(event);
+        } else if (bound[i].shift == true && event.shiftKey == true) {
+          bound[i].fn(event);
+        } else if (bound[i].shift == false && event.shiftKey == false) {
+          bound[i].fn(event);
+        }
+      }
+
+      if (preventDefault == true) {
+        event.preventDefault();
+      }
+    }
+  }; // bind a key to a callback
+
+
+  _exportFunctions.bind = function (key, callback, type) {
+    if (type === undefined) {
+      type = 'keydown';
+    }
+
+    if (_keys[key] === undefined) {
+      throw new Error("unsupported key: " + key);
+    }
+
+    if (_bound[type][_keys[key].code] === undefined) {
+      _bound[type][_keys[key].code] = [];
+    }
+
+    _bound[type][_keys[key].code].push({
+      fn: callback,
+      shift: _keys[key].shift
+    });
+  }; // bind all keys to a call back (demo purposes)
+
+
+  _exportFunctions.bindAll = function (callback, type) {
+    if (type === undefined) {
+      type = 'keydown';
+    }
+
+    for (var key in _keys) {
+      if (_keys.hasOwnProperty(key)) {
+        _exportFunctions.bind(key, callback, type);
+      }
+    }
+  }; // get the key label from an event
+
+
+  _exportFunctions.getKey = function (event) {
+    for (var key in _keys) {
+      if (_keys.hasOwnProperty(key)) {
+        if (event.shiftKey == true && _keys[key].shift == true && event.keyCode == _keys[key].code) {
+          return key;
+        } else if (event.shiftKey == false && _keys[key].shift == false && event.keyCode == _keys[key].code) {
+          return key;
+        } else if (event.keyCode == _keys[key].code && key == 'shift') {
+          return key;
+        }
+      }
+    }
+
+    return "unknown key, currently not supported";
+  }; // unbind either a specific callback from a key or all of them (by leaving callback undefined)
+
+
+  _exportFunctions.unbind = function (key, callback, type) {
+    if (type === undefined) {
+      type = 'keydown';
+    }
+
+    if (_keys[key] === undefined) {
+      throw new Error("unsupported key: " + key);
+    }
+
+    if (callback !== undefined) {
+      var newBindings = [];
+      var bound = _bound[type][_keys[key].code];
+
+      if (bound !== undefined) {
+        for (var i = 0; i < bound.length; i++) {
+          if (!(bound[i].fn == callback && bound[i].shift == _keys[key].shift)) {
+            newBindings.push(_bound[type][_keys[key].code][i]);
+          }
+        }
+      }
+
+      _bound[type][_keys[key].code] = newBindings;
+    } else {
+      _bound[type][_keys[key].code] = [];
+    }
+  }; // reset all bound variables.
+
+
+  _exportFunctions.reset = function () {
+    _bound = {
+      keydown: {},
+      keyup: {}
+    };
+  }; // unbind all listeners and reset all variables.
+
+
+  _exportFunctions.destroy = function () {
+    _bound = {
+      keydown: {},
+      keyup: {}
+    };
+    container.removeEventListener('keydown', down, true);
+    container.removeEventListener('keyup', up, true);
+  }; // create listeners.
+
+
+  container.addEventListener('keydown', down, true);
+  container.addEventListener('keyup', up, true); // return the public functions.
+
+  return _exportFunctions;
+}
 
 /*! Hammer.JS - v2.0.17-rc - 2019-12-16
  * http://naver.github.io/egjs
@@ -9388,11 +9672,6 @@ var Hammer$1 = typeof window !== "undefined" ? window.Hammer || Hammer : functio
   return hammerMock();
 };
 
-function _createForOfIteratorHelper$1(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray$2(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
-
-function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
  * Turn an element into an clickToUse element.
  * When not active, the element has a transparent overlay. When the overlay is
@@ -9406,64 +9685,46 @@ function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) le
  */
 
 function Activator(container) {
-  var _this = this,
-      _context;
+  var _context,
+      _this = this,
+      _context2;
 
-  this._cleanupQueue = [];
   this.active = false;
-  this._dom = {
-    container: container,
-    overlay: document.createElement("div")
+  this.dom = {
+    container: container
   };
-
-  this._dom.overlay.classList.add("vis-overlay");
-
-  this._dom.container.appendChild(this._dom.overlay);
-
-  this._cleanupQueue.push(function () {
-    _this._dom.overlay.parentNode.removeChild(_this._dom.overlay);
-  });
-
-  var hammer = Hammer$1(this._dom.overlay);
-  hammer.on("tap", bind$2(_context = this._onTapOverlay).call(_context, this));
-
-  this._cleanupQueue.push(function () {
-    hammer.destroy(); // FIXME: cleaning up hammer instances doesn't work (Timeline not removed
-    // from memory)
-  }); // block all touch events (except tap)
-
+  this.dom.overlay = document.createElement("div");
+  this.dom.overlay.className = "vis-overlay";
+  this.dom.container.appendChild(this.dom.overlay);
+  this.hammer = Hammer$1(this.dom.overlay);
+  this.hammer.on("tap", bind$2(_context = this._onTapOverlay).call(_context, this)); // block all touch events (except tap)
 
   var events = ["tap", "doubletap", "press", "pinch", "pan", "panstart", "panmove", "panend"];
 
   forEach$2(events).call(events, function (event) {
-    hammer.on(event, function (event) {
+    _this.hammer.on(event, function (event) {
       event.srcEvent.stopPropagation();
     });
   }); // attach a click event to the window, in order to deactivate when clicking outside the timeline
 
 
   if (document && document.body) {
-    this._onClick = function (event) {
+    this.onClick = function (event) {
       if (!_hasParent(event.target, container)) {
         _this.deactivate();
       }
     };
 
-    document.body.addEventListener("click", this._onClick);
+    document.body.addEventListener("click", this.onClick);
+  }
 
-    this._cleanupQueue.push(function () {
-      document.body.removeEventListener("click", _this._onClick);
-    });
-  } // prepare escape key listener for deactivating when active
+  if (this.keycharm !== undefined) {
+    this.keycharm.destroy();
+  }
 
+  this.keycharm = keycharm(); // keycharm listener only bounded when active)
 
-  this._escListener = function (event) {
-    if ("key" in event ? event.key === "Escape" : event.keyCode === 27
-    /* the keyCode is for IE11 */
-    ) {
-        _this.deactivate();
-      }
-  };
+  this.escListener = bind$2(_context2 = this.deactivate).call(_context2, this);
 } // turn into an event emitter
 
 
@@ -9475,23 +9736,23 @@ Activator.current = null;
  */
 
 Activator.prototype.destroy = function () {
-  var _context2, _context3;
+  this.deactivate(); // remove dom
 
-  this.deactivate();
+  this.dom.overlay.parentNode.removeChild(this.dom.overlay); // remove global event listener
 
-  var _iterator = _createForOfIteratorHelper$1(reverse$2(_context2 = splice$2(_context3 = this._cleanupQueue).call(_context3, 0)).call(_context2)),
-      _step;
+  if (this.onClick) {
+    document.body.removeEventListener("click", this.onClick);
+  } // remove keycharm
 
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var callback = _step.value;
-      callback();
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
+
+  if (this.keycharm !== undefined) {
+    this.keycharm.destroy();
   }
+
+  this.keycharm = null; // cleanup hammer instances
+
+  this.hammer.destroy();
+  this.hammer = null; // FIXME: cleaning up hammer instances doesn't work (Timeline not removed from memory)
 };
 /**
  * Activate the element
@@ -9500,6 +9761,8 @@ Activator.prototype.destroy = function () {
 
 
 Activator.prototype.activate = function () {
+  var _context3;
+
   // we allow only one active activator at a time
   if (Activator.current) {
     Activator.current.deactivate();
@@ -9507,15 +9770,13 @@ Activator.prototype.activate = function () {
 
   Activator.current = this;
   this.active = true;
-  this._dom.overlay.style.display = "none";
-
-  this._dom.container.classList.add("vis-active");
-
+  this.dom.overlay.style.display = "none";
+  addClassName(this.dom.container, "vis-active");
   this.emit("change");
   this.emit("activate"); // ugly hack: bind ESC after emitting the events, as the Network rebinds all
   // keyboard events on a 'change' event
 
-  document.body.addEventListener("keydown", this._escListener);
+  bind$2(_context3 = this.keycharm).call(_context3, "esc", this.escListener);
 };
 /**
  * Deactivate the element
@@ -9525,11 +9786,9 @@ Activator.prototype.activate = function () {
 
 Activator.prototype.deactivate = function () {
   this.active = false;
-  this._dom.overlay.style.display = "block";
-
-  this._dom.container.classList.remove("vis-active");
-
-  document.body.removeEventListener("keydown", this._escListener);
+  this.dom.overlay.style.display = "block";
+  removeClassName(this.dom.container, "vis-active");
+  this.keycharm.unbind("esc", this.escListener);
   this.emit("change");
   this.emit("deactivate");
 };
@@ -9576,7 +9835,6 @@ var en = {
   addEdge: "Add Edge",
   addNode: "Add Node",
   back: "Back",
-  close: "Close",
   createEdgeError: "Cannot link edges to a cluster.",
   del: "Delete selected",
   deleteClusterError: "Clusters cannot be deleted.",
@@ -9593,7 +9851,6 @@ var de = {
   addEdge: "Kante hinzuf\xFCgen",
   addNode: "Knoten hinzuf\xFCgen",
   back: "Zur\xFCck",
-  close: "Schließen",
   createEdgeError: "Es ist nicht m\xF6glich, Kanten mit Clustern zu verbinden.",
   del: "L\xF6sche Auswahl",
   deleteClusterError: "Cluster k\xF6nnen nicht gel\xF6scht werden.",
@@ -9610,7 +9867,6 @@ var es = {
   addEdge: "A\xF1adir arista",
   addNode: "A\xF1adir nodo",
   back: "Atr\xE1s",
-  close: "Cerrar",
   createEdgeError: "No se puede conectar una arista a un grupo.",
   del: "Eliminar selecci\xF3n",
   deleteClusterError: "No es posible eliminar grupos.",
@@ -9627,7 +9883,6 @@ var it = {
   addEdge: "Aggiungi un vertice",
   addNode: "Aggiungi un nodo",
   back: "Indietro",
-  close: "Chiudere",
   createEdgeError: "Non si possono collegare vertici ad un cluster",
   del: "Cancella la selezione",
   deleteClusterError: "I cluster non possono essere cancellati",
@@ -9644,7 +9899,6 @@ var nl = {
   addEdge: "Link toevoegen",
   addNode: "Node toevoegen",
   back: "Terug",
-  close: "Sluiten",
   createEdgeError: "Kan geen link maken naar een cluster.",
   del: "Selectie verwijderen",
   deleteClusterError: "Clusters kunnen niet worden verwijderd.",
@@ -9661,7 +9915,6 @@ var pt = {
   addEdge: "Adicionar aresta",
   addNode: "Adicionar nó",
   back: "Voltar",
-  close: "Fechar",
   createEdgeError: "Não foi possível linkar arestas a um cluster.",
   del: "Remover selecionado",
   deleteClusterError: "Clusters não puderam ser removidos.",
@@ -9678,7 +9931,6 @@ var ru = {
   addEdge: "Добавить ребро",
   addNode: "Добавить узел",
   back: "Назад",
-  close: "Закрывать",
   createEdgeError: "Невозможно соединить ребра в кластер.",
   del: "Удалить выбранное",
   deleteClusterError: "Кластеры не могут быть удалены",
@@ -9695,7 +9947,6 @@ var cn = {
   addEdge: "添加连接线",
   addNode: "添加节点",
   back: "返回",
-  close: "關閉",
   createEdgeError: "无法将连接线连接到群集。",
   del: "删除选定",
   deleteClusterError: "无法删除群集。",
@@ -9712,7 +9963,6 @@ var uk = {
   addEdge: "Додати край",
   addNode: "Додати вузол",
   back: "Назад",
-  close: "Закрити",
   createEdgeError: "Не можливо об'єднати краї в групу.",
   del: "Видалити обране",
   deleteClusterError: "Групи не можуть бути видалені.",
@@ -9729,7 +9979,6 @@ var fr = {
   addEdge: "Ajouter un lien",
   addNode: "Ajouter un nœud",
   back: "Retour",
-  close: "Fermer",
   createEdgeError: "Impossible de créer un lien vers un cluster.",
   del: "Effacer la sélection",
   deleteClusterError: "Les clusters ne peuvent pas être effacés.",
@@ -9746,7 +9995,6 @@ var cs = {
   addEdge: "Přidat hranu",
   addNode: "Přidat vrchol",
   back: "Zpět",
-  close: "Zavřít",
   createEdgeError: "Nelze připojit hranu ke shluku.",
   del: "Smazat výběr",
   deleteClusterError: "Nelze mazat shluky.",
@@ -10269,7 +10517,7 @@ var collection = function (CONSTRUCTOR_NAME, wrapper, common) {
   var IS_MAP = CONSTRUCTOR_NAME.indexOf('Map') !== -1;
   var IS_WEAK = CONSTRUCTOR_NAME.indexOf('Weak') !== -1;
   var ADDER = IS_MAP ? 'set' : 'add';
-  var NativeConstructor = global$1[CONSTRUCTOR_NAME];
+  var NativeConstructor = global_1[CONSTRUCTOR_NAME];
   var NativePrototype = NativeConstructor && NativeConstructor.prototype;
   var exported = {};
   var Constructor;
@@ -10943,10 +11191,10 @@ _export({
 }, {
   // `setTimeout` method
   // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-settimeout
-  setTimeout: wrap$1(global$1.setTimeout),
+  setTimeout: wrap$1(global_1.setTimeout),
   // `setInterval` method
   // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-setinterval
-  setInterval: wrap$1(global$1.setInterval)
+  setInterval: wrap$1(global_1.setInterval)
 });
 
 var setTimeout$1 = path.setTimeout;
@@ -10972,18 +11220,18 @@ _export({
 
 var some = entryVirtual('Array').some;
 
-var ArrayPrototype$a = Array.prototype;
+var ArrayPrototype$9 = Array.prototype;
 
 var some_1 = function (it) {
   var own = it.some;
-  return it === ArrayPrototype$a || it instanceof Array && own === ArrayPrototype$a.some ? some : own;
+  return it === ArrayPrototype$9 || it instanceof Array && own === ArrayPrototype$9.some ? some : own;
 };
 
 var some$1 = some_1;
 
 var some$2 = some$1;
 
-var globalIsFinite = global$1.isFinite; // `Number.isFinite` method
+var globalIsFinite = global_1.isFinite; // `Number.isFinite` method
 // https://tc39.github.io/ecma262/#sec-number.isfinite
 
 var numberIsFinite = Number.isFinite || function isFinite(it) {
@@ -11048,7 +11296,7 @@ var getOwnPropertyNames$1 = getOwnPropertyNames;
 var getOwnPropertyNames$2 = getOwnPropertyNames$1;
 
 var trim$2 = stringTrim.trim;
-var $parseFloat = global$1.parseFloat;
+var $parseFloat = global_1.parseFloat;
 var FORCED$3 = 1 / $parseFloat(whitespaces + '-0') !== -Infinity; // `parseFloat` method
 // https://tc39.github.io/ecma262/#sec-parsefloat-string
 
@@ -11230,7 +11478,7 @@ var values$1 = entryVirtual('Array').values;
 
 var values$2 = values$1;
 
-var ArrayPrototype$b = Array.prototype;
+var ArrayPrototype$a = Array.prototype;
 var DOMIterables$1 = {
   DOMTokenList: true,
   NodeList: true
@@ -11238,7 +11486,7 @@ var DOMIterables$1 = {
 
 var values_1 = function (it) {
   var own = it.values;
-  return it === ArrayPrototype$b || it instanceof Array && own === ArrayPrototype$b.values // eslint-disable-next-line no-prototype-builtins
+  return it === ArrayPrototype$a || it instanceof Array && own === ArrayPrototype$a.values // eslint-disable-next-line no-prototype-builtins
   || DOMIterables$1.hasOwnProperty(classof(it)) ? values$2 : own;
 };
 
@@ -13237,11 +13485,11 @@ _export({
 
 var fill = entryVirtual('Array').fill;
 
-var ArrayPrototype$c = Array.prototype;
+var ArrayPrototype$b = Array.prototype;
 
 var fill_1 = function (it) {
   var own = it.fill;
-  return it === ArrayPrototype$c || it instanceof Array && own === ArrayPrototype$c.fill ? fill : own;
+  return it === ArrayPrototype$b || it instanceof Array && own === ArrayPrototype$b.fill ? fill : own;
 };
 
 var fill$1 = fill_1;
@@ -16696,11 +16944,11 @@ var Node = /*#__PURE__*/function () {
   return Node;
 }();
 
-function _createForOfIteratorHelper$2(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$3(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$1(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$3(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$3(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen); }
+function _unsupportedIterableToArray$2(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
 
-function _arrayLikeToArray$3(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
  * Handler for Nodes
  */
@@ -17224,7 +17472,7 @@ var NodesHandler = /*#__PURE__*/function () {
       var dataArray = [];
       var dataset = this.body.data.nodes.getDataSet();
 
-      var _iterator = _createForOfIteratorHelper$2(dataset.get()),
+      var _iterator = _createForOfIteratorHelper$1(dataset.get()),
           _step;
 
       try {
@@ -23335,21 +23583,47 @@ var PhysicsEngine = /*#__PURE__*/function () {
   return PhysicsEngine;
 }();
 
+var nativeReverse = [].reverse;
+var test$1 = [1, 2]; // `Array.prototype.reverse` method
+// https://tc39.github.io/ecma262/#sec-array.prototype.reverse
+// fix for Safari 12.0 bug
+// https://bugs.webkit.org/show_bug.cgi?id=188794
+
+_export({
+  target: 'Array',
+  proto: true,
+  forced: String(test$1) === String(test$1.reverse())
+}, {
+  reverse: function reverse() {
+    // eslint-disable-next-line no-self-assign
+    if (isArray(this)) this.length = this.length;
+    return nativeReverse.call(this);
+  }
+});
+
+var reverse = entryVirtual('Array').reverse;
+
+var ArrayPrototype$c = Array.prototype;
+
+var reverse_1 = function (it) {
+  var own = it.reverse;
+  return it === ArrayPrototype$c || it instanceof Array && own === ArrayPrototype$c.reverse ? reverse : own;
+};
+
+var reverse$1 = reverse_1;
+
+var reverse$2 = reverse$1;
+
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
 // require the crypto API and do not support built-in fallback to lower quality random number
 // generators (like Math.random()).
-var getRandomValues;
+// getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
+// find the complete implementation of crypto (msCrypto) on IE11.
+var getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
 var rnds8 = new Uint8Array(16);
 function rng() {
-  // lazy load so that environments that need to polyfill have a chance to do so
   if (!getRandomValues) {
-    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
-    // find the complete implementation of crypto (msCrypto) on IE11.
-    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
-
-    if (!getRandomValues) {
-      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
-    }
+    throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
   }
 
   return getRandomValues(rnds8);
@@ -25187,11 +25461,11 @@ var ClusterEngine = /*#__PURE__*/function () {
   return ClusterEngine;
 }();
 
-function _createForOfIteratorHelper$3(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$4(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$2(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$3(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$4(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$4(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen); }
+function _unsupportedIterableToArray$3(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$3(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen); }
 
-function _arrayLikeToArray$4(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _arrayLikeToArray$3(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
  * Initializes window.requestAnimationFrame() to a usable form.
  *
@@ -25666,7 +25940,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
 
       return {
         drawExternalLabels: function drawExternalLabels() {
-          var _iterator = _createForOfIteratorHelper$3(_drawExternalLabels),
+          var _iterator = _createForOfIteratorHelper$2(_drawExternalLabels),
               _step;
 
           try {
@@ -26061,7 +26335,7 @@ var Canvas = /*#__PURE__*/function () {
       this.frame.className = "vis-network";
       this.frame.style.position = "relative";
       this.frame.style.overflow = "hidden";
-      this.frame.tabIndex = 0; // tab index is required for keycharm to bind keystrokes to the div instead of the window
+      this.frame.tabIndex = 900; // tab index is required for keycharm to bind keystrokes to the div instead of the window
       //////////////////////////////////////////////////////////////////
 
       this.frame.canvas = document.createElement("canvas");
@@ -26073,7 +26347,7 @@ var Canvas = /*#__PURE__*/function () {
         noCanvas.style.color = "red";
         noCanvas.style.fontWeight = "bold";
         noCanvas.style.padding = "10px";
-        noCanvas.innerText = "Error: your browser does not support HTML canvas";
+        noCanvas.innerHTML = "Error: your browser does not support HTML canvas";
         this.frame.canvas.appendChild(noCanvas);
       } else {
         this._setPixelRatio();
@@ -26867,292 +27141,6 @@ var View = /*#__PURE__*/function () {
 }();
 
 /**
- * Created by Alex on 11/6/2014.
- */
-function keycharm(options) {
-  var preventDefault = options && options.preventDefault || false;
-  var container = options && options.container || window;
-  var _exportFunctions = {};
-  var _bound = {
-    keydown: {},
-    keyup: {}
-  };
-  var _keys = {};
-  var i; // a - z
-
-  for (i = 97; i <= 122; i++) {
-    _keys[String.fromCharCode(i)] = {
-      code: 65 + (i - 97),
-      shift: false
-    };
-  } // A - Z
-
-
-  for (i = 65; i <= 90; i++) {
-    _keys[String.fromCharCode(i)] = {
-      code: i,
-      shift: true
-    };
-  } // 0 - 9
-
-
-  for (i = 0; i <= 9; i++) {
-    _keys['' + i] = {
-      code: 48 + i,
-      shift: false
-    };
-  } // F1 - F12
-
-
-  for (i = 1; i <= 12; i++) {
-    _keys['F' + i] = {
-      code: 111 + i,
-      shift: false
-    };
-  } // num0 - num9
-
-
-  for (i = 0; i <= 9; i++) {
-    _keys['num' + i] = {
-      code: 96 + i,
-      shift: false
-    };
-  } // numpad misc
-
-
-  _keys['num*'] = {
-    code: 106,
-    shift: false
-  };
-  _keys['num+'] = {
-    code: 107,
-    shift: false
-  };
-  _keys['num-'] = {
-    code: 109,
-    shift: false
-  };
-  _keys['num/'] = {
-    code: 111,
-    shift: false
-  };
-  _keys['num.'] = {
-    code: 110,
-    shift: false
-  }; // arrows
-
-  _keys['left'] = {
-    code: 37,
-    shift: false
-  };
-  _keys['up'] = {
-    code: 38,
-    shift: false
-  };
-  _keys['right'] = {
-    code: 39,
-    shift: false
-  };
-  _keys['down'] = {
-    code: 40,
-    shift: false
-  }; // extra keys
-
-  _keys['space'] = {
-    code: 32,
-    shift: false
-  };
-  _keys['enter'] = {
-    code: 13,
-    shift: false
-  };
-  _keys['shift'] = {
-    code: 16,
-    shift: undefined
-  };
-  _keys['esc'] = {
-    code: 27,
-    shift: false
-  };
-  _keys['backspace'] = {
-    code: 8,
-    shift: false
-  };
-  _keys['tab'] = {
-    code: 9,
-    shift: false
-  };
-  _keys['ctrl'] = {
-    code: 17,
-    shift: false
-  };
-  _keys['alt'] = {
-    code: 18,
-    shift: false
-  };
-  _keys['delete'] = {
-    code: 46,
-    shift: false
-  };
-  _keys['pageup'] = {
-    code: 33,
-    shift: false
-  };
-  _keys['pagedown'] = {
-    code: 34,
-    shift: false
-  }; // symbols
-
-  _keys['='] = {
-    code: 187,
-    shift: false
-  };
-  _keys['-'] = {
-    code: 189,
-    shift: false
-  };
-  _keys[']'] = {
-    code: 221,
-    shift: false
-  };
-  _keys['['] = {
-    code: 219,
-    shift: false
-  };
-
-  var down = function (event) {
-    handleEvent(event, 'keydown');
-  };
-
-  var up = function (event) {
-    handleEvent(event, 'keyup');
-  }; // handle the actualy bound key with the event
-
-
-  var handleEvent = function (event, type) {
-    if (_bound[type][event.keyCode] !== undefined) {
-      var bound = _bound[type][event.keyCode];
-
-      for (var i = 0; i < bound.length; i++) {
-        if (bound[i].shift === undefined) {
-          bound[i].fn(event);
-        } else if (bound[i].shift == true && event.shiftKey == true) {
-          bound[i].fn(event);
-        } else if (bound[i].shift == false && event.shiftKey == false) {
-          bound[i].fn(event);
-        }
-      }
-
-      if (preventDefault == true) {
-        event.preventDefault();
-      }
-    }
-  }; // bind a key to a callback
-
-
-  _exportFunctions.bind = function (key, callback, type) {
-    if (type === undefined) {
-      type = 'keydown';
-    }
-
-    if (_keys[key] === undefined) {
-      throw new Error("unsupported key: " + key);
-    }
-
-    if (_bound[type][_keys[key].code] === undefined) {
-      _bound[type][_keys[key].code] = [];
-    }
-
-    _bound[type][_keys[key].code].push({
-      fn: callback,
-      shift: _keys[key].shift
-    });
-  }; // bind all keys to a call back (demo purposes)
-
-
-  _exportFunctions.bindAll = function (callback, type) {
-    if (type === undefined) {
-      type = 'keydown';
-    }
-
-    for (var key in _keys) {
-      if (_keys.hasOwnProperty(key)) {
-        _exportFunctions.bind(key, callback, type);
-      }
-    }
-  }; // get the key label from an event
-
-
-  _exportFunctions.getKey = function (event) {
-    for (var key in _keys) {
-      if (_keys.hasOwnProperty(key)) {
-        if (event.shiftKey == true && _keys[key].shift == true && event.keyCode == _keys[key].code) {
-          return key;
-        } else if (event.shiftKey == false && _keys[key].shift == false && event.keyCode == _keys[key].code) {
-          return key;
-        } else if (event.keyCode == _keys[key].code && key == 'shift') {
-          return key;
-        }
-      }
-    }
-
-    return "unknown key, currently not supported";
-  }; // unbind either a specific callback from a key or all of them (by leaving callback undefined)
-
-
-  _exportFunctions.unbind = function (key, callback, type) {
-    if (type === undefined) {
-      type = 'keydown';
-    }
-
-    if (_keys[key] === undefined) {
-      throw new Error("unsupported key: " + key);
-    }
-
-    if (callback !== undefined) {
-      var newBindings = [];
-      var bound = _bound[type][_keys[key].code];
-
-      if (bound !== undefined) {
-        for (var i = 0; i < bound.length; i++) {
-          if (!(bound[i].fn == callback && bound[i].shift == _keys[key].shift)) {
-            newBindings.push(_bound[type][_keys[key].code][i]);
-          }
-        }
-      }
-
-      _bound[type][_keys[key].code] = newBindings;
-    } else {
-      _bound[type][_keys[key].code] = [];
-    }
-  }; // reset all bound variables.
-
-
-  _exportFunctions.reset = function () {
-    _bound = {
-      keydown: {},
-      keyup: {}
-    };
-  }; // unbind all listeners and reset all variables.
-
-
-  _exportFunctions.destroy = function () {
-    _bound = {
-      keydown: {},
-      keyup: {}
-    };
-    container.removeEventListener('keydown', down, true);
-    container.removeEventListener('keyup', up, true);
-  }; // create listeners.
-
-
-  container.addEventListener('keydown', down, true);
-  container.addEventListener('keyup', up, true); // return the public functions.
-
-  return _exportFunctions;
-}
-
-/**
  * Navigation Handler
  */
 
@@ -27628,10 +27616,7 @@ var Popup = /*#__PURE__*/function () {
     key: "setText",
     value: function setText(content) {
       if (content instanceof Element) {
-        while (this.frame.firstChild) {
-          this.frame.removeChild(this.frame.firstChild);
-        }
-
+        this.frame.innerHTML = "";
         this.frame.appendChild(content);
       } else {
         this.frame.innerHTML = content; // string containing text or HTML
@@ -27737,11 +27722,11 @@ var Popup = /*#__PURE__*/function () {
   return Popup;
 }();
 
-function _createForOfIteratorHelper$4(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$5(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$3(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$4(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$5(o, minLen) { var _context15; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$5(o, minLen); var n = slice$5(_context15 = Object.prototype.toString.call(o)).call(_context15, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$5(o, minLen); }
+function _unsupportedIterableToArray$4(o, minLen) { var _context15; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$4(o, minLen); var n = slice$5(_context15 = Object.prototype.toString.call(o)).call(_context15, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen); }
 
-function _arrayLikeToArray$5(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _arrayLikeToArray$4(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
  * Handler for interactions
  */
@@ -28060,7 +28045,7 @@ var InteractionHandler = /*#__PURE__*/function () {
 
         this.selectionHandler.generateClickEvent("dragStart", event, this.drag.pointer); // create an array with the selected nodes and their original location and status
 
-        var _iterator = _createForOfIteratorHelper$4(this.selectionHandler.getSelectedNodes()),
+        var _iterator = _createForOfIteratorHelper$3(this.selectionHandler.getSelectedNodes()),
             _step;
 
         try {
@@ -28654,7 +28639,7 @@ var collectionWeak = {
 var es_weakMap = createCommonjsModule(function (module) {
 
   var enforceIternalState = internalState.enforce;
-  var IS_IE11 = !global$1.ActiveXObject && 'ActiveXObject' in global$1;
+  var IS_IE11 = !global_1.ActiveXObject && 'ActiveXObject' in global_1;
   var isExtensible = Object.isExtensible;
   var InternalWeakMap;
 
@@ -28770,11 +28755,11 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
   return value;
 }
 
-function _createForOfIteratorHelper$5(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$6(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$4(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$5(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$6(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$6(o, minLen); var n = slice$5(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$6(o, minLen); }
+function _unsupportedIterableToArray$5(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$5(o, minLen); var n = slice$5(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$5(o, minLen); }
 
-function _arrayLikeToArray$6(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _arrayLikeToArray$5(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 var _previousSelection, _selection, _nodes, _edges, _commitHandler;
 /**
@@ -28785,7 +28770,7 @@ var _previousSelection, _selection, _nodes, _edges, _commitHandler;
 function diffSets(prev, next) {
   var diff = new set$3();
 
-  var _iterator = _createForOfIteratorHelper$5(next),
+  var _iterator = _createForOfIteratorHelper$4(next),
       _step;
 
   try {
@@ -28869,7 +28854,7 @@ var SingleTypeSelectionAccumulator = /*#__PURE__*/function () {
 
       __classPrivateFieldSet(this, _selection, new set$3(__classPrivateFieldGet(this, _previousSelection)));
 
-      var _iterator2 = _createForOfIteratorHelper$5(changes.added),
+      var _iterator2 = _createForOfIteratorHelper$4(changes.added),
           _step2;
 
       try {
@@ -28883,7 +28868,7 @@ var SingleTypeSelectionAccumulator = /*#__PURE__*/function () {
         _iterator2.f();
       }
 
-      var _iterator3 = _createForOfIteratorHelper$5(changes.deleted),
+      var _iterator3 = _createForOfIteratorHelper$4(changes.deleted),
           _step3;
 
       try {
@@ -29001,11 +28986,11 @@ var SelectionAccumulator = /*#__PURE__*/function () {
 }();
 _nodes = new weakMap$2(), _edges = new weakMap$2(), _commitHandler = new weakMap$2();
 
-function _createForOfIteratorHelper$6(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$7(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$5(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$6(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$7(o, minLen) { var _context3; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$7(o, minLen); var n = slice$5(_context3 = Object.prototype.toString.call(o)).call(_context3, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$7(o, minLen); }
+function _unsupportedIterableToArray$6(o, minLen) { var _context3; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$6(o, minLen); var n = slice$5(_context3 = Object.prototype.toString.call(o)).call(_context3, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$6(o, minLen); }
 
-function _arrayLikeToArray$7(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _arrayLikeToArray$6(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
  * The handler for selections
  */
@@ -29423,8 +29408,6 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "unselectAll",
     value: function unselectAll() {
       this._selectionAccumulator.clear();
-
-      this._selectionAccumulator.commit();
     }
     /**
      * return the number of selected nodes
@@ -29734,7 +29717,7 @@ var SelectionHandler = /*#__PURE__*/function () {
       }
 
       if (selection.nodes) {
-        var _iterator = _createForOfIteratorHelper$6(selection.nodes),
+        var _iterator = _createForOfIteratorHelper$5(selection.nodes),
             _step;
 
         try {
@@ -29757,7 +29740,7 @@ var SelectionHandler = /*#__PURE__*/function () {
       }
 
       if (selection.edges) {
-        var _iterator2 = _createForOfIteratorHelper$6(selection.edges),
+        var _iterator2 = _createForOfIteratorHelper$5(selection.edges),
             _step2;
 
         try {
@@ -29936,7 +29919,7 @@ var arrayReduce = {
   right: createMethod$5(true)
 };
 
-var engineIsNode = classofRaw(global$1.process) == 'process';
+var engineIsNode = classofRaw(global_1.process) == 'process';
 
 var $reduce = arrayReduce.left;
 var STRICT_METHOD$3 = arrayMethodIsStrict('reduce');
@@ -30011,31 +29994,31 @@ var sort$1 = sort_1;
 
 var sort$2 = sort$1;
 
-/****
- * The MIT License
- *
- * Copyright (c) 2015 Marco Ziccardi
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- ****/
 var timsort = createCommonjsModule(function (module, exports) {
+  /****
+   * The MIT License
+   *
+   * Copyright (c) 2015 Marco Ziccardi
+   *
+   * Permission is hereby granted, free of charge, to any person obtaining a copy
+   * of this software and associated documentation files (the "Software"), to deal
+   * in the Software without restriction, including without limitation the rights
+   * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   * copies of the Software, and to permit persons to whom the Software is
+   * furnished to do so, subject to the following conditions:
+   *
+   * The above copyright notice and this permission notice shall be included in
+   * all copies or substantial portions of the Software.
+   *
+   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+   * THE SOFTWARE.
+   *
+   ****/
   (function (global, factory) {
     {
       factory(exports);
@@ -31205,11 +31188,11 @@ var every$1 = every_1;
 
 var every$2 = every$1;
 
-function _createForOfIteratorHelper$7(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$8(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$6(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$7(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$8(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$8(o, minLen); var n = slice$5(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$8(o, minLen); }
+function _unsupportedIterableToArray$7(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$7(o, minLen); var n = slice$5(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$7(o, minLen); }
 
-function _arrayLikeToArray$8(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _arrayLikeToArray$7(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 /**
  * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
@@ -31329,7 +31312,7 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
   var edgeIdProp = direction + "Id";
   var newLevelDiff = direction === "to" ? 1 : -1;
 
-  var _iterator = _createForOfIteratorHelper$7(nodes),
+  var _iterator = _createForOfIteratorHelper$6(nodes),
       _step;
 
   try {
@@ -33379,11 +33362,6 @@ var LayoutEngine = /*#__PURE__*/function () {
   return LayoutEngine;
 }();
 
-function _createForOfIteratorHelper$8(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$9(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray$9(o, minLen) { var _context32; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$9(o, minLen); var n = slice$5(_context32 = Object.prototype.toString.call(o)).call(_context32, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$9(o, minLen); }
-
-function _arrayLikeToArray$9(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
  * Clears the toolbar div element of children
  *
@@ -33412,7 +33390,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     this.manipulationDiv = undefined;
     this.editModeDiv = undefined;
     this.closeDiv = undefined;
-    this._domEventListenerCleanupQueue = [];
+    this.manipulationHammers = [];
     this.temporaryUIFunctions = {};
     this.temporaryEventFunctions = [];
     this.touchTime = 0;
@@ -33647,7 +33625,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         } // bind the close button
 
 
-        this._bindElementEvents(this.closeDiv, bind$2(_context3 = this.toggleEditMode).call(_context3, this)); // refresh this bar based on what has been selected
+        this._bindHammerToDiv(this.closeDiv, bind$2(_context3 = this.toggleEditMode).call(_context3, this)); // refresh this bar based on what has been selected
 
 
         this._temporaryBindEvent("select", bind$2(_context4 = this.showManipulatorToolbar).call(_context4, this));
@@ -33688,7 +33666,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._createDescription(locale["addDescription"] || this.options.locales["en"]["addDescription"]); // bind the close button
 
 
-        this._bindElementEvents(this.closeDiv, bind$2(_context5 = this.toggleEditMode).call(_context5, this));
+        this._bindHammerToDiv(this.closeDiv, bind$2(_context5 = this.toggleEditMode).call(_context5, this));
       }
 
       this._temporaryBindEvent("click", bind$2(_context6 = this._performAddNode).call(_context6, this));
@@ -33775,7 +33753,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._createDescription(locale["edgeDescription"] || this.options.locales["en"]["edgeDescription"]); // bind the close button
 
 
-        this._bindElementEvents(this.closeDiv, bind$2(_context7 = this.toggleEditMode).call(_context7, this));
+        this._bindHammerToDiv(this.closeDiv, bind$2(_context7 = this.toggleEditMode).call(_context7, this));
       } // temporarily overload functions
 
 
@@ -33833,7 +33811,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._createDescription(locale["editEdgeDescription"] || this.options.locales["en"]["editEdgeDescription"]); // bind the close button
 
 
-        this._bindElementEvents(this.closeDiv, bind$2(_context13 = this.toggleEditMode).call(_context13, this));
+        this._bindHammerToDiv(this.closeDiv, bind$2(_context13 = this.toggleEditMode).call(_context13, this));
       }
 
       this.edgeBeingEditedId = this.selectionHandler.getSelectedEdgeIds()[0];
@@ -34035,11 +34013,8 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
 
       if (this.closeDiv === undefined) {
-        var _this$options$locales, _this$options$locales2;
-
-        this.closeDiv = document.createElement("button");
+        this.closeDiv = document.createElement("div");
         this.closeDiv.className = "vis-close";
-        this.closeDiv.setAttribute("aria-label", (_this$options$locales = (_this$options$locales2 = this.options.locales[this.options.locale]) === null || _this$options$locales2 === void 0 ? void 0 : _this$options$locales2["close"]) !== null && _this$options$locales !== void 0 ? _this$options$locales : this.options.locales["en"]["close"]);
         this.closeDiv.style.display = this.manipulationDiv.style.display;
         this.canvas.frame.appendChild(this.closeDiv);
       }
@@ -34091,11 +34066,11 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       var locale = this.options.locales[this.options.locale];
 
-      var button = this._createButton("editMode", "vis-edit vis-edit-mode", locale["edit"] || this.options.locales["en"]["edit"]);
+      var button = this._createButton("editMode", "vis-button vis-edit vis-edit-mode", locale["edit"] || this.options.locales["en"]["edit"]);
 
       this.editModeDiv.appendChild(button); // bind a hammer listener to the button, calling the function toggleEditMode.
 
-      this._bindElementEvents(button, bind$2(_context18 = this.toggleEditMode).call(_context18, this));
+      this._bindHammerToDiv(button, bind$2(_context18 = this.toggleEditMode).call(_context18, this));
     }
     /**
      * this function cleans up after everything this module does. Temporary elements, functions and events are removed, physics restored, hammers removed.
@@ -34113,7 +34088,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         recursiveDOMDelete(this.editModeDiv);
         recursiveDOMDelete(this.manipulationDiv); // removes all the bindings and overloads
 
-        this._cleanupDOMEventListeners();
+        this._cleanManipulatorHammers();
       } // remove temporary nodes and edges
 
 
@@ -34135,23 +34110,15 @@ var ManipulationSystem = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "_cleanupDOMEventListeners",
-    value: function _cleanupDOMEventListeners() {
-      var _context19;
-
-      // _clean DOM event listener bindings
-      var _iterator = _createForOfIteratorHelper$8(splice$2(_context19 = this._domEventListenerCleanupQueue).call(_context19, 0)),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var callback = _step.value;
-          callback();
+    key: "_cleanManipulatorHammers",
+    value: function _cleanManipulatorHammers() {
+      // _clean hammer bindings
+      if (this.manipulationHammers.length != 0) {
+        for (var i = 0; i < this.manipulationHammers.length; i++) {
+          this.manipulationHammers[i].destroy();
         }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
+
+        this.manipulationHammers = [];
       }
     }
     /**
@@ -34213,13 +34180,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createAddNodeButton",
     value: function _createAddNodeButton(locale) {
-      var _context20;
+      var _context19;
 
-      var button = this._createButton("addNode", "vis-add", locale["addNode"] || this.options.locales["en"]["addNode"]);
+      var button = this._createButton("addNode", "vis-button vis-add", locale["addNode"] || this.options.locales["en"]["addNode"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$2(_context20 = this.addNodeMode).call(_context20, this));
+      this._bindHammerToDiv(button, bind$2(_context19 = this.addNodeMode).call(_context19, this));
     }
     /**
      *
@@ -34230,13 +34197,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createAddEdgeButton",
     value: function _createAddEdgeButton(locale) {
-      var _context21;
+      var _context20;
 
-      var button = this._createButton("addEdge", "vis-connect", locale["addEdge"] || this.options.locales["en"]["addEdge"]);
+      var button = this._createButton("addEdge", "vis-button vis-connect", locale["addEdge"] || this.options.locales["en"]["addEdge"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$2(_context21 = this.addEdgeMode).call(_context21, this));
+      this._bindHammerToDiv(button, bind$2(_context20 = this.addEdgeMode).call(_context20, this));
     }
     /**
      *
@@ -34247,13 +34214,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createEditNodeButton",
     value: function _createEditNodeButton(locale) {
-      var _context22;
+      var _context21;
 
-      var button = this._createButton("editNode", "vis-edit", locale["editNode"] || this.options.locales["en"]["editNode"]);
+      var button = this._createButton("editNode", "vis-button vis-edit", locale["editNode"] || this.options.locales["en"]["editNode"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$2(_context22 = this.editNode).call(_context22, this));
+      this._bindHammerToDiv(button, bind$2(_context21 = this.editNode).call(_context21, this));
     }
     /**
      *
@@ -34264,13 +34231,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createEditEdgeButton",
     value: function _createEditEdgeButton(locale) {
-      var _context23;
+      var _context22;
 
-      var button = this._createButton("editEdge", "vis-edit", locale["editEdge"] || this.options.locales["en"]["editEdge"]);
+      var button = this._createButton("editEdge", "vis-button vis-edit", locale["editEdge"] || this.options.locales["en"]["editEdge"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$2(_context23 = this.editEdgeMode).call(_context23, this));
+      this._bindHammerToDiv(button, bind$2(_context22 = this.editEdgeMode).call(_context22, this));
     }
     /**
      *
@@ -34281,21 +34248,21 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createDeleteButton",
     value: function _createDeleteButton(locale) {
-      var _context24;
+      var _context23;
 
       var deleteBtnClass;
 
       if (this.options.rtl) {
-        deleteBtnClass = "vis-delete-rtl";
+        deleteBtnClass = "vis-button vis-delete-rtl";
       } else {
-        deleteBtnClass = "vis-delete";
+        deleteBtnClass = "vis-button vis-delete";
       }
 
       var button = this._createButton("delete", deleteBtnClass, locale["del"] || this.options.locales["en"]["del"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$2(_context24 = this.deleteSelected).call(_context24, this));
+      this._bindHammerToDiv(button, bind$2(_context23 = this.deleteSelected).call(_context23, this));
     }
     /**
      *
@@ -34306,13 +34273,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createBackButton",
     value: function _createBackButton(locale) {
-      var _context25;
+      var _context24;
 
-      var button = this._createButton("back", "vis-back", locale["back"] || this.options.locales["en"]["back"]);
+      var button = this._createButton("back", "vis-button vis-back", locale["back"] || this.options.locales["en"]["back"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$2(_context25 = this.showManipulatorToolbar).call(_context25, this));
+      this._bindHammerToDiv(button, bind$2(_context24 = this.showManipulatorToolbar).call(_context24, this));
     }
     /**
      *
@@ -34328,11 +34295,11 @@ var ManipulationSystem = /*#__PURE__*/function () {
     key: "_createButton",
     value: function _createButton(id, className, label) {
       var labelClassName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "vis-label";
-      this.manipulationDOM[id + "Div"] = document.createElement("button");
-      this.manipulationDOM[id + "Div"].className = "vis-button " + className;
+      this.manipulationDOM[id + "Div"] = document.createElement("div");
+      this.manipulationDOM[id + "Div"].className = className;
       this.manipulationDOM[id + "Label"] = document.createElement("div");
       this.manipulationDOM[id + "Label"].className = labelClassName;
-      this.manipulationDOM[id + "Label"].innerText = label;
+      this.manipulationDOM[id + "Label"].innerHTML = label;
       this.manipulationDOM[id + "Div"].appendChild(this.manipulationDOM[id + "Label"]);
       return this.manipulationDOM[id + "Div"];
     }
@@ -34345,10 +34312,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createDescription",
     value: function _createDescription(label) {
-      this.manipulationDOM["descriptionLabel"] = document.createElement("div");
-      this.manipulationDOM["descriptionLabel"].className = "vis-none";
-      this.manipulationDOM["descriptionLabel"].innerText = label;
-      this.manipulationDiv.appendChild(this.manipulationDOM["descriptionLabel"]);
+      this.manipulationDiv.appendChild(this._createButton("description", "vis-button vis-none", label));
     } // -------------------------- End of DOM functions for buttons ------------------------------//
 
     /**
@@ -34429,31 +34393,11 @@ var ManipulationSystem = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "_bindElementEvents",
-    value: function _bindElementEvents(domElement, boundFunction) {
-      // Bind touch events.
+    key: "_bindHammerToDiv",
+    value: function _bindHammerToDiv(domElement, boundFunction) {
       var hammer = new Hammer$1(domElement, {});
       onTouch(hammer, boundFunction);
-
-      this._domEventListenerCleanupQueue.push(function () {
-        hammer.destroy();
-      }); // Bind keyboard events.
-
-
-      var keyupListener = function keyupListener(_ref) {
-        var keyCode = _ref.keyCode,
-            key = _ref.key;
-
-        if (key === "Enter" || key === " " || keyCode === 13 || keyCode === 32) {
-          boundFunction();
-        }
-      };
-
-      domElement.addEventListener("keyup", keyupListener, false);
-
-      this._domEventListenerCleanupQueue.push(function () {
-        domElement.removeEventListener("keyup", keyupListener, false);
-      });
+      this.manipulationHammers.push(hammer);
     }
     /**
      * Neatly clean up temporary edges and nodes
@@ -34466,32 +34410,32 @@ var ManipulationSystem = /*#__PURE__*/function () {
     value: function _cleanupTemporaryNodesAndEdges() {
       // _clean temporary edges
       for (var i = 0; i < this.temporaryIds.edges.length; i++) {
-        var _context26;
+        var _context25;
 
         this.body.edges[this.temporaryIds.edges[i]].disconnect();
         delete this.body.edges[this.temporaryIds.edges[i]];
 
-        var indexTempEdge = indexOf$3(_context26 = this.body.edgeIndices).call(_context26, this.temporaryIds.edges[i]);
+        var indexTempEdge = indexOf$3(_context25 = this.body.edgeIndices).call(_context25, this.temporaryIds.edges[i]);
 
         if (indexTempEdge !== -1) {
-          var _context27;
+          var _context26;
 
-          splice$2(_context27 = this.body.edgeIndices).call(_context27, indexTempEdge, 1);
+          splice$2(_context26 = this.body.edgeIndices).call(_context26, indexTempEdge, 1);
         }
       } // _clean temporary nodes
 
 
       for (var _i = 0; _i < this.temporaryIds.nodes.length; _i++) {
-        var _context28;
+        var _context27;
 
         delete this.body.nodes[this.temporaryIds.nodes[_i]];
 
-        var indexTempNode = indexOf$3(_context28 = this.body.nodeIndices).call(_context28, this.temporaryIds.nodes[_i]);
+        var indexTempNode = indexOf$3(_context27 = this.body.nodeIndices).call(_context27, this.temporaryIds.nodes[_i]);
 
         if (indexTempNode !== -1) {
-          var _context29;
+          var _context28;
 
-          splice$2(_context29 = this.body.nodeIndices).call(_context29, indexTempNode, 1);
+          splice$2(_context28 = this.body.nodeIndices).call(_context28, indexTempNode, 1);
         }
       }
 
@@ -34708,10 +34652,10 @@ var ManipulationSystem = /*#__PURE__*/function () {
       var node = undefined;
 
       for (var i = overlappingNodeIds.length - 1; i >= 0; i--) {
-        var _context30;
+        var _context29;
 
         // if the node id is NOT a temporary node, accept the node.
-        if (indexOf$3(_context30 = this.temporaryIds.nodes).call(_context30, overlappingNodeIds[i]) === -1) {
+        if (indexOf$3(_context29 = this.temporaryIds.nodes).call(_context29, overlappingNodeIds[i]) === -1) {
           node = this.body.nodes[overlappingNodeIds[i]];
           break;
         }
@@ -34760,10 +34704,10 @@ var ManipulationSystem = /*#__PURE__*/function () {
       var node = undefined;
 
       for (var i = overlappingNodeIds.length - 1; i >= 0; i--) {
-        var _context31;
+        var _context30;
 
         // if the node id is NOT a temporary node, accept the node.
-        if (indexOf$3(_context31 = this.temporaryIds.nodes).call(_context31, overlappingNodeIds[i]) === -1) {
+        if (indexOf$3(_context30 = this.temporaryIds.nodes).call(_context30, overlappingNodeIds[i]) === -1) {
           node = this.body.nodes[overlappingNodeIds[i]];
           break;
         }
@@ -35502,7 +35446,7 @@ var ColorPicker = /*#__PURE__*/function () {
         noCanvas.style.color = "red";
         noCanvas.style.fontWeight = "bold";
         noCanvas.style.padding = "10px";
-        noCanvas.innerText = "Error: your browser does not support HTML canvas";
+        noCanvas.innerHTML = "Error: your browser does not support HTML canvas";
         this.colorPickerCanvas.appendChild(noCanvas);
       } else {
         var ctx = this.colorPickerCanvas.getContext("2d");
@@ -35563,31 +35507,31 @@ var ColorPicker = /*#__PURE__*/function () {
 
       this.brightnessLabel = document.createElement("div");
       this.brightnessLabel.className = "vis-label vis-brightness";
-      this.brightnessLabel.innerText = "brightness:";
+      this.brightnessLabel.innerHTML = "brightness:";
       this.opacityLabel = document.createElement("div");
       this.opacityLabel.className = "vis-label vis-opacity";
-      this.opacityLabel.innerText = "opacity:";
+      this.opacityLabel.innerHTML = "opacity:";
       this.newColorDiv = document.createElement("div");
       this.newColorDiv.className = "vis-new-color";
-      this.newColorDiv.innerText = "new";
+      this.newColorDiv.innerHTML = "new";
       this.initialColorDiv = document.createElement("div");
       this.initialColorDiv.className = "vis-initial-color";
-      this.initialColorDiv.innerText = "initial";
+      this.initialColorDiv.innerHTML = "initial";
       this.cancelButton = document.createElement("div");
       this.cancelButton.className = "vis-button vis-cancel";
-      this.cancelButton.innerText = "cancel";
+      this.cancelButton.innerHTML = "cancel";
       this.cancelButton.onclick = bind$2(_context = this._hide).call(_context, this, false);
       this.applyButton = document.createElement("div");
       this.applyButton.className = "vis-button vis-apply";
-      this.applyButton.innerText = "apply";
+      this.applyButton.innerHTML = "apply";
       this.applyButton.onclick = bind$2(_context2 = this._apply).call(_context2, this);
       this.saveButton = document.createElement("div");
       this.saveButton.className = "vis-button vis-save";
-      this.saveButton.innerText = "save";
+      this.saveButton.innerHTML = "save";
       this.saveButton.onclick = bind$2(_context3 = this._save).call(_context3, this);
       this.loadButton = document.createElement("div");
       this.loadButton.className = "vis-button vis-load";
-      this.loadButton.innerText = "load last";
+      this.loadButton.innerHTML = "load last";
       this.loadButton.onclick = bind$2(_context4 = this._loadLast).call(_context4, this);
       this.frame.appendChild(this.colorPickerDiv);
       this.frame.appendChild(this.arrowDiv);
@@ -35729,29 +35673,6 @@ var ColorPicker = /*#__PURE__*/function () {
 }();
 
 /**
- * Wrap given text (last argument) in HTML elements (all preceding arguments).
- *
- * @param {...any} rest - List of tag names followed by inner text.
- *
- * @returns An element or a text node.
- */
-
-function wrapInTag() {
-  for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
-    rest[_key] = arguments[_key];
-  }
-
-  if (rest.length < 1) {
-    throw new TypeError("Invalid arguments.");
-  } else if (rest.length === 1) {
-    return document.createTextNode(rest[0]);
-  } else {
-    var element = document.createElement(rest[0]);
-    element.appendChild(wrapInTag(slice$5(rest).call(rest, 1)));
-    return element;
-  }
-}
-/**
  * The way this works is for all properties of this.possible options, you can supply the property name in any form to list the options.
  * Boolean options are recognised as Boolean
  * Number options should be written as array: [default value, min value, max value, stepsize]
@@ -35760,7 +35681,6 @@ function wrapInTag() {
  *
  * The options are matched with their counterparts in each of the modules and the values used in the configuration are
  */
-
 
 var Configurator = /*#__PURE__*/function () {
   /**
@@ -36013,8 +35933,8 @@ var Configurator = /*#__PURE__*/function () {
         var item = document.createElement("div");
         item.className = "vis-configuration vis-config-item vis-config-s" + path.length;
 
-        for (var _len2 = arguments.length, domElements = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-          domElements[_key2 - 1] = arguments[_key2];
+        for (var _len = arguments.length, domElements = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+          domElements[_key - 1] = arguments[_key];
         }
 
         forEach$2(domElements).call(domElements, function (element) {
@@ -36039,7 +35959,7 @@ var Configurator = /*#__PURE__*/function () {
     value: function _makeHeader(name) {
       var div = document.createElement("div");
       div.className = "vis-configuration vis-config-header";
-      div.innerText = name;
+      div.innerHTML = name;
 
       this._makeItem([], div);
     }
@@ -36061,13 +35981,9 @@ var Configurator = /*#__PURE__*/function () {
       div.className = "vis-configuration vis-config-label vis-config-s" + path.length;
 
       if (objectLabel === true) {
-        while (div.firstChild) {
-          div.removeChild(div.firstChild);
-        }
-
-        div.appendChild(wrapInTag("i", "b", name));
+        div.innerHTML = "<i><b>" + name + ":</b></i>";
       } else {
-        div.innerText = name + ":";
+        div.innerHTML = name + ":";
       }
 
       return div;
@@ -36102,7 +36018,7 @@ var Configurator = /*#__PURE__*/function () {
           option.selected = "selected";
         }
 
-        option.innerText = arr[i];
+        option.innerHTML = arr[i];
         select.appendChild(option);
       }
 
@@ -36212,7 +36128,7 @@ var Configurator = /*#__PURE__*/function () {
       if (this.options.showButton === true) {
         var generateButton = document.createElement("div");
         generateButton.className = "vis-configuration vis-config-button";
-        generateButton.innerText = "generate options";
+        generateButton.innerHTML = "generate options";
 
         generateButton.onclick = function () {
           _this._printOptions();
@@ -36249,7 +36165,7 @@ var Configurator = /*#__PURE__*/function () {
         var div = document.createElement("div");
         div.id = "vis-configuration-popup";
         div.className = "vis-configuration-popup";
-        div.innerText = string;
+        div.innerHTML = string;
 
         div.onclick = function () {
           _this2._removePopup();
@@ -36649,12 +36565,7 @@ var Configurator = /*#__PURE__*/function () {
     key: "_printOptions",
     value: function _printOptions() {
       var options = this.getOptions();
-
-      while (this.optionsContainer.firstChild) {
-        this.optionsContainer.removeChild(this.optionsContainer.firstChild);
-      }
-
-      this.optionsContainer.appendChild(wrapInTag("pre", "const options = " + stringify$2(options, null, 2)));
+      this.optionsContainer.innerHTML = "<pre>var options = " + stringify$2(options, null, 2) + "</pre>";
     }
     /**
      *

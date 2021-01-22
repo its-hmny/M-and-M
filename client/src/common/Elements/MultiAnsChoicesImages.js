@@ -24,12 +24,19 @@ const base = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   margin: 5px;
   > div {
     margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    flex-wrap: wrap;
     width: 100%;
   }
-  .Image {
+  .ImageDiv {
+    width: 50%;
+    height: 40%;
   }
 `;
 
@@ -59,6 +66,8 @@ function MultiAnsChoicesImages({
     const allCorrect = selectedAnswers
       .sort()
       .every((answerId, index) => answerId === correctAnswers[index]);
+    console.log(correctAnswers);
+    console.log(allCorrect);
     return correctLength && allCorrect ? ANSWER_VALUE.CORRECT : ANSWER_VALUE.WRONG;
   }, [correctAnswers, selectedAnswers]);
 
@@ -83,14 +92,13 @@ function MultiAnsChoicesImages({
   return (
     <div css={[base, style]}>
       <div>
-        {answers.map(({ id, imgURL, alt }) => (
-          <div>
-            <img class="Image" src={imgURL} style={base && style['Image']} />
+        {answers.map(({ id, imgURL, alt, text }) => (
+          <div key={id} className="ImageDiv">
+            <img src={imgURL} style={base && style['Image']} alt={alt || 'alt'} />
             <Checkbox
-              key={id}
               id={id}
               name={name}
-              label={alt}
+              label={text}
               selected={selectedAnswers.find(answerId => answerId === id)}
               onSelected={handleSelected}
               style={style && style['Checkbox']}

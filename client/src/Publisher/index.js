@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import {
   Add as AddIcon,
+  Edit as EditIcon,
   Delete as DeleteIcon,
   FileCopy as FileCopyIcon,
   ExitToApp as ExitToAppIcon,
@@ -22,7 +23,6 @@ import AreYouSureDialog from './AreYouSureDialog';
 import Form from './Form';
 import * as ROUTES from '../routes';
 import axios from '../common/shared';
-import Navbar from '../common/Navbar';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   list: {
-    maxHeight: 'calc(100vh - 64px)',
+    maxHeight: '100vh',
     overflow: 'auto',
     flexBasis: 350,
     flexShrink: 0,
@@ -94,7 +94,7 @@ let storyCount = 0;
 
 const App = () => {
   const [stories, setStories] = useState([]);
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(undefined);
   const [toDelete, setToDelete] = useState(false);
   const [dontAskAgain, setDontAskAgain] = useState(false);
 
@@ -170,7 +170,7 @@ const App = () => {
       await axios.delete(`stories/${toDelete.uuid}`);
       setStories(stories => stories.filter(story => story.uuid !== toDelete.uuid));
       if (selected && selected.uuid === toDelete.uuid) {
-        setSelected(null);
+        setSelected(undefined);
       }
     } catch (err) {
       console.error(err);
@@ -179,7 +179,6 @@ const App = () => {
 
   return (
     <div className={classes.container}>
-      <Navbar />
       <div className={classes.content}>
         <div className={classes.list}>
           <List dense>
@@ -219,6 +218,14 @@ const App = () => {
                       <IconButton
                         component={Link}
                         to={`${ROUTES.EDITOR}?storyId=${story.uuid}`}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="See in Evaluator" placement="top-start">
+                      <IconButton
+                        component={Link}
+                        to={`${ROUTES.EVALUATOR}?storyId=${story.uuid}`}
                       >
                         <ExitToAppIcon />
                       </IconButton>

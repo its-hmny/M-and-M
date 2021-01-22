@@ -8,135 +8,135 @@ import ErrorIcon from '../../web_modules/@material-ui/icons/Error.js';
 import axios from './shared.js';
 
 const useStyles = makeStyles((theme) => ({
-    wrapper: {
-        position: 'relative',
+  wrapper: {
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
     },
-    buttonSuccess: {
-        backgroundColor: green[500],
-        '&:hover': {
-            backgroundColor: green[700],
-        },
+  },
+  buttonFailure: {
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
     },
-    buttonFailure: {
-        backgroundColor: red[500],
-        '&:hover': {
-            backgroundColor: red[700],
-        },
-    },
-    fabProgress: {
-        color: 'black',
-        marginRight: '10px',
-        zIndex: 1,
-    },
-    icon: {
-        marginRight: theme.spacing(1),
-    },
+  },
+  fabProgress: {
+    color: 'black',
+    marginRight: '10px',
+    zIndex: 1,
+  },
+  icon: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 const useInterval = (callback, delay) => {
-    const savedCallbackRef = useRef();
+  const savedCallbackRef = useRef();
 
-    useEffect(() => {
-        savedCallbackRef.current = callback;
-    }, [callback]);
-    useEffect(() => {
-        const handler = (...args) => savedCallbackRef.current(...args);
+  useEffect(() => {
+    savedCallbackRef.current = callback;
+  }, [callback]);
+  useEffect(() => {
+    const handler = (...args) => savedCallbackRef.current(...args);
 
-        if (delay !== null) {
-            const intervalId = setInterval(handler, delay);
+    if (delay !== null) {
+      const intervalId = setInterval(handler, delay);
 
-            return () => clearInterval(intervalId);
-        }
-    }, [delay]);
+      return () => clearInterval(intervalId);
+    }
+  }, [delay]);
 };
 
 const SaveButton = ({ story }) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-    const [failure, setFailure] = useState(false);
+  const [failure, setFailure] = useState(false);
 
-    const resetTimer = useRef();
+  const resetTimer = useRef();
 
-    useEffect(() => {
-        return () => {
-            clearTimeout(resetTimer.current);
-        };
-    }, []);
-    useInterval(() => uploadStory(), 30000);
-
-    const uploadStory = async () => {
-        if (!loading) {
-            setSuccess(false);
-            setFailure(false);
-            setLoading(true);
-
-            try {
-                const res = await axios.patch(`stories/${story.uuid}`, story);
-
-                if (res.data.status) {
-                    setSuccess(true);
-                    resetTimer.current = setTimeout(() => {
-                        setSuccess(false);
-                    }, 3000);
-                }
-            } catch (err) {
-                setFailure(true);
-                resetTimer.current = setTimeout(() => {
-                    setFailure(false);
-                }, 3000);
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        }
+  useEffect(() => {
+    return () => {
+      clearTimeout(resetTimer.current);
     };
+  }, []);
+  useInterval(() => uploadStory(), 30000);
 
-    return React.createElement(
-        'div',
-        {
-            className: classes.wrapper,
-        },
-        React.createElement(
-            Fab,
-            {
-                variant: 'extended',
-                color: 'primary',
-                className: success
-                    ? classes.buttonSuccess
-                    : failure
-                    ? classes.buttonFailure
-                    : '',
-                onClick: uploadStory,
-            },
-            success
-                ? React.createElement(CheckIcon, {
-                      className: classes.icon,
-                  })
-                : failure
-                ? React.createElement(ErrorIcon, {
-                      className: classes.icon,
-                  })
-                : loading
-                ? React.createElement(CircularProgress, {
-                      size: 24,
-                      className: classes.fabProgress,
-                  })
-                : React.createElement(SaveIcon, {
-                      className: classes.icon,
-                  }),
-            success
-                ? 'Saved'
-                : failure
-                ? 'Failed'
-                : loading
-                ? 'Saving'
-                : 'Save Story',
-        ),
-    );
+  const uploadStory = async () => {
+    if (!loading) {
+      setSuccess(false);
+      setFailure(false);
+      setLoading(true);
+
+      try {
+        const res = await axios.patch(`stories/${story.uuid}`, story);
+
+        if (res.data.status) {
+          setSuccess(true);
+          resetTimer.current = setTimeout(() => {
+            setSuccess(false);
+          }, 3000);
+        }
+      } catch (err) {
+        setFailure(true);
+        resetTimer.current = setTimeout(() => {
+          setFailure(false);
+        }, 3000);
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  return React.createElement(
+    'div',
+    {
+      className: classes.wrapper,
+    },
+    React.createElement(
+      Fab,
+      {
+        variant: 'extended',
+        color: 'primary',
+        className: success
+          ? classes.buttonSuccess
+          : failure
+          ? classes.buttonFailure
+          : '',
+        onClick: uploadStory,
+      },
+      success
+        ? React.createElement(CheckIcon, {
+            className: classes.icon,
+          })
+        : failure
+        ? React.createElement(ErrorIcon, {
+            className: classes.icon,
+          })
+        : loading
+        ? React.createElement(CircularProgress, {
+            size: 24,
+            className: classes.fabProgress,
+          })
+        : React.createElement(SaveIcon, {
+            className: classes.icon,
+          }),
+      success
+        ? 'Saved'
+        : failure
+        ? 'Failed'
+        : loading
+        ? 'Saving'
+        : 'Save Story',
+    ),
+  );
 };
 
 export default SaveButton;

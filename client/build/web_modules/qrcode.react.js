@@ -1,6 +1,6 @@
-import './common/_commonjsHelpers-37fa8da4.js';
 import { r as react } from './common/index-8732a38f.js';
 import './common/index-c103191b.js';
+import './common/_commonjsHelpers-37fa8da4.js';
 
 var mode = {
 	MODE_NUMBER :		1 << 0,

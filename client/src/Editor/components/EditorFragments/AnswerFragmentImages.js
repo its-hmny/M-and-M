@@ -94,6 +94,7 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
         id: shortid.generate(),
         imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'image alt',
+        text: 'answer text',
       },
     ]);
   };
@@ -142,7 +143,6 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
 
     setPathToValue(pointsPath, index, newVal);
   };
-  console.log('wow');
   return (
     <div className={classNames.InspectorElement}>
       <Button
@@ -158,9 +158,10 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
           <div key={`answer-${i}`}>
             <Divider className={divider} />
             <FilePickerFragment
+              key={`filepicker-answer-${i}`}
               className={classNames.InspectorElement}
               classNames={classNames}
-              path={path.concat('answers', i) || []}
+              path={path.concat('answers', i)}
               fragmentSpecificProps={{
                 acceptedFileType: 'image/*',
                 buttonLabel: 'Upload Image',
@@ -176,6 +177,18 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
                   setPathToValue(
                     path.concat('answers', i) || [],
                     'alt',
+                    event.target.value
+                  )
+                }
+              />
+              <TextField
+                value={answers[i].text}
+                className={classNames.InspectorElement}
+                label={'Choice text'}
+                onChange={event =>
+                  setPathToValue(
+                    path.concat('answers', i) || [],
+                    'text',
                     event.target.value
                   )
                 }

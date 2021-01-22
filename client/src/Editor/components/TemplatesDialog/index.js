@@ -24,8 +24,20 @@ import { CREATOR } from '../../../routes';
 import useTemplates from './use-templates';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    height: '100%',
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  dialogText: {
+    flexShrink: 0,
+    marginBottom: theme.spacing(2.5),
+  },
   container: {
     flexGrow: 1,
+    overflowY: 'auto',
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
   },
@@ -92,12 +104,13 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
       open={open}
       onClose={onCancel}
       aria-labelledby="max-width-dialog-title"
+      classes={{ paper: classes.root }}
     >
       {alternativeContent || (
         <>
           <DialogTitle>Templates</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
+          <DialogContent className={classes.content}>
+            <DialogContentText className={classes.dialogText}>
               Choose one of the available templates or create a new one with our{' '}
               <MuiLink component={Link} to={CREATOR}>
                 Template Creator

@@ -4,10 +4,10 @@ import { SERVER_URL } from './constants.js';
 // Custom hook to obtain the  query param (usually the storyId)
 
 export const useQuery = () =>
-    Object.fromEntries(new URLSearchParams(useLocation().search)); // Default preferences for axios
+  Object.fromEntries(new URLSearchParams(useLocation().search)); // Default preferences for axios
 
 const instance = axios.create({
-    baseURL: SERVER_URL,
+  baseURL: SERVER_URL,
 });
 
 export default instance;

@@ -24,12 +24,19 @@ const base = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   margin: 5px;
   > div {
     margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    flex-wrap: wrap;
     width: 100%;
   }
-  .Image {
+  .ImageDiv {
+    width: 50%;
+    height: 50%;
   }
 `;
 
@@ -59,7 +66,8 @@ function SingleAnsChoicesImages({
     // if an answer is selected AND is correct, return correct
     // Uses == instead === because for some reason type(selectedAnswer) != type(correctAnswer)
     // so a conversion is needed
-    return selectedAnswer && selectedAnswer === correctAnswer
+
+    return selectedAnswer && selectedAnswer == correctAnswer[0]
       ? ANSWER_VALUE.CORRECT
       : ANSWER_VALUE.WRONG;
   }, [correctAnswer, selectedAnswer]);
@@ -79,14 +87,13 @@ function SingleAnsChoicesImages({
   return (
     <div css={[base, style]} style={style['Root']}>
       <div>
-        {answers.map(({ id, imgURL, alt }) => (
-          <div>
-            <img class="Image" src={imgURL} style={base && style['Image']} />
+        {answers.map(({ id, imgURL, alt, text }) => (
+          <div key={id} className="ImageDiv">
+            <img src={imgURL} style={base && style['Image']} alt={alt || 'Alt'} />
             <Radio
-              key={id}
               id={id}
               name={name}
-              label={alt}
+              label={text}
               selected={id === selectedAnswer}
               onSelected={handleSelected}
               style={style && style['Radio']}

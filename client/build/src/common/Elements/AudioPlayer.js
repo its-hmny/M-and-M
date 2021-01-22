@@ -6,88 +6,88 @@ import PlayArrowIcon from '../../../web_modules/@material-ui/icons/PlayArrow.js'
 import PauseIcon from '../../../web_modules/@material-ui/icons/Pause.js';
 
 const base = css`
-    .player {
-        margin: 5px;
-        box-shadow: 1px 2px #bdbdbd;
+  .player {
+    margin: 5px;
+    box-shadow: 1px 2px #bdbdbd;
 
-        background-color: #e0e0e0;
-    }
+    background-color: #e0e0e0;
+  }
 
-    .progress {
-        height: 2px;
-        left: 0;
-        top: 0;
-        background-color: #bdbdbd;
-    }
+  .progress {
+    height: 2px;
+    left: 0;
+    top: 0;
+    background-color: #bdbdbd;
+  }
 
-    .play-pause {
-        border: none;
-        background-color: none;
-    }
+  .play-pause {
+    border: none;
+    background-color: none;
+  }
 
-    .icon-play {
-    }
+  .icon-play {
+  }
 `;
 
 const AudioPlayer = ({ srcURL, style }) => {
-    const [playing, setPlaying] = React.useState(false);
+  const [playing, setPlaying] = React.useState(false);
 
-    const [width, setWidth] = React.useState(0);
+  const [width, setWidth] = React.useState(0);
 
-    var audioref;
+  var audioref;
 
-    const playpause = () => {
-        if (playing) {
-            audioref.audioEl.current.pause();
-            setPlaying(false);
-        } else {
-            audioref.audioEl.current.play();
-            setPlaying(true);
-        }
-    };
+  const playpause = () => {
+    if (playing) {
+      audioref.audioEl.current.pause();
+      setPlaying(false);
+    } else {
+      audioref.audioEl.current.play();
+      setPlaying(true);
+    }
+  };
 
-    const updateProgress = (time) => {
-        setWidth((time / audioref.audioEl.current.duration) * 100);
-    };
+  const updateProgress = (time) => {
+    setWidth((time / audioref.audioEl.current.duration) * 100);
+  };
 
-    return jsx(
-        'div',
-        {
-            css: [base, style],
+  return jsx(
+    'div',
+    {
+      css: [base, style],
+    },
+    jsx(
+      'div',
+      {
+        className: 'player',
+      },
+      jsx(ReactAudioPlayer, {
+        src: srcURL,
+        listenInterval: 1,
+        onListen: (time) => updateProgress(time),
+        ref: (element) => {
+          audioref = element;
         },
-        jsx(
-            'div',
-            {
-                className: 'player',
-            },
-            jsx(ReactAudioPlayer, {
-                src: srcURL,
-                listenInterval: 1,
-                onListen: (time) => updateProgress(time),
-                ref: (element) => {
-                    audioref = element;
-                },
-                onEnded: () => {
-                    setPlaying(false);
-                },
-            }),
-            jsx('div', {
-                style: {
-                    backgroundColor: 'lightblue',
-                    width: width + '%',
-                    height: 4,
-                },
-            }),
-            jsx(
-                'button',
-                {
-                    className: 'play-pause icon-play',
-                    onClick: playpause,
-                },
-                playing ? jsx(PauseIcon, null) : jsx(PlayArrowIcon, null),
-            ),
-        ),
-    );
+        onEnded: () => {
+          setPlaying(false);
+        },
+      }),
+      jsx('div', {
+        style: {
+          backgroundColor: 'lightblue',
+          width: width + '%',
+          height: 4,
+        },
+      }),
+      jsx(
+        'button',
+        {
+          className: 'play-pause icon-play',
+          onClick: playpause,
+        },
+        playing ? jsx(PauseIcon, null) : jsx(PlayArrowIcon, null),
+      ),
+    ),
+  );
 };
 
 export default AudioPlayer;

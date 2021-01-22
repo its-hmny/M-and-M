@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Typography,
   TextField,
@@ -9,11 +9,18 @@ import {
   Button,
 } from '@material-ui/core';
 
-function DialogStyleName({ open, initialId, onComplete }) {
+function DialogStyleName({ open, initialId, onComplete, styleIds }) {
   const [styleId, setStyleId] = useState(initialId);
 
   const handleChange = event => setStyleId(event.target.value);
   const handleComplete = () => onComplete(styleId);
+  const idAlreadyPresent = useMemo(
+    () =>
+      Object.values(styleIds)
+        .flat()
+        .some(id => id === styleId),
+    [styleId, styleIds]
+  );
 
   return (
     <Dialog open={open}>
@@ -25,11 +32,15 @@ function DialogStyleName({ open, initialId, onComplete }) {
           label="Style id"
           value={styleId}
           onChange={handleChange}
-          onKeyPress={e => e.key === 'Enter' && handleComplete()}
+          onKeyPress={e => !idAlreadyPresent && e.key === 'Enter' && handleComplete()}
+          helperText={idAlreadyPresent && `Pick an unused name`}
+          error={idAlreadyPresent}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleComplete}>Ok</Button>
+        <Button disabled={idAlreadyPresent} onClick={handleComplete}>
+          Ok
+        </Button>
       </DialogActions>
     </Dialog>
   );

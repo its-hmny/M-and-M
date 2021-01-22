@@ -1,114 +1,114 @@
 import React from '../../../web_modules/react.js';
 import {
-    Card,
-    CardHeader,
-    Avatar,
-    CardContent,
-    Typography,
-    Paper,
+  Card,
+  CardHeader,
+  Avatar,
+  CardContent,
+  Typography,
+  Paper,
 } from '../../../web_modules/@material-ui/core.js';
 import {
-    TableContainer,
-    Table,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
 } from '../../../web_modules/@material-ui/core.js';
 
 const StatsWidget = ({ player }) => {
-    const { avatar, name, id, stats, score } = player;
+  const { avatar, name, id, stats, score } = player;
 
-    const statsRow = [
+  const statsRow = [
+    {
+      label: 'Score',
+      value: score,
+    },
+    ...Object.values(stats),
+  ];
+
+  return React.createElement(
+    Card,
+    null,
+    React.createElement(CardHeader, {
+      avatar: React.createElement(Avatar, {
+        src: avatar,
+      }),
+      title: name || id,
+      subheader: id,
+    }),
+    React.createElement(
+      CardContent,
+      null,
+      React.createElement(
+        Typography,
         {
-            label: 'Score',
-            value: score,
+          variant: 'subtitle1',
         },
-        ...Object.values(stats),
-    ];
-
-    return React.createElement(
-        Card,
-        null,
-        React.createElement(CardHeader, {
-            avatar: React.createElement(Avatar, {
-                src: avatar,
-            }),
-            title: name || id,
-            subheader: id,
-        }),
+        'Here some stats about the player:',
+      ),
+      React.createElement(
+        TableContainer,
+        {
+          component: Paper,
+        },
         React.createElement(
-            CardContent,
+          Table,
+          {
+            stickyHeader: true,
+          },
+          React.createElement(
+            TableHead,
             null,
             React.createElement(
-                Typography,
+              TableRow,
+              null,
+              React.createElement(
+                TableCell,
                 {
-                    variant: 'subtitle1',
+                  align: 'center',
                 },
-                'Here some stats about the player:',
-            ),
-            React.createElement(
-                TableContainer,
+                'Statistic',
+              ),
+              React.createElement(
+                TableCell,
                 {
-                    component: Paper,
+                  align: 'center',
+                },
+                'Result',
+              ),
+            ),
+          ),
+          React.createElement(
+            TableBody,
+            null,
+            statsRow.map((stat) =>
+              React.createElement(
+                TableRow,
+                {
+                  key: `${stat.label}-${id}`,
                 },
                 React.createElement(
-                    Table,
-                    {
-                        stickyHeader: true,
-                    },
-                    React.createElement(
-                        TableHead,
-                        null,
-                        React.createElement(
-                            TableRow,
-                            null,
-                            React.createElement(
-                                TableCell,
-                                {
-                                    align: 'center',
-                                },
-                                'Statistic',
-                            ),
-                            React.createElement(
-                                TableCell,
-                                {
-                                    align: 'center',
-                                },
-                                'Result',
-                            ),
-                        ),
-                    ),
-                    React.createElement(
-                        TableBody,
-                        null,
-                        statsRow.map((stat) =>
-                            React.createElement(
-                                TableRow,
-                                {
-                                    key: `${stat.label}-${id}`,
-                                },
-                                React.createElement(
-                                    TableCell,
-                                    {
-                                        align: 'center',
-                                    },
-                                    stat.label,
-                                ),
-                                React.createElement(
-                                    TableCell,
-                                    {
-                                        align: 'center',
-                                    },
-                                    stat.value || 'No data avaiable',
-                                ),
-                            ),
-                        ),
-                    ),
+                  TableCell,
+                  {
+                    align: 'center',
+                  },
+                  stat.label,
                 ),
+                React.createElement(
+                  TableCell,
+                  {
+                    align: 'center',
+                  },
+                  stat.value || 'No data avaiable',
+                ),
+              ),
             ),
+          ),
         ),
-    );
+      ),
+    ),
+  );
 };
 
 export default StatsWidget;

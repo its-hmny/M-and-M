@@ -1,32 +1,36 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
-
-import Navbar from './common/Navbar';
-import { useQuery } from './common/shared';
+import { Grid, Typography, makeStyles } from '@material-ui/core';
+import Astronaut from './assets/Astronaut.svg';
 
 const useStyles = makeStyles(() => ({
-  main: {
-    padding: '2vh',
+  container: {
+    height: '100vh',
+    width: '100%',
+  },
+  img: {
+    width: '33vw',
+    height: '33vh',
+  },
+  text: {
+    widht: '33vw',
   },
 }));
 
 const NotFound = () => {
-  const classes = useStyles();
-  const { route } = useQuery();
-
-  let content;
-  if (route && route.includes('editor')) {
-    const storyId = route.substring(route.lastIndexOf('=') + 1);
-    content = <div>Sorry, but we didn't find any story with ID: {storyId} </div>;
-  } else {
-    content = <div>404</div>;
-  }
-
+  const { container, img, text } = useStyles();
   return (
-    <div>
-      <Navbar />
-      <div className={classes.main}>{content}</div>
-    </div>
+    <Grid container justify="center" alignItems="center" className={container}>
+      <img src={Astronaut} alt="Just a funny astronaut" className={img} />
+      <Typography color="primary" variant="h1" align="left" classname={text}>
+        404
+        <Typography color="primary" variant="h3">
+          Not Found
+          <Typography color="status" variant="subtitle1">
+            We are sorry but the page you are looking for does not exist
+          </Typography>
+        </Typography>
+      </Typography>
+    </Grid>
   );
 };
 

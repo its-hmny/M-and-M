@@ -49,6 +49,10 @@ const useStyles = makeStyles(theme => ({
   listItemContainer: {
     borderBottom: `${theme.spacing(0.25)}px solid transparent`,
     borderTop: `${theme.spacing(0.25)}px solid transparent`,
+    // while editing, disable all pointer events on items different than the one being edited
+    pointerEvents: props => (props.isDragDisabled ? 'none' : 'initial'),
+    userSelect: props => (props.isDragDisabled ? 'none' : 'initial'),
+    opacity: props => (props.isDragDisabled ? 0.5 : 1),
   },
 }));
 
@@ -65,17 +69,14 @@ function getStyle(style, isDragging) {
   return style;
 }
 
-const SettingsItem = ({
-  dragIndex,
-  component,
-  onEditing,
-  isDragDisabled,
-  subSettings,
-}) => {
+const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const { provided, snapshot } = useDragList();
-  const classes = useStyles({ isDragging: snapshot.isDragging });
+  const { provided, snapshot, isDragDisabled } = useDragList();
+  const classes = useStyles({
+    isDragging: snapshot.isDragging,
+    isDragDisabled: !isEditing && isDragDisabled,
+  });
   const { changeStyleId, removeComponent } = useTemplateStore(state => ({
     changeStyleId: state.changeStyleId,
     removeComponent: state.removeComponent,
@@ -189,7 +190,12 @@ const SettingsItem = ({
       <Collapse className={classes.collapse} in={isEditing} timeout="auto" unmountOnExit>
         <SettingsComponent componentId={componentId} styleId={styleId} />
       </Collapse>
-      <StyleIdDialog open={isSaving} initialId={styleId} onComplete={handleComplete} />
+      <StyleIdDialog
+        open={isSaving}
+        initialId={styleId}
+        styleIds={styleIds}
+        onComplete={handleComplete}
+      />
     </>
   );
 };

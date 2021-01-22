@@ -2,33 +2,33 @@
 import { css, jsx } from '../../../web_modules/@emotion/core.js';
 
 const base = css`
-    align-self: stretch;
+  align-self: stretch;
 `;
 
 const container = css`
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 `;
 
 const Spacer = ({ style }) => {
-    return jsx(
-        'div',
+  return jsx(
+    'div',
+    {
+      css: container,
+      style: {
+        height: style.height,
+      },
+    },
+    jsx('div', {
+      css: [
+        base,
+        style,
         {
-            css: container,
-            style: {
-                height: style.height,
-            },
+          height: '100%',
         },
-        jsx('div', {
-            css: [
-                base,
-                style,
-                {
-                    height: '100%',
-                },
-            ],
-        }),
-    );
+      ],
+    }),
+  );
 };
 
 export default Spacer;

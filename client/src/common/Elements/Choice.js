@@ -18,7 +18,7 @@ const base = css`
   text-align: center;
   cursor: pointer;
   margin: 5px;
-
+  word-wrap: break-word;
   &:not(:last-of-type) {
     margin-bottom: 1rem;
   }

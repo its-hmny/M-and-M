@@ -1,11 +1,11 @@
 import React, {
-    useState,
-    useCallback,
-    useMemo,
+  useState,
+  useCallback,
+  useMemo,
 } from '../../../web_modules/react.js';
 import {
-    Container,
-    makeStyles,
+  Container,
+  makeStyles,
 } from '../../../web_modules/@material-ui/core.js';
 import { DragDropContext } from '../../../web_modules/react-beautiful-dnd.js';
 import { DraggableList } from './DraggableList.js';
@@ -14,77 +14,87 @@ import SettingsItem from './SettingsItem.js';
 import useTemplateStore from '../stores/template.js';
 
 const useStyles = makeStyles((theme) => ({
-    root: {},
+  root: {
+    maxHeight: `100vh`,
+    display: 'flex',
+    flexDirection: 'column',
+    '& .MuiList-root': {
+      overflowY: 'auto',
+      padding: `0 ${theme.spacing(2)}px`,
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+    },
+  },
 }));
 
 function Inspector() {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const [currentlyEditing, setCurrentlyEditing] = useState(0);
+  const [currentlyEditing, setCurrentlyEditing] = useState(0);
 
-    const { components, addComponent, reorderComponents } = useTemplateStore(
-        (state) => ({
-            components: state.components,
-            addComponent: state.addComponent,
-            reorderComponents: state.reorderComponents,
-        }),
-    );
+  const { components, addComponent, reorderComponents } = useTemplateStore(
+    (state) => ({
+      components: state.components,
+      addComponent: state.addComponent,
+      reorderComponents: state.reorderComponents,
+    }),
+  );
 
-    const inspectorDragId = 'inspector-top-list';
+  const inspectorDragId = 'inspector-top-list';
 
-    const settings = useMemo(
-        () =>
-            components.map((objComponent, index) =>
-                React.createElement(SettingsItem, {
-                    key: objComponent.id,
-                    id: objComponent.id,
-                    dragIndex: index,
-                    component: objComponent,
-                    onEditing: (isEditing) =>
-                        setCurrentlyEditing((currentlyEditing) =>
-                            isEditing
-                                ? currentlyEditing + 1
-                                : currentlyEditing - 1,
-                        ),
-                }),
+  const settings = useMemo(
+    () =>
+      components.map((objComponent, index) =>
+        React.createElement(SettingsItem, {
+          key: objComponent.id,
+          id: objComponent.id,
+          dragIndex: index,
+          component: objComponent,
+          onEditing: (isEditing) =>
+            setCurrentlyEditing((currentlyEditing) =>
+              isEditing ? currentlyEditing + 1 : currentlyEditing - 1,
             ),
-        [components],
-    );
-
-    const handleDragEnd = useCallback(
-        ({ source, destination, type: dragListId }) => {
-            // dropped outside the list
-            if (destination) {
-                reorderComponents(
-                    source.index,
-                    destination.index,
-                    dragListId === inspectorDragId ? null : dragListId,
-                );
-            }
-        },
-        [reorderComponents],
-    );
-
-    return React.createElement(
-        Container,
-        {
-            className: classes.root,
-        },
-        React.createElement(
-            DragDropContext,
-            {
-                onDragEnd: handleDragEnd,
-            },
-            React.createElement(DraggableList, {
-                id: inspectorDragId,
-                list: settings,
-                disabled: currentlyEditing > 0,
-            }),
-        ),
-        React.createElement(AddComponentButton, {
-            onClick: addComponent,
         }),
-    );
+      ),
+    [components],
+  );
+
+  const handleDragEnd = useCallback(
+    ({ source, destination, type: dragListId }) => {
+      // dropped outside the list
+      if (destination) {
+        reorderComponents(
+          source.index,
+          destination.index,
+          dragListId === inspectorDragId ? null : dragListId,
+        );
+      }
+    },
+    [reorderComponents],
+  );
+
+  return React.createElement(
+    Container,
+    {
+      className: classes.root,
+      disableGutters: true,
+    },
+    React.createElement(
+      DragDropContext,
+      {
+        onDragEnd: handleDragEnd,
+      },
+      React.createElement(DraggableList, {
+        id: inspectorDragId,
+        list: settings,
+        disabled: currentlyEditing > 0,
+      }),
+    ),
+    currentlyEditing === 0 &&
+      React.createElement(AddComponentButton, {
+        onClick: addComponent,
+      }),
+  );
 }
 
 export default Inspector;

@@ -1,5 +1,5 @@
-import '../common/_commonjsHelpers-37fa8da4.js';
 import { r as react } from '../common/index-8732a38f.js';
+import '../common/_commonjsHelpers-37fa8da4.js';
 
 /*
 

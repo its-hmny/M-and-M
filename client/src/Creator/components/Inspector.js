@@ -8,7 +8,17 @@ import SettingsItem from './SettingsItem';
 import useTemplateStore from '../stores/template';
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    maxHeight: `100vh`,
+    display: 'flex',
+    flexDirection: 'column',
+    '& .MuiList-root': {
+      overflowY: 'auto',
+      padding: `0 ${theme.spacing(2)}px`,
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+    },
+  },
 }));
 
 function Inspector() {
@@ -55,7 +65,7 @@ function Inspector() {
   );
 
   return (
-    <Container className={classes.root}>
+    <Container className={classes.root} disableGutters>
       <DragDropContext onDragEnd={handleDragEnd}>
         <DraggableList
           id={inspectorDragId}
@@ -63,7 +73,7 @@ function Inspector() {
           disabled={currentlyEditing > 0}
         />
       </DragDropContext>
-      <AddComponentButton onClick={addComponent} />
+      {currentlyEditing === 0 && <AddComponentButton onClick={addComponent} />}
     </Container>
   );
 }

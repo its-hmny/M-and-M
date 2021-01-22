@@ -90,13 +90,25 @@ const EvaluationWidget = () => {
   return (
     <Paper>
       <VoteSlider story={storyId} player={selectedPlayer.id} nodeId={showedNodeId} />
-      <Button variant="text" small onClick={() => changeNodeToShow(-1)}>
-        {'<<'}
-      </Button>
+      <Grid container xs={12} justify="space-between">
+        <Button
+          variant="contained"
+          color="primary"
+          small
+          onClick={() => changeNodeToShow(-1)}
+        >
+          {'<<'}
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          small
+          onClick={() => changeNodeToShow(+1)}
+        >
+          {'>>'}
+        </Button>
+      </Grid>
       <Preview components={patchedComponents} />
-      <Button variant="text" small onClick={() => changeNodeToShow(+1)}>
-        {'>>'}
-      </Button>
     </Paper>
   );
 };

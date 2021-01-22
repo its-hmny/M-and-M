@@ -1,9 +1,9 @@
 import { _ as _extends, b as _inheritsLoose, a as _objectWithoutPropertiesLoose } from './common/objectWithoutPropertiesLoose-2d09fd44.js';
-import './common/_commonjsHelpers-37fa8da4.js';
 import { r as react } from './common/index-8732a38f.js';
 import { p as propTypes } from './common/index-c103191b.js';
-import './common/hoist-non-react-statics.cjs-452b108e.js';
 import { i as invariant } from './common/tiny-invariant.esm-50c76060.js';
+import './common/hoist-non-react-statics.cjs-452b108e.js';
+import './common/_commonjsHelpers-37fa8da4.js';
 
 function isAbsolute(pathname) {
   return pathname.charAt(0) === '/';
@@ -77,6 +77,41 @@ function resolvePathname(to, from) {
   if (hasTrailingSlash && result.substr(-1) !== '/') result += '/';
 
   return result;
+}
+
+function valueOf(obj) {
+  return obj.valueOf ? obj.valueOf() : Object.prototype.valueOf.call(obj);
+}
+
+function valueEqual(a, b) {
+  // Test for strict equality first.
+  if (a === b) return true;
+
+  // Otherwise, if either of them == null they are not equal.
+  if (a == null || b == null) return false;
+
+  if (Array.isArray(a)) {
+    return (
+      Array.isArray(b) &&
+      a.length === b.length &&
+      a.every(function(item, index) {
+        return valueEqual(item, b[index]);
+      })
+    );
+  }
+
+  if (typeof a === 'object' || typeof b === 'object') {
+    var aValue = valueOf(a);
+    var bValue = valueOf(b);
+
+    if (aValue !== a || bValue !== b) return valueEqual(aValue, bValue);
+
+    return Object.keys(Object.assign({}, a, b)).every(function(key) {
+      return valueEqual(a[key], b[key]);
+    });
+  }
+
+  return false;
 }
 
 function addLeadingSlash(path) {
@@ -182,6 +217,9 @@ function createLocation(path, state, key, currentLocation) {
   }
 
   return location;
+}
+function locationsAreEqual(a, b) {
+  return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && valueEqual(a.state, b.state);
 }
 
 function createTransitionManager() {
@@ -1741,6 +1779,82 @@ function (_React$Component) {
   return Lifecycle;
 }(react.Component);
 
+var cache = {};
+var cacheLimit = 10000;
+var cacheCount = 0;
+
+function compilePath(path) {
+  if (cache[path]) return cache[path];
+  var generator = pathToRegexp_1.compile(path);
+
+  if (cacheCount < cacheLimit) {
+    cache[path] = generator;
+    cacheCount++;
+  }
+
+  return generator;
+}
+/**
+ * Public API for generating a URL pathname from a path and parameters.
+ */
+
+
+function generatePath(path, params) {
+  if (path === void 0) {
+    path = "/";
+  }
+
+  if (params === void 0) {
+    params = {};
+  }
+
+  return path === "/" ? path : compilePath(path)(params, {
+    pretty: true
+  });
+}
+
+/**
+ * The public API for navigating programmatically with a component.
+ */
+
+function Redirect(_ref) {
+  var computedMatch = _ref.computedMatch,
+      to = _ref.to,
+      _ref$push = _ref.push,
+      push = _ref$push === void 0 ? false : _ref$push;
+  return react.createElement(context.Consumer, null, function (context) {
+    !context ?  invariant(false) : void 0;
+    var history = context.history,
+        staticContext = context.staticContext;
+    var method = push ? history.push : history.replace;
+    var location = createLocation(computedMatch ? typeof to === "string" ? generatePath(to, computedMatch.params) : _extends({}, to, {
+      pathname: generatePath(to.pathname, computedMatch.params)
+    }) : to); // When rendering in a static context,
+    // set the new location immediately.
+
+    if (staticContext) {
+      method(location);
+      return null;
+    }
+
+    return react.createElement(Lifecycle, {
+      onMount: function onMount() {
+        method(location);
+      },
+      onUpdate: function onUpdate(self, prevProps) {
+        var prevLocation = createLocation(prevProps.to);
+
+        if (!locationsAreEqual(prevLocation, _extends({}, location, {
+          key: prevLocation.key
+        }))) {
+          method(location);
+        }
+      },
+      to: to
+    });
+  });
+}
+
 var cache$1 = {};
 var cacheLimit$1 = 10000;
 var cacheCount$1 = 0;
@@ -2283,4 +2397,4 @@ var NavLink = forwardRef$1(function (_ref, forwardedRef) {
   });
 });
 
-export { BrowserRouter, Link, NavLink, Route, Switch, useHistory, useLocation };
+export { BrowserRouter, Link, Redirect, Route, Switch, useHistory, useLocation };

@@ -15,33 +15,33 @@ const base = css`
 const noop = () => {};
 
 const TextArea = ({
-    placeholder,
-    rows,
-    onSubmit = noop,
-    initialValue = '',
-    style,
+  placeholder,
+  rows,
+  onSubmit = noop,
+  initialValue = '',
+  style,
 }) => {
-    const [value, setValue] = useState('');
+  const [value, setValue] = useState('');
 
-    useEffect(() => setValue(initialValue), [initialValue]);
-    return jsx(
-        'div',
-        null,
-        jsx('textarea', {
-            css: [base, style],
-            placeholder: placeholder,
-            rows: rows,
-            value: value,
-            onChange: (evt) => setValue(evt.target.value),
-        }),
-        jsx(
-            'button',
-            {
-                onClick: () => onSubmit(value),
-            },
-            'Invia risposta',
-        ),
-    );
+  useEffect(() => setValue(initialValue), [initialValue]);
+  return jsx(
+    'div',
+    null,
+    jsx('textarea', {
+      css: [base, style],
+      placeholder: placeholder,
+      rows: rows,
+      value: value,
+      onChange: (evt) => setValue(evt.target.value),
+    }),
+    jsx(
+      'button',
+      {
+        onClick: () => onSubmit(value),
+      },
+      'Invia risposta',
+    ),
+  );
 };
 
 export default TextArea;

@@ -14,6 +14,20 @@
       }
     },
     {
+      "fragment": "CheckboxFragment",
+      "props": {
+        "valToChange": "isInitial",
+        "label": "Is an initial node?"
+      }
+    },
+    {
+      "fragment": "CheckboxFragment",
+      "props": {
+        "valToChange": "isFinal",
+        "label": "Is a final node?"
+      }
+    },
+    {
       "fragment": "ButtonFragment",
       "props": {
         "text": "Delete this node",

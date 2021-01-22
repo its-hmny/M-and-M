@@ -3,16 +3,19 @@ import { useSnackbar } from 'notistack';
 import axios, { useQuery } from '../../common/shared';
 
 import io from 'socket.io-client';
+import { useHistory } from 'react-router-dom';
+import * as ROUTES from '../../routes';
 
 const EvaluatorContext = React.createContext();
 
 export const EvaluatorProvider = ({ children }) => {
   const { storyId } = useQuery();
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
-  const [userMessage, setUserMessage] = useState('Loading...');
+
   const socket = useMemo(
     () => io('http://localhost:8000', { query: { type: 'evaluator', storyId } }),
     [storyId]
@@ -25,13 +28,12 @@ export const EvaluatorProvider = ({ children }) => {
         const loadedStory = (await axios.get(`/stories/${storyId}`)).data.payload;
         setStory(loadedStory);
       } catch (err) {
-        setUserMessage('Error the story requested does not exist');
-        console.warn('Error loading the story from server', err);
+        history.push(ROUTES.NOTFOUND);
       }
     };
 
     fetchAll();
-  }, [storyId]);
+  }, [history, storyId]);
 
   const updatePlayerLog = useCallback(
     (playerId, patch) => socket.emit('update:eval', { story: storyId, playerId, patch }),
@@ -121,8 +123,13 @@ export const EvaluatorProvider = ({ children }) => {
 
     socket.on('rm:player', data => {
       const { story, playerId } = data;
-      if (story === storyId)
-        setPlayersLog(list => list.filter(player => player.id !== playerId));
+      if (story === storyId) {
+        const playerLog = playersLog.find(player => player.id === playerId);
+        if (playerLog) {
+          playerLog.isDisconnected = true;
+          mergePlayerLog(playerLog, playerLog);
+        }
+      }
     });
 
     // This has to be checked
@@ -141,9 +148,7 @@ export const EvaluatorProvider = ({ children }) => {
   };
 
   return (
-    <EvaluatorContext.Provider value={toProvide}>
-      {story ? children : <div>{userMessage}</div>}
-    </EvaluatorContext.Provider>
+    <EvaluatorContext.Provider value={toProvide}>{children}</EvaluatorContext.Provider>
   );
 };
 

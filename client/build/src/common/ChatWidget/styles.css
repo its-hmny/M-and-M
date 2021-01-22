@@ -1,49 +1,49 @@
 @media only screen and (min-width: 1000px) {
-    .rcw-widget-container {
-        /* Needed for evaluator */
-        width: 90vw !important;
-    }
+  .rcw-widget-container {
+    /* Needed for evaluator */
+    width: 90vw !important;
+  }
 }
 
 @media only screen and (max-width: 1000px) {
-    .rcw-widget-container .active {
-        /* Needed for player */
-        width: 100vw !important;
-    }
+  .rcw-widget-container .active {
+    /* Needed for player */
+    width: 100vw !important;
+  }
 }
 
 .rcw-conversation-container {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .rcw-messages-container {
-    background-color: #3d3d3d;
+  background-color: #3d3d3d;
 }
 
 .rcw-launcher,
 .rcw-conversation-container .rcw-close-button,
 .rcw-conversation-container .rcw-close-button,
 .rcw-conversation-container > .rcw-header {
-    background-color: #e91e63;
+  background-color: #e91e63;
 }
 
 .rcw-message > .rcw-response > .rcw-message-text {
-    background-color: white;
-    color: black;
+  background-color: white;
+  color: black;
 }
 
 .rcw-message > .rcw-client > .rcw-message-text {
-    background-color: #e91e63;
-    color: white;
+  background-color: #e91e63;
+  color: white;
 }
 
 .rcw-timestamp {
-    color: white;
+  color: white;
 }
 
 .rcw-sender,
 .rcw-sender > * {
-    background-color: #3d3d3d;
-    color: white;
+  background-color: #3d3d3d;
+  color: white;
 }

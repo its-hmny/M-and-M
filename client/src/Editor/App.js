@@ -12,8 +12,9 @@ import TemplatesDialog from './components/TemplatesDialog';
 import Panel from './components/Panel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import Navbar from '../common/Navbar';
 import SaveButton from '../common/SaveButton';
+
+import CompSettings from './constants/ComponentProperties.json';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -49,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'end',
     '& > *': {
-      marginBottom: theme.spacing(5),
+      marginBottom: theme.spacing(7),
     },
   },
   caption: {
@@ -69,14 +70,11 @@ const useStyles = makeStyles(theme => ({
     padding: 15,
     paddingTop: 0,
   },
-  navbar: {
-    flexShrink: 0,
-  },
   graphStyle: {
     position: 'relative',
     '& .vis-network': {
       width: '100%',
-      height: 'calc(100vh - 64px)', // 64px is navbar height
+      height: '100vh',
       outline: 'none',
     },
   },
@@ -96,23 +94,56 @@ const App = () => {
   const classes = useStyles();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isCaptionOpen, setIsCaptionOpen] = useState(true);
-  const { story, workingActivity, saveStory } = useEditor();
+  const { story, workingActivity, saveStory, setPathToValue } = useEditor();
 
   const currentNode = story.nodes.find(node => node.id === workingActivity);
+
+  const setNodeDestinations = (components, dest, specificPath) => {
+    // Setup the node to point to itself onAdd
+    const destinationFrags = ['SelectFragment', 'AnswerFragment', 'AnswerFragmentImages'];
+    const buttonFrags = destinationFrags[0];
+    const choiceFrags = destinationFrags.slice(-2);
+
+    components.forEach((comp, index) => {
+      const basepath = [...(specificPath || ['components']), index];
+      const option = CompSettings[comp.name].find(({ fragment }) =>
+        destinationFrags.includes(fragment)
+      );
+
+      if (option) {
+        if (buttonFrags.includes(option.fragment)) {
+          // Button case, simply set the story.nextNode object to itself
+          const { specificPath, valToChange } = option.props;
+          setPathToValue([...basepath, ...specificPath], valToChange, dest, dest);
+        } else if (choiceFrags.includes(option.fragment)) {
+          // MultiAnsChoice and similar case, is needed to set the whole
+          // destinaion object one level before in the object itself
+          const { selectPath } = option.props;
+          const dummy = { '[CORRECT]': dest, '[WRONG]': dest };
+          const pathToVal = [...basepath, ...selectPath.slice(0, -1)];
+          const valToChange = selectPath.slice(-1);
+          setPathToValue(pathToVal, valToChange, dummy, dest);
+        }
+      }
+      // Recursive call on children
+      if (comp.children)
+        setNodeDestinations(comp.children, dest, [...basepath, 'children']);
+    });
+  };
 
   const addNode = template => {
     setIsDialogOpen(false);
     const { nodes, ...others } = story;
     const nodeId = shortid.generate();
     const components = appendNodeId(nodeId, template.components);
-    saveStory({ nodes: [...nodes, { id: nodeId, ...template, components }], ...others });
+    //saveStory({ nodes: [...nodes, { id: nodeId, ...template, components }], ...others });
+    nodes.push({ id: nodeId, ...template, components });
+    saveStory({ nodes: [...nodes], ...others });
+    setNodeDestinations(components, nodeId);
   };
 
   return (
     <div className={classes.container}>
-      <div className={classes.navbar}>
-        <Navbar />
-      </div>
       <div className={classes.graphStyle}>
         <div className={classes.buttonsContainer}>
           <Fab

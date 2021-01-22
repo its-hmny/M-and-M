@@ -1,15 +1,15 @@
-import '../common/objectWithoutPropertiesLoose-2d09fd44.js';
-import '../common/_commonjsHelpers-37fa8da4.js';
 import { r as react } from '../common/index-8732a38f.js';
-import '../common/defaultTheme-2111bb1f.js';
+import { c as createSvgIcon } from '../common/createSvgIcon-41c43b3e.js';
+import '../common/_commonjsHelpers-37fa8da4.js';
+import '../common/objectWithoutPropertiesLoose-2d09fd44.js';
+import '../common/SvgIcon-eae2d21b.js';
+import '../common/defaultTheme-b844222d.js';
 import '../common/orange-f3aa52cc.js';
 import '../common/index-c103191b.js';
-import '../common/makeStyles-b541edea.js';
-import '../common/withStyles-dafff300.js';
+import '../common/withStyles-43366c5d.js';
 import '../common/hoist-non-react-statics.cjs-452b108e.js';
-import '../common/capitalize-2163aab8.js';
-import '../common/SvgIcon-3604f8f0.js';
-import { c as createSvgIcon } from '../common/createSvgIcon-cfceff46.js';
+import '../common/makeStyles-2e2fd3d5.js';
+import '../common/capitalize-263ec4d2.js';
 
 var Add = createSvgIcon( /*#__PURE__*/react.createElement("path", {
   d: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
@@ -91,4 +91,8 @@ var PhotoCamera = createSvgIcon( /*#__PURE__*/react.createElement(react.Fragment
   d: "M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"
 })));
 
-export { Add, Camera, Close, Delete, Done, DragHandle, Edit, _Error as Error, ExitToApp, FileCopy, FormatAlignCenter, FormatAlignJustify, FormatAlignLeft, FormatAlignRight, FormatBold, FormatItalic, FormatUnderlined, Height, PhotoCamera };
+var PlayCircleFilledRounded = createSvgIcon( /*#__PURE__*/react.createElement("path", {
+  d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"
+}));
+
+export { Add, Camera, Close, Delete, Done, DragHandle, Edit, _Error as Error, ExitToApp, FileCopy, FormatAlignCenter, FormatAlignJustify, FormatAlignLeft, FormatAlignRight, FormatBold, FormatItalic, FormatUnderlined, Height, PhotoCamera, PlayCircleFilledRounded };

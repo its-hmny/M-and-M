@@ -31,20 +31,20 @@ function SingleAnsChoicesSettings({ styleId }) {
       <p>Edit radio settings</p>
       <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'Radio')}
-        value={styles[styleId]}
+        value={styles[styleId]['Radio']}
       />
       <BackgroundColorPicker
         onChange={subStyle => onChange(subStyle, 'Radio')}
-        value={styles[styleId]}
+        value={styles[styleId]['Radio']}
       />
       <p>Edit submit settings</p>
       <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'Button')}
-        value={styles[styleId]}
+        value={styles[styleId]['Button']}
       />
       <BackgroundColorPicker
         onChange={subStyle => onChange(subStyle, 'Button')}
-        value={styles[styleId]}
+        value={styles[styleId]['Button']}
       />
     </div>
   );

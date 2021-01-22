@@ -1,7 +1,6 @@
-const express = require('express');
 const io = require('../shared')();
+const http = require('http');
 
-const router = express.Router();
 // Array of playerLog object (see under) for each story
 let database = {};
 const humanValuableComponent = ['TextArea', 'Input'];
@@ -12,6 +11,7 @@ const initialPlayerLog = {
   score: 0,
   avatar: undefined,
   hasFinished: false,
+  isDisconnected: false,
   pendingEvaluation: [],
   unreadMessages: 0,
   // Log of the chat
@@ -155,29 +155,3 @@ io.on('connection', socket => {
     }
   });
 });
-
-// Used by the player or the evaluator to provide update about himself or a player
-router.patch('/:story_uuid/:player_uuid', (req, res) => {
-  const { story_uuid, player_uuid } = req.params;
-  const patch = req.body;
-  // Update the entry in the DB
-  let toUpdate = database[story_uuid].find(player => player.id === player_uuid);
-  if (!toUpdate || !patch) {
-    res.statusCode = 400;
-    res.send({
-      status: false,
-      message: 'Stats for the given PlayerId not found or patch not given',
-    });
-    return;
-  }
-  // Apply the patch to the given player
-  Object.keys(patch).forEach(key => (toUpdate[key] = patch[key]));
-  res.statusCode = 200;
-  res.send({
-    status: true,
-    message: 'Updated stats sent!',
-    payload: database[story_uuid],
-  });
-});
-
-module.exports = router;

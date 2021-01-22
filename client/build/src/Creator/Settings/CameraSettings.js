@@ -8,37 +8,37 @@ import useStylesStore from '../stores/styles.js'; // Choices style object refere
 // }
 
 const CameraSettings = ({ styleId }) => {
-    const { styles, updateStyle } = useStylesStore((state) => ({
-        styles: state.styles,
-        updateStyle: state.updateStyle,
-    }));
+  const { styles, updateStyle } = useStylesStore((state) => ({
+    styles: state.styles,
+    updateStyle: state.updateStyle,
+  }));
 
-    const onChange = (subStyle, innerId) =>
-        updateStyle(
-            {
-                styleId: innerId,
-                ...subStyle,
-            },
-            styleId,
-        );
-
-    return React.createElement(
-        'div',
-        null,
-        React.createElement(TextColorPicker, {
-            onChange: (subStyle) => onChange(subStyle, 'CameraButton'),
-            value: styles[styleId]['CameraButton'],
-        }),
-        React.createElement('p', null, 'Edit submit Button settings'),
-        React.createElement(TextColorPicker, {
-            onChange: (subStyle) => onChange(subStyle, 'Button'),
-            value: styles[styleId]['Button'],
-        }),
-        React.createElement(BackgroundColorPicker, {
-            onChange: (subStyle) => onChange(subStyle, 'Button'),
-            value: styles[styleId]['Button'],
-        }),
+  const onChange = (subStyle, innerId) =>
+    updateStyle(
+      {
+        styleId: innerId,
+        ...subStyle,
+      },
+      styleId,
     );
+
+  return React.createElement(
+    'div',
+    null,
+    React.createElement(TextColorPicker, {
+      onChange: (subStyle) => onChange(subStyle, 'CameraButton'),
+      value: styles[styleId]['CameraButton'],
+    }),
+    React.createElement('p', null, 'Edit submit Button settings'),
+    React.createElement(TextColorPicker, {
+      onChange: (subStyle) => onChange(subStyle, 'Button'),
+      value: styles[styleId]['Button'],
+    }),
+    React.createElement(BackgroundColorPicker, {
+      onChange: (subStyle) => onChange(subStyle, 'Button'),
+      value: styles[styleId]['Button'],
+    }),
+  );
 };
 
 export default CameraSettings;

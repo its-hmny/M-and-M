@@ -1,10 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { useEffect, useMemo, useState, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios, { useQuery } from '../common/shared';
 import { SERVER_URL } from '../common/constants';
 
 import * as Elements from '../common/Elements';
 import Chat from './components/Chat';
+import PlayerLobby from './components/PlayerLobby';
 import { addResponseMessage } from '../common/ChatWidget';
+import * as ROUTES from '../routes';
 
 import io from 'socket.io-client';
 
@@ -21,9 +26,13 @@ const createStoryProps = (component, storyRuntime) => {
       };
     case 'SingleAnsChoices':
     case 'MultiAnsChoices':
+    case 'SingleAnsChoicesImages':
+    case 'MultiAnsChoicesImages':
       // if more than one answer, we sum all point values
       return {
         onSubmit: (isCorrect, selectedAnswers) => {
+          console.log(isCorrect);
+          console.log(storyProps);
           const nextNode = storyProps.nextNode[isCorrect];
           storyRuntime.moveTo(nextNode);
           storyRuntime.updateStats({ id, name, data: selectedAnswers });
@@ -118,10 +127,7 @@ const Player = () => {
     };
 
     socket.on('eval-pts', onEvalPts);
-    return () => {
-      socket.removeListener('eval-pts', onEvalPts);
-      axios.delete(`stats/${storyId}/${ids.player}`).catch(err => console.warn(err));
-    };
+    return () => socket.removeListener('eval-pts', onEvalPts);
   }, [socket, storyId, ids]);
 
   const handleSend = msg =>
@@ -140,8 +146,7 @@ const Player = () => {
         const res = await axios.get(`stories/${storyId}`);
         const newStory = res.data.payload;
         setStory(newStory);
-        setCurrentNodeId(newStory.nodes[0].id);
-        setStatus('SUCCESS');
+        //setStatus('SUCCESS');
       } catch (err) {
         console.error(err);
         setStatus('FAILURE');
@@ -155,8 +160,15 @@ const Player = () => {
   const storyRuntime = useMemo(
     () => ({
       currentNodeId,
+      // Whenever position changes evaluator is updated
       moveTo: node => {
-        // whenever position changes evaluator is updated
+        //If the node is final the player is marked as completed
+        if (story !== null && story.nodes.find(iter => iter.id === node && iter.isFinal))
+          socket.emit('update:eval', {
+            story: storyId,
+            playerId: ids.player,
+            patch: { hasFinished: true },
+          });
         socket.emit('update:position', {
           story: storyId,
           senderId: ids.player,
@@ -184,7 +196,7 @@ const Player = () => {
         });
       },
     }),
-    [socket, currentNodeId, ids, score, storyId]
+    [socket, currentNodeId, ids, score, storyId, story]
   );
 
   // load components for this position whenever position changes
@@ -199,18 +211,38 @@ const Player = () => {
   }, [currentNodeId, story, storyRuntime]);
 
   if (status === 'LOADING') {
-    return <p>Loading story...</p>;
+    const saveChanges = patch =>
+      socket.emit('update:eval', { story: storyId, playerId: ids.player, patch });
+
+    return (
+      <PlayerLobby
+        story={story}
+        onStart={node => {
+          setStatus('SUCCESS');
+          setCurrentNodeId(node.id);
+        }}
+        saveChanges={saveChanges}
+      />
+    );
   }
 
   if (status === 'FAILURE') {
-    return <p>An error occured while loading story. Try refresh page.</p>;
+    return <Redirect to={ROUTES.NOTFOUND} />;
   }
 
   return (
-    <>
-      <div>{viewContent}</div>
+    <Fragment>
+      <div
+        css={css`
+          width: 100vw;
+          height: 100vh;
+          overflow-y: auto;
+        `}
+      >
+        {viewContent}
+      </div>
       <Chat onSend={handleSend} socket={socket} />
-    </>
+    </Fragment>
   );
 };
 

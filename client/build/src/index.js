@@ -4,14 +4,6 @@ import App from './App.js';
 import ThemeProvider from './theme.js';
 
 ReactDOM.render(
-    React.createElement(
-        React.StrictMode,
-        null,
-        React.createElement(
-            ThemeProvider,
-            null,
-            React.createElement(App, null),
-        ),
-    ),
-    document.getElementById('root'),
+  React.createElement(ThemeProvider, null, React.createElement(App, null)),
+  document.getElementById('root'),
 );

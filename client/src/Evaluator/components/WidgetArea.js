@@ -34,7 +34,7 @@ const WidgetArea = () => {
 
             <WidgetLauncher
                 icon={smartphoneIcon}
-                buttonColor="#121212"
+                buttonColor="#2b76e2"
                 marginRight="10vw"
                 width={currentOpen !== 1 && 'unset'}
                 open={currentOpen === 1}
@@ -45,7 +45,7 @@ const WidgetArea = () => {
 
             <WidgetLauncher
                 icon={infoIcon}
-                buttonColor="#d3d3d3"
+                buttonColor="#ff9100"
                 marginRight="20vw"
                 width={currentOpen !== 2 && 'unset'}
                 open={currentOpen === 2}

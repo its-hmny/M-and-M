@@ -12,6 +12,7 @@ import RadioFragment from './RadioFragment';
 import DividerFragment from './DividerFragment';
 import InputFragment from './InputFragment';
 import AnswerFragmentImages from './AnswerFragmentImages';
+
 const fragmentsComponents = {
   ButtonFragment,
   ColorPickerFragment,
@@ -40,21 +41,6 @@ const useStyles = makeStyles({
 
   FormControl: {
     minWidth: 150,
-  },
-
-  colorButton: {
-    margin: 10,
-    marginLeft: 30,
-    width: 60,
-    height: 30,
-    border: 'none',
-    background: 'none',
-  },
-
-  colorLabel: {
-    margin: 10,
-    marginLeft: 15,
-    fontSize: 18,
   },
 });
 

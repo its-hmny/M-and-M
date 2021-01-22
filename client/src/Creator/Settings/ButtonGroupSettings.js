@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   buttonList: {
-    padding: `0 ${theme.spacing(5)}px ${theme.spacing(2)}px`,
+    padding: `0 ${theme.spacing(2)}px ${theme.spacing(1)}px`,
   },
 }));
 
@@ -18,13 +18,13 @@ function ButtonGroupSettings({ componentId, styleId }) {
   const classes = useStyles();
 
   // buttonGroup styles
+  // eslint-disable-next-line
   const { styles, updateStyle } = useStylesStore(state => ({
+    // buttonGroup has no styles for now, but leaving it in case someone wants to edit
+    // flow, for example, or the background color of the buttonGroup. very simple!
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
-  const onChange = subStyle => {
-    updateStyle({ styleId, ...subStyle });
-  };
 
   // contained buttons
   const [currentlyEditing, setCurrentlyEditing] = useState(0);

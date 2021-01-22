@@ -10,9 +10,7 @@ export const EditorProvider = ({ children, userStory }) => {
     story: inProgressStory,
     workingActivity: focusedNode,
 
-    saveStory: updatedStory => {
-      setStory(updatedStory);
-    },
+    saveStory: updatedStory => setStory(updatedStory),
     setWorkingActivity: activityID => setFocusedNode(activityID),
 
     getFromPath: path => {
@@ -27,7 +25,7 @@ export const EditorProvider = ({ children, userStory }) => {
       return current;
     },
 
-    setPathToValue: (path, field, value) => {
+    setPathToValue: (path, field, value, optNodeId = undefined) => {
       /* 
         path is the path to the current fragment in the story, 
         field is the name of the key inside the object that has to be modified,
@@ -35,7 +33,9 @@ export const EditorProvider = ({ children, userStory }) => {
         Ex. components -> 0 (first component) -> children -> 1 (second component)
       */
 
-      let current = inProgressStory.nodes.find(node => node.id === focusedNode);
+      let current = inProgressStory.nodes.find(
+        node => node.id === (optNodeId || focusedNode)
+      );
       path.forEach(key => {
         if (!current[key]) {
           current[key] = {};

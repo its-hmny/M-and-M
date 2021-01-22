@@ -1,32 +1,32 @@
 {
-    "SpaceButton": {
-        "fontFamily": "Arial",
-        "backgroundColor": "limegreen",
-        "color": "white",
-        "margin": "5px"
+  "SpaceButton": {
+    "fontFamily": "Arial",
+    "backgroundColor": "limegreen",
+    "color": "white",
+    "margin": "5px"
+  },
+  "SpaceChoices": {
+    "Radio": {
+      "margin": "5px",
+      "color": "green",
+      "backgroundColor": "yellow",
+      "border": "4px dotted pink",
+      "input:checked + &": {
+        "color": "yellow",
+        "backgroundColor": "green"
+      }
     },
-    "SpaceChoices": {
-        "Radio": {
-            "margin": "5px",
-            "color": "green",
-            "backgroundColor": "yellow",
-            "border": "4px dotted pink",
-            "input:checked + &": {
-                "color": "yellow",
-                "backgroundColor": "green"
-            }
-        },
-        "Checkbox": {
-            "margin": "5px",
-            "backgroundColor": "black",
-            "border": "1px solid black",
-            "color": "white"
-        },
-        "Button": "SpaceButton"
+    "Checkbox": {
+      "margin": "5px",
+      "backgroundColor": "black",
+      "border": "1px solid black",
+      "color": "white"
     },
-    "SpaceText": {
-        "margin": "5px",
-        "color": "green",
-        "fontSize": "14px"
-    }
+    "Button": "SpaceButton"
+  },
+  "SpaceText": {
+    "margin": "5px",
+    "color": "green",
+    "fontSize": "14px"
+  }
 }

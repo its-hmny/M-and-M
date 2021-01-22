@@ -7,71 +7,74 @@ import { Height as HeightIcon } from '../../../web_modules/@material-ui/icons.js
 import useStylesStore from '../stores/styles.js';
 
 const useStyles = makeStyles({
-    widthIcon: {
-        transform: 'rotate(90deg)',
-    },
+  widthIcon: {
+    transform: 'rotate(90deg)',
+  },
 });
 
 const removePercent = (value) => {
-    Number(value.replace('%', ''));
+  Number(value.replace('%', ''));
 };
 
 function YoutubePlayerSettings({ styleId }) {
-    const { widthIcon } = useStyles();
+  const { widthIcon } = useStyles();
 
-    const { styles, updateStyle } = useStylesStore((state) => ({
-        styles: state.styles,
-        updateStyle: state.updateStyle,
-    }));
+  const { styles, updateStyle } = useStylesStore((state) => ({
+    styles: state.styles,
+    updateStyle: state.updateStyle,
+  }));
 
-    const onWidthChange = (_, newWidth) => {
-        updateStyle({
-            styleId,
-            width: `${newWidth}%`,
-        });
-    };
+  const onWidthChange = (_, newWidth) => {
+    updateStyle({
+      styleId,
+      Player: {
+        width: `${newWidth}%`,
+        ...styles[styleId]['Player'],
+      },
+    });
+  };
 
-    return React.createElement(
-        'div',
-        null,
-        React.createElement(
-            Typography,
-            {
-                id: 'width-slider',
-                gutterBottom: true,
-            },
-            'Width',
-        ),
-        React.createElement(
-            Grid,
-            {
-                container: true,
-                spacing: 2,
-            },
-            React.createElement(
-                Grid,
-                {
-                    item: true,
-                },
-                React.createElement(HeightIcon, {
-                    className: widthIcon,
-                }),
-            ),
-            React.createElement(
-                Grid,
-                {
-                    item: true,
-                    xs: true,
-                },
-                React.createElement(Slider, {
-                    value: removePercent(styles[styleId].width),
-                    onChange: onWidthChange,
-                    getAriaValueText: (value) => `${value}%`,
-                    'aria-labelledby': 'width-slider',
-                }),
-            ),
-        ),
-    );
+  return React.createElement(
+    'div',
+    null,
+    React.createElement(
+      Typography,
+      {
+        id: 'width-slider',
+        gutterBottom: true,
+      },
+      'Width',
+    ),
+    React.createElement(
+      Grid,
+      {
+        container: true,
+        spacing: 2,
+      },
+      React.createElement(
+        Grid,
+        {
+          item: true,
+        },
+        React.createElement(HeightIcon, {
+          className: widthIcon,
+        }),
+      ),
+      React.createElement(
+        Grid,
+        {
+          item: true,
+          xs: true,
+        },
+        React.createElement(Slider, {
+          value: removePercent(styles[styleId]['Player'].width),
+          onChange: onWidthChange,
+          getAriaValueText: (value) => `${value}%`,
+          'aria-labelledby': 'width-slider',
+        }),
+      ),
+    ),
+  );
 }
 
 export default YoutubePlayerSettings;
