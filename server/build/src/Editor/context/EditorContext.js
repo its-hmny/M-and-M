@@ -10,14 +10,12 @@ export const EditorProvider = ({ children, userStory }) => {
   const toProvide = {
     story: inProgressStory,
     workingActivity: focusedNode,
-    saveStory: (updatedStory) => setStory(updatedStory),
-    setWorkingActivity: (activityID) => setFocusedNode(activityID),
-    getFromPath: (path) => {
-      let current = inProgressStory.nodes.find(
-        (node) => node.id === focusedNode,
-      );
+    saveStory: updatedStory => setStory(updatedStory),
+    setWorkingActivity: activityID => setFocusedNode(activityID),
+    getFromPath: path => {
+      let current = inProgressStory.nodes.find(node => node.id === focusedNode);
 
-      path.forEach((key) => {
+      path.forEach(key => {
         if (!current[key]) {
           current[key] = {};
         }
@@ -34,10 +32,10 @@ export const EditorProvider = ({ children, userStory }) => {
         Ex. components -> 0 (first component) -> children -> 1 (second component)
       */
       let current = inProgressStory.nodes.find(
-        (node) => node.id === (optNodeId || focusedNode),
+        node => node.id === (optNodeId || focusedNode)
       );
 
-      path.forEach((key) => {
+      path.forEach(key => {
         if (!current[key]) {
           current[key] = {};
         }
@@ -54,7 +52,7 @@ export const EditorProvider = ({ children, userStory }) => {
     {
       value: toProvide,
     },
-    children,
+    children
   );
 };
 export const useEditor = () => {

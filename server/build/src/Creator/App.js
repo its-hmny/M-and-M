@@ -1,11 +1,6 @@
 import React, { useState } from '../../web_modules/react.js';
 import { useHistory } from '../../web_modules/react-router-dom.js';
-import {
-  Fab,
-  Grid,
-  Button,
-  makeStyles,
-} from '../../web_modules/@material-ui/core.js';
+import { Fab, Grid, Button, makeStyles } from '../../web_modules/@material-ui/core.js';
 import {
   Home as HomeIcon,
   ArrowBack as ArrowBackIcon,
@@ -19,7 +14,7 @@ import useTemplateStore from './stores/template.js';
 import useStylesStore from './stores/styles.js';
 import * as ROUTES from '../routes.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   container: {
     width: '100vw',
     height: '100vh',
@@ -58,27 +53,27 @@ const App = () => {
 
   const [isSaving, setIsSaving] = useState(false);
 
-  const styles = useStylesStore((state) => state.styles);
+  const styles = useStylesStore(state => state.styles);
 
-  const components = useTemplateStore((state) => state.components);
+  const components = useTemplateStore(state => state.components);
 
-  const saveTemplate = (meta) => {
+  const saveTemplate = meta => {
     setIsSaving(false);
 
-    const styledComponents = components.map((component) => ({
+    const styledComponents = components.map(component => ({
       ...component,
       style: styles[component.styleId],
     }));
 
     axios // See common/shared.js (useAPI hook)
       .post('templates', { ...meta, components: styledComponents })
-      .then((value) => {
+      .then(value => {
         console.log('saved template ', value);
         enqueueSnackbar('Saved your template!', {
           variant: 'success',
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
         enqueueSnackbar('Something went wrong...', {
           variant: 'error',
@@ -103,7 +98,7 @@ const App = () => {
           onClick: () => history.goBack(),
           size: 'medium',
         },
-        React.createElement(ArrowBackIcon, null),
+        React.createElement(ArrowBackIcon, null)
       ),
       React.createElement(
         Fab,
@@ -112,8 +107,8 @@ const App = () => {
           onClick: () => history.push(ROUTES.HOME),
           size: 'medium',
         },
-        React.createElement(HomeIcon, null),
-      ),
+        React.createElement(HomeIcon, null)
+      )
     ),
     React.createElement(
       Grid,
@@ -127,7 +122,7 @@ const App = () => {
           item: true,
           xs: 6,
         },
-        React.createElement(Inspector, null),
+        React.createElement(Inspector, null)
       ),
       React.createElement(
         Grid,
@@ -152,7 +147,7 @@ const App = () => {
               className: classes.saveButton,
               onClick: () => setIsSaving(true),
             },
-            'Save Template',
+            'Save Template'
           ),
           React.createElement(SaveDialog, {
             open: isSaving,
@@ -160,10 +155,10 @@ const App = () => {
               setIsSaving(false);
             },
             onSave: saveTemplate,
-          }),
-        ),
-      ),
-    ),
+          })
+        )
+      )
+    )
   );
 };
 

@@ -49,17 +49,17 @@ const Input = ({ placeholder, onSubmit = noop, style, initialValue = '' }) => {
       jsx('input', {
         id: id,
         value: answer,
-        onChange: (event) => setAnswer(event.target.value),
+        onChange: event => setAnswer(event.target.value),
         required: true,
-      }),
+      })
     ),
     jsx(
       'button',
       {
         onClick: () => onSubmit(answer),
       },
-      'Invia risposta',
-    ),
+      'Invia risposta'
+    )
   );
 };
 

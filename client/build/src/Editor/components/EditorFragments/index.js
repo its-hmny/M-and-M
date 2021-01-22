@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 /* Component loading dynamically EditorFragments based on data passed through 
    fieldsToSet(data comes from ComponentProperties.json).  */
 
-const DynamicLoadFragments = (props) => {
+const DynamicLoadFragments = props => {
   const { fieldsToSet, pathToVal } = props;
 
   const classes = useStyles();
@@ -62,7 +62,7 @@ const DynamicLoadFragments = (props) => {
           fragmentSpecificProps: item.props,
         });
       }),
-    [fieldsToSet, classes, pathToVal],
+    [fieldsToSet, classes, pathToVal]
   );
 
   return React.createElement(React.Fragment, null, fragmentList);

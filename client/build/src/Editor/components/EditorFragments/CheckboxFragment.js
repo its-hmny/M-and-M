@@ -1,9 +1,6 @@
 import React from '../../../../web_modules/react.js';
 import { useEditor } from '../../context/EditorContext.js';
-import {
-  Checkbox,
-  FormControlLabel,
-} from '../../../../web_modules/@material-ui/core.js';
+import { Checkbox, FormControlLabel } from '../../../../web_modules/@material-ui/core.js';
 /*
   truthValues = [TrueValue, FalseValue]
 */
@@ -29,7 +26,7 @@ const CheckboxFragment = ({ classNames, path, fragmentSpecificProps }) => {
       color: 'primary',
       checked: value === (truthValues !== undefined ? truthValues[0] : true),
     }),
-    onChange: (event) =>
+    onChange: event =>
       onChange !== undefined
         ? onChange(event)
         : setPathToValue(
@@ -41,7 +38,7 @@ const CheckboxFragment = ({ classNames, path, fragmentSpecificProps }) => {
                 : true
               : truthValues !== undefined
               ? truthValues[1]
-              : false,
+              : false
           ),
     label: label,
   });

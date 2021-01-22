@@ -27,7 +27,7 @@ import './styles.css.proxy.js';
 const useStyles = makeStyles({
   wrapper: {
     '& > .rcw-widget-container': {
-      width: (props) => !props.isOpen && 'unset',
+      width: props => !props.isOpen && 'unset',
     },
   },
 });
@@ -50,8 +50,8 @@ const ChatWidget = ({ automaticToggle, isOpen, setOpen, ...forwardProps }) => {
         launcherClosedLabel: 'Chat closed',
         sendButtonAlt: 'Send',
       },
-      forwardProps,
-    ),
+      forwardProps
+    )
   );
 
   return React.createElement(
@@ -65,8 +65,8 @@ const ChatWidget = ({ automaticToggle, isOpen, setOpen, ...forwardProps }) => {
             onClick: setOpen,
             className: classes.wrapper,
           },
-          baseComponent,
-        ),
+          baseComponent
+        )
   );
 };
 

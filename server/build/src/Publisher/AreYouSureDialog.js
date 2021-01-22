@@ -26,7 +26,7 @@ const AreYouSureDialog = ({ open, onCancel, onConfirm }) => {
       {
         id: 'alert-dialog-title',
       },
-      'Are you sure you want to delete this story?',
+      'Are you sure you want to delete this story?'
     ),
     React.createElement(
       DialogContent,
@@ -36,7 +36,7 @@ const AreYouSureDialog = ({ open, onCancel, onConfirm }) => {
         {
           id: 'alert-dialog-description',
         },
-        'This is an irreversible operation, the story will be deleted, are you sure you want to continue?',
+        'This is an irreversible operation, the story will be deleted, are you sure you want to continue?'
       ),
       React.createElement(FormControlLabel, {
         value: 'top',
@@ -46,7 +46,7 @@ const AreYouSureDialog = ({ open, onCancel, onConfirm }) => {
         }),
         label: "Don't ask again",
         labelPlacement: 'end',
-      }),
+      })
     ),
     React.createElement(
       DialogActions,
@@ -57,7 +57,7 @@ const AreYouSureDialog = ({ open, onCancel, onConfirm }) => {
           onClick: onCancel,
           color: 'primary',
         },
-        'No',
+        'No'
       ),
       React.createElement(
         Button,
@@ -65,9 +65,9 @@ const AreYouSureDialog = ({ open, onCancel, onConfirm }) => {
           onClick: () => onConfirm(dontAskAgain),
           color: 'primary',
         },
-        'Yes',
-      ),
-    ),
+        'Yes'
+      )
+    )
   );
 };
 

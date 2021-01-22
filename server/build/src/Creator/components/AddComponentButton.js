@@ -4,7 +4,7 @@ import { Fab, Menu, MenuItem } from '../../../web_modules/@material-ui/core.js';
 import { Add as AddIcon } from '../../../web_modules/@material-ui/icons.js';
 import { componentBuilders } from '../stores/template.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     textAlign: 'center',
     flexShrink: 0,
@@ -17,11 +17,11 @@ function AddComponentButton({ onClick }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClick = event => setAnchorEl(event.currentTarget);
 
   const handleClose = () => setAnchorEl(null);
 
-  const handleItemClick = (componentName) => {
+  const handleItemClick = componentName => {
     onClick(componentName);
     handleClose();
   };
@@ -37,7 +37,7 @@ function AddComponentButton({ onClick }) {
         size: 'medium',
         onClick: handleClick,
       },
-      React.createElement(AddIcon, null),
+      React.createElement(AddIcon, null)
     ),
     React.createElement(
       Menu,
@@ -57,17 +57,17 @@ function AddComponentButton({ onClick }) {
           horizontal: 'center',
         },
       },
-      Object.keys(componentBuilders).map((componentName) =>
+      Object.keys(componentBuilders).map(componentName =>
         React.createElement(
           MenuItem,
           {
             key: componentName,
             onClick: () => handleItemClick(componentName),
           },
-          componentName,
-        ),
-      ),
-    ),
+          componentName
+        )
+      )
+    )
   );
 }
 

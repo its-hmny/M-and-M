@@ -32,7 +32,6 @@ function sheetForTag(tag) {
 
   /* istanbul ignore next */
 
-
   for (var i = 0; i < document.styleSheets.length; i++) {
     if (document.styleSheets[i].ownerNode === tag) {
       // $FlowFixMe
@@ -54,89 +53,118 @@ function createStyleElement(options) {
 }
 
 var StyleSheet =
-/*#__PURE__*/
-function () {
-  function StyleSheet(options) {
-    this.isSpeedy = options.speedy === undefined ? "production" === 'production' : options.speedy;
-    this.tags = [];
-    this.ctr = 0;
-    this.nonce = options.nonce; // key is the value of the data-emotion attribute, it's used to identify different sheets
+  /*#__PURE__*/
+  (function () {
+    function StyleSheet(options) {
+      this.isSpeedy =
+        options.speedy === undefined ? 'production' === 'production' : options.speedy;
+      this.tags = [];
+      this.ctr = 0;
+      this.nonce = options.nonce; // key is the value of the data-emotion attribute, it's used to identify different sheets
 
-    this.key = options.key;
-    this.container = options.container;
-    this.before = null;
-  }
+      this.key = options.key;
+      this.container = options.container;
+      this.before = null;
+    }
 
-  var _proto = StyleSheet.prototype;
+    var _proto = StyleSheet.prototype;
 
-  _proto.insert = function insert(rule) {
-    // the max length is how many rules we have per style tag, it's 65000 in speedy mode
-    // it's 1 in dev because we insert source maps that map a single rule to a location
-    // and you can only have one source map per style tag
-    if (this.ctr % (this.isSpeedy ? 65000 : 1) === 0) {
-      var _tag = createStyleElement(this);
+    _proto.insert = function insert(rule) {
+      // the max length is how many rules we have per style tag, it's 65000 in speedy mode
+      // it's 1 in dev because we insert source maps that map a single rule to a location
+      // and you can only have one source map per style tag
+      if (this.ctr % (this.isSpeedy ? 65000 : 1) === 0) {
+        var _tag = createStyleElement(this);
 
-      var before;
+        var before;
 
-      if (this.tags.length === 0) {
-        before = this.before;
+        if (this.tags.length === 0) {
+          before = this.before;
+        } else {
+          before = this.tags[this.tags.length - 1].nextSibling;
+        }
+
+        this.container.insertBefore(_tag, before);
+        this.tags.push(_tag);
+      }
+
+      var tag = this.tags[this.tags.length - 1];
+
+      if (this.isSpeedy) {
+        var sheet = sheetForTag(tag);
+
+        try {
+          // this is a really hot path
+          // we check the second character first because having "i"
+          // as the second character will happen less often than
+          // having "@" as the first character
+          var isImportRule = rule.charCodeAt(1) === 105 && rule.charCodeAt(0) === 64; // this is the ultrafast version, works across browsers
+          // the big drawback is that the css won't be editable in devtools
+
+          sheet.insertRule(
+            rule, // we need to insert @import rules before anything else
+            // otherwise there will be an error
+            // technically this means that the @import rules will
+            // _usually_(not always since there could be multiple style tags)
+            // be the first ones in prod and generally later in dev
+            // this shouldn't really matter in the real world though
+            // @import is generally only used for font faces from google fonts and etc.
+            // so while this could be technically correct then it would be slower and larger
+            // for a tiny bit of correctness that won't matter in the real world
+            isImportRule ? 0 : sheet.cssRules.length
+          );
+        } catch (e) {}
       } else {
-        before = this.tags[this.tags.length - 1].nextSibling;
+        tag.appendChild(document.createTextNode(rule));
       }
 
-      this.container.insertBefore(_tag, before);
-      this.tags.push(_tag);
-    }
+      this.ctr++;
+    };
 
-    var tag = this.tags[this.tags.length - 1];
+    _proto.flush = function flush() {
+      // $FlowFixMe
+      this.tags.forEach(function (tag) {
+        return tag.parentNode.removeChild(tag);
+      });
+      this.tags = [];
+      this.ctr = 0;
+    };
 
-    if (this.isSpeedy) {
-      var sheet = sheetForTag(tag);
+    return StyleSheet;
+  })();
 
-      try {
-        // this is a really hot path
-        // we check the second character first because having "i"
-        // as the second character will happen less often than
-        // having "@" as the first character
-        var isImportRule = rule.charCodeAt(1) === 105 && rule.charCodeAt(0) === 64; // this is the ultrafast version, works across browsers
-        // the big drawback is that the css won't be editable in devtools
-
-        sheet.insertRule(rule, // we need to insert @import rules before anything else
-        // otherwise there will be an error
-        // technically this means that the @import rules will
-        // _usually_(not always since there could be multiple style tags)
-        // be the first ones in prod and generally later in dev
-        // this shouldn't really matter in the real world though
-        // @import is generally only used for font faces from google fonts and etc.
-        // so while this could be technically correct then it would be slower and larger
-        // for a tiny bit of correctness that won't matter in the real world
-        isImportRule ? 0 : sheet.cssRules.length);
-      } catch (e) {
-      }
-    } else {
-      tag.appendChild(document.createTextNode(rule));
-    }
-
-    this.ctr++;
-  };
-
-  _proto.flush = function flush() {
-    // $FlowFixMe
-    this.tags.forEach(function (tag) {
-      return tag.parentNode.removeChild(tag);
-    });
-    this.tags = [];
-    this.ctr = 0;
-  };
-
-  return StyleSheet;
-}();
-
-function stylis_min (W) {
+function stylis_min(W) {
   function M(d, c, e, h, a) {
-    for (var m = 0, b = 0, v = 0, n = 0, q, g, x = 0, K = 0, k, u = k = q = 0, l = 0, r = 0, I = 0, t = 0, B = e.length, J = B - 1, y, f = '', p = '', F = '', G = '', C; l < B;) {
+    for (
+      var m = 0,
+        b = 0,
+        v = 0,
+        n = 0,
+        q,
+        g,
+        x = 0,
+        K = 0,
+        k,
+        u = (k = q = 0),
+        l = 0,
+        r = 0,
+        I = 0,
+        t = 0,
+        B = e.length,
+        J = B - 1,
+        y,
+        f = '',
+        p = '',
+        F = '',
+        G = '',
+        C;
+      l < B;
+
+    ) {
       g = e.charCodeAt(l);
-      l === J && 0 !== b + n + v + m && (0 !== b && (g = 47 === b ? 10 : 47), n = v = m = 0, B++, J++);
+      l === J &&
+        0 !== b + n + v + m &&
+        (0 !== b && (g = 47 === b ? 10 : 47), (n = v = m = 0), B++, J++);
 
       if (0 === b + n + v + m) {
         if (l === J && (0 < r && (f = f.replace(N, '')), 0 < f.trim().length)) {
@@ -161,8 +189,8 @@ function stylis_min (W) {
             q = f.charCodeAt(0);
             k = 1;
 
-            for (t = ++l; l < B;) {
-              switch (g = e.charCodeAt(l)) {
+            for (t = ++l; l < B; ) {
+              switch ((g = e.charCodeAt(l))) {
                 case 123:
                   k++;
                   break;
@@ -172,7 +200,7 @@ function stylis_min (W) {
                   break;
 
                 case 47:
-                  switch (g = e.charCodeAt(l + 1)) {
+                  switch ((g = e.charCodeAt(l + 1))) {
                     case 42:
                     case 47:
                       a: {
@@ -191,13 +219,11 @@ function stylis_min (W) {
                                 l = u + 1;
                                 break a;
                               }
-
                           }
                         }
 
                         l = u;
                       }
-
                   }
 
                   break;
@@ -210,9 +236,7 @@ function stylis_min (W) {
 
                 case 34:
                 case 39:
-                  for (; l++ < J && e.charCodeAt(l) !== g;) {
-                  }
-
+                  for (; l++ < J && e.charCodeAt(l) !== g; ) {}
               }
 
               if (0 === k) break;
@@ -241,26 +265,37 @@ function stylis_min (W) {
 
                 k = M(c, r, k, g, a + 1);
                 t = k.length;
-                0 < A && (r = X(O, f, I), C = H(3, k, r, c, D, z, t, g, a, h), f = r.join(''), void 0 !== C && 0 === (t = (k = C.trim()).length) && (g = 0, k = ''));
-                if (0 < t) switch (g) {
-                  case 115:
-                    f = f.replace(da, ea);
+                0 < A &&
+                  ((r = X(O, f, I)),
+                  (C = H(3, k, r, c, D, z, t, g, a, h)),
+                  (f = r.join('')),
+                  void 0 !== C &&
+                    0 === (t = (k = C.trim()).length) &&
+                    ((g = 0), (k = '')));
+                if (0 < t)
+                  switch (g) {
+                    case 115:
+                      f = f.replace(da, ea);
 
-                  case 100:
-                  case 109:
-                  case 45:
-                    k = f + '{' + k + '}';
-                    break;
+                    case 100:
+                    case 109:
+                    case 45:
+                      k = f + '{' + k + '}';
+                      break;
 
-                  case 107:
-                    f = f.replace(fa, '$1 $2');
-                    k = f + '{' + k + '}';
-                    k = 1 === w || 2 === w && L('@' + k, 3) ? '@-webkit-' + k + '@' + k : '@' + k;
-                    break;
+                    case 107:
+                      f = f.replace(fa, '$1 $2');
+                      k = f + '{' + k + '}';
+                      k =
+                        1 === w || (2 === w && L('@' + k, 3))
+                          ? '@-webkit-' + k + '@' + k
+                          : '@' + k;
+                      break;
 
-                  default:
-                    k = f + k, 112 === h && (k = (p += k, ''));
-                } else k = '';
+                    default:
+                      (k = f + k), 112 === h && (k = ((p += k), ''));
+                  }
+                else k = '';
                 break;
 
               default:
@@ -276,19 +311,31 @@ function stylis_min (W) {
           case 125:
           case 59:
             f = (0 < r ? f.replace(N, '') : f).trim();
-            if (1 < (t = f.length)) switch (0 === u && (q = f.charCodeAt(0), 45 === q || 96 < q && 123 > q) && (t = (f = f.replace(' ', ':')).length), 0 < A && void 0 !== (C = H(1, f, c, d, D, z, p.length, h, a, h)) && 0 === (t = (f = C.trim()).length) && (f = '\x00\x00'), q = f.charCodeAt(0), g = f.charCodeAt(1), q) {
-              case 0:
-                break;
-
-              case 64:
-                if (105 === g || 99 === g) {
-                  G += f + e.charAt(l);
+            if (1 < (t = f.length))
+              switch (
+                (0 === u &&
+                  ((q = f.charCodeAt(0)), 45 === q || (96 < q && 123 > q)) &&
+                  (t = (f = f.replace(' ', ':')).length),
+                0 < A &&
+                  void 0 !== (C = H(1, f, c, d, D, z, p.length, h, a, h)) &&
+                  0 === (t = (f = C.trim()).length) &&
+                  (f = '\x00\x00'),
+                (q = f.charCodeAt(0)),
+                (g = f.charCodeAt(1)),
+                q)
+              ) {
+                case 0:
                   break;
-                }
 
-              default:
-                58 !== f.charCodeAt(t - 1) && (p += P(f, q, g, f.charCodeAt(2)));
-            }
+                case 64:
+                  if (105 === g || 99 === g) {
+                    G += f + e.charAt(l);
+                    break;
+                  }
+
+                default:
+                  58 !== f.charCodeAt(t - 1) && (p += P(f, q, g, f.charCodeAt(2)));
+              }
             I = r = u = q = 0;
             f = '';
             g = e.charCodeAt(++l);
@@ -298,7 +345,9 @@ function stylis_min (W) {
       switch (g) {
         case 13:
         case 10:
-          47 === b ? b = 0 : 0 === 1 + q && 107 !== h && 0 < f.length && (r = 1, f += '\x00');
+          47 === b
+            ? (b = 0)
+            : 0 === 1 + q && 107 !== h && 0 < f.length && ((r = 1), (f += '\x00'));
           0 < A * Y && H(0, f, c, d, D, z, p.length, h, a, h);
           z = 1;
           D++;
@@ -318,17 +367,18 @@ function stylis_min (W) {
           switch (g) {
             case 9:
             case 32:
-              if (0 === n + m + b) switch (x) {
-                case 44:
-                case 58:
-                case 9:
-                case 32:
-                  y = '';
-                  break;
+              if (0 === n + m + b)
+                switch (x) {
+                  case 44:
+                  case 58:
+                  case 9:
+                  case 32:
+                    y = '';
+                    break;
 
-                default:
-                  32 !== g && (y = ' ');
-              }
+                  default:
+                    32 !== g && (y = ' ');
+                }
               break;
 
             case 0:
@@ -344,17 +394,18 @@ function stylis_min (W) {
               break;
 
             case 38:
-              0 === n + b + m && (r = I = 1, y = '\f' + y);
+              0 === n + b + m && ((r = I = 1), (y = '\f' + y));
               break;
 
             case 108:
-              if (0 === n + b + m + E && 0 < u) switch (l - u) {
-                case 2:
-                  112 === x && 58 === e.charCodeAt(l - 3) && (E = x);
+              if (0 === n + b + m + E && 0 < u)
+                switch (l - u) {
+                  case 2:
+                    112 === x && 58 === e.charCodeAt(l - 3) && (E = x);
 
-                case 8:
-                  111 === K && (E = K);
-              }
+                  case 8:
+                    111 === K && (E = K);
+                }
               break;
 
             case 58:
@@ -362,7 +413,7 @@ function stylis_min (W) {
               break;
 
             case 44:
-              0 === b + v + n + m && (r = 1, y += '\r');
+              0 === b + v + n + m && ((r = 1), (y += '\r'));
               break;
 
             case 34:
@@ -384,13 +435,14 @@ function stylis_min (W) {
 
             case 40:
               if (0 === n + b + m) {
-                if (0 === q) switch (2 * x + 3 * K) {
-                  case 533:
-                    break;
+                if (0 === q)
+                  switch (2 * x + 3 * K) {
+                    case 533:
+                      break;
 
-                  default:
-                    q = 1;
-                }
+                    default:
+                      q = 1;
+                  }
                 v++;
               }
 
@@ -402,22 +454,28 @@ function stylis_min (W) {
 
             case 42:
             case 47:
-              if (!(0 < n + m + v)) switch (b) {
-                case 0:
-                  switch (2 * g + 3 * e.charCodeAt(l + 1)) {
-                    case 235:
-                      b = 47;
-                      break;
+              if (!(0 < n + m + v))
+                switch (b) {
+                  case 0:
+                    switch (2 * g + 3 * e.charCodeAt(l + 1)) {
+                      case 235:
+                        b = 47;
+                        break;
 
-                    case 220:
-                      t = l, b = 42;
-                  }
+                      case 220:
+                        (t = l), (b = 42);
+                    }
 
-                  break;
+                    break;
 
-                case 42:
-                  47 === g && 42 === x && t + 2 !== l && (33 === e.charCodeAt(t + 2) && (p += e.substring(t, l + 1)), y = '', b = 0);
-              }
+                  case 42:
+                    47 === g &&
+                      42 === x &&
+                      t + 2 !== l &&
+                      (33 === e.charCodeAt(t + 2) && (p += e.substring(t, l + 1)),
+                      (y = ''),
+                      (b = 0));
+                }
           }
 
           0 === b && (f += y);
@@ -432,7 +490,11 @@ function stylis_min (W) {
 
     if (0 < t) {
       r = c;
-      if (0 < A && (C = H(2, p, r, d, D, z, t, h, a, h), void 0 !== C && 0 === (p = C).length)) return G + p + F;
+      if (
+        0 < A &&
+        ((C = H(2, p, r, d, D, z, t, h, a, h)), void 0 !== C && 0 === (p = C).length)
+      )
+        return G + p + F;
       p = r.join(',') + '{' + p + '}';
 
       if (0 !== w * E) {
@@ -444,7 +506,11 @@ function stylis_min (W) {
             break;
 
           case 112:
-            p = p.replace(Q, '::-webkit-input-$1') + p.replace(Q, '::-moz-$1') + p.replace(Q, ':-ms-input-$1') + p;
+            p =
+              p.replace(Q, '::-webkit-input-$1') +
+              p.replace(Q, '::-moz-$1') +
+              p.replace(Q, ':-ms-input-$1') +
+              p;
         }
 
         E = 0;
@@ -458,7 +524,7 @@ function stylis_min (W) {
     var h = c.trim().split(ia);
     c = h;
     var a = h.length,
-        m = d.length;
+      m = d.length;
 
     switch (m) {
       case 0:
@@ -472,14 +538,13 @@ function stylis_min (W) {
         break;
 
       default:
-        var v = b = 0;
+        var v = (b = 0);
 
         for (c = []; b < a; ++b) {
           for (var n = 0; n < m; ++n) {
             c[v++] = Z(d[n] + ' ', h[b], e).trim();
           }
         }
-
     }
 
     return c;
@@ -497,7 +562,8 @@ function stylis_min (W) {
         return d.trim() + c.replace(F, '$1' + d.trim());
 
       default:
-        if (0 < 1 * e && 0 < c.indexOf('\f')) return c.replace(F, (58 === d.charCodeAt(0) ? '' : '$1') + d.trim());
+        if (0 < 1 * e && 0 < c.indexOf('\f'))
+          return c.replace(F, (58 === d.charCodeAt(0) ? '' : '$1') + d.trim());
     }
 
     return d + c;
@@ -505,16 +571,16 @@ function stylis_min (W) {
 
   function P(d, c, e, h) {
     var a = d + ';',
-        m = 2 * c + 3 * e + 4 * h;
+      m = 2 * c + 3 * e + 4 * h;
 
     if (944 === m) {
       d = a.indexOf(':', 9) + 1;
       var b = a.substring(d, a.length - 1).trim();
       b = a.substring(0, d).trim() + b + ';';
-      return 1 === w || 2 === w && L(b, 1) ? '-webkit-' + b + b : b;
+      return 1 === w || (2 === w && L(b, 1)) ? '-webkit-' + b + b : b;
     }
 
-    if (0 === w || 2 === w && !L(a, 1)) return a;
+    if (0 === w || (2 === w && !L(a, 1))) return a;
 
     switch (m) {
       case 1015:
@@ -546,16 +612,25 @@ function stylis_min (W) {
         break;
 
       case 932:
-        if (45 === a.charCodeAt(4)) switch (a.charCodeAt(5)) {
-          case 103:
-            return '-webkit-box-' + a.replace('-grow', '') + '-webkit-' + a + '-ms-' + a.replace('grow', 'positive') + a;
+        if (45 === a.charCodeAt(4))
+          switch (a.charCodeAt(5)) {
+            case 103:
+              return (
+                '-webkit-box-' +
+                a.replace('-grow', '') +
+                '-webkit-' +
+                a +
+                '-ms-' +
+                a.replace('grow', 'positive') +
+                a
+              );
 
-          case 115:
-            return '-webkit-' + a + '-ms-' + a.replace('shrink', 'negative') + a;
+            case 115:
+              return '-webkit-' + a + '-ms-' + a.replace('shrink', 'negative') + a;
 
-          case 98:
-            return '-webkit-' + a + '-ms-' + a.replace('basis', 'preferred-size') + a;
-        }
+            case 98:
+              return '-webkit-' + a + '-ms-' + a.replace('basis', 'preferred-size') + a;
+          }
         return '-webkit-' + a + '-ms-' + a + a;
 
       case 964:
@@ -563,7 +638,10 @@ function stylis_min (W) {
 
       case 1023:
         if (99 !== a.charCodeAt(8)) break;
-        b = a.substring(a.indexOf(':', 15)).replace('flex-', '').replace('space-between', 'justify');
+        b = a
+          .substring(a.indexOf(':', 15))
+          .replace('flex-', '')
+          .replace('space-between', 'justify');
         return '-webkit-box-pack' + b + '-webkit-' + a + '-ms-flex-pack' + b + a;
 
       case 1005:
@@ -597,9 +675,11 @@ function stylis_min (W) {
 
       case 975:
         c = (a = d).length - 10;
-        b = (33 === a.charCodeAt(c) ? a.substring(0, c) : a).substring(d.indexOf(':', 7) + 1).trim();
+        b = (33 === a.charCodeAt(c) ? a.substring(0, c) : a)
+          .substring(d.indexOf(':', 7) + 1)
+          .trim();
 
-        switch (m = b.charCodeAt(0) + (b.charCodeAt(7) | 0)) {
+        switch ((m = b.charCodeAt(0) + (b.charCodeAt(7) | 0))) {
           case 203:
             if (111 > b.charCodeAt(8)) break;
 
@@ -609,22 +689,39 @@ function stylis_min (W) {
 
           case 207:
           case 102:
-            a = a.replace(b, '-webkit-' + (102 < m ? 'inline-' : '') + 'box') + ';' + a.replace(b, '-webkit-' + b) + ';' + a.replace(b, '-ms-' + b + 'box') + ';' + a;
+            a =
+              a.replace(b, '-webkit-' + (102 < m ? 'inline-' : '') + 'box') +
+              ';' +
+              a.replace(b, '-webkit-' + b) +
+              ';' +
+              a.replace(b, '-ms-' + b + 'box') +
+              ';' +
+              a;
         }
 
         return a + ';';
 
       case 938:
-        if (45 === a.charCodeAt(5)) switch (a.charCodeAt(6)) {
-          case 105:
-            return b = a.replace('-items', ''), '-webkit-' + a + '-webkit-box-' + b + '-ms-flex-' + b + a;
+        if (45 === a.charCodeAt(5))
+          switch (a.charCodeAt(6)) {
+            case 105:
+              return (
+                (b = a.replace('-items', '')),
+                '-webkit-' + a + '-webkit-box-' + b + '-ms-flex-' + b + a
+              );
 
-          case 115:
-            return '-webkit-' + a + '-ms-flex-item-' + a.replace(ba, '') + a;
+            case 115:
+              return '-webkit-' + a + '-ms-flex-item-' + a.replace(ba, '') + a;
 
-          default:
-            return '-webkit-' + a + '-ms-flex-line-pack' + a.replace('align-content', '').replace(ba, '') + a;
-        }
+            default:
+              return (
+                '-webkit-' +
+                a +
+                '-ms-flex-line-pack' +
+                a.replace('align-content', '').replace(ba, '') +
+                a
+              );
+          }
         break;
 
       case 973:
@@ -633,11 +730,23 @@ function stylis_min (W) {
 
       case 931:
       case 953:
-        if (!0 === la.test(d)) return 115 === (b = d.substring(d.indexOf(':') + 1)).charCodeAt(0) ? P(d.replace('stretch', 'fill-available'), c, e, h).replace(':fill-available', ':stretch') : a.replace(b, '-webkit-' + b) + a.replace(b, '-moz-' + b.replace('fill-', '')) + a;
+        if (!0 === la.test(d))
+          return 115 === (b = d.substring(d.indexOf(':') + 1)).charCodeAt(0)
+            ? P(d.replace('stretch', 'fill-available'), c, e, h).replace(
+                ':fill-available',
+                ':stretch'
+              )
+            : a.replace(b, '-webkit-' + b) +
+                a.replace(b, '-moz-' + b.replace('fill-', '')) +
+                a;
         break;
 
       case 962:
-        if (a = '-webkit-' + a + (102 === a.charCodeAt(5) ? '-ms-' + a : '') + a, 211 === e + h && 105 === a.charCodeAt(13) && 0 < a.indexOf('transform', 10)) return a.substring(0, a.indexOf(';', 27) + 1).replace(ma, '$1-webkit-$2') + a;
+        if (
+          ((a = '-webkit-' + a + (102 === a.charCodeAt(5) ? '-ms-' + a : '') + a),
+          211 === e + h && 105 === a.charCodeAt(13) && 0 < a.indexOf('transform', 10))
+        )
+          return a.substring(0, a.indexOf(';', 27) + 1).replace(ma, '$1-webkit-$2') + a;
     }
 
     return a;
@@ -645,7 +754,7 @@ function stylis_min (W) {
 
   function L(d, c) {
     var e = d.indexOf(1 === c ? ':' : '{'),
-        h = d.substring(0, 3 !== c ? e : 10);
+      h = d.substring(0, 3 !== c ? e : 10);
     e = d.substring(e + 1, d.length - 1);
     return R(2 !== c ? h : h.replace(na, '$1'), e, c);
   }
@@ -657,7 +766,7 @@ function stylis_min (W) {
 
   function H(d, c, e, h, a, m, b, v, n, q) {
     for (var g = 0, x = c, w; g < A; ++g) {
-      switch (w = S[g].call(B, d, x, e, h, a, m, b, v, n, q)) {
+      switch ((w = S[g].call(B, d, x, e, h, a, m, b, v, n, q))) {
         case void 0:
         case !1:
         case !0:
@@ -680,9 +789,12 @@ function stylis_min (W) {
         break;
 
       default:
-        if ('function' === typeof d) S[A++] = d;else if ('object' === typeof d) for (var c = 0, e = d.length; c < e; ++c) {
-          T(d[c]);
-        } else Y = !!d | 0;
+        if ('function' === typeof d) S[A++] = d;
+        else if ('object' === typeof d)
+          for (var c = 0, e = d.length; c < e; ++c) {
+            T(d[c]);
+          }
+        else Y = !!d | 0;
     }
 
     return T;
@@ -690,7 +802,9 @@ function stylis_min (W) {
 
   function U(d) {
     d = d.prefix;
-    void 0 !== d && (R = null, d ? 'function' !== typeof d ? w = 1 : (w = 2, R = d) : w = 0);
+    void 0 !== d &&
+      ((R = null),
+      d ? ('function' !== typeof d ? (w = 1) : ((w = 2), (R = d))) : (w = 0));
     return U;
   }
 
@@ -706,7 +820,7 @@ function stylis_min (W) {
     }
 
     var a = M(O, e, c, 0, 0);
-    0 < A && (h = H(-2, a, e, e, D, z, a.length, 0, 0, 0), void 0 !== h && (a = h));
+    0 < A && ((h = H(-2, a, e, e, D, z, a.length, 0, 0, 0)), void 0 !== h && (a = h));
     V = '';
     E = 0;
     z = D = 1;
@@ -714,32 +828,32 @@ function stylis_min (W) {
   }
 
   var ca = /^\0+/g,
-      N = /[\0\r\f]/g,
-      aa = /: */g,
-      ka = /zoo|gra/,
-      ma = /([,: ])(transform)/g,
-      ia = /,\r+?/g,
-      F = /([\t\r\n ])*\f?&/g,
-      fa = /@(k\w+)\s*(\S*)\s*/,
-      Q = /::(place)/g,
-      ha = /:(read-only)/g,
-      G = /[svh]\w+-[tblr]{2}/,
-      da = /\(\s*(.*)\s*\)/g,
-      oa = /([\s\S]*?);/g,
-      ba = /-self|flex-/g,
-      na = /[^]*?(:[rp][el]a[\w-]+)[^]*/,
-      la = /stretch|:\s*\w+\-(?:conte|avail)/,
-      ja = /([^-])(image-set\()/,
-      z = 1,
-      D = 1,
-      E = 0,
-      w = 1,
-      O = [],
-      S = [],
-      A = 0,
-      R = null,
-      Y = 0,
-      V = '';
+    N = /[\0\r\f]/g,
+    aa = /: */g,
+    ka = /zoo|gra/,
+    ma = /([,: ])(transform)/g,
+    ia = /,\r+?/g,
+    F = /([\t\r\n ])*\f?&/g,
+    fa = /@(k\w+)\s*(\S*)\s*/,
+    Q = /::(place)/g,
+    ha = /:(read-only)/g,
+    G = /[svh]\w+-[tblr]{2}/,
+    da = /\(\s*(.*)\s*\)/g,
+    oa = /([\s\S]*?);/g,
+    ba = /-self|flex-/g,
+    na = /[^]*?(:[rp][el]a[\w-]+)[^]*/,
+    la = /stretch|:\s*\w+\-(?:conte|avail)/,
+    ja = /([^-])(image-set\()/,
+    z = 1,
+    D = 1,
+    E = 0,
+    w = 1,
+    O = [],
+    S = [],
+    A = 0,
+    R = null,
+    Y = 0,
+    V = '';
   B.use = T;
   B.set = U;
   void 0 !== W && U(W);
@@ -759,65 +873,68 @@ function toSheet(block) {
 }
 
 var Sheet = {
-  current: null
+  current: null,
 };
-var ruleSheet = function ruleSheet(context, content, selectors, parents, line, column, length, ns, depth, at) {
+var ruleSheet = function ruleSheet(
+  context,
+  content,
+  selectors,
+  parents,
+  line,
+  column,
+  length,
+  ns,
+  depth,
+  at
+) {
   switch (context) {
     // property
-    case 1:
-      {
-        switch (content.charCodeAt(0)) {
-          case 64:
-            {
-              // @import
-              Sheet.current.insert(content + ';');
-              return '';
-            }
-          // charcode for l
-
-          case 108:
-            {
-              // charcode for b
-              // this ignores label
-              if (content.charCodeAt(2) === 98) {
-                return '';
-              }
-            }
+    case 1: {
+      switch (content.charCodeAt(0)) {
+        case 64: {
+          // @import
+          Sheet.current.insert(content + ';');
+          return '';
         }
+        // charcode for l
 
-        break;
+        case 108: {
+          // charcode for b
+          // this ignores label
+          if (content.charCodeAt(2) === 98) {
+            return '';
+          }
+        }
       }
+
+      break;
+    }
     // selector
 
-    case 2:
-      {
-        if (ns === 0) return content + delimiter;
-        break;
-      }
+    case 2: {
+      if (ns === 0) return content + delimiter;
+      break;
+    }
     // at-rule
 
-    case 3:
-      {
-        switch (ns) {
-          // @font-face, @page
-          case 102:
-          case 112:
-            {
-              Sheet.current.insert(selectors[0] + content);
-              return '';
-            }
+    case 3: {
+      switch (ns) {
+        // @font-face, @page
+        case 102:
+        case 112: {
+          Sheet.current.insert(selectors[0] + content);
+          return '';
+        }
 
-          default:
-            {
-              return content + (at === 0 ? delimiter : '');
-            }
+        default: {
+          return content + (at === 0 ? delimiter : '');
         }
       }
+    }
 
-    case -2:
-      {
-        content.split(needle).forEach(toSheet);
-      }
+    case -2: {
+      content.split(needle).forEach(toSheet);
+    }
   }
 };
 
@@ -828,7 +945,7 @@ var createCache = function createCache(options) {
 
   if (options.prefix !== undefined) {
     stylisOptions = {
-      prefix: options.prefix
+      prefix: options.prefix,
     };
   }
 
@@ -840,9 +957,9 @@ var createCache = function createCache(options) {
 
   {
     container = options.container || document.head;
-    var nodes = document.querySelectorAll("style[data-emotion-" + key + "]");
+    var nodes = document.querySelectorAll('style[data-emotion-' + key + ']');
     Array.prototype.forEach.call(nodes, function (node) {
-      var attrib = node.getAttribute("data-emotion-" + key); // $FlowFixMe
+      var attrib = node.getAttribute('data-emotion-' + key); // $FlowFixMe
 
       attrib.split(' ').forEach(function (id) {
         inserted[id] = true;
@@ -877,41 +994,44 @@ var createCache = function createCache(options) {
       key: key,
       container: container,
       nonce: options.nonce,
-      speedy: options.speedy
+      speedy: options.speedy,
     }),
     nonce: options.nonce,
     inserted: inserted,
     registered: {},
-    insert: _insert
+    insert: _insert,
   };
   return cache;
 };
 
-var isBrowser = "object" !== 'undefined';
+var isBrowser = 'object' !== 'undefined';
 function getRegisteredStyles(registered, registeredStyles, classNames) {
   var rawClassName = '';
   classNames.split(' ').forEach(function (className) {
     if (registered[className] !== undefined) {
       registeredStyles.push(registered[className]);
     } else {
-      rawClassName += className + " ";
+      rawClassName += className + ' ';
     }
   });
   return rawClassName;
 }
 var insertStyles = function insertStyles(cache, serialized, isStringTag) {
-  var className = cache.key + "-" + serialized.name;
+  var className = cache.key + '-' + serialized.name;
 
-  if ( // we only need to add the styles to the registered cache if the
-  // class name could be used further down
-  // the tree but if it's a string tag, we know it won't
-  // so we don't have to add it to registered cache.
-  // this improves memory usage since we can avoid storing the whole style string
-  (isStringTag === false || // we need to always store it if we're in compat mode and
-  // in node since emotion-server relies on whether a style is in
-  // the registered cache to know whether a style is global or not
-  // also, note that this check will be dead code eliminated in the browser
-  isBrowser === false ) && cache.registered[className] === undefined) {
+  if (
+    // we only need to add the styles to the registered cache if the
+    // class name could be used further down
+    // the tree but if it's a string tag, we know it won't
+    // so we don't have to add it to registered cache.
+    // this improves memory usage since we can avoid storing the whole style string
+    (isStringTag === false || // we need to always store it if we're in compat mode and
+      // in node since emotion-server relies on whether a style is in
+      // the registered cache to know whether a style is global or not
+      // also, note that this check will be dead code eliminated in the browser
+      isBrowser === false) &&
+    cache.registered[className] === undefined
+  ) {
     cache.registered[className] = serialized.styles;
   }
 
@@ -919,7 +1039,7 @@ var insertStyles = function insertStyles(cache, serialized, isStringTag) {
     var current = serialized;
 
     do {
-      var maybeStyles = cache.insert("." + className, current, cache.sheet, true);
+      var maybeStyles = cache.insert('.' + className, current, cache.sheet, true);
 
       current = current.next;
     } while (current !== undefined);
@@ -938,24 +1058,27 @@ function murmur2(str) {
   var h = 0; // Mix 4 bytes at a time into the hash
 
   var k,
-      i = 0,
-      len = str.length;
+    i = 0,
+    len = str.length;
 
   for (; len >= 4; ++i, len -= 4) {
-    k = str.charCodeAt(i) & 0xff | (str.charCodeAt(++i) & 0xff) << 8 | (str.charCodeAt(++i) & 0xff) << 16 | (str.charCodeAt(++i) & 0xff) << 24;
     k =
-    /* Math.imul(k, m): */
-    (k & 0xffff) * 0x5bd1e995 + ((k >>> 16) * 0xe995 << 16);
+      (str.charCodeAt(i) & 0xff) |
+      ((str.charCodeAt(++i) & 0xff) << 8) |
+      ((str.charCodeAt(++i) & 0xff) << 16) |
+      ((str.charCodeAt(++i) & 0xff) << 24);
+    k =
+      /* Math.imul(k, m): */
+      (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0xe995) << 16);
     k ^=
-    /* k >>> r: */
-    k >>> 24;
+      /* k >>> r: */
+      k >>> 24;
     h =
-    /* Math.imul(k, m): */
-    (k & 0xffff) * 0x5bd1e995 + ((k >>> 16) * 0xe995 << 16) ^
-    /* Math.imul(h, m): */
-    (h & 0xffff) * 0x5bd1e995 + ((h >>> 16) * 0xe995 << 16);
+      /* Math.imul(k, m): */
+      ((k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0xe995) << 16)) ^
+      /* Math.imul(h, m): */
+      ((h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0xe995) << 16));
   } // Handle the last few bytes of the input array
-
 
   switch (len) {
     case 3:
@@ -967,17 +1090,16 @@ function murmur2(str) {
     case 1:
       h ^= str.charCodeAt(i) & 0xff;
       h =
-      /* Math.imul(h, m): */
-      (h & 0xffff) * 0x5bd1e995 + ((h >>> 16) * 0xe995 << 16);
+        /* Math.imul(h, m): */
+        (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0xe995) << 16);
   } // Do a few final mixes of the hash to ensure the last few
   // bytes are well-incorporated.
 
-
   h ^= h >>> 13;
   h =
-  /* Math.imul(h, m): */
-  (h & 0xffff) * 0x5bd1e995 + ((h >>> 16) * 0xe995 << 16);
-  return ((h ^ h >>> 15) >>> 0).toString(36);
+    /* Math.imul(h, m): */
+    (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0xe995) << 16);
+  return ((h ^ (h >>> 15)) >>> 0).toString(36);
 }
 
 var unitlessKeys = {
@@ -1026,7 +1148,7 @@ var unitlessKeys = {
   strokeDashoffset: 1,
   strokeMiterlimit: 1,
   strokeOpacity: 1,
-  strokeWidth: 1
+  strokeWidth: 1,
 };
 
 function memoize(fn) {
@@ -1049,98 +1171,109 @@ var isProcessableValue = function isProcessableValue(value) {
 };
 
 var processStyleName = memoize(function (styleName) {
-  return isCustomProperty(styleName) ? styleName : styleName.replace(hyphenateRegex, '-$&').toLowerCase();
+  return isCustomProperty(styleName)
+    ? styleName
+    : styleName.replace(hyphenateRegex, '-$&').toLowerCase();
 });
 
 var processStyleValue = function processStyleValue(key, value) {
   switch (key) {
     case 'animation':
-    case 'animationName':
-      {
-        if (typeof value === 'string') {
-          return value.replace(animationRegex, function (match, p1, p2) {
-            cursor = {
-              name: p1,
-              styles: p2,
-              next: cursor
-            };
-            return p1;
-          });
-        }
+    case 'animationName': {
+      if (typeof value === 'string') {
+        return value.replace(animationRegex, function (match, p1, p2) {
+          cursor = {
+            name: p1,
+            styles: p2,
+            next: cursor,
+          };
+          return p1;
+        });
       }
+    }
   }
 
-  if (unitlessKeys[key] !== 1 && !isCustomProperty(key) && typeof value === 'number' && value !== 0) {
+  if (
+    unitlessKeys[key] !== 1 &&
+    !isCustomProperty(key) &&
+    typeof value === 'number' &&
+    value !== 0
+  ) {
     return value + 'px';
   }
 
   return value;
 };
 
-function handleInterpolation(mergedProps, registered, interpolation, couldBeSelectorInterpolation) {
+function handleInterpolation(
+  mergedProps,
+  registered,
+  interpolation,
+  couldBeSelectorInterpolation
+) {
   if (interpolation == null) {
     return '';
   }
 
   if (interpolation.__emotion_styles !== undefined) {
-
     return interpolation;
   }
 
   switch (typeof interpolation) {
-    case 'boolean':
-      {
-        return '';
+    case 'boolean': {
+      return '';
+    }
+
+    case 'object': {
+      if (interpolation.anim === 1) {
+        cursor = {
+          name: interpolation.name,
+          styles: interpolation.styles,
+          next: cursor,
+        };
+        return interpolation.name;
       }
 
-    case 'object':
-      {
-        if (interpolation.anim === 1) {
-          cursor = {
-            name: interpolation.name,
-            styles: interpolation.styles,
-            next: cursor
-          };
-          return interpolation.name;
-        }
+      if (interpolation.styles !== undefined) {
+        var next = interpolation.next;
 
-        if (interpolation.styles !== undefined) {
-          var next = interpolation.next;
-
-          if (next !== undefined) {
-            // not the most efficient thing ever but this is a pretty rare case
-            // and there will be very few iterations of this generally
-            while (next !== undefined) {
-              cursor = {
-                name: next.name,
-                styles: next.styles,
-                next: cursor
-              };
-              next = next.next;
-            }
+        if (next !== undefined) {
+          // not the most efficient thing ever but this is a pretty rare case
+          // and there will be very few iterations of this generally
+          while (next !== undefined) {
+            cursor = {
+              name: next.name,
+              styles: next.styles,
+              next: cursor,
+            };
+            next = next.next;
           }
-
-          var styles = interpolation.styles + ";";
-
-          return styles;
         }
 
-        return createStringFromObject(mergedProps, registered, interpolation);
+        var styles = interpolation.styles + ';';
+
+        return styles;
       }
 
-    case 'function':
-      {
-        if (mergedProps !== undefined) {
-          var previousCursor = cursor;
-          var result = interpolation(mergedProps);
-          cursor = previousCursor;
-          return handleInterpolation(mergedProps, registered, result, couldBeSelectorInterpolation);
-        }
+      return createStringFromObject(mergedProps, registered, interpolation);
+    }
 
-        break;
+    case 'function': {
+      if (mergedProps !== undefined) {
+        var previousCursor = cursor;
+        var result = interpolation(mergedProps);
+        cursor = previousCursor;
+        return handleInterpolation(
+          mergedProps,
+          registered,
+          result,
+          couldBeSelectorInterpolation
+        );
       }
+
+      break;
+    }
   } // finalize string values (regular strings and functions interpolated into css calls)
-
 
   if (registered == null) {
     return interpolation;
@@ -1164,19 +1297,26 @@ function createStringFromObject(mergedProps, registered, obj) {
 
       if (typeof value !== 'object') {
         if (registered != null && registered[value] !== undefined) {
-          string += _key + "{" + registered[value] + "}";
+          string += _key + '{' + registered[value] + '}';
         } else if (isProcessableValue(value)) {
-          string += processStyleName(_key) + ":" + processStyleValue(_key, value) + ";";
+          string += processStyleName(_key) + ':' + processStyleValue(_key, value) + ';';
         }
       } else {
-        if (_key === 'NO_COMPONENT_SELECTOR' && "production" !== 'production') {
-          throw new Error('Component selectors can only be used in conjunction with babel-plugin-emotion.');
+        if (_key === 'NO_COMPONENT_SELECTOR' && 'production' !== 'production') {
+          throw new Error(
+            'Component selectors can only be used in conjunction with babel-plugin-emotion.'
+          );
         }
 
-        if (Array.isArray(value) && typeof value[0] === 'string' && (registered == null || registered[value[0]] === undefined)) {
+        if (
+          Array.isArray(value) &&
+          typeof value[0] === 'string' &&
+          (registered == null || registered[value[0]] === undefined)
+        ) {
           for (var _i = 0; _i < value.length; _i++) {
             if (isProcessableValue(value[_i])) {
-              string += processStyleName(_key) + ":" + processStyleValue(_key, value[_i]) + ";";
+              string +=
+                processStyleName(_key) + ':' + processStyleValue(_key, value[_i]) + ';';
             }
           }
         } else {
@@ -1184,17 +1324,14 @@ function createStringFromObject(mergedProps, registered, obj) {
 
           switch (_key) {
             case 'animation':
-            case 'animationName':
-              {
-                string += processStyleName(_key) + ":" + interpolated + ";";
-                break;
-              }
+            case 'animationName': {
+              string += processStyleName(_key) + ':' + interpolated + ';';
+              break;
+            }
 
-            default:
-              {
-
-                string += _key + "{" + interpolated + "}";
-              }
+            default: {
+              string += _key + '{' + interpolated + '}';
+            }
           }
         }
       }
@@ -1207,10 +1344,14 @@ function createStringFromObject(mergedProps, registered, obj) {
 var labelPattern = /label:\s*([^\s;\n{]+)\s*;/g;
 // keyframes are stored on the SerializedStyles object as a linked list
 
-
 var cursor;
 var serializeStyles = function serializeStyles(args, registered, mergedProps) {
-  if (args.length === 1 && typeof args[0] === 'object' && args[0] !== null && args[0].styles !== undefined) {
+  if (
+    args.length === 1 &&
+    typeof args[0] === 'object' &&
+    args[0] !== null &&
+    args[0].styles !== undefined
+  ) {
     return args[0];
   }
 
@@ -1223,28 +1364,30 @@ var serializeStyles = function serializeStyles(args, registered, mergedProps) {
     stringMode = false;
     styles += handleInterpolation(mergedProps, registered, strings, false);
   } else {
-
     styles += strings[0];
   } // we start at 1 since we've already handled the first arg
 
-
   for (var i = 1; i < args.length; i++) {
-    styles += handleInterpolation(mergedProps, registered, args[i], styles.charCodeAt(styles.length - 1) === 46);
+    styles += handleInterpolation(
+      mergedProps,
+      registered,
+      args[i],
+      styles.charCodeAt(styles.length - 1) === 46
+    );
 
     if (stringMode) {
-
       styles += strings[i];
     }
   }
-
 
   labelPattern.lastIndex = 0;
   var identifierName = '';
   var match; // https://esbench.com/bench/5b809c2cf2949800a0f61fb5
 
   while ((match = labelPattern.exec(styles)) !== null) {
-    identifierName += '-' + // $FlowFixMe we know it's not null
-    match[1];
+    identifierName +=
+      '-' + // $FlowFixMe we know it's not null
+      match[1];
   }
 
   var name = murmur2(styles) + identifierName;
@@ -1252,36 +1395,40 @@ var serializeStyles = function serializeStyles(args, registered, mergedProps) {
   return {
     name: name,
     styles: styles,
-    next: cursor
+    next: cursor,
   };
 };
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-var EmotionCacheContext = /*#__PURE__*/react.createContext( // we're doing this to avoid preconstruct's dead code elimination in this one case
-// because this module is primarily intended for the browser and node
-// but it's also required in react native and similar environments sometimes
-// and we could have a special build just for that
-// but this is much easier and the native packages
-// might use a different theme context in the future anyway
-typeof HTMLElement !== 'undefined' ? createCache() : null);
-var ThemeContext = /*#__PURE__*/react.createContext({});
+var EmotionCacheContext = /*#__PURE__*/ react.createContext(
+  // we're doing this to avoid preconstruct's dead code elimination in this one case
+  // because this module is primarily intended for the browser and node
+  // but it's also required in react native and similar environments sometimes
+  // and we could have a special build just for that
+  // but this is much easier and the native packages
+  // might use a different theme context in the future anyway
+  typeof HTMLElement !== 'undefined' ? createCache() : null
+);
+var ThemeContext = /*#__PURE__*/ react.createContext({});
 var CacheProvider = EmotionCacheContext.Provider;
 
 var withEmotionCache = function withEmotionCache(func) {
   var render = function render(props, ref) {
-    return /*#__PURE__*/react.createElement(EmotionCacheContext.Consumer, null, function (cache) {
-      return func(props, cache, ref);
-    });
+    return /*#__PURE__*/ react.createElement(
+      EmotionCacheContext.Consumer,
+      null,
+      function (cache) {
+        return func(props, cache, ref);
+      }
+    );
   }; // $FlowFixMe
 
-
-  return /*#__PURE__*/react.forwardRef(render);
+  return /*#__PURE__*/ react.forwardRef(render);
 };
 
 var typePropName = '__EMOTION_TYPE_PLEASE_DO_NOT_USE__';
 var createEmotionProps = function createEmotionProps(type, props) {
-
   var newProps = {};
 
   for (var key in props) {
@@ -1311,41 +1458,53 @@ var render = function render(cache, props, theme, ref) {
   if (typeof props.className === 'string') {
     className = getRegisteredStyles(cache.registered, registeredStyles, props.className);
   } else if (props.className != null) {
-    className = props.className + " ";
+    className = props.className + ' ';
   }
 
   var serialized = serializeStyles(registeredStyles);
 
   var rules = insertStyles(cache, serialized, typeof type === 'string');
-  className += cache.key + "-" + serialized.name;
+  className += cache.key + '-' + serialized.name;
   var newProps = {};
 
   for (var key in props) {
-    if (hasOwnProperty.call(props, key) && key !== 'css' && key !== typePropName && ("production" === 'production' )) {
+    if (
+      hasOwnProperty.call(props, key) &&
+      key !== 'css' &&
+      key !== typePropName &&
+      'production' === 'production'
+    ) {
       newProps[key] = props[key];
     }
   }
 
   newProps.ref = ref;
   newProps.className = className;
-  var ele = /*#__PURE__*/react.createElement(type, newProps);
+  var ele = /*#__PURE__*/ react.createElement(type, newProps);
 
   return ele;
 }; // eslint-disable-next-line no-undef
 
-
-var Emotion = /* #__PURE__ */withEmotionCache(function (props, cache, ref) {
+var Emotion = /* #__PURE__ */ withEmotionCache(function (props, cache, ref) {
   if (typeof props.css === 'function') {
-    return /*#__PURE__*/react.createElement(ThemeContext.Consumer, null, function (theme) {
-      return render(cache, props, theme, ref);
-    });
+    return /*#__PURE__*/ react.createElement(
+      ThemeContext.Consumer,
+      null,
+      function (theme) {
+        return render(cache, props, theme, ref);
+      }
+    );
   }
 
   return render(cache, props, null, ref);
 });
 
 function css() {
-  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+  for (
+    var _len = arguments.length, args = new Array(_len), _key = 0;
+    _key < _len;
+    _key++
+  ) {
     args[_key] = arguments[_key];
   }
 
@@ -1368,7 +1527,6 @@ var jsx = function jsx(type, props) {
   for (var i = 2; i < argsLength; i++) {
     createElementArgArray[i] = args[i];
   } // $FlowFixMe
-
 
   return react.createElement.apply(null, createElementArgArray);
 };

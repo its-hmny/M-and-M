@@ -4,10 +4,10 @@ import Grid from '../../../web_modules/@material-ui/core/Grid.js';
 import Typography from '../../../web_modules/@material-ui/core/Typography.js';
 import useStylesStore from '../stores/styles.js';
 
-const removePercent = (value) => Number(value.replace('%', ''));
+const removePercent = value => Number(value.replace('%', ''));
 
 function YoutubePlayerSettings({ styleId }) {
-  const { styles, updateStyle } = useStylesStore((state) => ({
+  const { styles, updateStyle } = useStylesStore(state => ({
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
@@ -38,7 +38,7 @@ function YoutubePlayerSettings({ styleId }) {
           id: 'height-slider',
           gutterBottom: true,
         },
-        'Height',
+        'Height'
       ),
       React.createElement(
         Grid,
@@ -55,11 +55,11 @@ function YoutubePlayerSettings({ styleId }) {
           React.createElement(Slider, {
             value: removePercent(styles[styleId].height),
             onChange: onHeightChange,
-            getAriaValueText: (value) => `${value}%`,
+            getAriaValueText: value => `${value}%`,
             'aria-labelledby': 'height-slider',
-          }),
-        ),
-      ),
+          })
+        )
+      )
     ),
     React.createElement(
       'div',
@@ -70,7 +70,7 @@ function YoutubePlayerSettings({ styleId }) {
           id: 'width-slider',
           gutterBottom: true,
         },
-        'Width',
+        'Width'
       ),
       React.createElement(
         Grid,
@@ -87,12 +87,12 @@ function YoutubePlayerSettings({ styleId }) {
           React.createElement(Slider, {
             value: removePercent(styles[styleId].width),
             onChange: onWidthChange,
-            getAriaValueText: (value) => `${value}%`,
+            getAriaValueText: value => `${value}%`,
             'aria-labelledby': 'width-slider',
-          }),
-        ),
-      ),
-    ),
+          })
+        )
+      )
+    )
   );
 }
 
