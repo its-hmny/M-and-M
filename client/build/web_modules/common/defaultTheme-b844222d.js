@@ -1,14 +1,11 @@
 import { r as react } from './index-8732a38f.js';
-import {
-  _ as _extends,
-  a as _objectWithoutPropertiesLoose,
-} from './objectWithoutPropertiesLoose-2d09fd44.js';
+import { _ as _extends, a as _objectWithoutPropertiesLoose } from './objectWithoutPropertiesLoose-2d09fd44.js';
 import { p as pink, r as red, o as orange, g as green } from './orange-f3aa52cc.js';
 import './index-c103191b.js';
 
 var common = {
   black: '#000',
-  white: '#fff',
+  white: '#fff'
 };
 
 var indigo = {
@@ -25,7 +22,7 @@ var indigo = {
   A100: '#8c9eff',
   A200: '#536dfe',
   A400: '#3d5afe',
-  A700: '#304ffe',
+  A700: '#304ffe'
 };
 
 var blue = {
@@ -42,7 +39,7 @@ var blue = {
   A100: '#82b1ff',
   A200: '#448aff',
   A400: '#2979ff',
-  A700: '#2962ff',
+  A700: '#2962ff'
 };
 
 var grey = {
@@ -59,24 +56,19 @@ var grey = {
   A100: '#d5d5d5',
   A200: '#aaaaaa',
   A400: '#303030',
-  A700: '#616161',
+  A700: '#616161'
 };
 
 function _typeof(obj) {
-  '@babel/helpers - typeof';
+  "@babel/helpers - typeof";
 
-  if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function _typeof(obj) {
       return typeof obj;
     };
   } else {
     _typeof = function _typeof(obj) {
-      return obj &&
-        typeof Symbol === 'function' &&
-        obj.constructor === Symbol &&
-        obj !== Symbol.prototype
-        ? 'symbol'
-        : typeof obj;
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
 
@@ -87,12 +79,9 @@ function isPlainObject(item) {
   return item && _typeof(item) === 'object' && item.constructor === Object;
 }
 function deepmerge(target, source) {
-  var options =
-    arguments.length > 2 && arguments[2] !== undefined
-      ? arguments[2]
-      : {
-          clone: true,
-        };
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+    clone: true
+  };
   var output = options.clone ? _extends({}, target) : target;
 
   if (isPlainObject(target) && isPlainObject(source)) {
@@ -119,7 +108,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true,
+      writable: true
     });
   } else {
     obj[key] = value;
@@ -147,9 +136,7 @@ function formatMuiErrorMessage(code) {
     url += '&args[]=' + encodeURIComponent(arguments[i]);
   }
 
-  return (
-    'Minified Material-UI error #' + code + '; visit ' + url + ' for the full message.'
-  );
+  return 'Minified Material-UI error #' + code + '; visit ' + url + ' for the full message.';
   /* eslint-enable prefer-template */
 }
 
@@ -176,9 +163,10 @@ function clamp(value) {
  * @returns {string} A CSS rgb color string
  */
 
+
 function hexToRgb(color) {
   color = color.substr(1);
-  var re = new RegExp('.{1,'.concat(color.length >= 6 ? 2 : 1, '}'), 'g');
+  var re = new RegExp(".{1,".concat(color.length >= 6 ? 2 : 1, "}"), 'g');
   var colors = color.match(re);
 
   if (colors && colors[0].length === 1) {
@@ -187,18 +175,9 @@ function hexToRgb(color) {
     });
   }
 
-  return colors
-    ? 'rgb'.concat(colors.length === 4 ? 'a' : '', '(').concat(
-        colors
-          .map(function (n, index) {
-            return index < 3
-              ? parseInt(n, 16)
-              : Math.round((parseInt(n, 16) / 255) * 1000) / 1000;
-          })
-          .join(', '),
-        ')'
-      )
-    : '';
+  return colors ? "rgb".concat(colors.length === 4 ? 'a' : '', "(").concat(colors.map(function (n, index) {
+    return index < 3 ? parseInt(n, 16) : Math.round(parseInt(n, 16) / 255 * 1000) / 1000;
+  }).join(', '), ")") : '';
 }
 /**
  * Converts a color from hsl format to rgb format.
@@ -210,17 +189,14 @@ function hexToRgb(color) {
 function hslToRgb(color) {
   color = decomposeColor(color);
   var _color = color,
-    values = _color.values;
+      values = _color.values;
   var h = values[0];
   var s = values[1] / 100;
   var l = values[2] / 100;
   var a = s * Math.min(l, 1 - l);
 
   var f = function f(n) {
-    var k =
-      arguments.length > 1 && arguments[1] !== undefined
-        ? arguments[1]
-        : (n + h / 30) % 12;
+    var k = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (n + h / 30) % 12;
     return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
   };
 
@@ -234,7 +210,7 @@ function hslToRgb(color) {
 
   return recomposeColor({
     type: type,
-    values: rgb,
+    values: rgb
   });
 }
 /**
@@ -260,7 +236,7 @@ function decomposeColor(color) {
   var type = color.substring(0, marker);
 
   if (['rgb', 'rgba', 'hsl', 'hsla'].indexOf(type) === -1) {
-    throw new Error(formatMuiErrorMessage(3, color));
+    throw new Error( formatMuiErrorMessage(3, color));
   }
 
   var values = color.substring(marker + 1, color.length - 1).split(',');
@@ -269,7 +245,7 @@ function decomposeColor(color) {
   });
   return {
     type: type,
-    values: values,
+    values: values
   };
 }
 /**
@@ -291,11 +267,11 @@ function recomposeColor(color) {
       return i < 3 ? parseInt(n, 10) : n;
     });
   } else if (type.indexOf('hsl') !== -1) {
-    values[1] = ''.concat(values[1], '%');
-    values[2] = ''.concat(values[2], '%');
+    values[1] = "".concat(values[1], "%");
+    values[2] = "".concat(values[2], "%");
   }
 
-  return ''.concat(type, '(').concat(values.join(', '), ')');
+  return "".concat(type, "(").concat(values.join(', '), ")");
 }
 /**
  * Calculates the contrast ratio between two colors.
@@ -343,11 +319,8 @@ function getLuminance(color) {
  */
 
 function emphasize(color) {
-  var coefficient =
-    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.15;
-  return getLuminance(color) > 0.5
-    ? darken(color, coefficient)
-    : lighten(color, coefficient);
+  var coefficient = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.15;
+  return getLuminance(color) > 0.5 ? darken(color, coefficient) : lighten(color, coefficient);
 }
 /**
  * Set the absolute transparency of a color.
@@ -439,25 +412,22 @@ var keys = ['xs', 'sm', 'md', 'lg', 'xl']; // Keep in mind that @media is inclus
 
 function createBreakpoints(breakpoints) {
   var _breakpoints$values = breakpoints.values,
-    values =
-      _breakpoints$values === void 0
-        ? {
-            xs: 0,
-            sm: 600,
-            md: 960,
-            lg: 1280,
-            xl: 1920,
-          }
-        : _breakpoints$values,
-    _breakpoints$unit = breakpoints.unit,
-    unit = _breakpoints$unit === void 0 ? 'px' : _breakpoints$unit,
-    _breakpoints$step = breakpoints.step,
-    step = _breakpoints$step === void 0 ? 5 : _breakpoints$step,
-    other = _objectWithoutProperties(breakpoints, ['values', 'unit', 'step']);
+      values = _breakpoints$values === void 0 ? {
+    xs: 0,
+    sm: 600,
+    md: 960,
+    lg: 1280,
+    xl: 1920
+  } : _breakpoints$values,
+      _breakpoints$unit = breakpoints.unit,
+      unit = _breakpoints$unit === void 0 ? 'px' : _breakpoints$unit,
+      _breakpoints$step = breakpoints.step,
+      step = _breakpoints$step === void 0 ? 5 : _breakpoints$step,
+      other = _objectWithoutProperties(breakpoints, ["values", "unit", "step"]);
 
   function up(key) {
     var value = typeof values[key] === 'number' ? values[key] : key;
-    return '@media (min-width:'.concat(value).concat(unit, ')');
+    return "@media (min-width:".concat(value).concat(unit, ")");
   }
 
   function down(key) {
@@ -470,7 +440,7 @@ function createBreakpoints(breakpoints) {
     }
 
     var value = typeof upperbound === 'number' && endIndex > 0 ? upperbound : key;
-    return '@media (max-width:'.concat(value - step / 100).concat(unit, ')');
+    return "@media (max-width:".concat(value - step / 100).concat(unit, ")");
   }
 
   function between(start, end) {
@@ -480,19 +450,7 @@ function createBreakpoints(breakpoints) {
       return up(start);
     }
 
-    return (
-      '@media (min-width:'
-        .concat(typeof values[start] === 'number' ? values[start] : start)
-        .concat(unit, ') and ') +
-      '(max-width:'
-        .concat(
-          (endIndex !== -1 && typeof values[keys[endIndex + 1]] === 'number'
-            ? values[keys[endIndex + 1]]
-            : end) -
-            step / 100
-        )
-        .concat(unit, ')')
-    );
+    return "@media (min-width:".concat(typeof values[start] === 'number' ? values[start] : start).concat(unit, ") and ") + "(max-width:".concat((endIndex !== -1 && typeof values[keys[endIndex + 1]] === 'number' ? values[keys[endIndex + 1]] : end) - step / 100).concat(unit, ")");
   }
 
   function only(key) {
@@ -503,81 +461,55 @@ function createBreakpoints(breakpoints) {
     return values[key];
   }
 
-  return _extends(
-    {
-      keys: keys,
-      values: values,
-      up: up,
-      down: down,
-      between: between,
-      only: only,
-      width: width,
-    },
-    other
-  );
+  return _extends({
+    keys: keys,
+    values: values,
+    up: up,
+    down: down,
+    between: between,
+    only: only,
+    width: width
+  }, other);
 }
 
 function createMixins(breakpoints, spacing, mixins) {
   var _toolbar;
 
-  return _extends(
-    {
-      gutters: function gutters() {
-        var styles =
-          arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-        // To deprecate in v4.1
-        //       warning(
-        //         false,
-        //         [
-        //           'Material-UI: Theme.mixins.gutters() is deprecated.',
-        //           'You can use the source of the mixin directly:',
-        //           `
-        // paddingLeft: theme.spacing(2),
-        // paddingRight: theme.spacing(2),
-        // [theme.breakpoints.up('sm')]: {
-        //   paddingLeft: theme.spacing(3),
-        //   paddingRight: theme.spacing(3),
-        // },
-        // `,
-        //         ].join('\n'),
-        //       );
-        return _extends(
-          {
-            paddingLeft: spacing(2),
-            paddingRight: spacing(2),
-          },
-          styles,
-          _defineProperty(
-            {},
-            breakpoints.up('sm'),
-            _extends(
-              {
-                paddingLeft: spacing(3),
-                paddingRight: spacing(3),
-              },
-              styles[breakpoints.up('sm')]
-            )
-          )
-        );
-      },
-      toolbar:
-        ((_toolbar = {
-          minHeight: 56,
-        }),
-        _defineProperty(
-          _toolbar,
-          ''.concat(breakpoints.up('xs'), ' and (orientation: landscape)'),
-          {
-            minHeight: 48,
-          }
-        ),
-        _defineProperty(_toolbar, breakpoints.up('sm'), {
-          minHeight: 64,
-        }),
-        _toolbar),
+  return _extends({
+    gutters: function gutters() {
+      var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      // To deprecate in v4.1
+      //       warning(
+      //         false,
+      //         [
+      //           'Material-UI: Theme.mixins.gutters() is deprecated.',
+      //           'You can use the source of the mixin directly:',
+      //           `
+      // paddingLeft: theme.spacing(2),
+      // paddingRight: theme.spacing(2),
+      // [theme.breakpoints.up('sm')]: {
+      //   paddingLeft: theme.spacing(3),
+      //   paddingRight: theme.spacing(3),
+      // },
+      // `,
+      //         ].join('\n'),
+      //       );
+      return _extends({
+        paddingLeft: spacing(2),
+        paddingRight: spacing(2)
+      }, styles, _defineProperty({}, breakpoints.up('sm'), _extends({
+        paddingLeft: spacing(3),
+        paddingRight: spacing(3)
+      }, styles[breakpoints.up('sm')])));
     },
-    mixins
-  );
+    toolbar: (_toolbar = {
+      minHeight: 56
+    }, _defineProperty(_toolbar, "".concat(breakpoints.up('xs'), " and (orientation: landscape)"), {
+      minHeight: 48
+    }), _defineProperty(_toolbar, breakpoints.up('sm'), {
+      minHeight: 64
+    }), _toolbar)
+  }, mixins);
 }
 
 var light = {
@@ -590,7 +522,7 @@ var light = {
     // Disabled text have even lower visual prominence.
     disabled: 'rgba(0, 0, 0, 0.38)',
     // Text hints.
-    hint: 'rgba(0, 0, 0, 0.38)',
+    hint: 'rgba(0, 0, 0, 0.38)'
   },
   // The color used to divide different elements.
   divider: 'rgba(0, 0, 0, 0.12)',
@@ -598,7 +530,7 @@ var light = {
   // Consistency between these values is important.
   background: {
     paper: common.white,
-    default: grey[50],
+    default: grey[50]
   },
   // The colors used to style the action elements.
   action: {
@@ -617,8 +549,8 @@ var light = {
     disabledOpacity: 0.38,
     focus: 'rgba(0, 0, 0, 0.12)',
     focusOpacity: 0.12,
-    activatedOpacity: 0.12,
-  },
+    activatedOpacity: 0.12
+  }
 };
 var dark = {
   text: {
@@ -626,12 +558,12 @@ var dark = {
     secondary: 'rgba(255, 255, 255, 0.7)',
     disabled: 'rgba(255, 255, 255, 0.5)',
     hint: 'rgba(255, 255, 255, 0.5)',
-    icon: 'rgba(255, 255, 255, 0.5)',
+    icon: 'rgba(255, 255, 255, 0.5)'
   },
   divider: 'rgba(255, 255, 255, 0.12)',
   background: {
     paper: grey[800],
-    default: '#303030',
+    default: '#303030'
   },
   action: {
     active: common.white,
@@ -644,8 +576,8 @@ var dark = {
     disabledOpacity: 0.38,
     focus: 'rgba(255, 255, 255, 0.12)',
     focusOpacity: 0.12,
-    activatedOpacity: 0.24,
-  },
+    activatedOpacity: 0.24
+  }
 };
 
 function addLightOrDark(intent, direction, shade, tonalOffset) {
@@ -665,95 +597,62 @@ function addLightOrDark(intent, direction, shade, tonalOffset) {
 
 function createPalette(palette) {
   var _palette$primary = palette.primary,
-    primary =
-      _palette$primary === void 0
-        ? {
-            light: indigo[300],
-            main: indigo[500],
-            dark: indigo[700],
-          }
-        : _palette$primary,
-    _palette$secondary = palette.secondary,
-    secondary =
-      _palette$secondary === void 0
-        ? {
-            light: pink.A200,
-            main: pink.A400,
-            dark: pink.A700,
-          }
-        : _palette$secondary,
-    _palette$error = palette.error,
-    error =
-      _palette$error === void 0
-        ? {
-            light: red[300],
-            main: red[500],
-            dark: red[700],
-          }
-        : _palette$error,
-    _palette$warning = palette.warning,
-    warning =
-      _palette$warning === void 0
-        ? {
-            light: orange[300],
-            main: orange[500],
-            dark: orange[700],
-          }
-        : _palette$warning,
-    _palette$info = palette.info,
-    info =
-      _palette$info === void 0
-        ? {
-            light: blue[300],
-            main: blue[500],
-            dark: blue[700],
-          }
-        : _palette$info,
-    _palette$success = palette.success,
-    success =
-      _palette$success === void 0
-        ? {
-            light: green[300],
-            main: green[500],
-            dark: green[700],
-          }
-        : _palette$success,
-    _palette$type = palette.type,
-    type = _palette$type === void 0 ? 'light' : _palette$type,
-    _palette$contrastThre = palette.contrastThreshold,
-    contrastThreshold = _palette$contrastThre === void 0 ? 3 : _palette$contrastThre,
-    _palette$tonalOffset = palette.tonalOffset,
-    tonalOffset = _palette$tonalOffset === void 0 ? 0.2 : _palette$tonalOffset,
-    other = _objectWithoutProperties(palette, [
-      'primary',
-      'secondary',
-      'error',
-      'warning',
-      'info',
-      'success',
-      'type',
-      'contrastThreshold',
-      'tonalOffset',
-    ]); // Use the same logic as
+      primary = _palette$primary === void 0 ? {
+    light: indigo[300],
+    main: indigo[500],
+    dark: indigo[700]
+  } : _palette$primary,
+      _palette$secondary = palette.secondary,
+      secondary = _palette$secondary === void 0 ? {
+    light: pink.A200,
+    main: pink.A400,
+    dark: pink.A700
+  } : _palette$secondary,
+      _palette$error = palette.error,
+      error = _palette$error === void 0 ? {
+    light: red[300],
+    main: red[500],
+    dark: red[700]
+  } : _palette$error,
+      _palette$warning = palette.warning,
+      warning = _palette$warning === void 0 ? {
+    light: orange[300],
+    main: orange[500],
+    dark: orange[700]
+  } : _palette$warning,
+      _palette$info = palette.info,
+      info = _palette$info === void 0 ? {
+    light: blue[300],
+    main: blue[500],
+    dark: blue[700]
+  } : _palette$info,
+      _palette$success = palette.success,
+      success = _palette$success === void 0 ? {
+    light: green[300],
+    main: green[500],
+    dark: green[700]
+  } : _palette$success,
+      _palette$type = palette.type,
+      type = _palette$type === void 0 ? 'light' : _palette$type,
+      _palette$contrastThre = palette.contrastThreshold,
+      contrastThreshold = _palette$contrastThre === void 0 ? 3 : _palette$contrastThre,
+      _palette$tonalOffset = palette.tonalOffset,
+      tonalOffset = _palette$tonalOffset === void 0 ? 0.2 : _palette$tonalOffset,
+      other = _objectWithoutProperties(palette, ["primary", "secondary", "error", "warning", "info", "success", "type", "contrastThreshold", "tonalOffset"]); // Use the same logic as
   // Bootstrap: https://github.com/twbs/bootstrap/blob/1d6e3710dd447de1a200f29e8fa521f8a0908f70/scss/_functions.scss#L59
   // and material-components-web https://github.com/material-components/material-components-web/blob/ac46b8863c4dab9fc22c4c662dc6bd1b65dd652f/packages/mdc-theme/_functions.scss#L54
 
+
   function getContrastText(background) {
-    var contrastText =
-      getContrastRatio(background, dark.text.primary) >= contrastThreshold
-        ? dark.text.primary
-        : light.text.primary;
+    var contrastText = getContrastRatio(background, dark.text.primary) >= contrastThreshold ? dark.text.primary : light.text.primary;
 
     return contrastText;
   }
 
   var augmentColor = function augmentColor(color) {
-    var mainShade =
-      arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;
-    var lightShade =
-      arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 300;
-    var darkShade =
-      arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 700;
+    var mainShade = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;
+    var lightShade = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 300;
+    var darkShade = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 700;
     color = _extends({}, color);
 
     if (!color.main && color[mainShade]) {
@@ -761,11 +660,11 @@ function createPalette(palette) {
     }
 
     if (!color.main) {
-      throw new Error(formatMuiErrorMessage(4, mainShade));
+      throw new Error( formatMuiErrorMessage(4, mainShade));
     }
 
     if (typeof color.main !== 'string') {
-      throw new Error(formatMuiErrorMessage(5, JSON.stringify(color.main)));
+      throw new Error( formatMuiErrorMessage(5, JSON.stringify(color.main)));
     }
 
     addLightOrDark(color, 'light', lightShade, tonalOffset);
@@ -780,46 +679,40 @@ function createPalette(palette) {
 
   var types = {
     dark: dark,
-    light: light,
+    light: light
   };
 
-  var paletteOutput = deepmerge(
-    _extends(
-      {
-        // A collection of common colors.
-        common: common,
-        // The palette type, can be light or dark.
-        type: type,
-        // The colors used to represent primary interface elements for a user.
-        primary: augmentColor(primary),
-        // The colors used to represent secondary interface elements for a user.
-        secondary: augmentColor(secondary, 'A400', 'A200', 'A700'),
-        // The colors used to represent interface elements that the user should be made aware of.
-        error: augmentColor(error),
-        // The colors used to represent potentially dangerous actions or important messages.
-        warning: augmentColor(warning),
-        // The colors used to present information to the user that is neutral and not necessarily important.
-        info: augmentColor(info),
-        // The colors used to indicate the successful completion of an action that user triggered.
-        success: augmentColor(success),
-        // The grey colors.
-        grey: grey,
-        // Used by `getContrastText()` to maximize the contrast between
-        // the background and the text.
-        contrastThreshold: contrastThreshold,
-        // Takes a background color and returns the text color that maximizes the contrast.
-        getContrastText: getContrastText,
-        // Generate a rich color object.
-        augmentColor: augmentColor,
-        // Used by the functions below to shift a color's luminance by approximately
-        // two indexes within its tonal palette.
-        // E.g., shift from Red 500 to Red 300 or Red 700.
-        tonalOffset: tonalOffset,
-      },
-      types[type]
-    ),
-    other
-  );
+  var paletteOutput = deepmerge(_extends({
+    // A collection of common colors.
+    common: common,
+    // The palette type, can be light or dark.
+    type: type,
+    // The colors used to represent primary interface elements for a user.
+    primary: augmentColor(primary),
+    // The colors used to represent secondary interface elements for a user.
+    secondary: augmentColor(secondary, 'A400', 'A200', 'A700'),
+    // The colors used to represent interface elements that the user should be made aware of.
+    error: augmentColor(error),
+    // The colors used to represent potentially dangerous actions or important messages.
+    warning: augmentColor(warning),
+    // The colors used to present information to the user that is neutral and not necessarily important.
+    info: augmentColor(info),
+    // The colors used to indicate the successful completion of an action that user triggered.
+    success: augmentColor(success),
+    // The grey colors.
+    grey: grey,
+    // Used by `getContrastText()` to maximize the contrast between
+    // the background and the text.
+    contrastThreshold: contrastThreshold,
+    // Takes a background color and returns the text color that maximizes the contrast.
+    getContrastText: getContrastText,
+    // Generate a rich color object.
+    augmentColor: augmentColor,
+    // Used by the functions below to shift a color's luminance by approximately
+    // two indexes within its tonal palette.
+    // E.g., shift from Red 500 to Red 300 or Red 700.
+    tonalOffset: tonalOffset
+  }, types[type]), other);
   return paletteOutput;
 }
 
@@ -828,7 +721,7 @@ function round(value) {
 }
 
 var caseAllCaps = {
-  textTransform: 'uppercase',
+  textTransform: 'uppercase'
 };
 var defaultFontFamily = '"Roboto", "Helvetica", "Arial", sans-serif';
 /**
@@ -838,65 +731,40 @@ var defaultFontFamily = '"Roboto", "Helvetica", "Arial", sans-serif';
 
 function createTypography(palette, typography) {
   var _ref = typeof typography === 'function' ? typography(palette) : typography,
-    _ref$fontFamily = _ref.fontFamily,
-    fontFamily = _ref$fontFamily === void 0 ? defaultFontFamily : _ref$fontFamily,
-    _ref$fontSize = _ref.fontSize,
-    fontSize = _ref$fontSize === void 0 ? 14 : _ref$fontSize,
-    _ref$fontWeightLight = _ref.fontWeightLight,
-    fontWeightLight = _ref$fontWeightLight === void 0 ? 300 : _ref$fontWeightLight,
-    _ref$fontWeightRegula = _ref.fontWeightRegular,
-    fontWeightRegular = _ref$fontWeightRegula === void 0 ? 400 : _ref$fontWeightRegula,
-    _ref$fontWeightMedium = _ref.fontWeightMedium,
-    fontWeightMedium = _ref$fontWeightMedium === void 0 ? 500 : _ref$fontWeightMedium,
-    _ref$fontWeightBold = _ref.fontWeightBold,
-    fontWeightBold = _ref$fontWeightBold === void 0 ? 700 : _ref$fontWeightBold,
-    _ref$htmlFontSize = _ref.htmlFontSize,
-    htmlFontSize = _ref$htmlFontSize === void 0 ? 16 : _ref$htmlFontSize,
-    allVariants = _ref.allVariants,
-    pxToRem2 = _ref.pxToRem,
-    other = _objectWithoutProperties(_ref, [
-      'fontFamily',
-      'fontSize',
-      'fontWeightLight',
-      'fontWeightRegular',
-      'fontWeightMedium',
-      'fontWeightBold',
-      'htmlFontSize',
-      'allVariants',
-      'pxToRem',
-    ]);
+      _ref$fontFamily = _ref.fontFamily,
+      fontFamily = _ref$fontFamily === void 0 ? defaultFontFamily : _ref$fontFamily,
+      _ref$fontSize = _ref.fontSize,
+      fontSize = _ref$fontSize === void 0 ? 14 : _ref$fontSize,
+      _ref$fontWeightLight = _ref.fontWeightLight,
+      fontWeightLight = _ref$fontWeightLight === void 0 ? 300 : _ref$fontWeightLight,
+      _ref$fontWeightRegula = _ref.fontWeightRegular,
+      fontWeightRegular = _ref$fontWeightRegula === void 0 ? 400 : _ref$fontWeightRegula,
+      _ref$fontWeightMedium = _ref.fontWeightMedium,
+      fontWeightMedium = _ref$fontWeightMedium === void 0 ? 500 : _ref$fontWeightMedium,
+      _ref$fontWeightBold = _ref.fontWeightBold,
+      fontWeightBold = _ref$fontWeightBold === void 0 ? 700 : _ref$fontWeightBold,
+      _ref$htmlFontSize = _ref.htmlFontSize,
+      htmlFontSize = _ref$htmlFontSize === void 0 ? 16 : _ref$htmlFontSize,
+      allVariants = _ref.allVariants,
+      pxToRem2 = _ref.pxToRem,
+      other = _objectWithoutProperties(_ref, ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"]);
 
   var coef = fontSize / 14;
 
-  var pxToRem =
-    pxToRem2 ||
-    function (size) {
-      return ''.concat((size / htmlFontSize) * coef, 'rem');
-    };
+  var pxToRem = pxToRem2 || function (size) {
+    return "".concat(size / htmlFontSize * coef, "rem");
+  };
 
-  var buildVariant = function buildVariant(
-    fontWeight,
-    size,
-    lineHeight,
-    letterSpacing,
-    casing
-  ) {
-    return _extends(
-      {
-        fontFamily: fontFamily,
-        fontWeight: fontWeight,
-        fontSize: pxToRem(size),
-        // Unitless following https://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
-        lineHeight: lineHeight,
-      },
-      fontFamily === defaultFontFamily
-        ? {
-            letterSpacing: ''.concat(round(letterSpacing / size), 'em'),
-          }
-        : {},
-      casing,
-      allVariants
-    );
+  var buildVariant = function buildVariant(fontWeight, size, lineHeight, letterSpacing, casing) {
+    return _extends({
+      fontFamily: fontFamily,
+      fontWeight: fontWeight,
+      fontSize: pxToRem(size),
+      // Unitless following https://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
+      lineHeight: lineHeight
+    }, fontFamily === defaultFontFamily ? {
+      letterSpacing: "".concat(round(letterSpacing / size), "em")
+    } : {}, casing, allVariants);
   };
 
   var variants = {
@@ -912,29 +780,23 @@ function createTypography(palette, typography) {
     body2: buildVariant(fontWeightRegular, 14, 1.43, 0.15),
     button: buildVariant(fontWeightMedium, 14, 1.75, 0.4, caseAllCaps),
     caption: buildVariant(fontWeightRegular, 12, 1.66, 0.4),
-    overline: buildVariant(fontWeightRegular, 12, 2.66, 1, caseAllCaps),
+    overline: buildVariant(fontWeightRegular, 12, 2.66, 1, caseAllCaps)
   };
-  return deepmerge(
-    _extends(
-      {
-        htmlFontSize: htmlFontSize,
-        pxToRem: pxToRem,
-        round: round,
-        // TODO v5: remove
-        fontFamily: fontFamily,
-        fontSize: fontSize,
-        fontWeightLight: fontWeightLight,
-        fontWeightRegular: fontWeightRegular,
-        fontWeightMedium: fontWeightMedium,
-        fontWeightBold: fontWeightBold,
-      },
-      variants
-    ),
-    other,
-    {
-      clone: false, // No need to clone deep
-    }
-  );
+  return deepmerge(_extends({
+    htmlFontSize: htmlFontSize,
+    pxToRem: pxToRem,
+    round: round,
+    // TODO v5: remove
+    fontFamily: fontFamily,
+    fontSize: fontSize,
+    fontWeightLight: fontWeightLight,
+    fontWeightRegular: fontWeightRegular,
+    fontWeightMedium: fontWeightMedium,
+    fontWeightBold: fontWeightBold
+  }, variants), other, {
+    clone: false // No need to clone deep
+
+  });
 }
 
 var shadowKeyUmbraOpacity = 0.2;
@@ -942,58 +804,14 @@ var shadowKeyPenumbraOpacity = 0.14;
 var shadowAmbientShadowOpacity = 0.12;
 
 function createShadow() {
-  return [
-    ''
-      .concat(arguments.length <= 0 ? undefined : arguments[0], 'px ')
-      .concat(arguments.length <= 1 ? undefined : arguments[1], 'px ')
-      .concat(arguments.length <= 2 ? undefined : arguments[2], 'px ')
-      .concat(arguments.length <= 3 ? undefined : arguments[3], 'px rgba(0,0,0,')
-      .concat(shadowKeyUmbraOpacity, ')'),
-    ''
-      .concat(arguments.length <= 4 ? undefined : arguments[4], 'px ')
-      .concat(arguments.length <= 5 ? undefined : arguments[5], 'px ')
-      .concat(arguments.length <= 6 ? undefined : arguments[6], 'px ')
-      .concat(arguments.length <= 7 ? undefined : arguments[7], 'px rgba(0,0,0,')
-      .concat(shadowKeyPenumbraOpacity, ')'),
-    ''
-      .concat(arguments.length <= 8 ? undefined : arguments[8], 'px ')
-      .concat(arguments.length <= 9 ? undefined : arguments[9], 'px ')
-      .concat(arguments.length <= 10 ? undefined : arguments[10], 'px ')
-      .concat(arguments.length <= 11 ? undefined : arguments[11], 'px rgba(0,0,0,')
-      .concat(shadowAmbientShadowOpacity, ')'),
-  ].join(',');
+  return ["".concat(arguments.length <= 0 ? undefined : arguments[0], "px ").concat(arguments.length <= 1 ? undefined : arguments[1], "px ").concat(arguments.length <= 2 ? undefined : arguments[2], "px ").concat(arguments.length <= 3 ? undefined : arguments[3], "px rgba(0,0,0,").concat(shadowKeyUmbraOpacity, ")"), "".concat(arguments.length <= 4 ? undefined : arguments[4], "px ").concat(arguments.length <= 5 ? undefined : arguments[5], "px ").concat(arguments.length <= 6 ? undefined : arguments[6], "px ").concat(arguments.length <= 7 ? undefined : arguments[7], "px rgba(0,0,0,").concat(shadowKeyPenumbraOpacity, ")"), "".concat(arguments.length <= 8 ? undefined : arguments[8], "px ").concat(arguments.length <= 9 ? undefined : arguments[9], "px ").concat(arguments.length <= 10 ? undefined : arguments[10], "px ").concat(arguments.length <= 11 ? undefined : arguments[11], "px rgba(0,0,0,").concat(shadowAmbientShadowOpacity, ")")].join(',');
 } // Values from https://github.com/material-components/material-components-web/blob/be8747f94574669cb5e7add1a7c54fa41a89cec7/packages/mdc-elevation/_variables.scss
 
-var shadows = [
-  'none',
-  createShadow(0, 2, 1, -1, 0, 1, 1, 0, 0, 1, 3, 0),
-  createShadow(0, 3, 1, -2, 0, 2, 2, 0, 0, 1, 5, 0),
-  createShadow(0, 3, 3, -2, 0, 3, 4, 0, 0, 1, 8, 0),
-  createShadow(0, 2, 4, -1, 0, 4, 5, 0, 0, 1, 10, 0),
-  createShadow(0, 3, 5, -1, 0, 5, 8, 0, 0, 1, 14, 0),
-  createShadow(0, 3, 5, -1, 0, 6, 10, 0, 0, 1, 18, 0),
-  createShadow(0, 4, 5, -2, 0, 7, 10, 1, 0, 2, 16, 1),
-  createShadow(0, 5, 5, -3, 0, 8, 10, 1, 0, 3, 14, 2),
-  createShadow(0, 5, 6, -3, 0, 9, 12, 1, 0, 3, 16, 2),
-  createShadow(0, 6, 6, -3, 0, 10, 14, 1, 0, 4, 18, 3),
-  createShadow(0, 6, 7, -4, 0, 11, 15, 1, 0, 4, 20, 3),
-  createShadow(0, 7, 8, -4, 0, 12, 17, 2, 0, 5, 22, 4),
-  createShadow(0, 7, 8, -4, 0, 13, 19, 2, 0, 5, 24, 4),
-  createShadow(0, 7, 9, -4, 0, 14, 21, 2, 0, 5, 26, 4),
-  createShadow(0, 8, 9, -5, 0, 15, 22, 2, 0, 6, 28, 5),
-  createShadow(0, 8, 10, -5, 0, 16, 24, 2, 0, 6, 30, 5),
-  createShadow(0, 8, 11, -5, 0, 17, 26, 2, 0, 6, 32, 5),
-  createShadow(0, 9, 11, -5, 0, 18, 28, 2, 0, 7, 34, 6),
-  createShadow(0, 9, 12, -6, 0, 19, 29, 2, 0, 7, 36, 6),
-  createShadow(0, 10, 13, -6, 0, 20, 31, 3, 0, 8, 38, 7),
-  createShadow(0, 10, 13, -6, 0, 21, 33, 3, 0, 8, 40, 7),
-  createShadow(0, 10, 14, -6, 0, 22, 35, 3, 0, 8, 42, 7),
-  createShadow(0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8),
-  createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8),
-];
+
+var shadows = ['none', createShadow(0, 2, 1, -1, 0, 1, 1, 0, 0, 1, 3, 0), createShadow(0, 3, 1, -2, 0, 2, 2, 0, 0, 1, 5, 0), createShadow(0, 3, 3, -2, 0, 3, 4, 0, 0, 1, 8, 0), createShadow(0, 2, 4, -1, 0, 4, 5, 0, 0, 1, 10, 0), createShadow(0, 3, 5, -1, 0, 5, 8, 0, 0, 1, 14, 0), createShadow(0, 3, 5, -1, 0, 6, 10, 0, 0, 1, 18, 0), createShadow(0, 4, 5, -2, 0, 7, 10, 1, 0, 2, 16, 1), createShadow(0, 5, 5, -3, 0, 8, 10, 1, 0, 3, 14, 2), createShadow(0, 5, 6, -3, 0, 9, 12, 1, 0, 3, 16, 2), createShadow(0, 6, 6, -3, 0, 10, 14, 1, 0, 4, 18, 3), createShadow(0, 6, 7, -4, 0, 11, 15, 1, 0, 4, 20, 3), createShadow(0, 7, 8, -4, 0, 12, 17, 2, 0, 5, 22, 4), createShadow(0, 7, 8, -4, 0, 13, 19, 2, 0, 5, 24, 4), createShadow(0, 7, 9, -4, 0, 14, 21, 2, 0, 5, 26, 4), createShadow(0, 8, 9, -5, 0, 15, 22, 2, 0, 6, 28, 5), createShadow(0, 8, 10, -5, 0, 16, 24, 2, 0, 6, 30, 5), createShadow(0, 8, 11, -5, 0, 17, 26, 2, 0, 6, 32, 5), createShadow(0, 9, 11, -5, 0, 18, 28, 2, 0, 7, 34, 6), createShadow(0, 9, 12, -6, 0, 19, 29, 2, 0, 7, 36, 6), createShadow(0, 10, 13, -6, 0, 20, 31, 3, 0, 8, 38, 7), createShadow(0, 10, 13, -6, 0, 21, 33, 3, 0, 8, 40, 7), createShadow(0, 10, 14, -6, 0, 22, 35, 3, 0, 8, 42, 7), createShadow(0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8), createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8)];
 
 var shape = {
-  borderRadius: 4,
+  borderRadius: 4
 };
 
 function _arrayLikeToArray(arr, len) {
@@ -1008,12 +826,11 @@ function _arrayLikeToArray(arr, len) {
 
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
   var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === 'Object' && o.constructor) n = o.constructor.name;
-  if (n === 'Map' || n === 'Set') return Array.from(o);
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
 
 function merge(acc, item) {
@@ -1022,7 +839,8 @@ function merge(acc, item) {
   }
 
   return deepmerge(acc, item, {
-    clone: false, // No need to clone deep, it's way faster.
+    clone: false // No need to clone deep, it's way faster.
+
   });
 }
 
@@ -1033,23 +851,22 @@ var values = {
   sm: 600,
   md: 960,
   lg: 1280,
-  xl: 1920,
+  xl: 1920
 };
 var defaultBreakpoints = {
   // Sorted ASC by size. That's important.
   // It can't be configured as it's used statically for propTypes.
   keys: ['xs', 'sm', 'md', 'lg', 'xl'],
   up: function up(key) {
-    return '@media (min-width:'.concat(values[key], 'px)');
-  },
+    return "@media (min-width:".concat(values[key], "px)");
+  }
 };
 function handleBreakpoints(props, propValue, styleFromPropValue) {
+
   if (Array.isArray(propValue)) {
     var themeBreakpoints = props.theme.breakpoints || defaultBreakpoints;
     return propValue.reduce(function (acc, item, index) {
-      acc[themeBreakpoints.up(themeBreakpoints.keys[index])] = styleFromPropValue(
-        propValue[index]
-      );
+      acc[themeBreakpoints.up(themeBreakpoints.keys[index])] = styleFromPropValue(propValue[index]);
       return acc;
     }, {});
   }
@@ -1072,7 +889,7 @@ function _arrayWithHoles(arr) {
 }
 
 function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === 'undefined' || !(Symbol.iterator in Object(arr))) return;
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -1089,7 +906,7 @@ function _iterableToArrayLimit(arr, i) {
     _e = err;
   } finally {
     try {
-      if (!_n && _i['return'] != null) _i['return']();
+      if (!_n && _i["return"] != null) _i["return"]();
     } finally {
       if (_d) throw _e;
     }
@@ -1099,18 +916,11 @@ function _iterableToArrayLimit(arr, i) {
 }
 
 function _nonIterableRest() {
-  throw new TypeError(
-    'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  );
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 function _slicedToArray(arr, i) {
-  return (
-    _arrayWithHoles(arr) ||
-    _iterableToArrayLimit(arr, i) ||
-    _unsupportedIterableToArray(arr, i) ||
-    _nonIterableRest()
-  );
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
 
 function memoize(fn) {
@@ -1126,7 +936,7 @@ function memoize(fn) {
 
 var properties = {
   m: 'margin',
-  p: 'padding',
+  p: 'padding'
 };
 var directions = {
   t: 'Top',
@@ -1134,13 +944,13 @@ var directions = {
   b: 'Bottom',
   l: 'Left',
   x: ['Left', 'Right'],
-  y: ['Top', 'Bottom'],
+  y: ['Top', 'Bottom']
 };
 var aliases = {
   marginX: 'mx',
   marginY: 'my',
   paddingX: 'px',
-  paddingY: 'py',
+  paddingY: 'py'
 }; // memoize() impact:
 // From 300,000 ops/sec
 // To 350,000 ops/sec
@@ -1156,59 +966,30 @@ var getCssProperties = memoize(function (prop) {
   }
 
   var _prop$split = prop.split(''),
-    _prop$split2 = _slicedToArray(_prop$split, 2),
-    a = _prop$split2[0],
-    b = _prop$split2[1];
+      _prop$split2 = _slicedToArray(_prop$split, 2),
+      a = _prop$split2[0],
+      b = _prop$split2[1];
 
   var property = properties[a];
   var direction = directions[b] || '';
-  return Array.isArray(direction)
-    ? direction.map(function (dir) {
-        return property + dir;
-      })
-    : [property + direction];
+  return Array.isArray(direction) ? direction.map(function (dir) {
+    return property + dir;
+  }) : [property + direction];
 });
-var spacingKeys = [
-  'm',
-  'mt',
-  'mr',
-  'mb',
-  'ml',
-  'mx',
-  'my',
-  'p',
-  'pt',
-  'pr',
-  'pb',
-  'pl',
-  'px',
-  'py',
-  'margin',
-  'marginTop',
-  'marginRight',
-  'marginBottom',
-  'marginLeft',
-  'marginX',
-  'marginY',
-  'padding',
-  'paddingTop',
-  'paddingRight',
-  'paddingBottom',
-  'paddingLeft',
-  'paddingX',
-  'paddingY',
-];
+var spacingKeys = ['m', 'mt', 'mr', 'mb', 'ml', 'mx', 'my', 'p', 'pt', 'pr', 'pb', 'pl', 'px', 'py', 'margin', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft', 'marginX', 'marginY', 'padding', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'paddingX', 'paddingY'];
 function createUnarySpacing(theme) {
   var themeSpacing = theme.spacing || 8;
 
   if (typeof themeSpacing === 'number') {
     return function (abs) {
+
       return themeSpacing * abs;
     };
   }
 
   if (Array.isArray(themeSpacing)) {
     return function (abs) {
+
       return themeSpacing[abs];
     };
   }
@@ -1238,7 +1019,7 @@ function getValue(transformer, propValue) {
     return -transformed;
   }
 
-  return '-'.concat(transformed);
+  return "-".concat(transformed);
 }
 
 function getStyleFromPropValue(cssProperties, transformer) {
@@ -1253,28 +1034,25 @@ function getStyleFromPropValue(cssProperties, transformer) {
 function spacing(props) {
   var theme = props.theme;
   var transformer = createUnarySpacing(theme);
-  return Object.keys(props)
-    .map(function (prop) {
-      // Using a hash computation over an array iteration could be faster, but with only 28 items,
-      // it's doesn't worth the bundle size.
-      if (spacingKeys.indexOf(prop) === -1) {
-        return null;
-      }
+  return Object.keys(props).map(function (prop) {
+    // Using a hash computation over an array iteration could be faster, but with only 28 items,
+    // it's doesn't worth the bundle size.
+    if (spacingKeys.indexOf(prop) === -1) {
+      return null;
+    }
 
-      var cssProperties = getCssProperties(prop);
-      var styleFromPropValue = getStyleFromPropValue(cssProperties, transformer);
-      var propValue = props[prop];
-      return handleBreakpoints(props, propValue, styleFromPropValue);
-    })
-    .reduce(merge, {});
+    var cssProperties = getCssProperties(prop);
+    var styleFromPropValue = getStyleFromPropValue(cssProperties, transformer);
+    var propValue = props[prop];
+    return handleBreakpoints(props, propValue, styleFromPropValue);
+  }).reduce(merge, {});
 }
 
-spacing.propTypes = {};
+spacing.propTypes =  {};
 spacing.filterProps = spacingKeys;
 
 function createSpacing() {
-  var spacingInput =
-    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 8;
+  var spacingInput = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 8;
 
   // Already transformed.
   if (spacingInput.mui) {
@@ -1283,16 +1061,13 @@ function createSpacing() {
   // Smaller components, such as icons and type, can align to a 4dp grid.
   // https://material.io/design/layout/understanding-layout.html#usage
 
+
   var transform = createUnarySpacing({
-    spacing: spacingInput,
+    spacing: spacingInput
   });
 
   var spacing = function spacing() {
-    for (
-      var _len = arguments.length, args = new Array(_len), _key = 0;
-      _key < _len;
-      _key++
-    ) {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
@@ -1304,22 +1079,22 @@ function createSpacing() {
       return transform(args[0]);
     }
 
-    return args
-      .map(function (argument) {
-        if (typeof argument === 'string') {
-          return argument;
-        }
+    return args.map(function (argument) {
+      if (typeof argument === 'string') {
+        return argument;
+      }
 
-        var output = transform(argument);
-        return typeof output === 'number' ? ''.concat(output, 'px') : output;
-      })
-      .join(' ');
+      var output = transform(argument);
+      return typeof output === 'number' ? "".concat(output, "px") : output;
+    }).join(' ');
   }; // Backward compatibility, to remove in v5.
+
 
   Object.defineProperty(spacing, 'unit', {
     get: function get() {
+
       return spacingInput;
-    },
+    }
   });
   spacing.mui = true;
   return spacing;
@@ -1336,7 +1111,7 @@ var easing = {
   // Objects leave the screen at full velocity. They do not decelerate when off-screen.
   easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
   // The sharp curve is used by objects that may return to the screen at any time.
-  sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
+  sharp: 'cubic-bezier(0.4, 0, 0.6, 1)'
 }; // Follow https://material.io/guidelines/motion/duration-easing.html#duration-easing-common-durations
 // to learn when use what timing
 
@@ -1351,11 +1126,11 @@ var duration = {
   // recommended when something is entering screen
   enteringScreen: 225,
   // recommended when something is leaving screen
-  leavingScreen: 195,
+  leavingScreen: 195
 };
 
 function formatMs(milliseconds) {
-  return ''.concat(Math.round(milliseconds), 'ms');
+  return "".concat(Math.round(milliseconds), "ms");
 }
 /**
  * @param {string|Array} props
@@ -1366,37 +1141,25 @@ function formatMs(milliseconds) {
  * @param {number} param.delay
  */
 
+
 var transitions = {
   easing: easing,
   duration: duration,
   create: function create() {
-    var props =
-      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['all'];
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['all'];
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     var _options$duration = options.duration,
-      durationOption =
-        _options$duration === void 0 ? duration.standard : _options$duration,
-      _options$easing = options.easing,
-      easingOption = _options$easing === void 0 ? easing.easeInOut : _options$easing,
-      _options$delay = options.delay,
-      delay = _options$delay === void 0 ? 0 : _options$delay,
-      other = _objectWithoutProperties(options, ['duration', 'easing', 'delay']);
+        durationOption = _options$duration === void 0 ? duration.standard : _options$duration,
+        _options$easing = options.easing,
+        easingOption = _options$easing === void 0 ? easing.easeInOut : _options$easing,
+        _options$delay = options.delay,
+        delay = _options$delay === void 0 ? 0 : _options$delay,
+        other = _objectWithoutProperties(options, ["duration", "easing", "delay"]);
 
-    return (Array.isArray(props) ? props : [props])
-      .map(function (animatedProp) {
-        return ''
-          .concat(animatedProp, ' ')
-          .concat(
-            typeof durationOption === 'string'
-              ? durationOption
-              : formatMs(durationOption),
-            ' '
-          )
-          .concat(easingOption, ' ')
-          .concat(typeof delay === 'string' ? delay : formatMs(delay));
-      })
-      .join(',');
+    return (Array.isArray(props) ? props : [props]).map(function (animatedProp) {
+      return "".concat(animatedProp, " ").concat(typeof durationOption === 'string' ? durationOption : formatMs(durationOption), " ").concat(easingOption, " ").concat(typeof delay === 'string' ? delay : formatMs(delay));
+    }).join(',');
   },
   getAutoHeightDuration: function getAutoHeightDuration(height) {
     if (!height) {
@@ -1406,7 +1169,7 @@ var transitions = {
     var constant = height / 36; // https://www.wolframalpha.com/input/?i=(4+%2B+15+*+(x+%2F+36+)+**+0.25+%2B+(x+%2F+36)+%2F+5)+*+10
 
     return Math.round((4 + 15 * Math.pow(constant, 0.25) + constant / 5) * 10);
-  },
+  }
 };
 
 // We need to centralize the zIndex definitions as they work
@@ -1418,57 +1181,44 @@ var zIndex = {
   drawer: 1200,
   modal: 1300,
   snackbar: 1400,
-  tooltip: 1500,
+  tooltip: 1500
 };
 
 function createMuiTheme() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   var _options$breakpoints = options.breakpoints,
-    breakpointsInput = _options$breakpoints === void 0 ? {} : _options$breakpoints,
-    _options$mixins = options.mixins,
-    mixinsInput = _options$mixins === void 0 ? {} : _options$mixins,
-    _options$palette = options.palette,
-    paletteInput = _options$palette === void 0 ? {} : _options$palette,
-    spacingInput = options.spacing,
-    _options$typography = options.typography,
-    typographyInput = _options$typography === void 0 ? {} : _options$typography,
-    other = _objectWithoutProperties(options, [
-      'breakpoints',
-      'mixins',
-      'palette',
-      'spacing',
-      'typography',
-    ]);
+      breakpointsInput = _options$breakpoints === void 0 ? {} : _options$breakpoints,
+      _options$mixins = options.mixins,
+      mixinsInput = _options$mixins === void 0 ? {} : _options$mixins,
+      _options$palette = options.palette,
+      paletteInput = _options$palette === void 0 ? {} : _options$palette,
+      spacingInput = options.spacing,
+      _options$typography = options.typography,
+      typographyInput = _options$typography === void 0 ? {} : _options$typography,
+      other = _objectWithoutProperties(options, ["breakpoints", "mixins", "palette", "spacing", "typography"]);
 
   var palette = createPalette(paletteInput);
   var breakpoints = createBreakpoints(breakpointsInput);
   var spacing = createSpacing(spacingInput);
-  var muiTheme = deepmerge(
-    {
-      breakpoints: breakpoints,
-      direction: 'ltr',
-      mixins: createMixins(breakpoints, spacing, mixinsInput),
-      overrides: {},
-      // Inject custom styles
-      palette: palette,
-      props: {},
-      // Provide default props
-      shadows: shadows,
-      typography: createTypography(palette, typographyInput),
-      spacing: spacing,
-      shape: shape,
-      transitions: transitions,
-      zIndex: zIndex,
-    },
-    other
-  );
+  var muiTheme = deepmerge({
+    breakpoints: breakpoints,
+    direction: 'ltr',
+    mixins: createMixins(breakpoints, spacing, mixinsInput),
+    overrides: {},
+    // Inject custom styles
+    palette: palette,
+    props: {},
+    // Provide default props
+    shadows: shadows,
+    typography: createTypography(palette, typographyInput),
+    spacing: spacing,
+    shape: shape,
+    transitions: transitions,
+    zIndex: zIndex
+  }, other);
 
-  for (
-    var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1;
-    _key < _len;
-    _key++
-  ) {
+  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     args[_key - 1] = arguments[_key];
   }
 
@@ -1489,30 +1239,4 @@ function useTheme() {
 
 var defaultTheme = createMuiTheme();
 
-export {
-  ThemeContext as T,
-  _defineProperty as _,
-  _objectWithoutProperties as a,
-  blue as b,
-  common as c,
-  defaultTheme as d,
-  _slicedToArray as e,
-  fade as f,
-  grey as g,
-  handleBreakpoints as h,
-  indigo as i,
-  darken as j,
-  deepmerge as k,
-  lighten as l,
-  merge as m,
-  createMuiTheme as n,
-  formatMuiErrorMessage as o,
-  _typeof as p,
-  duration as q,
-  emphasize as r,
-  spacing as s,
-  _arrayLikeToArray as t,
-  useTheme as u,
-  _unsupportedIterableToArray as v,
-  zIndex as z,
-};
+export { ThemeContext as T, _defineProperty as _, _objectWithoutProperties as a, blue as b, common as c, defaultTheme as d, _slicedToArray as e, fade as f, grey as g, handleBreakpoints as h, indigo as i, darken as j, deepmerge as k, lighten as l, merge as m, createMuiTheme as n, formatMuiErrorMessage as o, _typeof as p, duration as q, emphasize as r, spacing as s, _arrayLikeToArray as t, useTheme as u, _unsupportedIterableToArray as v, zIndex as z };

@@ -34,10 +34,10 @@ const GraphCanvas = () => {
     setWorkingActivity,
   } = useEditor();
 
-  const nodeExists = nodeId => {
+  const nodeExists = (nodeId) => {
     var res = false;
 
-    networkRef.current.body.data.nodes.forEach(node => {
+    networkRef.current.body.data.nodes.forEach((node) => {
       if (node.id === nodeId) res = true;
     });
     return res;
@@ -46,7 +46,7 @@ const GraphCanvas = () => {
   // on doubleClick select node
 
   const doubleClick = useCallback(
-    event => {
+    (event) => {
       const eventNode = event.nodes[0]; //If node is cluster open the cluster else setWorkingActivity to node
 
       if (
@@ -63,22 +63,22 @@ const GraphCanvas = () => {
       } else {
         //Check if node is a story node, if it is continue else it means it's a cluster
         if (nodeExists(eventNode)) {
-          const pos = story.nodes.findIndex(node => node.id === eventNode);
+          const pos = story.nodes.findIndex((node) => node.id === eventNode);
 
           story.nodes[pos] = { ...story.nodes[pos] };
           setWorkingActivity(eventNode);
         }
       }
     },
-    [setWorkingActivity, story.nodes, clusteredMissions]
+    [setWorkingActivity, story.nodes, clusteredMissions],
   );
 
   const deselectNode = useCallback(
-    event => {
+    (event) => {
       networkRef.current.disableEditMode();
       setWorkingActivity(undefined);
     },
-    [setWorkingActivity]
+    [setWorkingActivity],
   );
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const GraphCanvas = () => {
   */
 
   const zoom = useCallback(
-    event => {
+    (event) => {
       //Zooming out
       if (event.direction === '-') {
         if (clusteredMissions.length === 0) {
@@ -113,7 +113,7 @@ const GraphCanvas = () => {
         }
       }
     },
-    [lastClusterZoomLevel, clusteredMissions]
+    [lastClusterZoomLevel, clusteredMissions],
   );
   /*Clean graph library errors on automatic cluster edge creation */
 
@@ -150,10 +150,13 @@ const GraphCanvas = () => {
       zoom,
       deselectNode,
     }),
-    [doubleClick, zoom, deselectNode]
+    [doubleClick, zoom, deselectNode],
   );
 
-  const getNetwork = useCallback(network => (networkRef.current = network), []);
+  const getNetwork = useCallback(
+    (network) => (networkRef.current = network),
+    [],
+  );
 
   return React.createElement(Graph, {
     data: getGraphFromStory(story),

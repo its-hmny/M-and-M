@@ -4,7 +4,7 @@ import Button from '../../../../web_modules/@material-ui/core/Button.js';
 import Typography from '../../../../web_modules/@material-ui/core/Typography.js';
 import { Error as ErrorIcon } from '../../../../web_modules/@material-ui/icons.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -34,9 +34,9 @@ const Failure = ({ onRetry }) => {
         {
           variant: 'h6',
         },
-        'Something went wrong'
+        'Something went wrong',
       ),
-      React.createElement(Typography, null, 'Unable to fetch templates')
+      React.createElement(Typography, null, 'Unable to fetch templates'),
     ),
     React.createElement(
       Button,
@@ -44,8 +44,8 @@ const Failure = ({ onRetry }) => {
         variant: 'text',
         onClick: onRetry,
       },
-      'Retry'
-    )
+      'Retry',
+    ),
   );
 };
 

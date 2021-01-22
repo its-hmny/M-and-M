@@ -45,7 +45,7 @@
     "wdyr": "ENABLE_WDYR=true yarn start",
     "start": "react-scripts start",
     "build": "snowpack build && yarn build:remove-pure && yarn build:fmt && yarn build:lint",
-    "build:remove-pure": "find ./build/src -type f -not -path \"./build/src/assets*\" -exec sed -i '' -e 's/\\/\\*#__PURE__\\*\\///g' {} +",
+    "build:remove-pure": "find ./build/src -type f -not -path \"./build/src/assets*\" -exec sed -i -e 's/\\/\\*#__PURE__\\*\\///g' {} +",
     "build:fmt": "prettier --config ./.prettierrc.js --write build/src",
     "build:lint": "eslint --fix -c ./.eslintrc.js build/src",
     "test": "react-scripts test",

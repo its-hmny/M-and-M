@@ -1,7 +1,14 @@
 import React from '../../../web_modules/react.js';
 
-const WidgetLauncher = props => {
-  const { buttonColor, icon, children, open, toggleContainer, ...style } = props;
+const WidgetLauncher = (props) => {
+  const {
+    buttonColor,
+    icon,
+    children,
+    open,
+    toggleContainer,
+    ...style
+  } = props;
 
   return React.createElement(
     'div',
@@ -17,7 +24,7 @@ const WidgetLauncher = props => {
             display: open || 'none',
           },
         },
-        children
+        children,
       ),
     React.createElement(
       'button',
@@ -41,8 +48,8 @@ const WidgetLauncher = props => {
             src: icon,
             className: 'rcw-close-launcher',
             alt: 'Open',
-          })
-    )
+          }),
+    ),
   );
 };
 

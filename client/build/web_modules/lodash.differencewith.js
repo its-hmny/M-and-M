@@ -20,8 +20,8 @@ var MAX_SAFE_INTEGER = 9007199254740991;
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
-  funcTag = '[object Function]',
-  genTag = '[object GeneratorFunction]';
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]';
 
 /**
  * Used to match `RegExp`
@@ -33,11 +33,7 @@ var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
 var reIsHostCtor = /^\[object .+?Constructor\]$/;
 
 /** Detect free variable `global` from Node.js. */
-var freeGlobal =
-  typeof commonjsGlobal == 'object' &&
-  commonjsGlobal &&
-  commonjsGlobal.Object === Object &&
-  commonjsGlobal;
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -57,14 +53,10 @@ var root = freeGlobal || freeSelf || Function('return this')();
  */
 function apply(func, thisArg, args) {
   switch (args.length) {
-    case 0:
-      return func.call(thisArg);
-    case 1:
-      return func.call(thisArg, args[0]);
-    case 2:
-      return func.call(thisArg, args[0], args[1]);
-    case 3:
-      return func.call(thisArg, args[0], args[1], args[2]);
+    case 0: return func.call(thisArg);
+    case 1: return func.call(thisArg, args[0]);
+    case 2: return func.call(thisArg, args[0], args[1]);
+    case 3: return func.call(thisArg, args[0], args[1], args[2]);
   }
   return func.apply(thisArg, args);
 }
@@ -94,7 +86,7 @@ function arrayIncludes(array, value) {
  */
 function arrayIncludesWith(array, value, comparator) {
   var index = -1,
-    length = array ? array.length : 0;
+      length = array ? array.length : 0;
 
   while (++index < length) {
     if (comparator(value, array[index])) {
@@ -115,8 +107,8 @@ function arrayIncludesWith(array, value, comparator) {
  */
 function arrayMap(array, iteratee) {
   var index = -1,
-    length = array ? array.length : 0,
-    result = Array(length);
+      length = array ? array.length : 0,
+      result = Array(length);
 
   while (++index < length) {
     result[index] = iteratee(array[index], index, array);
@@ -134,8 +126,8 @@ function arrayMap(array, iteratee) {
  */
 function arrayPush(array, values) {
   var index = -1,
-    length = values.length,
-    offset = array.length;
+      length = values.length,
+      offset = array.length;
 
   while (++index < length) {
     array[offset + index] = values[index];
@@ -156,9 +148,9 @@ function arrayPush(array, values) {
  */
 function baseFindIndex(array, predicate, fromIndex, fromRight) {
   var length = array.length,
-    index = fromIndex + (fromRight ? 1 : -1);
+      index = fromIndex + (fromRight ? 1 : -1);
 
-  while (fromRight ? index-- : ++index < length) {
+  while ((fromRight ? index-- : ++index < length)) {
     if (predicate(array[index], index, array)) {
       return index;
     }
@@ -180,7 +172,7 @@ function baseIndexOf(array, value, fromIndex) {
     return baseFindIndex(array, baseIsNaN, fromIndex);
   }
   var index = fromIndex - 1,
-    length = array.length;
+      length = array.length;
 
   while (++index < length) {
     if (array[index] === value) {
@@ -209,7 +201,7 @@ function baseIsNaN(value) {
  * @returns {Function} Returns the new capped function.
  */
 function baseUnary(func) {
-  return function (value) {
+  return function(value) {
     return func(value);
   };
 }
@@ -259,19 +251,17 @@ function isHostObject(value) {
 
 /** Used for built-in method references. */
 var arrayProto = Array.prototype,
-  funcProto = Function.prototype,
-  objectProto = Object.prototype;
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
 
 /** Used to detect methods masquerading as native. */
-var maskSrcKey = (function () {
-  var uid = /[^.]+$/.exec(
-    (coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO) || ''
-  );
-  return uid ? 'Symbol(src)_1.' + uid : '';
-})();
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
 
 /** Used to resolve the decompiled source of functions. */
 var funcToString = funcProto.toString;
@@ -287,27 +277,23 @@ var hasOwnProperty = objectProto.hasOwnProperty;
 var objectToString = objectProto.toString;
 
 /** Used to detect if a method is native. */
-var reIsNative = RegExp(
-  '^' +
-    funcToString
-      .call(hasOwnProperty)
-      .replace(reRegExpChar, '\\$&')
-      .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') +
-    '$'
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
 );
 
 /** Built-in value references. */
 var Symbol = root.Symbol,
-  propertyIsEnumerable = objectProto.propertyIsEnumerable,
-  splice = arrayProto.splice,
-  spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
+    propertyIsEnumerable = objectProto.propertyIsEnumerable,
+    splice = arrayProto.splice,
+    spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map'),
-  nativeCreate = getNative(Object, 'create');
+    nativeCreate = getNative(Object, 'create');
 
 /**
  * Creates a hash object.
@@ -318,7 +304,7 @@ var Map = getNative(root, 'Map'),
  */
 function Hash(entries) {
   var index = -1,
-    length = entries ? entries.length : 0;
+      length = entries ? entries.length : 0;
 
   this.clear();
   while (++index < length) {
@@ -396,7 +382,7 @@ function hashHas(key) {
  */
 function hashSet(key, value) {
   var data = this.__data__;
-  data[key] = nativeCreate && value === undefined ? HASH_UNDEFINED : value;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
   return this;
 }
 
@@ -416,7 +402,7 @@ Hash.prototype.set = hashSet;
  */
 function ListCache(entries) {
   var index = -1,
-    length = entries ? entries.length : 0;
+      length = entries ? entries.length : 0;
 
   this.clear();
   while (++index < length) {
@@ -447,7 +433,7 @@ function listCacheClear() {
  */
 function listCacheDelete(key) {
   var data = this.__data__,
-    index = assocIndexOf(data, key);
+      index = assocIndexOf(data, key);
 
   if (index < 0) {
     return false;
@@ -472,7 +458,7 @@ function listCacheDelete(key) {
  */
 function listCacheGet(key) {
   var data = this.__data__,
-    index = assocIndexOf(data, key);
+      index = assocIndexOf(data, key);
 
   return index < 0 ? undefined : data[index][1];
 }
@@ -502,7 +488,7 @@ function listCacheHas(key) {
  */
 function listCacheSet(key, value) {
   var data = this.__data__,
-    index = assocIndexOf(data, key);
+      index = assocIndexOf(data, key);
 
   if (index < 0) {
     data.push([key, value]);
@@ -528,7 +514,7 @@ ListCache.prototype.set = listCacheSet;
  */
 function MapCache(entries) {
   var index = -1,
-    length = entries ? entries.length : 0;
+      length = entries ? entries.length : 0;
 
   this.clear();
   while (++index < length) {
@@ -546,9 +532,9 @@ function MapCache(entries) {
  */
 function mapCacheClear() {
   this.__data__ = {
-    hash: new Hash(),
-    map: new (Map || ListCache)(),
-    string: new Hash(),
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
   };
 }
 
@@ -623,9 +609,9 @@ MapCache.prototype.set = mapCacheSet;
  */
 function SetCache(values) {
   var index = -1,
-    length = values ? values.length : 0;
+      length = values ? values.length : 0;
 
-  this.__data__ = new MapCache();
+  this.__data__ = new MapCache;
   while (++index < length) {
     this.add(values[index]);
   }
@@ -694,11 +680,11 @@ function assocIndexOf(array, key) {
  */
 function baseDifference(array, values, iteratee, comparator) {
   var index = -1,
-    includes = arrayIncludes,
-    isCommon = true,
-    length = array.length,
-    result = [],
-    valuesLength = values.length;
+      includes = arrayIncludes,
+      isCommon = true,
+      length = array.length,
+      result = [],
+      valuesLength = values.length;
 
   if (!length) {
     return result;
@@ -709,16 +695,18 @@ function baseDifference(array, values, iteratee, comparator) {
   if (comparator) {
     includes = arrayIncludesWith;
     isCommon = false;
-  } else if (values.length >= LARGE_ARRAY_SIZE) {
+  }
+  else if (values.length >= LARGE_ARRAY_SIZE) {
     includes = cacheHas;
     isCommon = false;
     values = new SetCache(values);
   }
-  outer: while (++index < length) {
+  outer:
+  while (++index < length) {
     var value = array[index],
-      computed = iteratee ? iteratee(value) : value;
+        computed = iteratee ? iteratee(value) : value;
 
-    value = comparator || value !== 0 ? value : 0;
+    value = (comparator || value !== 0) ? value : 0;
     if (isCommon && computed === computed) {
       var valuesIndex = valuesLength;
       while (valuesIndex--) {
@@ -727,7 +715,8 @@ function baseDifference(array, values, iteratee, comparator) {
         }
       }
       result.push(value);
-    } else if (!includes(values, computed, comparator)) {
+    }
+    else if (!includes(values, computed, comparator)) {
       result.push(value);
     }
   }
@@ -747,7 +736,7 @@ function baseDifference(array, values, iteratee, comparator) {
  */
 function baseFlatten(array, depth, predicate, isStrict, result) {
   var index = -1,
-    length = array.length;
+      length = array.length;
 
   predicate || (predicate = isFlattenable);
   result || (result = []);
@@ -780,7 +769,7 @@ function baseIsNative(value) {
   if (!isObject(value) || isMasked(value)) {
     return false;
   }
-  var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
   return pattern.test(toSource(value));
 }
 
@@ -793,12 +782,12 @@ function baseIsNative(value) {
  * @returns {Function} Returns the new function.
  */
 function baseRest(func, start) {
-  start = nativeMax(start === undefined ? func.length - 1 : start, 0);
-  return function () {
+  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+  return function() {
     var args = arguments,
-      index = -1,
-      length = nativeMax(args.length - start, 0),
-      array = Array(length);
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        array = Array(length);
 
     while (++index < length) {
       array[index] = args[start + index];
@@ -823,7 +812,9 @@ function baseRest(func, start) {
  */
 function getMapData(map, key) {
   var data = map.__data__;
-  return isKeyable(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
 }
 
 /**
@@ -847,11 +838,8 @@ function getNative(object, key) {
  * @returns {boolean} Returns `true` if `value` is flattenable, else `false`.
  */
 function isFlattenable(value) {
-  return (
-    isArray(value) ||
-    isArguments(value) ||
-    !!(spreadableSymbol && value && value[spreadableSymbol])
-  );
+  return isArray(value) || isArguments(value) ||
+    !!(spreadableSymbol && value && value[spreadableSymbol]);
 }
 
 /**
@@ -863,9 +851,9 @@ function isFlattenable(value) {
  */
 function isKeyable(value) {
   var type = typeof value;
-  return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean'
-    ? value !== '__proto__'
-    : value === null;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
 }
 
 /**
@@ -876,7 +864,7 @@ function isKeyable(value) {
  * @returns {boolean} Returns `true` if `func` is masked, else `false`.
  */
 function isMasked(func) {
-  return !!maskSrcKey && maskSrcKey in func;
+  return !!maskSrcKey && (maskSrcKey in func);
 }
 
 /**
@@ -892,7 +880,7 @@ function toSource(func) {
       return funcToString.call(func);
     } catch (e) {}
     try {
-      return func + '';
+      return (func + '');
     } catch (e) {}
   }
   return '';
@@ -921,18 +909,13 @@ function toSource(func) {
  * _.differenceWith(objects, [{ 'x': 1, 'y': 2 }], _.isEqual);
  * // => [{ 'x': 2, 'y': 1 }]
  */
-var differenceWith = baseRest(function (array, values) {
+var differenceWith = baseRest(function(array, values) {
   var comparator = last(values);
   if (isArrayLikeObject(comparator)) {
     comparator = undefined;
   }
   return isArrayLikeObject(array)
-    ? baseDifference(
-        array,
-        baseFlatten(values, 1, isArrayLikeObject, true),
-        undefined,
-        comparator
-      )
+    ? baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true), undefined, comparator)
     : [];
 });
 
@@ -1011,11 +994,8 @@ function eq(value, other) {
  */
 function isArguments(value) {
   // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-  return (
-    isArrayLikeObject(value) &&
-    hasOwnProperty.call(value, 'callee') &&
-    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag)
-  );
+  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
 }
 
 /**
@@ -1152,9 +1132,8 @@ function isFunction(value) {
  * // => false
  */
 function isLength(value) {
-  return (
-    typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER
-  );
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
 }
 
 /**

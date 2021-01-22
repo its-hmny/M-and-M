@@ -12,7 +12,7 @@ import {
 function DialogStyleName({ open, initialId, onComplete, styleIds }) {
   const [styleId, setStyleId] = useState(initialId);
 
-  const handleChange = event => setStyleId(event.target.value);
+  const handleChange = (event) => setStyleId(event.target.value);
 
   const handleComplete = () => onComplete(styleId);
 
@@ -20,8 +20,8 @@ function DialogStyleName({ open, initialId, onComplete, styleIds }) {
     () =>
       Object.values(styleIds)
         .flat()
-        .some(id => id === styleId),
-    [styleId, styleIds]
+        .some((id) => id === styleId),
+    [styleId, styleIds],
   );
 
   return React.createElement(
@@ -33,16 +33,21 @@ function DialogStyleName({ open, initialId, onComplete, styleIds }) {
     React.createElement(
       DialogContent,
       null,
-      React.createElement(Typography, null, 'What do you want to call your new style?'),
+      React.createElement(
+        Typography,
+        null,
+        'What do you want to call your new style?',
+      ),
       React.createElement(TextField, {
         autoFocus: true,
         label: 'Style id',
         value: styleId,
         onChange: handleChange,
-        onKeyPress: e => !idAlreadyPresent && e.key === 'Enter' && handleComplete(),
+        onKeyPress: (e) =>
+          !idAlreadyPresent && e.key === 'Enter' && handleComplete(),
         helperText: idAlreadyPresent && `Pick an unused name`,
         error: idAlreadyPresent,
-      })
+      }),
     ),
     React.createElement(
       DialogActions,
@@ -53,9 +58,9 @@ function DialogStyleName({ open, initialId, onComplete, styleIds }) {
           disabled: idAlreadyPresent,
           onClick: handleComplete,
         },
-        'Ok'
-      )
-    )
+        'Ok',
+      ),
+    ),
   );
 }
 

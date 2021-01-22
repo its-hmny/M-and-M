@@ -11,17 +11,17 @@ var seed = 1;
  * @returns {number}
  */
 function getNextValue() {
-  seed = (seed * 9301 + 49297) % 233280;
-  return seed / 233280.0;
+    seed = (seed * 9301 + 49297) % 233280;
+    return seed/(233280.0);
 }
 
 function setSeed(_seed_) {
-  seed = _seed_;
+    seed = _seed_;
 }
 
 var randomFromSeed = {
-  nextValue: getNextValue,
-  seed: setSeed,
+    nextValue: getNextValue,
+    seed: setSeed
 };
 
 var ORIGINAL = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
@@ -31,87 +31,75 @@ var previousSeed;
 var shuffled;
 
 function reset() {
-  shuffled = false;
+    shuffled = false;
 }
 
 function setCharacters(_alphabet_) {
-  if (!_alphabet_) {
-    if (alphabet !== ORIGINAL) {
-      alphabet = ORIGINAL;
-      reset();
+    if (!_alphabet_) {
+        if (alphabet !== ORIGINAL) {
+            alphabet = ORIGINAL;
+            reset();
+        }
+        return;
     }
-    return;
-  }
 
-  if (_alphabet_ === alphabet) {
-    return;
-  }
+    if (_alphabet_ === alphabet) {
+        return;
+    }
 
-  if (_alphabet_.length !== ORIGINAL.length) {
-    throw new Error(
-      'Custom alphabet for shortid must be ' +
-        ORIGINAL.length +
-        ' unique characters. You submitted ' +
-        _alphabet_.length +
-        ' characters: ' +
-        _alphabet_
-    );
-  }
+    if (_alphabet_.length !== ORIGINAL.length) {
+        throw new Error('Custom alphabet for shortid must be ' + ORIGINAL.length + ' unique characters. You submitted ' + _alphabet_.length + ' characters: ' + _alphabet_);
+    }
 
-  var unique = _alphabet_.split('').filter(function (item, ind, arr) {
-    return ind !== arr.lastIndexOf(item);
-  });
+    var unique = _alphabet_.split('').filter(function(item, ind, arr){
+       return ind !== arr.lastIndexOf(item);
+    });
 
-  if (unique.length) {
-    throw new Error(
-      'Custom alphabet for shortid must be ' +
-        ORIGINAL.length +
-        ' unique characters. These characters were not unique: ' +
-        unique.join(', ')
-    );
-  }
+    if (unique.length) {
+        throw new Error('Custom alphabet for shortid must be ' + ORIGINAL.length + ' unique characters. These characters were not unique: ' + unique.join(', '));
+    }
 
-  alphabet = _alphabet_;
-  reset();
+    alphabet = _alphabet_;
+    reset();
 }
 
 function characters(_alphabet_) {
-  setCharacters(_alphabet_);
-  return alphabet;
+    setCharacters(_alphabet_);
+    return alphabet;
 }
 
 function setSeed$1(seed) {
-  randomFromSeed.seed(seed);
-  if (previousSeed !== seed) {
-    reset();
-    previousSeed = seed;
-  }
+    randomFromSeed.seed(seed);
+    if (previousSeed !== seed) {
+        reset();
+        previousSeed = seed;
+    }
 }
 
 function shuffle() {
-  if (!alphabet) {
-    setCharacters(ORIGINAL);
-  }
+    if (!alphabet) {
+        setCharacters(ORIGINAL);
+    }
 
-  var sourceArray = alphabet.split('');
-  var targetArray = [];
-  var r = randomFromSeed.nextValue();
-  var characterIndex;
+    var sourceArray = alphabet.split('');
+    var targetArray = [];
+    var r = randomFromSeed.nextValue();
+    var characterIndex;
 
-  while (sourceArray.length > 0) {
-    r = randomFromSeed.nextValue();
-    characterIndex = Math.floor(r * sourceArray.length);
-    targetArray.push(sourceArray.splice(characterIndex, 1)[0]);
-  }
-  return targetArray.join('');
+    while (sourceArray.length > 0) {
+        r = randomFromSeed.nextValue();
+        characterIndex = Math.floor(r * sourceArray.length);
+        targetArray.push(sourceArray.splice(characterIndex, 1)[0]);
+    }
+    return targetArray.join('');
 }
 
 function getShuffled() {
-  if (shuffled) {
+    if (shuffled) {
+        return shuffled;
+    }
+    shuffled = shuffle();
     return shuffled;
-  }
-  shuffled = shuffle();
-  return shuffled;
 }
 
 /**
@@ -120,20 +108,20 @@ function getShuffled() {
  * @returns {string}
  */
 function lookup(index) {
-  var alphabetShuffled = getShuffled();
-  return alphabetShuffled[index];
+    var alphabetShuffled = getShuffled();
+    return alphabetShuffled[index];
 }
 
-function get() {
+function get () {
   return alphabet || ORIGINAL;
 }
 
 var alphabet_1 = {
-  get: get,
-  characters: characters,
-  seed: setSeed$1,
-  lookup: lookup,
-  shuffled: getShuffled,
+    get: get,
+    characters: characters,
+    seed: setSeed$1,
+    lookup: lookup,
+    shuffled: getShuffled
 };
 
 var crypto = typeof window === 'object' && (window.crypto || window.msCrypto); // IE 11 uses window.msCrypto
@@ -141,17 +129,17 @@ var crypto = typeof window === 'object' && (window.crypto || window.msCrypto); /
 var randomByte;
 
 if (!crypto || !crypto.getRandomValues) {
-  randomByte = function (size) {
-    var bytes = [];
-    for (var i = 0; i < size; i++) {
-      bytes.push(Math.floor(Math.random() * 256));
-    }
-    return bytes;
-  };
+    randomByte = function(size) {
+        var bytes = [];
+        for (var i = 0; i < size; i++) {
+            bytes.push(Math.floor(Math.random() * 256));
+        }
+        return bytes;
+    };
 } else {
-  randomByte = function (size) {
-    return crypto.getRandomValues(new Uint8Array(size));
-  };
+    randomByte = function(size) {
+        return crypto.getRandomValues(new Uint8Array(size));
+    };
 }
 
 var randomByteBrowser = randomByte;
@@ -165,7 +153,7 @@ var format_browser = function (random, alphabet, size) {
   // `2 ** x - 1` number, which will be bigger than alphabet size. If we have
   // 30 symbols in the alphabet, we will take 31 (00011111).
   // We do not use faster Math.clz32, because it is not available in browsers.
-  var mask = (2 << (Math.log(alphabet.length - 1) / Math.LN2)) - 1;
+  var mask = (2 << Math.log(alphabet.length - 1) / Math.LN2) - 1;
   // Bitmask is not a perfect solution (in our example it will pass 31 bytes,
   // which is bigger than the alphabet). As a result, we will need more bytes,
   // than ID size, because we will refuse bytes bigger than the alphabet.
@@ -180,7 +168,7 @@ var format_browser = function (random, alphabet, size) {
 
   // -~f => Math.ceil(f) if n is float number
   // -~i => i + 1 if n is integer number
-  var step = -~((1.6 * mask * size) / alphabet.length);
+  var step = -~(1.6 * mask * size / alphabet.length);
   var id = '';
 
   while (true) {
@@ -192,23 +180,23 @@ var format_browser = function (random, alphabet, size) {
       // we refuse it by `|| ''`.
       id += alphabet[bytes[i] & mask] || '';
       // More compact than `id.length + 1 === size`
-      if (id.length === +size) return id;
+      if (id.length === +size) return id
     }
   }
 };
 
 function generate(number) {
-  var loopCounter = 0;
-  var done;
+    var loopCounter = 0;
+    var done;
 
-  var str = '';
+    var str = '';
 
-  while (!done) {
-    str = str + format_browser(randomByteBrowser, alphabet_1.get(), 1);
-    done = number < Math.pow(16, loopCounter + 1);
-    loopCounter++;
-  }
-  return str;
+    while (!done) {
+        str = str + format_browser(randomByteBrowser, alphabet_1.get(), 1);
+        done = number < (Math.pow(16, loopCounter + 1 ) );
+        loopCounter++;
+    }
+    return str;
 }
 
 var generate_1 = generate;
@@ -233,98 +221,103 @@ var previousSeconds;
  * Returns string id
  */
 function build(clusterWorkerId) {
-  var str = '';
+    var str = '';
 
-  var seconds = Math.floor((Date.now() - REDUCE_TIME) * 0.001);
+    var seconds = Math.floor((Date.now() - REDUCE_TIME) * 0.001);
 
-  if (seconds === previousSeconds) {
-    counter++;
-  } else {
-    counter = 0;
-    previousSeconds = seconds;
-  }
+    if (seconds === previousSeconds) {
+        counter++;
+    } else {
+        counter = 0;
+        previousSeconds = seconds;
+    }
 
-  str = str + generate_1(version);
-  str = str + generate_1(clusterWorkerId);
-  if (counter > 0) {
-    str = str + generate_1(counter);
-  }
-  str = str + generate_1(seconds);
-  return str;
+    str = str + generate_1(version);
+    str = str + generate_1(clusterWorkerId);
+    if (counter > 0) {
+        str = str + generate_1(counter);
+    }
+    str = str + generate_1(seconds);
+    return str;
 }
 
 var build_1 = build;
 
 function isShortId(id) {
-  if (!id || typeof id !== 'string' || id.length < 6) {
-    return false;
-  }
+    if (!id || typeof id !== 'string' || id.length < 6 ) {
+        return false;
+    }
 
-  var nonAlphabetic = new RegExp(
-    '[^' + alphabet_1.get().replace(/[|\\{}()[\]^$+*?.-]/g, '\\$&') + ']'
-  );
-  return !nonAlphabetic.test(id);
+    var nonAlphabetic = new RegExp('[^' +
+      alphabet_1.get().replace(/[|\\{}()[\]^$+*?.-]/g, '\\$&') +
+    ']');
+    return !nonAlphabetic.test(id);
 }
 
 var isValid = isShortId;
 
 var lib = createCommonjsModule(function (module) {
-  // if you are using cluster or multiple servers use this to make each instance
-  // has a unique value for worker
-  // Note: I don't know if this is automatically set when using third
-  // party cluster solutions such as pm2.
-  var clusterWorkerId = 0;
 
-  /**
-   * Set the seed.
-   * Highly recommended if you don't want people to try to figure out your id schema.
-   * exposed as shortid.seed(int)
-   * @param seed Integer value to seed the random alphabet.  ALWAYS USE THE SAME SEED or you might get overlaps.
-   */
-  function seed(seedValue) {
+
+
+
+
+// if you are using cluster or multiple servers use this to make each instance
+// has a unique value for worker
+// Note: I don't know if this is automatically set when using third
+// party cluster solutions such as pm2.
+var clusterWorkerId =  0;
+
+/**
+ * Set the seed.
+ * Highly recommended if you don't want people to try to figure out your id schema.
+ * exposed as shortid.seed(int)
+ * @param seed Integer value to seed the random alphabet.  ALWAYS USE THE SAME SEED or you might get overlaps.
+ */
+function seed(seedValue) {
     alphabet_1.seed(seedValue);
     return module.exports;
-  }
+}
 
-  /**
-   * Set the cluster worker or machine id
-   * exposed as shortid.worker(int)
-   * @param workerId worker must be positive integer.  Number less than 16 is recommended.
-   * returns shortid module so it can be chained.
-   */
-  function worker(workerId) {
+/**
+ * Set the cluster worker or machine id
+ * exposed as shortid.worker(int)
+ * @param workerId worker must be positive integer.  Number less than 16 is recommended.
+ * returns shortid module so it can be chained.
+ */
+function worker(workerId) {
     clusterWorkerId = workerId;
     return module.exports;
-  }
+}
 
-  /**
-   *
-   * sets new characters to use in the alphabet
-   * returns the shuffled alphabet
-   */
-  function characters(newCharacters) {
+/**
+ *
+ * sets new characters to use in the alphabet
+ * returns the shuffled alphabet
+ */
+function characters(newCharacters) {
     if (newCharacters !== undefined) {
-      alphabet_1.characters(newCharacters);
+        alphabet_1.characters(newCharacters);
     }
 
     return alphabet_1.shuffled();
-  }
+}
 
-  /**
-   * Generate unique id
-   * Returns string id
-   */
-  function generate() {
-    return build_1(clusterWorkerId);
-  }
+/**
+ * Generate unique id
+ * Returns string id
+ */
+function generate() {
+  return build_1(clusterWorkerId);
+}
 
-  // Export all other functions as properties of the generate function
-  module.exports = generate;
-  module.exports.generate = generate;
-  module.exports.seed = seed;
-  module.exports.worker = worker;
-  module.exports.characters = characters;
-  module.exports.isValid = isValid;
+// Export all other functions as properties of the generate function
+module.exports = generate;
+module.exports.generate = generate;
+module.exports.seed = seed;
+module.exports.worker = worker;
+module.exports.characters = characters;
+module.exports.isValid = isValid;
 });
 
 var shortid = lib;

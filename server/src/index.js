@@ -25,6 +25,6 @@ app.use('/resources', resourcesRouter);
 app.use('/templates', templatesRouter);
 app.use('/stories', storiesRouter);
 
-app.get('/', (_, res) => res.sendFile(path.join(__dirname, '../build', 'index.html')));
+app.get('*', (_, res) => res.sendFile(path.join(__dirname, '../build', 'index.html')));
 
 http.listen(8000, () => console.log('Example app listening on port 8000!'));

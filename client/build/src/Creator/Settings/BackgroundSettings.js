@@ -7,7 +7,7 @@ import useStylesStore from '../stores/styles.js';
 import axios from '../../common/shared.js';
 import { SERVER_URL } from '../../common/constants.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
   },
@@ -20,17 +20,19 @@ const BackgroundSettings = ({ styleId }) => {
 
   const [outcome, setOutcome] = useState('');
 
-  const { styles, updateStyle } = useStylesStore(state => ({
+  const { styles, updateStyle } = useStylesStore((state) => ({
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
 
-  const upload = async file => {
+  const upload = async (file) => {
     const formData = new FormData();
 
     formData.append('file', file); // Ignore any error
 
-    axios.delete(`resources/${styles[styleId].backgroundImage}`).catch(() => {});
+    axios
+      .delete(`resources/${styles[styleId].backgroundImage}`)
+      .catch(() => {});
 
     try {
       const res = await axios.put('resources/', formData, {
@@ -64,7 +66,7 @@ const BackgroundSettings = ({ styleId }) => {
           inputRef.current.click();
         },
       },
-      'Upload image'
+      'Upload image',
     ),
     React.createElement('input', {
       style: {
@@ -72,11 +74,11 @@ const BackgroundSettings = ({ styleId }) => {
       },
       ref: inputRef,
       type: 'file',
-      onChange: evt => {
+      onChange: (evt) => {
         upload(evt.target.files[0]);
       },
     }),
-    React.createElement(Typography, null, outcome)
+    React.createElement(Typography, null, outcome),
   );
 };
 

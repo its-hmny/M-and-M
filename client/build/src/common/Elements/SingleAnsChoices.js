@@ -45,10 +45,10 @@ function SingleAnsChoices({
   const correctAnswer = useMemo(
     () =>
       answers
-        .filter(answer => answer.value === ANSWER_VALUE.CORRECT)
-        .map(answer => answer.id)
+        .filter((answer) => answer.value === ANSWER_VALUE.CORRECT)
+        .map((answer) => answer.id)
         .sort(),
-    [answers]
+    [answers],
   );
 
   const isCorrect = useMemo(() => {
@@ -60,7 +60,7 @@ function SingleAnsChoices({
       : ANSWER_VALUE.WRONG;
   }, [correctAnswer, selectedAnswer]);
 
-  const handleSelected = event => {
+  const handleSelected = (event) => {
     // since it's radio button, selected answer is only one.
     const { id } = event.target;
 
@@ -69,7 +69,9 @@ function SingleAnsChoices({
 
   useEffect(() => {
     if (!withSubmit && selectedAnswer) {
-      onSubmit(isCorrect, [answers.find(answer => answer.id === selectedAnswer)]);
+      onSubmit(isCorrect, [
+        answers.find((answer) => answer.id === selectedAnswer),
+      ]);
     }
   }, [withSubmit, onSubmit, isCorrect, answers, selectedAnswer]);
   return jsx(
@@ -89,17 +91,19 @@ function SingleAnsChoices({
           selected: id === selectedAnswer,
           onSelected: handleSelected,
           style: style && style['Radio'],
-        })
-      )
+        }),
+      ),
     ),
     withSubmit &&
       jsx(Button, {
         disabled: selectedAnswer === null,
         onClick: () =>
-          onSubmit(isCorrect, [answers.find(answer => answer.id === selectedAnswer)]),
+          onSubmit(isCorrect, [
+            answers.find((answer) => answer.id === selectedAnswer),
+          ]),
         style: style && style.Button,
         text: 'Conferma',
-      })
+      }),
   );
 }
 

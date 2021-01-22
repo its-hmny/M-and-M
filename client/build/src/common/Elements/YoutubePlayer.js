@@ -27,7 +27,7 @@ const YoutubePlayer = ({ srcURL, style }) => {
         'accelerometer; autoplay; clipboard-write; encrypted-media;  gyroscope; picture-in-picture',
       allowFullScreen: true,
       title: 'youtube player',
-    })
+    }),
   );
 };
 

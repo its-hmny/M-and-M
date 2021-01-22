@@ -15,7 +15,7 @@ function emptyFunction() {}
 function emptyFunctionWithReset() {}
 emptyFunctionWithReset.resetWarningCache = emptyFunction;
 
-var factoryWithThrowingShims = function () {
+var factoryWithThrowingShims = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
     if (secret === ReactPropTypesSecret_1) {
       // It is still safe when called from React.
@@ -23,16 +23,15 @@ var factoryWithThrowingShims = function () {
     }
     var err = new Error(
       'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-        'Use PropTypes.checkPropTypes() to call them. ' +
-        'Read more at http://fb.me/use-check-prop-types'
+      'Use PropTypes.checkPropTypes() to call them. ' +
+      'Read more at http://fb.me/use-check-prop-types'
     );
     err.name = 'Invariant Violation';
     throw err;
-  }
-  shim.isRequired = shim;
+  }  shim.isRequired = shim;
   function getShim() {
     return shim;
-  } // Important!
+  }  // Important!
   // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
   var ReactPropTypes = {
     array: shim,
@@ -56,7 +55,7 @@ var factoryWithThrowingShims = function () {
     exact: getShim,
 
     checkPropTypes: emptyFunctionWithReset,
-    resetWarningCache: emptyFunction,
+    resetWarningCache: emptyFunction
   };
 
   ReactPropTypes.PropTypes = ReactPropTypes;
@@ -65,18 +64,18 @@ var factoryWithThrowingShims = function () {
 };
 
 var propTypes = createCommonjsModule(function (module) {
-  /**
-   * Copyright (c) 2013-present, Facebook, Inc.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   */
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
-  {
-    // By explicitly using `prop-types` you are opting into new production behavior.
-    // http://fb.me/prop-types-in-prod
-    module.exports = factoryWithThrowingShims();
-  }
+{
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = factoryWithThrowingShims();
+}
 });
 
 export { propTypes as p };
