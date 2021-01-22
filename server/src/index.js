@@ -1,6 +1,5 @@
 const cors = require('cors');
 const app = require('express')();
-const express = require('express');
 const http = require('http').Server(app);
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
@@ -16,7 +15,6 @@ require('./routes/stats');
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('static'));
 app.use(fileUpload({ createParentPath: true }));
 
 // API endpoints

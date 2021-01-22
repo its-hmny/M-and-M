@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { useSnackbar } from 'notistack';
 import axios, { useQuery } from '../../common/shared';
+import { SERVER_URL } from '../../common/constants';
 
 import io from 'socket.io-client';
 import { useHistory } from 'react-router-dom';
@@ -17,7 +18,7 @@ export const EvaluatorProvider = ({ children }) => {
   const [story, setStory] = useState(undefined);
 
   const socket = useMemo(
-    () => io('http://localhost:8000', { query: { type: 'evaluator', storyId } }),
+    () => io(SERVER_URL, { query: { type: 'evaluator', storyId } }),
     [storyId]
   );
 

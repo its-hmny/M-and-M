@@ -1,4 +1,5 @@
 import React from 'react';
+import clearButton from '../assets/svgs/clear-button.svg';
 
 const WidgetLauncher = props => {
   const { buttonColor, icon, children, open, toggleContainer, ...style } = props;
@@ -15,7 +16,7 @@ const WidgetLauncher = props => {
         {open ? (
           <img
             width="20vw"
-            src="http://localhost:8000/clear-button.svg"
+            src={clearButton}
             className="rcw-open-launcher"
             alt="Closed"
           />
