@@ -119,9 +119,13 @@ const App = () => {
       if (option) {
         if (buttonFrags.includes(option.fragment)) {
           // Button case, simply set the story.nextNode object to itself
-          const { specificPath, valToChange } = option.props;
-
-          setPathToValue([...basepath, ...(specificPath || [])], valToChange, dest, dest);
+          const { pathAlternative, valToChange } = option.props;
+          setPathToValue(
+            [...basepath, ...(pathAlternative || [])],
+            valToChange,
+            dest,
+            dest
+          );
         } else if (choiceFrags.includes(option.fragment)) {
           // MultiAnsChoice and similar case, is needed to set the whole
           // destinaion object one level before in the object itself
