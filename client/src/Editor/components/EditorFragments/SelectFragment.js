@@ -3,11 +3,11 @@ import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import { useEditor } from '../../context/EditorContext';
 
 const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
-  const { specificPath, valToChange, label, data, dataName } = fragmentSpecificProps;
+  const { pathAlternative, valToChange, label, data, dataName } = fragmentSpecificProps;
   const { story, getFromPath, setPathToValue } = useEditor();
   path = path || [];
-  const completePath = specificPath ? [...path, ...specificPath] : [...path];
-  var items = [];
+  const completePath = pathAlternative ? [...path, ...pathAlternative] : [...path];
+  let items = [];
   const menuItems = story.nodes.map(node => {
     if (node[data] && !items.includes(node[data])) {
       items.push(node[data]);
@@ -32,9 +32,6 @@ const SelectFragment = ({ classNames, path, fragmentSpecificProps }) => {
           }
         >
           {menuItems}
-          <MenuItem key={story.nodes.length} value="">
-            {'\u00A0'}
-          </MenuItem>
         </Select>
       </FormControl>
     </div>

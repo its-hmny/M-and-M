@@ -41,7 +41,6 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { divider, FormSelect, deleteStyle } = useStyles();
   const { story, getFromPath, setPathToValue } = useEditor();
   const {
-    pathAlternative,
     valToChange,
     singleCorrectAnswer,
     selectPath,
@@ -55,10 +54,10 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const [correctAnswerValue, setCorrectAnswerValue] = useState([]);
 
   //Additional field to modify objects or array
-  path = pathAlternative ? path.concat(pathAlternative || []) : path;
-  const answers = getFromPath(path || [])[valToChange];
-  const pointsPath = path.concat(valToChange) || [];
-  const selectCompletePath = (path || []).concat(selectPath);
+  path = path || [];
+  const answers = getFromPath(path)[valToChange];
+  const pointsPath = path.concat(valToChange);
+  const selectCompletePath = path.concat(selectPath);
   const correctSelectValue = getFromPath(selectCompletePath)[correctStory];
   const wrongSelectValue = getFromPath(selectCompletePath)[wrongStory];
 
@@ -86,14 +85,14 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   }, [singleCorrectAnswer, answers]);
 
   const addChoice = () => {
-    setPathToValue(path || [], 'answers', [
+    setPathToValue(path, 'answers', [
       ...answers,
       { value: ANSWER_VALUE.WRONG, id: shortid.generate(), text: 'Risposta' },
     ]);
   };
   const deleteChoice = i => {
     answers.splice(i, 1);
-    setPathToValue(path || [], 'answers', answers);
+    setPathToValue(path, 'answers', answers);
   };
 
   const cannotChooseCorrectAnswer = singleCorrectAnswer
@@ -220,9 +219,6 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
           }
         >
           {menuItems}
-          <MenuItem key={story.nodes.length} value="">
-            {'\u00A0'}
-          </MenuItem>
         </Select>
       </FormControl>
 
@@ -237,9 +233,6 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
           }
         >
           {menuItems}
-          <MenuItem key={story.nodes.length} value="">
-            {'\u00A0'}
-          </MenuItem>
         </Select>
       </FormControl>
     </div>

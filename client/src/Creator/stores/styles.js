@@ -21,6 +21,7 @@ const useStylesStore = createStore(set => ({
     SingleAnsChoicesImages: ['DefaultSingleAnsChoicesImages'],
     MultiAnsChoicesImages: ['DefaultMultiAnsChoicesImages'],
     YoutubePlayer: ['DefaultYoutubePlayer'],
+    Points: ['DefaultPoints'],
   },
   styles: {
     DefaultRadio: {},
@@ -121,12 +122,20 @@ const useStylesStore = createStore(set => ({
       },
     },
     DefaultYoutubePlayer: {
-      Player: {
-        width: '100%',
+      width: '100%',
+      height: '20%',
+    },
+    DefaultPoints: {
+      Points: {
+        fontSize: 30,
+        textAlign: 'center',
+        color: 'rgba(0, 0, 0, 1.0)',
       },
-
-      color: 'rgba(0, 0, 0, 1.0)',
-      backgroundColor: 'rgba(255,255,255,1.0)',
+      Text: {
+        fontSize: 16,
+        textAlign: 'center',
+        color: 'rgba(0, 0, 0, 1.0)',
+      },
     },
   },
   addStyle: ({ componentName, styleId, baseStyleId }) => {

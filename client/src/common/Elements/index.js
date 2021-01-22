@@ -8,6 +8,7 @@ export { default as MultiAnsChoicesImages } from './MultiAnsChoicesImages';
 export { default as Footer } from './Footer';
 export { default as Image } from './Image';
 export { default as Input } from './Input';
+export { default as Points } from './Points';
 export { default as Text } from './Text';
 export { default as TextArea } from './TextArea';
 export { default as Spacer } from './Spacer';

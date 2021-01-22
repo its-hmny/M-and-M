@@ -77,6 +77,14 @@ const useStyles = makeStyles(theme => ({
   playIcon: {
     marginRight: theme.spacing(1),
   },
+  text: {
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5),
+    paddingTop: theme.spacing(4),
+  },
+  teamInput: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const takePhoto = onChangeHandler => {
@@ -91,7 +99,11 @@ const takePhoto = onChangeHandler => {
 };
 
 const PlayerLobby = ({ story, onStart, saveChanges }) => {
-  const [playerData, setData] = useState({});
+  const [playerData, setData] = useState({
+    name: '',
+    team: '',
+    avatar: '',
+  });
   const classes = useStyles();
   const initialNodes = useMemo(() => {
     if (story) {
@@ -153,6 +165,15 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
           value={playerData.name}
           onChange={e => setData({ ...playerData, name: e.target.value })}
         />
+        {story && story.modes.includes('teams') && (
+          <TextField
+            className={classes.teamInput}
+            variant="outlined"
+            label="Your team"
+            value={playerData.team}
+            onChange={e => setData({ ...playerData, team: e.target.value })}
+          />
+        )}
       </div>
       {!story ? (
         <CircularProgress />
@@ -187,6 +208,12 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
           Start
         </Fab>
       )}
+      <Typography className={classes.text} variant="body1" align="center">
+        Hey! Just so you know, you can't refresh or go back one page while you're playing.
+        <br />
+        The button in the bottom opens a chat with an Evaluator, if any are online, so you
+        can ask for hints!
+      </Typography>
     </Container>
   );
 };

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { makeStyles, Typography, Box, Button } from '@material-ui/core';
-import Fab from '@material-ui/core/Fab';
-import { Add as AddIcon } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
+import { makeStyles, Typography, Box, Button, Fab } from '@material-ui/core';
+import { Add as AddIcon, Home as HomeIcon } from '@material-ui/icons';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import shortid from 'shortid';
 
 import { useEditor } from './context/EditorContext';
@@ -10,10 +12,9 @@ import GraphCanvas from './components/GraphCanvas';
 import Inspector from './components/Inspector';
 import TemplatesDialog from './components/TemplatesDialog';
 import Panel from './components/Panel';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import SaveButton from '../common/SaveButton';
 
+import * as ROUTES from '../routes';
 import CompSettings from './constants/ComponentProperties.json';
 
 const useStyles = makeStyles(theme => ({
@@ -43,6 +44,9 @@ const useStyles = makeStyles(theme => ({
   saveButton: {},
   saveIcon: {
     marginRight: theme.spacing(1),
+  },
+  homeButton: {
+    marginRight: theme.spacing(2),
   },
   preview: {
     marginLeft: theme.spacing(2),
@@ -92,6 +96,7 @@ const appendNodeId = (nodeId, components) =>
 
 const App = () => {
   const classes = useStyles();
+  const history = useHistory();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isCaptionOpen, setIsCaptionOpen] = useState(true);
   const { story, workingActivity, saveStory, setPathToValue } = useEditor();
@@ -106,6 +111,7 @@ const App = () => {
 
     components.forEach((comp, index) => {
       const basepath = [...(specificPath || ['components']), index];
+
       const option = CompSettings[comp.name].find(({ fragment }) =>
         destinationFrags.includes(fragment)
       );
@@ -114,7 +120,8 @@ const App = () => {
         if (buttonFrags.includes(option.fragment)) {
           // Button case, simply set the story.nextNode object to itself
           const { specificPath, valToChange } = option.props;
-          setPathToValue([...basepath, ...specificPath], valToChange, dest, dest);
+
+          setPathToValue([...basepath, ...(specificPath || [])], valToChange, dest, dest);
         } else if (choiceFrags.includes(option.fragment)) {
           // MultiAnsChoice and similar case, is needed to set the whole
           // destinaion object one level before in the object itself
@@ -146,6 +153,13 @@ const App = () => {
     <div className={classes.container}>
       <div className={classes.graphStyle}>
         <div className={classes.buttonsContainer}>
+          <Fab
+            className={classes.homeButton}
+            onClick={() => history.push(ROUTES.HOME)}
+            size="medium"
+          >
+            <HomeIcon />
+          </Fab>
           <Fab
             variant="extended"
             className={classes.addButton}

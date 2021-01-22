@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
-import { Checkbox } from './Choice';
 import Button from './Button';
 
 /** renders a single choice component:
@@ -28,15 +27,46 @@ const base = css`
   margin: 5px;
   > div {
     margin-bottom: 1rem;
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    flex-wrap: wrap;
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+  }
+`;
+
+const labelImg = css`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #000;
+
+  span {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #f00;
+  }
+
+  input[type='checkbox'] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  img {
     width: 100%;
   }
-  .ImageDiv {
-    width: 50%;
-    height: 40%;
+
+  [type='checkbox']:checked ~ span {
+    display: block;
   }
 `;
 
@@ -66,8 +96,7 @@ function MultiAnsChoicesImages({
     const allCorrect = selectedAnswers
       .sort()
       .every((answerId, index) => answerId === correctAnswers[index]);
-    console.log(correctAnswers);
-    console.log(allCorrect);
+
     return correctLength && allCorrect ? ANSWER_VALUE.CORRECT : ANSWER_VALUE.WRONG;
   }, [correctAnswers, selectedAnswers]);
 
@@ -92,18 +121,18 @@ function MultiAnsChoicesImages({
   return (
     <div css={[base, style]}>
       <div>
-        {answers.map(({ id, imgURL, alt, text }) => (
-          <div key={id} className="ImageDiv">
-            <img src={imgURL} style={base && style['Image']} alt={alt || 'alt'} />
-            <Checkbox
+        {answers.map(({ id, imgURL, alt }) => (
+          <label key={id} css={labelImg}>
+            <input
+              type="checkbox"
               id={id}
               name={name}
-              label={text}
               selected={selectedAnswers.find(answerId => answerId === id)}
-              onSelected={handleSelected}
-              style={style && style['Checkbox']}
+              onChange={handleSelected}
             />
-          </div>
+            <img src={imgURL} alt={alt || 'Alt'} />
+            <span></span>
+          </label>
         ))}
       </div>
 

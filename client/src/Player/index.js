@@ -2,6 +2,8 @@
 import { css, jsx } from '@emotion/core';
 import { useEffect, useMemo, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
+import shortid from 'shortid';
+
 import axios, { useQuery } from '../common/shared';
 import { SERVER_URL } from '../common/constants';
 
@@ -31,8 +33,6 @@ const createStoryProps = (component, storyRuntime) => {
       // if more than one answer, we sum all point values
       return {
         onSubmit: (isCorrect, selectedAnswers) => {
-          console.log(isCorrect);
-          console.log(storyProps);
           const nextNode = storyProps.nextNode[isCorrect];
           storyRuntime.moveTo(nextNode);
           storyRuntime.updateStats({ id, name, data: selectedAnswers });
@@ -58,6 +58,10 @@ const createStoryProps = (component, storyRuntime) => {
           storyRuntime.moveTo(storyProps.nextNode);
           storyRuntime.updateStats({ id, name, data: answer });
         },
+      };
+    case 'Points':
+      return {
+        points: storyRuntime.score,
       };
     default:
       throw new Error(
@@ -98,6 +102,8 @@ const Player = () => {
   const [currentNodeId, setCurrentNodeId] = useState(null);
   // point total
   const [score, setScore] = useState(0);
+
+  const [forceUpdate, setForceUpdate] = useState(shortid.generate());
 
   const socket = useMemo(() => {
     const tmp = io(SERVER_URL, { query: { type: 'player', storyId } });
@@ -160,15 +166,21 @@ const Player = () => {
   const storyRuntime = useMemo(
     () => ({
       currentNodeId,
+      score,
       // Whenever position changes evaluator is updated
       moveTo: node => {
         //If the node is final the player is marked as completed
-        if (story !== null && story.nodes.find(iter => iter.id === node && iter.isFinal))
+        if (
+          story !== null &&
+          story.nodes.find(iter => iter.id === node && iter.isFinal)
+        ) {
           socket.emit('update:eval', {
             story: storyId,
             playerId: ids.player,
             patch: { hasFinished: true },
           });
+        }
+
         socket.emit('update:position', {
           story: storyId,
           senderId: ids.player,
@@ -210,6 +222,8 @@ const Player = () => {
     }
   }, [currentNodeId, story, storyRuntime]);
 
+  useEffect(() => setForceUpdate(shortid.generate()), [currentNodeId]);
+
   if (status === 'LOADING') {
     const saveChanges = patch =>
       socket.emit('update:eval', { story: storyId, playerId: ids.player, patch });
@@ -233,10 +247,24 @@ const Player = () => {
   return (
     <Fragment>
       <div
+        key={forceUpdate}
         css={css`
           width: 100vw;
           height: 100vh;
           overflow-y: auto;
+          padding: 10px;
+          background-color: white;
+          animation-name: fade;
+          animation-duration: 2200ms;
+
+          @keyframes fade {
+            0% {
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
         `}
       >
         {viewContent}

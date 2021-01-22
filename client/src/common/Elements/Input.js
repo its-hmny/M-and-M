@@ -39,7 +39,6 @@ const Input = ({ placeholder, onSubmit = noop, style, initialValue = '' }) => {
         {`${placeholder}*`}
         <input
           id={id}
-          placeholder={placeholder}
           value={answer}
           onChange={event => setAnswer(event.target.value)}
           required

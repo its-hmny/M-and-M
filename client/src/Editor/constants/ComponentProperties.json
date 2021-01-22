@@ -67,7 +67,7 @@
     {
       "fragment": "SelectFragment",
       "props": {
-        "specificPath": ["story"],
+        "pathAlternative": ["story"],
         "valToChange": "nextNode",
         "label": "Destination",
         "data": "id",
@@ -103,6 +103,16 @@
         "pointsPath": ["story", "points"],
         "pointsValToChange": "[CORRECT]"
       }
+    },
+    {
+      "fragment": "SelectFragment",
+      "props": {
+        "pathAlternative": ["story"],
+        "valToChange": "nextNode",
+        "label": "Destination",
+        "data": "id",
+        "dataName": "name"
+      }
     }
   ],
   "ButtonGroup": [],
@@ -112,13 +122,6 @@
       "props": {
         "valToChange": "description",
         "label": "Image description"
-      }
-    },
-    {
-      "fragment": "TextFieldFragment",
-      "props": {
-        "valToChange": "fallback",
-        "label": "Fallback"
       }
     },
     {
@@ -140,7 +143,25 @@
       }
     }
   ],
-  "TextArea": [],
+  "TextArea": [
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "label",
+        "label": "Label text"
+      }
+    },
+    {
+      "fragment": "SelectFragment",
+      "props": {
+        "pathAlternative": ["story"],
+        "valToChange": "nextNode",
+        "label": "Destination",
+        "data": "id",
+        "dataName": "name"
+      }
+    }
+  ],
   "Footer": [],
   "Spacer": [],
   "Background": [],
@@ -240,7 +261,7 @@
     {
       "fragment": "SelectFragment",
       "props": {
-        "specificPath": ["story"],
+        "pathAlternative": ["story"],
         "valToChange": "nextNode",
         "label": "Destination",
         "data": "id",
@@ -254,6 +275,16 @@
       "props": {
         "valToChange": "srcURL",
         "label": "Youtube Link"
+      }
+    }
+  ],
+  "Points": [
+    {
+      "fragment": "PointsFragment",
+      "props": {
+        "valToChange": "messages",
+        "data": "id",
+        "dataName": "name"
       }
     }
   ]

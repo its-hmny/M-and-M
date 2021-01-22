@@ -15,7 +15,7 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
   FileCopy as FileCopyIcon,
-  ExitToApp as ExitToAppIcon,
+  Assessment as AssessmentIcon,
 } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
@@ -227,7 +227,7 @@ const App = () => {
                         component={Link}
                         to={`${ROUTES.EVALUATOR}?storyId=${story.uuid}`}
                       >
-                        <ExitToAppIcon />
+                        <AssessmentIcon />
                       </IconButton>
                     </Tooltip>
                   </ListItemSecondaryAction>
@@ -246,7 +246,7 @@ const App = () => {
       </Fab>
       {!dontAskAgain && (
         <AreYouSureDialog
-          open={toDelete}
+          open={!!toDelete}
           onCancel={() => setToDelete(null)}
           onConfirm={dontAskAgain => {
             setDontAskAgain(dontAskAgain);

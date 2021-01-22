@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Grid, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import { Fab, Grid, Button, makeStyles } from '@material-ui/core';
+import { Home as HomeIcon, ArrowBack as ArrowBackIcon } from '@material-ui/icons';
+import { useSnackbar } from 'notistack';
 
 import Preview from '../common/Preview';
 import Inspector from './components/Inspector';
@@ -8,7 +10,8 @@ import SaveDialog from './components/SaveDialog';
 import axios from '../common/shared';
 import useTemplateStore from './stores/template';
 import useStylesStore from './stores/styles';
-import { useSnackbar } from 'notistack';
+
+import * as ROUTES from '../routes';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -16,6 +19,17 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
+  },
+  buttonsContainer: {
+    margin: theme.spacing(2),
+    top: theme.spacing(2),
+    left: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'row',
+    zIndex: 1,
+  },
+  navButton: {
+    marginRight: theme.spacing(2),
   },
   grid: {
     flexGrow: 1,
@@ -30,8 +44,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const App = () => {
-  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
+  const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
   const styles = useStylesStore(state => state.styles);
   const components = useTemplateStore(state => state.components);
@@ -55,6 +70,18 @@ const App = () => {
 
   return (
     <div className={classes.container}>
+      <div className={classes.buttonsContainer}>
+        <Fab className={classes.navButton} onClick={() => history.goBack()} size="medium">
+          <ArrowBackIcon />
+        </Fab>
+        <Fab
+          className={classes.navButton}
+          onClick={() => history.push(ROUTES.HOME)}
+          size="medium"
+        >
+          <HomeIcon />
+        </Fab>
+      </div>
       <Grid container className={classes.grid}>
         <Grid item xs={6}>
           <Inspector />

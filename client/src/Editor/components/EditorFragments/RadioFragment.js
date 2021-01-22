@@ -19,7 +19,7 @@ const RadioFragment = ({ classNames, path, fragmentSpecificProps }) => {
   } = fragmentSpecificProps;
 
   const { setPathToValue } = useEditor();
-  path = pathAlternative ? path.concat(pathAlternative || []) : path;
+  path = pathAlternative ? path.concat(pathAlternative || []) : path || [];
 
   return (
     <FormControlLabel
@@ -27,7 +27,7 @@ const RadioFragment = ({ classNames, path, fragmentSpecificProps }) => {
       control={<Radio name={name} value={index} checked={index === correctAnswerValue} />}
       onChange={event =>
         onChange !== undefined
-          ? onChange(event, index, path || [], truthValues)
+          ? onChange(event, index, path, truthValues)
           : setPathToValue(
               path || [],
               valToChange,

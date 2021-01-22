@@ -4,6 +4,7 @@ import React from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
+import shortid from 'shortid';
 
 const base = css`
   .player {
@@ -28,7 +29,7 @@ const base = css`
   .icon-play {
   }
 `;
-
+const audioID = shortid.generate();
 const AudioPlayer = ({ srcURL, style }) => {
   const [playing, setPlaying] = React.useState(false);
   const [width, setWidth] = React.useState(0);
@@ -52,7 +53,9 @@ const AudioPlayer = ({ srcURL, style }) => {
     <div css={[base, style]}>
       <div className="player">
         <ReactAudioPlayer
+          aria-label={'Audio Player'}
           src={srcURL}
+          id={audioID}
           listenInterval={1}
           onListen={time => updateProgress(time)}
           ref={element => {
@@ -62,8 +65,13 @@ const AudioPlayer = ({ srcURL, style }) => {
             setPlaying(false);
           }}
         />
+
         <div style={{ backgroundColor: 'lightblue', width: width + '%', height: 4 }} />
-        <button className="play-pause icon-play" onClick={playpause}>
+        <button
+          aria-label={playing ? 'Pause audio player' : 'Play audio player'}
+          className="play-pause icon-play"
+          onClick={playpause}
+        >
           {playing ? <PauseIcon /> : <PlayArrowIcon />}
         </button>
       </div>

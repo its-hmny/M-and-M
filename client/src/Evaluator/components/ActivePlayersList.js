@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
   listItem: {
     padding: 10,
     wordWrap: 'break-word',
+    cursor: 'pointer',
   },
 }));
 
@@ -53,55 +54,59 @@ const ActivePlayersList = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const generatedTab = () =>
-    playersLog.map(player => {
-      const {
-        name,
-        id,
-        avatar,
-        hasFinished,
-        isDisconnected,
-        pendingEvaluation,
-        unreadMessages,
-      } = player;
-      const avaiableName = name || id;
-      const showBadge = Boolean(pendingEvaluation.length || unreadMessages);
-      const statusLabel = hasFinished
-        ? 'Completed'
-        : isDisconnected
-        ? 'Offline'
-        : 'Online';
+    playersLog
+      .sort((a, b) => (a.name || a.id).localeCompare((b.name || b.id).toUpperCase()))
+      .map(player => {
+        const {
+          name,
+          id,
+          team,
+          avatar,
+          hasFinished,
+          isDisconnected,
+          pendingEvaluation,
+          unreadMessages,
+        } = player;
+        const teamTag = team ? ` [${team}]` : '';
+        const avaiableName = name || id;
+        const showBadge = Boolean(pendingEvaluation.length || unreadMessages);
+        const statusLabel = hasFinished
+          ? 'Completed'
+          : isDisconnected
+          ? 'Offline'
+          : 'Online';
 
-      return (
-        <ListItem
-          key={id}
-          selected={selectedPlayer && id === selectedPlayer.id}
-          onClick={() => setFocusedPlayer(id)}
-          onDoubleClick={() => setDialogOpen(true)}
-          disabled={isDisconnected || hasFinished}
-          className={listItem}
-        >
-          {showBadge && <Badge badgeContent={'!'} color="primary" />}
-          <ListItemAvatar>
-            <Avatar src={avatar} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={avaiableName}
-            secondary={<Chip color="primary" size="small" label={statusLabel} />}
-          />
-        </ListItem>
-      );
-    });
+        return (
+          <ListItem
+            key={id}
+            selected={selectedPlayer && id === selectedPlayer.id}
+            onClick={() => setFocusedPlayer(id)}
+            onDoubleClick={() => setDialogOpen(true)}
+            disabled={isDisconnected || hasFinished}
+            className={listItem}
+          >
+            {showBadge && <Badge badgeContent={'!'} color="primary" />}
+            <ListItemAvatar>
+              <Avatar src={avatar} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={avaiableName + teamTag}
+              secondary={
+                <Chip component="span" color="primary" size="small" label={statusLabel} />
+              }
+            />
+          </ListItem>
+        );
+      });
 
   return (
     <div className={container}>
       {playersLog.length === 0 ? (
-        <Typography centered variant="h6">
+        <Typography align="center" variant="h6">
           Nobody is currently playing your story
         </Typography>
       ) : (
-        <List orientation="vertical" indicatorColor="primary">
-          {generatedTab()}
-        </List>
+        <List orientation="vertical">{generatedTab()}</List>
       )}
       <RenameDialog isOpen={dialogOpen} close={() => setDialogOpen(false)} />
     </div>

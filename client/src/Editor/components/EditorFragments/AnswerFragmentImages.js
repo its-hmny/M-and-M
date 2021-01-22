@@ -56,10 +56,10 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
   const [correctAnswerValue, setCorrectAnswerValue] = React.useState([]);
 
   //Additional field to modify objects or array
-  path = pathAlternative ? path.concat(pathAlternative || []) : path;
-  const answers = getFromPath(path || [])[valToChange];
-  const pointsPath = path.concat(valToChange) || [];
-  const selectCompletePath = (path || []).concat(selectPath);
+  path = pathAlternative ? path.concat(pathAlternative) : path || [];
+  const answers = getFromPath(path)[valToChange];
+  const pointsPath = path.concat(valToChange);
+  const selectCompletePath = path.concat(selectPath);
   const correctSelectValue = getFromPath(selectCompletePath)[correctStory];
   const wrongSelectValue = getFromPath(selectCompletePath)[wrongStory];
 
@@ -87,20 +87,19 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
   }, [singleCorrectAnswer, answers]);
 
   const addChoice = () => {
-    setPathToValue(path || [], 'answers', [
+    setPathToValue(path, 'answers', [
       ...answers,
       {
         value: ANSWER_VALUE.WRONG,
         id: shortid.generate(),
         imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'image alt',
-        text: 'answer text',
       },
     ]);
   };
   const deleteChoice = i => {
     answers.splice(i, 1);
-    setPathToValue(path || [], 'answers', answers);
+    setPathToValue(path, 'answers', answers);
   };
 
   var cannotChooseCorrectAnswer = singleCorrectAnswer
@@ -177,18 +176,6 @@ const AnswerFragmentImages = ({ classNames, path, fragmentSpecificProps }) => {
                   setPathToValue(
                     path.concat('answers', i) || [],
                     'alt',
-                    event.target.value
-                  )
-                }
-              />
-              <TextField
-                value={answers[i].text}
-                className={classNames.InspectorElement}
-                label={'Choice text'}
-                onChange={event =>
-                  setPathToValue(
-                    path.concat('answers', i) || [],
-                    'text',
                     event.target.value
                   )
                 }
