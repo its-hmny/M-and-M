@@ -1,4 +1,5 @@
 import React from '../../../web_modules/react.js';
+import clearButton from '../assets/svgs/clear-button.svg.proxy.js';
 
 const WidgetLauncher = (props) => {
   const {
@@ -39,7 +40,7 @@ const WidgetLauncher = (props) => {
       open
         ? React.createElement('img', {
             width: '20vw',
-            src: 'http://localhost:8000/clear-button.svg',
+            src: clearButton,
             className: 'rcw-open-launcher',
             alt: 'Closed',
           })

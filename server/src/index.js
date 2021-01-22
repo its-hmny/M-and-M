@@ -1,7 +1,6 @@
 const cors = require('cors');
 const path = require('path');
 const app = require('express')();
-const express = require('express');
 const http = require('http').Server(app);
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');

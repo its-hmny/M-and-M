@@ -257,6 +257,7 @@ const Player = () => {
           },
         });
         setCurrentNodeId(node);
+        setForceUpdate(shortid.generate());
       },
       updateStats: (payload) => {
         socket.emit('update:stats', {
@@ -295,7 +296,6 @@ const Player = () => {
       setViewContent(content);
     }
   }, [currentNodeId, story, storyRuntime]);
-  useEffect(() => setForceUpdate(shortid.generate()), [currentNodeId]);
 
   if (status === 'LOADING') {
     const saveChanges = (patch) =>
