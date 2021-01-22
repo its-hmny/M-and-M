@@ -17,8 +17,8 @@ const Text = ({ text, style }) => {
       {
         css: [base, style],
       },
-      text,
-    ),
+      text
+    )
   );
 };
 

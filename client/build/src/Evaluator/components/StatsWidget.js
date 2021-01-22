@@ -45,7 +45,7 @@ const StatsWidget = ({ player }) => {
         {
           variant: 'subtitle1',
         },
-        'Here some stats about the player:',
+        'Here some stats about the player:'
       ),
       React.createElement(
         TableContainer,
@@ -68,21 +68,21 @@ const StatsWidget = ({ player }) => {
                 {
                   align: 'center',
                 },
-                'Statistic',
+                'Statistic'
               ),
               React.createElement(
                 TableCell,
                 {
                   align: 'center',
                 },
-                'Result',
-              ),
-            ),
+                'Result'
+              )
+            )
           ),
           React.createElement(
             TableBody,
             null,
-            statsRow.map((stat) =>
+            statsRow.map(stat =>
               React.createElement(
                 TableRow,
                 {
@@ -93,21 +93,21 @@ const StatsWidget = ({ player }) => {
                   {
                     align: 'center',
                   },
-                  stat.label,
+                  stat.label
                 ),
                 React.createElement(
                   TableCell,
                   {
                     align: 'center',
                   },
-                  stat.value || 'No data avaiable',
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
+                  stat.value || 'No data avaiable'
+                )
+              )
+            )
+          )
+        )
+      )
+    )
   );
 };
 

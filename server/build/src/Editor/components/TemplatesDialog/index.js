@@ -21,7 +21,7 @@ import Failure from './Failure.js';
 import { CREATOR } from '../../../routes.js';
 import useTemplates from './use-templates.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     height: '100%',
   },
@@ -95,9 +95,9 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
                 role: 'img',
                 'aria-label': 'thinking emoji',
               },
-              '\uD83E\uDD14',
-            ),
-          ),
+              '\uD83E\uDD14'
+            )
+          )
         ),
         React.createElement(
           DialogContent,
@@ -105,8 +105,8 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
           React.createElement(
             Typography,
             null,
-            'What are you waiting for? Get to the Template Creator and build something amazing!',
-          ),
+            'What are you waiting for? Get to the Template Creator and build something amazing!'
+          )
         ),
         React.createElement(
           DialogActions,
@@ -118,9 +118,9 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
               component: Link,
               to: CREATOR,
             },
-            'Jump to Creator',
-          ),
-        ),
+            'Jump to Creator'
+          )
+        )
       );
     }
 
@@ -161,8 +161,8 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
                 component: Link,
                 to: CREATOR,
               },
-              'Template Creator',
-            ),
+              'Template Creator'
+            )
           ),
           React.createElement(
             'div',
@@ -184,8 +184,8 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
                   key: index,
                   label: template.name,
                   disableRipple: true,
-                }),
-              ),
+                })
+              )
             ),
             React.createElement(
               Box,
@@ -202,8 +202,8 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
                   null,
                   React.createElement(Preview, {
                     components: templates[current].components,
-                  }),
-                ),
+                  })
+                )
               ),
               React.createElement(
                 Box,
@@ -216,18 +216,18 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
                   {
                     variant: 'h6',
                   },
-                  templates[current].name,
+                  templates[current].name
                 ),
                 React.createElement(
                   Typography,
                   {
                     variant: 'subtitle1',
                   },
-                  templates[current].description,
-                ),
-              ),
-            ),
-          ),
+                  templates[current].description
+                )
+              )
+            )
+          )
         ),
         React.createElement(
           DialogActions,
@@ -238,7 +238,7 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
               onClick: onCancel,
               color: 'primary',
             },
-            'Cancel',
+            'Cancel'
           ),
           React.createElement(
             Button,
@@ -246,10 +246,10 @@ const TemplatesDialog = ({ open, onCancel, onConfirm }) => {
               color: 'primary',
               onClick: () => onConfirm(templates[current]),
             },
-            'Confirm',
-          ),
-        ),
-      ),
+            'Confirm'
+          )
+        )
+      )
   );
 };
 

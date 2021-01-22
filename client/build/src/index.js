@@ -5,5 +5,5 @@ import ThemeProvider from './theme.js';
 
 ReactDOM.render(
   React.createElement(ThemeProvider, null, React.createElement(App, null)),
-  document.getElementById('root'),
+  document.getElementById('root')
 );

@@ -1,17 +1,10 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-} from '../../../../web_modules/react.js';
+import React, { useState, useCallback, useRef } from '../../../../web_modules/react.js';
 import { makeStyles } from '../../../../web_modules/@material-ui/core/styles.js';
-import {
-  Typography,
-  InputLabel,
-} from '../../../../web_modules/@material-ui/core.js';
+import { Typography, InputLabel } from '../../../../web_modules/@material-ui/core.js';
 import Slider from '../../../../web_modules/@material-ui/core/Slider.js';
 import shortid from '../../../../web_modules/shortid.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   colorContainer: {
     marginBottom: theme.spacing(2),
     display: 'flex',
@@ -24,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     width: 30,
     height: 30,
     borderRadius: '50%',
-    backgroundColor: (props) => props.color,
+    backgroundColor: props => props.color,
   },
   input: {
     display: 'none',
@@ -41,11 +34,11 @@ const hexToRgba = (hexColor, opacity) => {
   return `rgba(${red}, ${green}, ${blue}, ${opacity.toFixed(2)})`;
 };
 
-const rgbaToHex = (rgba) => {
+const rgbaToHex = rgba => {
   const [red, green, blue] = rgba
     .slice(5, -1)
     .split(',')
-    .map((val) => Number(val.trim()).toString(16).padStart(2, '0'));
+    .map(val => Number(val.trim()).toString(16).padStart(2, '0'));
 
   return `#${red}${green}${blue}`;
 };
@@ -63,7 +56,7 @@ function TextColorPicker({ onChange, value }) {
 
   const inputRef = useRef();
 
-  const handleChangeColor = (event) => {
+  const handleChangeColor = event => {
     onChange({
       color: hexToRgba(event.currentTarget.value, textOpacity),
     });
@@ -91,7 +84,7 @@ function TextColorPicker({ onChange, value }) {
         {
           htmlFor: colorInputId,
         },
-        'Text Color',
+        'Text Color'
       ),
       React.createElement('div', {
         className: classes.swatch,
@@ -104,21 +97,21 @@ function TextColorPicker({ onChange, value }) {
         id: colorInputId,
         value: rgbaToHex(color),
         onChange: handleChangeColor,
-      }),
+      })
     ),
     React.createElement(
       Typography,
       {
         id: 'opacity-slider',
       },
-      'Color Opacity',
+      'Color Opacity'
     ),
     React.createElement(Slider, {
       value: textOpacity * 100,
       onChange: handleChangeTextOpacity,
-      getAriaValueText: (value) => `${value}`,
+      getAriaValueText: value => `${value}`,
       'aria-labelledby': 'opacity-slider',
-    }),
+    })
   );
 }
 

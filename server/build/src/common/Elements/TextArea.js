@@ -17,13 +17,7 @@ const noop = () => {};
 
 const id = shortid.generate();
 
-const TextArea = ({
-  label,
-  rows,
-  onSubmit = noop,
-  initialValue = '',
-  style,
-}) => {
+const TextArea = ({ label, rows, onSubmit = noop, initialValue = '', style }) => {
   const [value, setValue] = useState('');
 
   useEffect(() => setValue(initialValue), [initialValue]);
@@ -38,22 +32,22 @@ const TextArea = ({
           color: style['color'],
         },
       },
-      label,
+      label
     ),
     jsx('textarea', {
       id: id,
       css: [base, style],
       rows: rows,
       value: value,
-      onChange: (evt) => setValue(evt.target.value),
+      onChange: evt => setValue(evt.target.value),
     }),
     jsx(
       'button',
       {
         onClick: () => onSubmit(value),
       },
-      'Invia risposta',
-    ),
+      'Invia risposta'
+    )
   );
 };
 

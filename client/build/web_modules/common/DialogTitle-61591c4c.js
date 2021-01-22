@@ -10,27 +10,45 @@ var styles = {
   root: {
     margin: 0,
     padding: '16px 24px',
-    flex: '0 0 auto'
-  }
+    flex: '0 0 auto',
+  },
 };
-var DialogTitle = /*#__PURE__*/react.forwardRef(function DialogTitle(props, ref) {
+var DialogTitle = /*#__PURE__*/ react.forwardRef(function DialogTitle(props, ref) {
   var children = props.children,
-      classes = props.classes,
-      className = props.className,
-      _props$disableTypogra = props.disableTypography,
-      disableTypography = _props$disableTypogra === void 0 ? false : _props$disableTypogra,
-      other = _objectWithoutProperties(props, ["children", "classes", "className", "disableTypography"]);
+    classes = props.classes,
+    className = props.className,
+    _props$disableTypogra = props.disableTypography,
+    disableTypography = _props$disableTypogra === void 0 ? false : _props$disableTypogra,
+    other = _objectWithoutProperties(props, [
+      'children',
+      'classes',
+      'className',
+      'disableTypography',
+    ]);
 
-  return /*#__PURE__*/react.createElement("div", _extends({
-    className: clsx(classes.root, className),
-    ref: ref
-  }, other), disableTypography ? children : /*#__PURE__*/react.createElement(Typography, {
-    component: "h2",
-    variant: "h6"
-  }, children));
+  return /*#__PURE__*/ react.createElement(
+    'div',
+    _extends(
+      {
+        className: clsx(classes.root, className),
+        ref: ref,
+      },
+      other
+    ),
+    disableTypography
+      ? children
+      : /*#__PURE__*/ react.createElement(
+          Typography,
+          {
+            component: 'h2',
+            variant: 'h6',
+          },
+          children
+        )
+  );
 });
 var __pika_web_default_export_for_treeshaking__ = withStyles(styles, {
-  name: 'MuiDialogTitle'
+  name: 'MuiDialogTitle',
 })(DialogTitle);
 
 export { __pika_web_default_export_for_treeshaking__ as _ };

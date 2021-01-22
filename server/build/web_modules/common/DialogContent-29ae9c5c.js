@@ -15,32 +15,38 @@ var styles = function styles(theme) {
       padding: '8px 24px',
       '&:first-child': {
         // dialog without title
-        paddingTop: 20
-      }
+        paddingTop: 20,
+      },
     },
 
     /* Styles applied to the root element if `dividers={true}`. */
     dividers: {
       padding: '16px 24px',
-      borderTop: "1px solid ".concat(theme.palette.divider),
-      borderBottom: "1px solid ".concat(theme.palette.divider)
-    }
+      borderTop: '1px solid '.concat(theme.palette.divider),
+      borderBottom: '1px solid '.concat(theme.palette.divider),
+    },
   };
 };
-var DialogContent = /*#__PURE__*/react.forwardRef(function DialogContent(props, ref) {
+var DialogContent = /*#__PURE__*/ react.forwardRef(function DialogContent(props, ref) {
   var classes = props.classes,
-      className = props.className,
-      _props$dividers = props.dividers,
-      dividers = _props$dividers === void 0 ? false : _props$dividers,
-      other = _objectWithoutProperties(props, ["classes", "className", "dividers"]);
+    className = props.className,
+    _props$dividers = props.dividers,
+    dividers = _props$dividers === void 0 ? false : _props$dividers,
+    other = _objectWithoutProperties(props, ['classes', 'className', 'dividers']);
 
-  return /*#__PURE__*/react.createElement("div", _extends({
-    className: clsx(classes.root, className, dividers && classes.dividers),
-    ref: ref
-  }, other));
+  return /*#__PURE__*/ react.createElement(
+    'div',
+    _extends(
+      {
+        className: clsx(classes.root, className, dividers && classes.dividers),
+        ref: ref,
+      },
+      other
+    )
+  );
 });
 var __pika_web_default_export_for_treeshaking__ = withStyles(styles, {
-  name: 'MuiDialogContent'
+  name: 'MuiDialogContent',
 })(DialogContent);
 
 export { __pika_web_default_export_for_treeshaking__ as _ };
