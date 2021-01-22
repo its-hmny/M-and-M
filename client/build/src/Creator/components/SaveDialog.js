@@ -8,7 +8,7 @@ import DialogContentText from '../../../web_modules/@material-ui/core/DialogCont
 import DialogTitle from '../../../web_modules/@material-ui/core/DialogTitle.js';
 import { makeStyles } from '../../../web_modules/@material-ui/core.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   name: {
     marginBottom: theme.spacing(2),
   },
@@ -27,16 +27,16 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
         name,
         description,
       }),
-    [name, description, onSave],
+    [name, description, onSave]
   );
 
   const handleEnter = useCallback(
-    (evt) => {
+    evt => {
       if (name && evt.key === 'Enter') {
         handleComplete();
       }
     },
-    [name, handleComplete],
+    [name, handleComplete]
   );
 
   return React.createElement(
@@ -51,7 +51,7 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
       {
         id: 'save-dialog',
       },
-      'Save Template',
+      'Save Template'
     ),
     React.createElement(
       DialogContent,
@@ -59,7 +59,7 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
       React.createElement(
         DialogContentText,
         null,
-        "You're about to save this template. Give your new template a name and a brief description.",
+        "You're about to save this template. Give your new template a name and a brief description."
       ),
       React.createElement(TextField, {
         className: classes.name,
@@ -70,7 +70,7 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
         label: 'Name',
         fullWidth: true,
         value: name,
-        onChange: (evt) => setName(evt.target.value),
+        onChange: evt => setName(evt.target.value),
         onKeyPress: handleEnter,
       }),
       React.createElement(TextField, {
@@ -82,9 +82,9 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
         multiline: true,
         rows: 4,
         value: description,
-        onChange: (evt) => setDescription(evt.target.value),
+        onChange: evt => setDescription(evt.target.value),
         onKeyPress: handleEnter,
-      }),
+      })
     ),
     React.createElement(
       DialogActions,
@@ -95,7 +95,7 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
           onClick: onCancel,
           color: 'primary',
         },
-        'Cancel',
+        'Cancel'
       ),
       React.createElement(
         Button,
@@ -104,9 +104,9 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
           color: 'primary',
           disabled: !name,
         },
-        'Save',
-      ),
-    ),
+        'Save'
+      )
+    )
   );
 };
 

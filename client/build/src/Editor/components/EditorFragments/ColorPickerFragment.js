@@ -1,11 +1,8 @@
 import React, { useCallback, useRef } from '../../../../web_modules/react.js';
-import {
-  Typography,
-  makeStyles,
-} from '../../../../web_modules/@material-ui/core.js';
+import { Typography, makeStyles } from '../../../../web_modules/@material-ui/core.js';
 import { useEditor } from '../../context/EditorContext.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   container: {
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
     display: 'flex',
@@ -19,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
     width: 20,
     height: 20,
     borderRadius: '50%',
-    backgroundColor: (props) => props.color,
+    backgroundColor: props => props.color,
   },
   input: {
     display: 'none',
   },
 }));
 
-const ColorPickerFragment = (props) => {
+const ColorPickerFragment = props => {
   const { path, fragmentSpecificProps } = props;
 
   const { valToChange } = fragmentSpecificProps;
@@ -53,7 +50,7 @@ const ColorPickerFragment = (props) => {
       {
         className: classes.label,
       },
-      'Node Color',
+      'Node Color'
     ),
     React.createElement('div', {
       className: classes.swatch,
@@ -64,9 +61,8 @@ const ColorPickerFragment = (props) => {
       className: classes.input,
       type: 'color',
       value: colorValue,
-      onChange: (event) =>
-        setPathToValue(path || [], valToChange, event.target.value),
-    }),
+      onChange: event => setPathToValue(path || [], valToChange, event.target.value),
+    })
   );
 };
 

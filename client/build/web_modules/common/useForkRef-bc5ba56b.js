@@ -15,16 +15,19 @@ function useForkRef(refA, refB) {
    * This means react will call the old forkRef with `null` and the new forkRef
    * with the ref. Cleanup naturally emerges from this behavior
    */
-  return react.useMemo(function () {
-    if (refA == null && refB == null) {
-      return null;
-    }
+  return react.useMemo(
+    function () {
+      if (refA == null && refB == null) {
+        return null;
+      }
 
-    return function (refValue) {
-      setRef(refA, refValue);
-      setRef(refB, refValue);
-    };
-  }, [refA, refB]);
+      return function (refValue) {
+        setRef(refA, refValue);
+        setRef(refB, refValue);
+      };
+    },
+    [refA, refB]
+  );
 }
 
 export { setRef as s, useForkRef as u };

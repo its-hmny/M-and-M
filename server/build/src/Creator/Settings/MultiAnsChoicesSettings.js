@@ -10,7 +10,7 @@ import useStylesStore from '../stores/styles.js'; // Choices style object refere
 
 function MultiAnsChoicesSettings({ styleId }) {
   // Choices styles
-  const { styles, updateStyle } = useStylesStore((state) => ({
+  const { styles, updateStyle } = useStylesStore(state => ({
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
@@ -21,7 +21,7 @@ function MultiAnsChoicesSettings({ styleId }) {
         styleId: innerId,
         ...subStyle,
       },
-      styleId,
+      styleId
     );
 
   return React.createElement(
@@ -29,14 +29,14 @@ function MultiAnsChoicesSettings({ styleId }) {
     null,
     React.createElement('p', null, 'Edit checkbox settings'),
     React.createElement(TextColorPicker, {
-      onChange: (subStyle) => onChange(subStyle, 'Checkbox'),
+      onChange: subStyle => onChange(subStyle, 'Checkbox'),
       value: styles[styleId]['Checkbox'],
     }),
     React.createElement('p', null, 'Edit submit settings'),
     React.createElement(BackgroundColorPicker, {
-      onChange: (subStyle) => onChange(subStyle, 'Button'),
+      onChange: subStyle => onChange(subStyle, 'Button'),
       value: styles[styleId]['Button'],
-    }),
+    })
   );
 }
 

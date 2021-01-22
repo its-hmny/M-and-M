@@ -1,9 +1,6 @@
 import React from '../../../../web_modules/react.js';
 import { useEditor } from '../../context/EditorContext.js';
-import {
-  Radio,
-  FormControlLabel,
-} from '../../../../web_modules/@material-ui/core.js';
+import { Radio, FormControlLabel } from '../../../../web_modules/@material-ui/core.js';
 /*
   truthValues = [TrueValue, FalseValue]
 */
@@ -30,7 +27,7 @@ const RadioFragment = ({ classNames, path, fragmentSpecificProps }) => {
       value: index,
       checked: index === correctAnswerValue,
     }),
-    onChange: (event) =>
+    onChange: event =>
       onChange !== undefined
         ? onChange(event, index, path, truthValues)
         : setPathToValue(
@@ -42,7 +39,7 @@ const RadioFragment = ({ classNames, path, fragmentSpecificProps }) => {
                 : true
               : truthValues !== undefined
               ? truthValues[1]
-              : false,
+              : false
           ),
     label: label,
   });

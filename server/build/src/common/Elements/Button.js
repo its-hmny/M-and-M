@@ -29,8 +29,8 @@ const Button = ({ text, onClick, style, disabled }) =>
         css: [base, style, disabled ? disabledStyle : ''],
         onClick: disabled ? noop : onClick,
       },
-      text,
-    ),
+      text
+    )
   );
 
 export default Button;

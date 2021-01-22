@@ -80,23 +80,23 @@ function FontFamilyInput({ onChange, value }) {
       clearOnBlur: true,
       handleHomeEndKeys: true,
       required: true,
-      value: possibleFonts.find((font) => font.name === value.fontFamily),
+      value: possibleFonts.find(font => font.name === value.fontFamily),
       options: possibleFonts.sort(),
-      getOptionLabel: (option) => option.name,
-      groupBy: (option) => option.type,
-      renderOption: (option) => option.name,
+      getOptionLabel: option => option.name,
+      groupBy: option => option.type,
+      renderOption: option => option.name,
       style: {
         width: 300,
       },
-      renderInput: (params) =>
+      renderInput: params =>
         React.createElement(
           TextField,
           _extends({}, params, {
             label: 'Font family',
             variant: 'outlined',
-          }),
+          })
         ),
-    }),
+    })
   );
 }
 

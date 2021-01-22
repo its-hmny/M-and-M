@@ -17,7 +17,7 @@ const Chat = ({ onOpen, isOpen }) => {
     deleteMessages();
 
     if (chatLog) {
-      chatLog.forEach((msg) => {
+      chatLog.forEach(msg => {
         const { sender, content } = msg;
 
         sender === `evaluator${storyId}`
@@ -29,7 +29,7 @@ const Chat = ({ onOpen, isOpen }) => {
     setBadgeCount(unreadMessages);
   }, [chatLog, unreadMessages, storyId]);
 
-  const sendHandler = (msg) => {
+  const sendHandler = msg => {
     socket.emit('chat-msg-send', {
       story: storyId,
       senderId: `evaluator${storyId}`,

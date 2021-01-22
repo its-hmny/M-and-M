@@ -13,7 +13,7 @@ import create from '../../../web_modules/zustand.js';
       }
 */
 
-const createStore = (config) =>
-  create((set, get, api) => config((fn) => set(produce(fn)), get, api));
+const createStore = config =>
+  create((set, get, api) => config(fn => set(produce(fn)), get, api));
 
 export default createStore;

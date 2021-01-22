@@ -15,7 +15,7 @@ function FontSizeInput({ onChange, value }) {
     React.createElement(Slider, {
       defaultValue: 12,
       value: Number(value.fontSize.replace('px', '')),
-      getAriaValueText: (val) => `${val}px`,
+      getAriaValueText: val => `${val}px`,
       'aria-labelledby': 'font-size-slider',
       step: 1,
       marks: true,
@@ -23,7 +23,7 @@ function FontSizeInput({ onChange, value }) {
       max: 70,
       valueLabelDisplay: 'on',
       onChange: handleSliderChange,
-    }),
+    })
   );
 }
 

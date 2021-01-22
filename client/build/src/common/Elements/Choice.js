@@ -69,33 +69,33 @@ function Choice({ type, id, name, label, selected, onSelected, style }) {
         htmlFor: id,
         css: [base, style],
       },
-      label,
-    ),
+      label
+    )
   );
 }
 
-const Radio = (props) =>
+const Radio = props =>
   jsx(
     Choice,
     _extends(
       {
         type: 'radio',
       },
-      props,
-    ),
+      props
+    )
   );
 
 Radio.displayName = 'Radio';
 
-const Checkbox = (props) =>
+const Checkbox = props =>
   jsx(
     Choice,
     _extends(
       {
         type: 'checkbox',
       },
-      props,
-    ),
+      props
+    )
   );
 
 Checkbox.displayName = 'Checkbox';
