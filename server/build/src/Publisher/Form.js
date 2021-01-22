@@ -17,7 +17,7 @@ import GetAppIcon from '../../web_modules/@material-ui/icons/GetApp.js';
 import { CLIENT_URL } from '../common/constants.js';
 import SaveButton from '../common/SaveButton.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   form: {
     position: 'relative',
     width: '100%',
@@ -65,9 +65,7 @@ const Form = ({ story, handleChange }) => {
   const handleChecks = (propName, value, isOn) => {
     handleChange(
       propName,
-      isOn
-        ? [...story[propName], value]
-        : story[propName].filter((item) => item !== value),
+      isOn ? [...story[propName], value] : story[propName].filter(item => item !== value)
     );
   };
 
@@ -98,11 +96,11 @@ const Form = ({ story, handleChange }) => {
         variant: 'filled',
         color: 'secondary',
         value: story.title,
-        onChange: (e) => {
+        onChange: e => {
           handleChange('title', e.target.value);
         },
         label: 'Title',
-      }),
+      })
     ),
     React.createElement(
       FormControl,
@@ -114,13 +112,13 @@ const Form = ({ story, handleChange }) => {
         variant: 'filled',
         color: 'secondary',
         value: story.description,
-        onChange: (e) => handleChange('description', e.target.value),
+        onChange: e => handleChange('description', e.target.value),
         label: 'Description',
         placeholder:
           'Write down some intriguing lines to persuade players to choose your story',
         multiline: true,
         rows: 5,
-      }),
+      })
     ),
     React.createElement(
       'div',
@@ -141,11 +139,7 @@ const Form = ({ story, handleChange }) => {
           React.createElement(
             FormGroup,
             null,
-            React.createElement(
-              Typography,
-              null,
-              'Who is this story suitable for?',
-            ),
+            React.createElement(Typography, null, 'Who is this story suitable for?'),
             React.createElement(
               'div',
               {
@@ -154,7 +148,7 @@ const Form = ({ story, handleChange }) => {
               React.createElement(FormControlLabel, {
                 control: React.createElement(Checkbox, {
                   checked: (story.targets || []).includes('children'),
-                  onChange: (evt) =>
+                  onChange: evt =>
                     handleChecks('targets', 'children', evt.target.checked),
                 }),
                 label: React.createElement(
@@ -162,39 +156,37 @@ const Form = ({ story, handleChange }) => {
                   {
                     variant: 'body2',
                   },
-                  'Children',
+                  'Children'
                 ),
               }),
               React.createElement(FormControlLabel, {
                 control: React.createElement(Checkbox, {
                   checked: (story.targets || []).includes('teen'),
-                  onChange: (evt) =>
-                    handleChecks('targets', 'teen', evt.target.checked),
+                  onChange: evt => handleChecks('targets', 'teen', evt.target.checked),
                 }),
                 label: React.createElement(
                   Typography,
                   {
                     variant: 'body2',
                   },
-                  'Teen',
+                  'Teen'
                 ),
               }),
               React.createElement(FormControlLabel, {
                 control: React.createElement(Checkbox, {
                   checked: (story.targets || []).includes('adult'),
-                  onChange: (evt) =>
-                    handleChecks('targets', 'adult', evt.target.checked),
+                  onChange: evt => handleChecks('targets', 'adult', evt.target.checked),
                 }),
                 label: React.createElement(
                   Typography,
                   {
                     variant: 'body2',
                   },
-                  'Young Adults',
+                  'Young Adults'
                 ),
-              }),
-            ),
-          ),
+              })
+            )
+          )
         ),
         React.createElement(
           FormControl,
@@ -208,7 +200,7 @@ const Form = ({ story, handleChange }) => {
             React.createElement(
               Typography,
               null,
-              'What game modes are available for this story?',
+              'What game modes are available for this story?'
             ),
             React.createElement(
               'div',
@@ -218,7 +210,7 @@ const Form = ({ story, handleChange }) => {
               React.createElement(FormControlLabel, {
                 control: React.createElement(Checkbox, {
                   checked: (story.modes || []).includes('singleplayer'),
-                  onChange: (evt) =>
+                  onChange: evt =>
                     handleChecks('modes', 'singleplayer', evt.target.checked),
                 }),
                 label: React.createElement(
@@ -226,13 +218,13 @@ const Form = ({ story, handleChange }) => {
                   {
                     variant: 'body2',
                   },
-                  'Single Player',
+                  'Single Player'
                 ),
               }),
               React.createElement(FormControlLabel, {
                 control: React.createElement(Checkbox, {
                   checked: (story.modes || []).includes('multiplayer'),
-                  onChange: (evt) =>
+                  onChange: evt =>
                     handleChecks('modes', 'multiplayer', evt.target.checked),
                 }),
                 label: React.createElement(
@@ -240,25 +232,24 @@ const Form = ({ story, handleChange }) => {
                   {
                     variant: 'body2',
                   },
-                  'Multiplayer',
+                  'Multiplayer'
                 ),
               }),
               React.createElement(FormControlLabel, {
                 control: React.createElement(Checkbox, {
                   checked: (story.modes || []).includes('teams'),
-                  onChange: (evt) =>
-                    handleChecks('modes', 'teams', evt.target.checked),
+                  onChange: evt => handleChecks('modes', 'teams', evt.target.checked),
                 }),
                 label: React.createElement(
                   Typography,
                   {
                     variant: 'body2',
                   },
-                  'Teams',
+                  'Teams'
                 ),
-              }),
-            ),
-          ),
+              })
+            )
+          )
         ),
         React.createElement(
           FormControl,
@@ -268,7 +259,7 @@ const Form = ({ story, handleChange }) => {
           React.createElement(
             Typography,
             null,
-            'Could your story be played by people with disabilities?',
+            'Could your story be played by people with disabilities?'
           ),
           React.createElement(
             'div',
@@ -288,9 +279,9 @@ const Form = ({ story, handleChange }) => {
                 checked: story.accessible,
                 onChange: () => handleChange('accessible', true),
               }),
-            }),
-          ),
-        ),
+            })
+          )
+        )
       ),
       React.createElement(
         'div',
@@ -322,9 +313,9 @@ const Form = ({ story, handleChange }) => {
             startIcon: React.createElement(GetAppIcon, null),
             onClick: downloadQrCode,
           },
-          'Download QR',
-        ),
-      ),
+          'Download QR'
+        )
+      )
     ),
     React.createElement(
       'div',
@@ -333,8 +324,8 @@ const Form = ({ story, handleChange }) => {
       },
       React.createElement(SaveButton, {
         story: story,
-      }),
-    ),
+      })
+    )
   );
 };
 

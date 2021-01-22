@@ -46,7 +46,7 @@ const Graph = ({
         nodes: nodes.current,
         edges: edges.current,
       },
-      options,
+      options
     );
 
     if (getNetwork) {
@@ -69,21 +69,13 @@ const Graph = ({
     if (nodesChange) {
       const idIsEqual = (n1, n2) => n1.id === n2.id;
 
-      const nodesRemoved = differenceWith(
-        nodes.current.get(),
-        data.nodes,
-        idIsEqual,
-      );
+      const nodesRemoved = differenceWith(nodes.current.get(), data.nodes, idIsEqual);
 
-      const nodesAdded = differenceWith(
-        data.nodes,
-        nodes.current.get(),
-        idIsEqual,
-      );
+      const nodesAdded = differenceWith(data.nodes, nodes.current.get(), idIsEqual);
 
       const nodesChanged = differenceWith(
         differenceWith(data.nodes, nodes.current.get(), isEqual),
-        nodesAdded,
+        nodesAdded
       );
 
       nodes.current.remove(nodesRemoved);
@@ -92,21 +84,13 @@ const Graph = ({
     }
 
     if (edgesChange) {
-      const edgesRemoved = differenceWith(
-        edges.current.get(),
-        data.edges,
-        isEqual,
-      );
+      const edgesRemoved = differenceWith(edges.current.get(), data.edges, isEqual);
 
-      const edgesAdded = differenceWith(
-        data.edges,
-        edges.current.get(),
-        isEqual,
-      );
+      const edgesAdded = differenceWith(data.edges, edges.current.get(), isEqual);
 
       const edgesChanged = differenceWith(
         differenceWith(data.edges, edges.current.get(), isEqual),
-        edgesAdded,
+        edgesAdded
       );
 
       edges.current.remove(edgesRemoved);

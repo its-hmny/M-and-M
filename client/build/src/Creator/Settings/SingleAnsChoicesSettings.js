@@ -10,7 +10,7 @@ import useStylesStore from '../stores/styles.js'; // Choices style object refere
 
 function SingleAnsChoicesSettings({ styleId }) {
   // Choices styles
-  const { styles, updateStyle } = useStylesStore((state) => ({
+  const { styles, updateStyle } = useStylesStore(state => ({
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
@@ -21,7 +21,7 @@ function SingleAnsChoicesSettings({ styleId }) {
         styleId: innerId,
         ...subStyle,
       },
-      styleId,
+      styleId
     );
 
   return React.createElement(
@@ -29,22 +29,22 @@ function SingleAnsChoicesSettings({ styleId }) {
     null,
     React.createElement('p', null, 'Edit radio settings'),
     React.createElement(TextColorPicker, {
-      onChange: (subStyle) => onChange(subStyle, 'Radio'),
+      onChange: subStyle => onChange(subStyle, 'Radio'),
       value: styles[styleId]['Radio'],
     }),
     React.createElement(BackgroundColorPicker, {
-      onChange: (subStyle) => onChange(subStyle, 'Radio'),
+      onChange: subStyle => onChange(subStyle, 'Radio'),
       value: styles[styleId]['Radio'],
     }),
     React.createElement('p', null, 'Edit submit settings'),
     React.createElement(TextColorPicker, {
-      onChange: (subStyle) => onChange(subStyle, 'Button'),
+      onChange: subStyle => onChange(subStyle, 'Button'),
       value: styles[styleId]['Button'],
     }),
     React.createElement(BackgroundColorPicker, {
-      onChange: (subStyle) => onChange(subStyle, 'Button'),
+      onChange: subStyle => onChange(subStyle, 'Button'),
       value: styles[styleId]['Button'],
-    }),
+    })
   );
 }
 

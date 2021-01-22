@@ -21,10 +21,10 @@ function _extends() {
 import React from '../../../web_modules/react.js';
 /* Blocks interaction with the preview */
 
-const ReadOnly = (props) => {
+const ReadOnly = props => {
   const { children, ...options } = props;
 
-  const blockingHandler = (event) => event.stopPropagation();
+  const blockingHandler = event => event.stopPropagation();
 
   return React.createElement(
     'div',
@@ -34,9 +34,9 @@ const ReadOnly = (props) => {
         onFocusCapture: blockingHandler,
         onSelectCapture: blockingHandler,
       },
-      options,
+      options
     ),
-    children,
+    children
   );
 };
 

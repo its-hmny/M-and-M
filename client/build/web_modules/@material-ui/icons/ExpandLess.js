@@ -1,5 +1,12 @@
-import { g as getDefaultExportFromCjs, c as createCommonjsModule } from '../../common/_commonjsHelpers-37fa8da4.js';
-import { i as interopRequireWildcard, a as interopRequireDefault, c as createSvgIcon } from '../../common/createSvgIcon-ecb4de6e.js';
+import {
+  g as getDefaultExportFromCjs,
+  c as createCommonjsModule,
+} from '../../common/_commonjsHelpers-37fa8da4.js';
+import {
+  i as interopRequireWildcard,
+  a as interopRequireDefault,
+  c as createSvgIcon,
+} from '../../common/createSvgIcon-ecb4de6e.js';
 import { r as react } from '../../common/index-8732a38f.js';
 import '../../common/capitalize-263ec4d2.js';
 import '../../common/defaultTheme-b844222d.js';
@@ -24,27 +31,27 @@ import '../../common/useIsFocusVisible-04a95341.js';
 import '../../common/index-859bbe1e.js';
 
 var ExpandLess = createCommonjsModule(function (module, exports) {
+  Object.defineProperty(exports, '__esModule', {
+    value: true,
+  });
+  exports.default = void 0;
 
+  var React = interopRequireWildcard(react);
 
+  var _createSvgIcon = interopRequireDefault(createSvgIcon);
 
+  var _default = (0, _createSvgIcon.default)(
+    /*#__PURE__*/ React.createElement('path', {
+      d: 'M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z',
+    }),
+    'ExpandLess'
+  );
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var React = interopRequireWildcard(react);
-
-var _createSvgIcon = interopRequireDefault(createSvgIcon);
-
-var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
-  d: "M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
-}), 'ExpandLess');
-
-exports.default = _default;
+  exports.default = _default;
 });
 
-var __pika_web_default_export_for_treeshaking__ = /*@__PURE__*/getDefaultExportFromCjs(ExpandLess);
+var __pika_web_default_export_for_treeshaking__ = /*@__PURE__*/ getDefaultExportFromCjs(
+  ExpandLess
+);
 
 export default __pika_web_default_export_for_treeshaking__;

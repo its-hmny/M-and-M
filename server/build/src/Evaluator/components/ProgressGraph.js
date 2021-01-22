@@ -1,8 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-} from '../../../web_modules/react.js';
+import React, { useCallback, useEffect, useRef } from '../../../web_modules/react.js';
 import Graph from '../../common/Graph.js';
 import {
   Options,
@@ -37,10 +33,7 @@ const ProgressGraph = () => {
     return () => window.removeEventListener('resize', resizeHandler);
   }, []);
 
-  const getNetwork = useCallback(
-    (network) => (networkRef.current = network),
-    [],
-  );
+  const getNetwork = useCallback(network => (networkRef.current = network), []);
 
   return React.createElement(
     'div',
@@ -51,7 +44,7 @@ const ProgressGraph = () => {
       data: highlightPath({ ...getGraphFromStory(story) }, playerPath),
       options: Options,
       getNetwork: getNetwork,
-    }),
+    })
   );
 };
 

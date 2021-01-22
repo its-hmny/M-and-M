@@ -1,9 +1,5 @@
 import React from '../web_modules/react.js';
-import {
-  Grid,
-  Typography,
-  makeStyles,
-} from '../web_modules/@material-ui/core.js';
+import { Grid, Typography, makeStyles } from '../web_modules/@material-ui/core.js';
 import Astronaut from './assets/Astronaut.svg.proxy.js';
 
 const useStyles = makeStyles(() => ({
@@ -58,10 +54,10 @@ const NotFound = () => {
             color: 'status',
             variant: 'subtitle1',
           },
-          'We are sorry but the page you are looking for does not exist',
-        ),
-      ),
-    ),
+          'We are sorry but the page you are looking for does not exist'
+        )
+      )
+    )
   );
 };
 

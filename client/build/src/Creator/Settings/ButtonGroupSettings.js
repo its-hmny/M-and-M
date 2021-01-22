@@ -7,7 +7,7 @@ import { DraggableList } from '../components/DraggableList.js';
 import useStylesStore from '../stores/styles.js';
 import { makeStyles } from '../../../web_modules/@material-ui/core/styles.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   buttonList: {
     padding: `0 ${theme.spacing(2)}px ${theme.spacing(1)}px`,
   },
@@ -17,7 +17,7 @@ function ButtonGroupSettings({ componentId, styleId }) {
   const classes = useStyles(); // buttonGroup styles
   // eslint-disable-next-line
 
-  const { styles, updateStyle } = useStylesStore((state) => ({
+  const { styles, updateStyle } = useStylesStore(state => ({
     // buttonGroup has no styles for now, but leaving it in case someone wants to edit
     // flow, for example, or the background color of the buttonGroup. very simple!
     styles: state.styles,
@@ -26,10 +26,10 @@ function ButtonGroupSettings({ componentId, styleId }) {
 
   const [currentlyEditing, setCurrentlyEditing] = useState(0);
 
-  const getButtons = (state) =>
-    state.components.find((component) => component.id === componentId).children;
+  const getButtons = state =>
+    state.components.find(component => component.id === componentId).children;
 
-  const { buttons, addComponent } = useTemplateStore((state) => ({
+  const { buttons, addComponent } = useTemplateStore(state => ({
     buttons: getButtons(state),
     addComponent: state.addComponent,
   }));
@@ -42,13 +42,13 @@ function ButtonGroupSettings({ componentId, styleId }) {
           id: button.id,
           dragIndex: index,
           component: button,
-          onEditing: (isEditing) =>
-            setCurrentlyEditing((currentlyEditing) =>
-              isEditing ? currentlyEditing + 1 : currentlyEditing - 1,
+          onEditing: isEditing =>
+            setCurrentlyEditing(currentlyEditing =>
+              isEditing ? currentlyEditing + 1 : currentlyEditing - 1
             ),
-        }),
+        })
       ),
-    [buttons],
+    [buttons]
   );
 
   return React.createElement(
@@ -67,14 +67,14 @@ function ButtonGroupSettings({ componentId, styleId }) {
           startIcon: React.createElement(AddIcon, null),
           onClick: () => addComponent('Button', componentId),
         },
-        'Add button',
+        'Add button'
       ),
       React.createElement(DraggableList, {
         id: componentId,
         list: list || [],
         disabled: currentlyEditing > 0,
-      }),
-    ),
+      })
+    )
   );
 }
 

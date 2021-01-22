@@ -6,7 +6,7 @@ import { o as formatMuiErrorMessage } from './defaultTheme-b844222d.js';
 // We only handle the first word.
 function capitalize(string) {
   if (typeof string !== 'string') {
-    throw new Error( formatMuiErrorMessage(7));
+    throw new Error(formatMuiErrorMessage(7));
   }
 
   return string.charAt(0).toUpperCase() + string.slice(1);

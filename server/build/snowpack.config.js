@@ -4,14 +4,18 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
   // mount: {},
-  plugins: [['@snowpack/plugin-babel', {
-    input: ['.js'],
-    transformOptions: {
-      presets: ['@babel/preset-react'],
-      plugins: ['@babel/plugin-proposal-class-properties']
-    }
-  }]] // installOptions: {},
+  plugins: [
+    [
+      '@snowpack/plugin-babel',
+      {
+        input: ['.js'],
+        transformOptions: {
+          presets: ['@babel/preset-react'],
+          plugins: ['@babel/plugin-proposal-class-properties'],
+        },
+      },
+    ],
+  ], // installOptions: {},
   // devOptions: {},
   // buildOptions: {},
-
 };

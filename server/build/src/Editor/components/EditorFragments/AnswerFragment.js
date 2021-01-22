@@ -16,7 +16,7 @@ import RadioFragment from './RadioFragment.js';
 import shortid from '../../../../web_modules/shortid.js';
 import DeleteIcon from '../../../../web_modules/@material-ui/icons/Delete.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     overflow: 'auto',
   },
@@ -72,7 +72,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
 
   const items = [];
 
-  const menuItems = story.nodes.map((node) => {
+  const menuItems = story.nodes.map(node => {
     if (!items.includes(node[data])) {
       items.push(node[data]);
       return React.createElement(
@@ -81,7 +81,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
           key: node[data],
           value: node[data],
         },
-        node[dataName],
+        node[dataName]
       );
     }
 
@@ -91,7 +91,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
   useEffect(() => {
     if (singleCorrectAnswer) {
       answers.map((answer, i) =>
-        answer.value === ANSWER_VALUE.CORRECT ? setCorrectAnswerValue(i) : null,
+        answer.value === ANSWER_VALUE.CORRECT ? setCorrectAnswerValue(i) : null
       );
     }
   }, [singleCorrectAnswer, answers]);
@@ -107,14 +107,13 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
     ]);
   };
 
-  const deleteChoice = (i) => {
+  const deleteChoice = i => {
     answers.splice(i, 1);
     setPathToValue(path, 'answers', answers);
   };
 
   const cannotChooseCorrectAnswer = singleCorrectAnswer
-    ? answers.filter((answer) => answer.value === ANSWER_VALUE.CORRECT)
-        .length === 1
+    ? answers.filter(answer => answer.value === ANSWER_VALUE.CORRECT).length === 1
     : false;
 
   const name = shortid.generate();
@@ -125,7 +124,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
     setPathToValue(
       oldAnswerPath,
       'value',
-      truthValues !== undefined ? truthValues[1] : false,
+      truthValues !== undefined ? truthValues[1] : false
     );
     setCorrectAnswerValue(value);
     setPathToValue(
@@ -137,7 +136,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
           : true
         : truthValues !== undefined
         ? truthValues[1]
-        : false,
+        : false
     );
   };
 
@@ -170,7 +169,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
         onClick: addChoice,
         className: classNames.InspectorElement,
       },
-      'Add',
+      'Add'
     ),
     answers.map((answer, i) => {
       return React.createElement(
@@ -193,12 +192,8 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
             value: answers[i].text,
             className: classNames.InspectorElement,
             label: 'Answer text',
-            onChange: (event) =>
-              setPathToValue(
-                path.concat('answers', i) || [],
-                'text',
-                event.target.value,
-              ),
+            onChange: event =>
+              setPathToValue(path.concat('answers', i) || [], 'text', event.target.value),
           }),
           React.createElement(
             IconButton,
@@ -207,14 +202,14 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
             },
             React.createElement(DeleteIcon, {
               className: deleteStyle,
-            }),
-          ),
+            })
+          )
         ),
         React.createElement(TextField, {
           label: 'Answer points',
           value: answer.points,
           className: classNames.InspectorElement,
-          onChange: (event) => setNumberField(event.target.value, i),
+          onChange: event => setNumberField(event.target.value, i),
         }),
         singleCorrectAnswer
           ? React.createElement(RadioFragment, {
@@ -244,7 +239,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
                     ? false
                     : cannotChooseCorrectAnswer,
               },
-            }),
+            })
       );
     }),
     React.createElement(Divider, null),
@@ -258,15 +253,11 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
         Select,
         {
           value: correctSelectValue,
-          onChange: (event) =>
-            setPathToValue(
-              selectCompletePath,
-              correctStory,
-              event.target.value,
-            ),
+          onChange: event =>
+            setPathToValue(selectCompletePath, correctStory, event.target.value),
         },
-        menuItems,
-      ),
+        menuItems
+      )
     ),
     React.createElement(
       FormControl,
@@ -278,12 +269,12 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
         Select,
         {
           value: wrongSelectValue,
-          onChange: (event) =>
+          onChange: event =>
             setPathToValue(selectCompletePath, wrongStory, event.target.value),
         },
-        menuItems,
-      ),
-    ),
+        menuItems
+      )
+    )
   );
 };
 

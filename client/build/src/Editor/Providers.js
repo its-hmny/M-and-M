@@ -47,7 +47,7 @@ const Providers = ({ children }) => {
     {
       userStory: story,
     },
-    children,
+    children
   );
 };
 

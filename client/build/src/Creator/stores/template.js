@@ -19,7 +19,7 @@ const ANSWER_VALUE = {
   WRONG: '[WRONG]',
 };
 
-const generateText = (name) =>
+const generateText = name =>
   `im a ${words[Math.floor(Math.random() * words.length)]} ${name}`;
 
 export const componentBuilders = {
@@ -113,15 +113,13 @@ export const componentBuilders = {
   }),
   Image: () => ({
     name: 'Image',
-    imgURL:
-      'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+    imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
     fallback: 'This is the default fallback',
     styleId: 'DefaultImage',
   }),
   AudioPlayer: () => ({
     name: 'AudioPlayer',
-    srcURL:
-      'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
+    srcURL: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
     styleId: 'DefaultAudioPlayer',
   }),
   Background: () => ({
@@ -143,32 +141,28 @@ export const componentBuilders = {
     answers: [
       {
         id: shortid.generate(),
-        imgURL:
-          'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'alt text',
         value: ANSWER_VALUE.CORRECT,
         points: 0,
       },
       {
         id: shortid.generate(),
-        imgURL:
-          'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'alt text',
         value: ANSWER_VALUE.WRONG,
         points: 0,
       },
       {
         id: shortid.generate(),
-        imgURL:
-          'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'alt text',
         value: ANSWER_VALUE.WRONG,
         points: 0,
       },
       {
         id: shortid.generate(),
-        imgURL:
-          'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'alt text',
         value: ANSWER_VALUE.WRONG,
         points: 0,
@@ -182,32 +176,28 @@ export const componentBuilders = {
     answers: [
       {
         id: shortid.generate(),
-        imgURL:
-          'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'alt text',
         value: ANSWER_VALUE.CORRECT,
         points: 0,
       },
       {
         id: shortid.generate(),
-        imgURL:
-          'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'alt text',
         value: ANSWER_VALUE.CORRECT,
         points: 0,
       },
       {
         id: shortid.generate(),
-        imgURL:
-          'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'alt text',
         value: ANSWER_VALUE.WRONG,
         points: 0,
       },
       {
         id: shortid.generate(),
-        imgURL:
-          'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+        imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
         alt: 'alt text',
         value: ANSWER_VALUE.WRONG,
         points: 0,
@@ -264,7 +254,7 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const useTemplateStore = createStore((set) => ({
+const useTemplateStore = createStore(set => ({
   components: [
     {
       id: shortid.generate(),
@@ -299,7 +289,7 @@ const useTemplateStore = createStore((set) => ({
     },
   ],
   addComponent: (componentName, parentId) => {
-    set((state) => {
+    set(state => {
       let components = state.components;
 
       if (parentId) {
@@ -317,19 +307,19 @@ const useTemplateStore = createStore((set) => ({
     });
   },
   changeStyleId: ({ componentId, newStyleId }) => {
-    set((state) => {
+    set(state => {
       const component = recursiveFind(state.components, componentId);
 
       component.styleId = newStyleId; // Exception is not allowed so that error is raised (intended behaviour)
     });
   },
-  removeComponent: (removedId) => {
-    set((state) => {
+  removeComponent: removedId => {
+    set(state => {
       state.components = recursiveFilter(state.components, removedId);
     });
   },
   reorderComponents: (start, end, dragListId) => {
-    set((state) => {
+    set(state => {
       if (dragListId) {
         // Update component sublist
         const list = recursiveFind(state.components, dragListId);

@@ -13,11 +13,7 @@ const Evaluator = () =>
         horizontal: 'right',
       },
     },
-    React.createElement(
-      EvaluatorProvider,
-      null,
-      React.createElement(App, null),
-    ),
+    React.createElement(EvaluatorProvider, null, React.createElement(App, null))
   );
 
 export default Evaluator;
