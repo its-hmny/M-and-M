@@ -1,5 +1,9 @@
 name: Automated Code Formatting
-on: push
+on: 
+  push:
+    branches:
+      - master
+
 jobs:
   Formatting:
     runs-on: ubuntu-latest

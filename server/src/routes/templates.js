@@ -1,5 +1,4 @@
 const fs = require('fs').promises;
-const util = require('util');
 const path = require('path');
 const express = require('express');
 const shortid = require('shortid');
