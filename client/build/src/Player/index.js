@@ -20,7 +20,12 @@ function _extends() {
 
 /** @jsx jsx */
 import { css, jsx } from '../../web_modules/@emotion/core.js';
-import { useEffect, useMemo, useState, Fragment } from '../../web_modules/react.js';
+import {
+  useEffect,
+  useMemo,
+  useState,
+  Fragment,
+} from '../../web_modules/react.js';
 import { Redirect } from '../../web_modules/react-router-dom.js';
 import shortid from '../../web_modules/shortid.js';
 import axios, { useQuery } from '../common/shared.js';
@@ -61,15 +66,15 @@ const createStoryProps = (component, storyRuntime) => {
           storyRuntime.updateScore(
             selectedAnswers.reduce(
               (points, answer) => points + (Number(answer.points) || 0),
-              0
-            )
+              0,
+            ),
           );
         },
       };
 
     case 'Camera':
       return {
-        onSendPhoto: pic => {
+        onSendPhoto: (pic) => {
           storyRuntime.moveTo(storyProps.nextNode);
           storyRuntime.updateStats({
             id,
@@ -82,7 +87,7 @@ const createStoryProps = (component, storyRuntime) => {
     case 'Input':
     case 'TextArea':
       return {
-        onSubmit: answer => {
+        onSubmit: (answer) => {
           storyRuntime.moveTo(storyProps.nextNode);
           storyRuntime.updateStats({
             id,
@@ -99,13 +104,13 @@ const createStoryProps = (component, storyRuntime) => {
 
     default:
       throw new Error(
-        `Cannot compute story props for ${name} because this component does not exist.`
+        `Cannot compute story props for ${name} because this component does not exist.`,
       );
   }
 }; // create component tree
 
 const buildViewContent = (components, storyRuntime) =>
-  components.map(component => {
+  components.map((component) => {
     const { story, children, ...rest } = component;
 
     const storyProps = story ? createStoryProps(component, storyRuntime) : {}; // compound components must keep their "atoms" in children prop, or we can't
@@ -125,8 +130,8 @@ const buildViewContent = (components, storyRuntime) =>
         {
           key: component.id,
         },
-        props
-      )
+        props,
+      ),
     );
   });
 
@@ -162,14 +167,14 @@ const Player = () => {
       setIds({
         player: tmp.id,
         evaluator: `evaluator${storyId}`,
-      })
+      }),
     );
     return tmp;
   }, [storyId]);
   /* =========================== SOCKET STUFF ======================== */
 
   useEffect(() => {
-    socket.on('chat-msg-recv', payload => {
+    socket.on('chat-msg-recv', (payload) => {
       const { player, evaluator } = ids;
 
       const { story, senderId, receiverId, msg } = payload;
@@ -180,11 +185,15 @@ const Player = () => {
     return () => socket.removeListener('chat-msg-recv');
   }, [socket, storyId, ids]);
   useEffect(() => {
-    const onEvalPts = payload => {
+    const onEvalPts = (payload) => {
       const { story, senderId, receiverId, points } = payload;
 
-      if (story === storyId && senderId === ids.evaluator && receiverId === ids.player) {
-        setScore(score => score + points);
+      if (
+        story === storyId &&
+        senderId === ids.evaluator &&
+        receiverId === ids.player
+      ) {
+        setScore((score) => score + points);
       }
     };
 
@@ -192,7 +201,7 @@ const Player = () => {
     return () => socket.removeListener('eval-pts', onEvalPts);
   }, [socket, storyId, ids]);
 
-  const handleSend = msg =>
+  const handleSend = (msg) =>
     socket.emit('chat-msg-send', {
       story: storyId,
       senderId: ids.player,
@@ -224,11 +233,11 @@ const Player = () => {
       currentNodeId,
       score,
       // Whenever position changes evaluator is updated
-      moveTo: node => {
+      moveTo: (node) => {
         //If the node is final the player is marked as completed
         if (
           story !== null &&
-          story.nodes.find(iter => iter.id === node && iter.isFinal)
+          story.nodes.find((iter) => iter.id === node && iter.isFinal)
         ) {
           socket.emit('update:eval', {
             story: storyId,
@@ -249,7 +258,7 @@ const Player = () => {
         });
         setCurrentNodeId(node);
       },
-      updateStats: payload => {
+      updateStats: (payload) => {
         socket.emit('update:stats', {
           story: storyId,
           nodeId: currentNodeId,
@@ -258,8 +267,8 @@ const Player = () => {
           payload,
         });
       },
-      updateScore: points => {
-        setScore(score => score + points);
+      updateScore: (points) => {
+        setScore((score) => score + points);
         socket.emit('update:score', {
           story: storyId,
           senderId: ids.player,
@@ -270,14 +279,16 @@ const Player = () => {
         });
       },
     }),
-    [socket, currentNodeId, ids, score, storyId, story]
+    [socket, currentNodeId, ids, score, storyId, story],
   ); // load components for this position whenever position changes
 
   useEffect(() => {
     // if (currentNodeId) is insufficient because 0 means false -.-
     // Stupid JS! I miss you Option<T>...sigh
     if (currentNodeId != null) {
-      const { components } = story.nodes.find(node => node.id === currentNodeId);
+      const { components } = story.nodes.find(
+        (node) => node.id === currentNodeId,
+      );
 
       const content = buildViewContent(components, storyRuntime);
 
@@ -287,7 +298,7 @@ const Player = () => {
   useEffect(() => setForceUpdate(shortid.generate()), [currentNodeId]);
 
   if (status === 'LOADING') {
-    const saveChanges = patch =>
+    const saveChanges = (patch) =>
       socket.emit('update:eval', {
         story: storyId,
         playerId: ids.player,
@@ -296,7 +307,7 @@ const Player = () => {
 
     return jsx(PlayerLobby, {
       story: story,
-      onStart: node => {
+      onStart: (node) => {
         setStatus('SUCCESS');
         setCurrentNodeId(node.id);
       },
@@ -336,12 +347,12 @@ const Player = () => {
           }
         `,
       },
-      viewContent
+      viewContent,
     ),
     jsx(Chat, {
       onSend: handleSend,
       socket: socket,
-    })
+    }),
   );
 };
 

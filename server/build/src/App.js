@@ -46,8 +46,8 @@ const App = () => {
       }),
       React.createElement(Route, {
         component: NotFound,
-      })
-    )
+      }),
+    ),
   );
 };
 

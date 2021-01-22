@@ -1,5 +1,14 @@
-import React, { useEffect, useMemo, useState } from '../../../web_modules/react.js';
-import { Paper, Slider, Button, Grid } from '../../../web_modules/@material-ui/core.js';
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+} from '../../../web_modules/react.js';
+import {
+  Paper,
+  Slider,
+  Button,
+  Grid,
+} from '../../../web_modules/@material-ui/core.js';
 import { useEvaluator } from '../context/EvaluatorContext.js';
 import Preview from '../../common/Preview.js';
 
@@ -51,7 +60,7 @@ const VoteSlider = ({ story, player, nodeId }) => {
         value: vote,
         valueLabelDisplay: 'auto',
         onChange: (_, newVote) => setVote(newVote),
-      })
+      }),
     ),
     React.createElement(
       Grid,
@@ -66,9 +75,9 @@ const VoteSlider = ({ story, player, nodeId }) => {
           color: 'primary',
           onClick: sendVote,
         },
-        'Submit'
-      )
-    )
+        'Submit',
+      ),
+    ),
   );
 };
 
@@ -92,29 +101,32 @@ const EvaluationWidget = () => {
 
     let toShow = undefined;
 
-    const plainNode = story.nodes.find(node => node.id === showedNodeId);
+    const plainNode = story.nodes.find((node) => node.id === showedNodeId);
 
     if (!plainNode) return [];
     else toShow = JSON.parse(JSON.stringify(plainNode)); // Get the patch for that node, the patch contains the information added by the player
 
-    let { patchs } = history.find(node => node.activityNodeId === showedNodeId) || {};
+    let { patchs } =
+      history.find((node) => node.activityNodeId === showedNodeId) || {};
 
     patchs = patchs || []; // Apply the patchs to each  modified component in the plain node
     // before showing  it to the evaluator
 
     patchs.forEach(({ componentId, value }) => {
-      const toPatch = toShow.components.find(component => component.id === componentId);
+      const toPatch = toShow.components.find(
+        (component) => component.id === componentId,
+      );
 
       if (toPatch) toPatch.initialValue = value;
     });
     return toShow.components;
   }, [showedNodeId, story.nodes, selectedPlayer]);
 
-  const changeNodeToShow = delta => {
+  const changeNodeToShow = (delta) => {
     const { history } = selectedPlayer;
 
     const currentIndex = history.findIndex(
-      ({ activityNodeId }) => activityNodeId === showedNodeId
+      ({ activityNodeId }) => activityNodeId === showedNodeId,
     );
 
     const updatedIndex = currentIndex + delta;
@@ -147,7 +159,7 @@ const EvaluationWidget = () => {
           small: true,
           onClick: () => changeNodeToShow(-1),
         },
-        '<<'
+        '<<',
       ),
       React.createElement(
         Button,
@@ -157,12 +169,12 @@ const EvaluationWidget = () => {
           small: true,
           onClick: () => changeNodeToShow(+1),
         },
-        '>>'
-      )
+        '>>',
+      ),
     ),
     React.createElement(Preview, {
       components: patchedComponents,
-    })
+    }),
   );
 };
 

@@ -7,7 +7,7 @@ import SaveIcon from '../../web_modules/@material-ui/icons/Save.js';
 import ErrorIcon from '../../web_modules/@material-ui/icons/Error.js';
 import axios from './shared.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   wrapper: {
     position: 'relative',
   },
@@ -105,7 +105,11 @@ const SaveButton = ({ story }) => {
       {
         variant: 'extended',
         color: 'primary',
-        className: success ? classes.buttonSuccess : failure ? classes.buttonFailure : '',
+        className: success
+          ? classes.buttonSuccess
+          : failure
+          ? classes.buttonFailure
+          : '',
         onClick: uploadStory,
       },
       success
@@ -124,8 +128,14 @@ const SaveButton = ({ story }) => {
         : React.createElement(SaveIcon, {
             className: classes.icon,
           }),
-      success ? 'Saved' : failure ? 'Failed' : loading ? 'Saving' : 'Save Story'
-    )
+      success
+        ? 'Saved'
+        : failure
+        ? 'Failed'
+        : loading
+        ? 'Saving'
+        : 'Save Story',
+    ),
   );
 };
 

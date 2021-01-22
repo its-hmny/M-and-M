@@ -17,7 +17,7 @@ import {
 import axios from '../../common/shared.js';
 import { SERVER_URL } from '../../common/constants.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     boxSizing: 'border-box',
     paddingTop: theme.spacing(5),
@@ -89,7 +89,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const takePhoto = onChangeHandler => {
+const takePhoto = (onChangeHandler) => {
   const link = document.createElement('input');
 
   document.body.appendChild(link);
@@ -112,13 +112,13 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
 
   const initialNodes = useMemo(() => {
     if (story) {
-      const initialNodes = story.nodes.filter(node => node.isInitial);
+      const initialNodes = story.nodes.filter((node) => node.isInitial);
 
       return initialNodes.length > 0 ? initialNodes : [story.nodes[0]];
     }
   }, [story]);
 
-  const onChangePicture = event => {
+  const onChangePicture = (event) => {
     const uploadedImg = event.target.files[0];
 
     const formData = new FormData();
@@ -130,7 +130,9 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
       if (playerData.avatar) {
         const resourceId = playerData.avatar.split('/').slice(-1);
 
-        axios.delete(`resources/${resourceId}`).catch(err => console.warn(err));
+        axios
+          .delete(`resources/${resourceId}`)
+          .catch((err) => console.warn(err));
       } // Sends the new one to the server
 
       axios
@@ -139,17 +141,17 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
             'Content-Type': uploadedImg.type,
           },
         })
-        .then(res =>
+        .then((res) =>
           setData({
             ...playerData,
             avatar: `${SERVER_URL}/resources/${res.data.uuid}`,
-          })
+          }),
         )
-        .catch(err => console.warn(err));
+        .catch((err) => console.warn(err));
     }
   };
 
-  const startGame = node => {
+  const startGame = (node) => {
     saveChanges(playerData);
     onStart(node);
   };
@@ -186,13 +188,13 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
           src: playerData.avatar,
           alt: 'Your profile image or avatar',
           className: classes.playerAvatar,
-        })
+        }),
       ),
       React.createElement(TextField, {
         variant: 'outlined',
         label: 'Your name',
         value: playerData.name,
-        onChange: e => setData({ ...playerData, name: e.target.value }),
+        onChange: (e) => setData({ ...playerData, name: e.target.value }),
       }),
       story &&
         story.modes.includes('teams') &&
@@ -201,8 +203,8 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
           variant: 'outlined',
           label: 'Your team',
           value: playerData.team,
-          onChange: e => setData({ ...playerData, team: e.target.value }),
-        })
+          onChange: (e) => setData({ ...playerData, team: e.target.value }),
+        }),
     ),
     !story
       ? React.createElement(CircularProgress, null)
@@ -218,14 +220,14 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
               variant: 'h6',
               className: classes.whereToStartHead,
             },
-            'Where do you want to start from?'
+            'Where do you want to start from?',
           ),
           React.createElement(
             'div',
             {
               className: classes.buttons,
             },
-            initialNodes.map(node =>
+            initialNodes.map((node) =>
               React.createElement(
                 Button,
                 {
@@ -236,10 +238,10 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
                   color: 'primary',
                   fullWidth: true,
                 },
-                node.name
-              )
-            )
-          )
+                node.name,
+              ),
+            ),
+          ),
         )
       : React.createElement(
           Fab,
@@ -252,7 +254,7 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
           React.createElement(PlayCircleFilledRounded, {
             className: classes.playIcon,
           }),
-          'Start'
+          'Start',
         ),
     React.createElement(
       Typography,
@@ -263,8 +265,8 @@ const PlayerLobby = ({ story, onStart, saveChanges }) => {
       },
       "Hey! Just so you know, you can't refresh or go back one page while you're playing.",
       React.createElement('br', null),
-      'The button in the bottom opens a chat with an Evaluator, if any are online, so you can ask for hints!'
-    )
+      'The button in the bottom opens a chat with an Evaluator, if any are online, so you can ask for hints!',
+    ),
   );
 };
 

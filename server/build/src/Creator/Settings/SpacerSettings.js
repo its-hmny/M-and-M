@@ -5,15 +5,15 @@ import Slider from '../../../web_modules/@material-ui/core/Slider.js';
 import Grid from '../../../web_modules/@material-ui/core/Grid.js';
 import Typography from '../../../web_modules/@material-ui/core/Typography.js';
 
-const removePercent = value => Number(value.replace('%', ''));
+const removePercent = (value) => Number(value.replace('%', ''));
 
 const SpacerSettings = ({ styleId }) => {
-  const { styles, updateStyle } = useStylesStore(state => ({
+  const { styles, updateStyle } = useStylesStore((state) => ({
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
 
-  const onChange = subStyle =>
+  const onChange = (subStyle) =>
     updateStyle({
       styleId,
       ...subStyle,
@@ -49,7 +49,7 @@ const SpacerSettings = ({ styleId }) => {
           id: 'height-slider',
           gutterBottom: true,
         },
-        'Height'
+        'Height',
       ),
       React.createElement(
         Grid,
@@ -66,11 +66,11 @@ const SpacerSettings = ({ styleId }) => {
           React.createElement(Slider, {
             value: removePercent(styles[styleId].height),
             onChange: onHeightChange,
-            getAriaValueText: value => `${value}%`,
+            getAriaValueText: (value) => `${value}%`,
             'aria-labelledby': 'height-slider',
-          })
-        )
-      )
+          }),
+        ),
+      ),
     ),
     React.createElement(
       'div',
@@ -81,7 +81,7 @@ const SpacerSettings = ({ styleId }) => {
           id: 'width-slider',
           gutterBottom: true,
         },
-        'Width'
+        'Width',
       ),
       React.createElement(
         Grid,
@@ -98,12 +98,12 @@ const SpacerSettings = ({ styleId }) => {
           React.createElement(Slider, {
             value: removePercent(styles[styleId].width),
             onChange: onWidthChange,
-            getAriaValueText: value => `${value}%`,
+            getAriaValueText: (value) => `${value}%`,
             'aria-labelledby': 'width-slider',
-          })
-        )
-      )
-    )
+          }),
+        ),
+      ),
+    ),
   );
 };
 

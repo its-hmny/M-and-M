@@ -4,12 +4,12 @@ import BackgroundColorPickerInput from './atoms/BackgroundColorPicker.js';
 import useStylesStore from '../stores/styles.js';
 
 function ButtonSettings({ componentId, styleId }) {
-  const { styles, updateStyle } = useStylesStore(state => ({
+  const { styles, updateStyle } = useStylesStore((state) => ({
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
 
-  const onChange = subStyle =>
+  const onChange = (subStyle) =>
     updateStyle({
       styleId,
       ...subStyle,
@@ -25,7 +25,7 @@ function ButtonSettings({ componentId, styleId }) {
     React.createElement(BackgroundColorPickerInput, {
       onChange: onChange,
       value: styles[styleId],
-    })
+    }),
   );
 }
 

@@ -36,7 +36,7 @@ const Camera = ({ style, initialValue, onSendPhoto }) => {
     }
   };
 
-  const handleTakePhoto = evt => {
+  const handleTakePhoto = (evt) => {
     const file = evt.target.files[0];
 
     const reader = new FileReader();
@@ -47,7 +47,7 @@ const Camera = ({ style, initialValue, onSendPhoto }) => {
         // convert image file to base64 string
         setPhotoUrl(reader.result);
       },
-      false
+      false,
     );
 
     if (file) {
@@ -84,7 +84,7 @@ const Camera = ({ style, initialValue, onSendPhoto }) => {
           css: cameraButtonText,
         },
         jsx(PhotoCamera, null),
-        jsx('span', null, photoUrl ? 'Retake' : 'Take photo')
+        jsx('span', null, photoUrl ? 'Retake' : 'Take photo'),
       ),
       style: style && style.CameraButton,
     }),
@@ -93,7 +93,7 @@ const Camera = ({ style, initialValue, onSendPhoto }) => {
       onClick: () => onSendPhoto(photoUrl),
       style: style && style.Button,
       text: 'Conferma',
-    })
+    }),
   );
 };
 

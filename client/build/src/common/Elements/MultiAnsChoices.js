@@ -45,10 +45,10 @@ function MultiAnsChoices({
   const correctAnswers = useMemo(
     () =>
       answers
-        .filter(answer => answer.value === ANSWER_VALUE.CORRECT)
-        .map(answer => answer.id)
+        .filter((answer) => answer.value === ANSWER_VALUE.CORRECT)
+        .map((answer) => answer.id)
         .sort(),
-    [answers]
+    [answers],
   );
 
   const isCorrect = useMemo(() => {
@@ -58,17 +58,19 @@ function MultiAnsChoices({
       .sort()
       .every((answerId, index) => answerId === correctAnswers[index]);
 
-    return correctLength && allCorrect ? ANSWER_VALUE.CORRECT : ANSWER_VALUE.WRONG;
+    return correctLength && allCorrect
+      ? ANSWER_VALUE.CORRECT
+      : ANSWER_VALUE.WRONG;
   }, [correctAnswers, selectedAnswers]);
 
-  const handleSelected = event => {
+  const handleSelected = (event) => {
     // updated selectedAnswers according to user input
     const { id } = event.target;
 
     setSelectedAnswers(
       event.target.checked
         ? [...selectedAnswers, id]
-        : selectedAnswers.filter(answerId => answerId !== id)
+        : selectedAnswers.filter((answerId) => answerId !== id),
     );
   };
 
@@ -76,10 +78,17 @@ function MultiAnsChoices({
     if (!withSubmit && correctAnswers.length === selectedAnswers.length) {
       onSubmit(
         isCorrect,
-        answers.filter(answer => selectedAnswers.includes(answer.id))
+        answers.filter((answer) => selectedAnswers.includes(answer.id)),
       );
     }
-  }, [withSubmit, onSubmit, isCorrect, correctAnswers, answers, selectedAnswers]);
+  }, [
+    withSubmit,
+    onSubmit,
+    isCorrect,
+    correctAnswers,
+    answers,
+    selectedAnswers,
+  ]);
   return jsx(
     'div',
     {
@@ -94,11 +103,11 @@ function MultiAnsChoices({
           id: id,
           name: name,
           label: text,
-          selected: selectedAnswers.find(answerId => answerId === id),
+          selected: selectedAnswers.find((answerId) => answerId === id),
           onSelected: handleSelected,
           style: style && style.Checkbox,
-        })
-      )
+        }),
+      ),
     ),
     withSubmit &&
       jsx(Button, {
@@ -106,11 +115,11 @@ function MultiAnsChoices({
         onClick: () =>
           onSubmit(
             isCorrect,
-            answers.filter(answer => selectedAnswers.includes(answer.id))
+            answers.filter((answer) => selectedAnswers.includes(answer.id)),
           ),
         style: style && style.Button,
         text: 'Conferma',
-      })
+      }),
   );
 }
 

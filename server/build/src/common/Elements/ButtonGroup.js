@@ -14,7 +14,7 @@ const ButtonGroup = ({ style, children }) =>
     {
       css: [base, style],
     },
-    children
+    children,
   );
 
 export default ButtonGroup;

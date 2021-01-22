@@ -1,10 +1,17 @@
-import React, { useState, useRef, useCallback } from '../../../../web_modules/react.js';
+import React, {
+  useState,
+  useRef,
+  useCallback,
+} from '../../../../web_modules/react.js';
 import { makeStyles } from '../../../../web_modules/@material-ui/core/styles.js';
-import { Typography, InputLabel } from '../../../../web_modules/@material-ui/core.js';
+import {
+  Typography,
+  InputLabel,
+} from '../../../../web_modules/@material-ui/core.js';
 import Slider from '../../../../web_modules/@material-ui/core/Slider.js';
 import shortid from '../../../../web_modules/shortid.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   colorContainer: {
     marginBottom: theme.spacing(2),
     display: 'flex',
@@ -17,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     width: 30,
     height: 30,
     borderRadius: '50%',
-    backgroundColor: props => props.color,
+    backgroundColor: (props) => props.color,
   },
   input: {
     display: 'none',
@@ -34,11 +41,11 @@ const hexToRgba = (hexColor, opacity) => {
   return `rgba(${red}, ${green}, ${blue}, ${opacity.toFixed(2)})`;
 };
 
-const rgbaToHex = rgba => {
+const rgbaToHex = (rgba) => {
   const [red, green, blue] = rgba
     .slice(5, -1)
     .split(',')
-    .map(val => Number(val.trim()).toString(16).padStart(2, '0'));
+    .map((val) => Number(val.trim()).toString(16).padStart(2, '0'));
 
   return `#${red}${green}${blue}`;
 };
@@ -56,7 +63,7 @@ function BackgroundColorPicker({ onChange, value }) {
 
   const inputRef = useRef();
 
-  const handleChangeBackgroundColor = event => {
+  const handleChangeBackgroundColor = (event) => {
     onChange({
       backgroundColor: hexToRgba(event.currentTarget.value, bgOpacity),
     });
@@ -84,7 +91,7 @@ function BackgroundColorPicker({ onChange, value }) {
         {
           htmlFor: backgroundColorInputId,
         },
-        'Background Color'
+        'Background Color',
       ),
       React.createElement('div', {
         className: classes.swatch,
@@ -97,21 +104,21 @@ function BackgroundColorPicker({ onChange, value }) {
         id: backgroundColorInputId,
         value: rgbaToHex(backgroundColor),
         onChange: handleChangeBackgroundColor,
-      })
+      }),
     ),
     React.createElement(
       Typography,
       {
         id: 'opacity-slider',
       },
-      'Background Color Opacity'
+      'Background Color Opacity',
     ),
     React.createElement(Slider, {
       value: bgOpacity * 100,
       onChange: handleChangeBGOpacity,
-      getAriaValueText: value => `${value}`,
+      getAriaValueText: (value) => `${value}`,
       'aria-labelledby': 'opacity-slider',
-    })
+    }),
   );
 }
 

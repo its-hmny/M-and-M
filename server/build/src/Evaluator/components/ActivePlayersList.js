@@ -22,7 +22,7 @@ import {
 } from '../../../web_modules/@material-ui/core.js';
 import { useEvaluator } from '../context/EvaluatorContext.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     minWidth: 200,
     width: 200,
@@ -67,8 +67,8 @@ const RenameDialog = ({ isOpen, close }) => {
       React.createElement(Input, {
         autoFocus: true,
         value: newName,
-        onChange: e => setName(e.target.value),
-      })
+        onChange: (e) => setName(e.target.value),
+      }),
     ),
     React.createElement(
       DialogActions,
@@ -80,9 +80,9 @@ const RenameDialog = ({ isOpen, close }) => {
           variant: 'contained',
           onClick: saveChanges,
         },
-        'Save'
-      )
-    )
+        'Save',
+      ),
+    ),
   );
 };
 
@@ -95,8 +95,10 @@ const ActivePlayersList = () => {
 
   const generatedTab = () =>
     playersLog
-      .sort((a, b) => (a.name || a.id).localeCompare((b.name || b.id).toUpperCase()))
-      .map(player => {
+      .sort((a, b) =>
+        (a.name || a.id).localeCompare((b.name || b.id).toUpperCase()),
+      )
+      .map((player) => {
         const {
           name,
           id,
@@ -140,7 +142,7 @@ const ActivePlayersList = () => {
             null,
             React.createElement(Avatar, {
               src: avatar,
-            })
+            }),
           ),
           React.createElement(ListItemText, {
             primary: avaiableName + teamTag,
@@ -150,7 +152,7 @@ const ActivePlayersList = () => {
               size: 'small',
               label: statusLabel,
             }),
-          })
+          }),
         );
       });
 
@@ -166,19 +168,19 @@ const ActivePlayersList = () => {
             align: 'center',
             variant: 'h6',
           },
-          'Nobody is currently playing your story'
+          'Nobody is currently playing your story',
         )
       : React.createElement(
           List,
           {
             orientation: 'vertical',
           },
-          generatedTab()
+          generatedTab(),
         ),
     React.createElement(RenameDialog, {
       isOpen: dialogOpen,
       close: () => setDialogOpen(false),
-    })
+    }),
   );
 };
 

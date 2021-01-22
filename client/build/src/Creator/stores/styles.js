@@ -1,7 +1,7 @@
 import createStore from './createStore.js';
 import defaultBg from '../../assets/default_bg.jpg.proxy.js';
 
-const useStylesStore = createStore(set => ({
+const useStylesStore = createStore((set) => ({
   styleIds: {
     Text: ['DefaultText'],
     Button: ['DefaultButton'],
@@ -143,13 +143,13 @@ const useStylesStore = createStore(set => ({
     },
   },
   addStyle: ({ componentName, styleId, baseStyleId }) => {
-    set(state => {
+    set((state) => {
       state.styleIds[componentName].push(styleId);
       state.styles[styleId] = state.styles[baseStyleId] || {};
     });
   },
   updateStyle: ({ styleId, ...subStyle }, parentStyleId) => {
-    set(state => {
+    set((state) => {
       if (parentStyleId) {
         state.styles[parentStyleId][styleId] = {
           ...state.styles[parentStyleId][styleId],
@@ -161,17 +161,19 @@ const useStylesStore = createStore(set => ({
     });
   },
   removeStyle: ({ componentName, styleId }) => {
-    set(state => {
-      const updatedIds = state.styleIds[componentName].filter(id => id !== styleId);
+    set((state) => {
+      const updatedIds = state.styleIds[componentName].filter(
+        (id) => id !== styleId,
+      );
 
       state.styleIds[componentName] = updatedIds;
       state.styles[styleId] = null;
     });
   },
   renameStyle: ({ componentName, oldId, newId }) => {
-    set(state => {
-      const updatedIds = state.styleIds[componentName].map(id =>
-        id === oldId ? newId : id
+    set((state) => {
+      const updatedIds = state.styleIds[componentName].map((id) =>
+        id === oldId ? newId : id,
       );
 
       state.styleIds[componentName] = updatedIds;
