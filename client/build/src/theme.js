@@ -30,7 +30,7 @@ const ThemeProvider = ({ children }) =>
       theme: theme,
     },
     React.createElement(CssBaseline, null),
-    children
+    children,
   );
 
 export default ThemeProvider;

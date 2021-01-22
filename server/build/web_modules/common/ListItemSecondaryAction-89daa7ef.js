@@ -10,34 +10,26 @@ var styles = {
     position: 'absolute',
     right: 16,
     top: '50%',
-    transform: 'translateY(-50%)',
-  },
+    transform: 'translateY(-50%)'
+  }
 };
 /**
  * Must be used as the last child of ListItem to function properly.
  */
 
-var ListItemSecondaryAction = /*#__PURE__*/ react.forwardRef(
-  function ListItemSecondaryAction(props, ref) {
-    var classes = props.classes,
+var ListItemSecondaryAction = /*#__PURE__*/react.forwardRef(function ListItemSecondaryAction(props, ref) {
+  var classes = props.classes,
       className = props.className,
-      other = _objectWithoutProperties(props, ['classes', 'className']);
+      other = _objectWithoutProperties(props, ["classes", "className"]);
 
-    return /*#__PURE__*/ react.createElement(
-      'div',
-      _extends(
-        {
-          className: clsx(classes.root, className),
-          ref: ref,
-        },
-        other
-      )
-    );
-  }
-);
+  return /*#__PURE__*/react.createElement("div", _extends({
+    className: clsx(classes.root, className),
+    ref: ref
+  }, other));
+});
 ListItemSecondaryAction.muiName = 'ListItemSecondaryAction';
 var __pika_web_default_export_for_treeshaking__ = withStyles(styles, {
-  name: 'MuiListItemSecondaryAction',
+  name: 'MuiListItemSecondaryAction'
 })(ListItemSecondaryAction);
 
 export { __pika_web_default_export_for_treeshaking__ as _ };

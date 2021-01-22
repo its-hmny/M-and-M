@@ -1,7 +1,6 @@
 import { r as react } from './index-8732a38f.js';
 
-var useEnhancedEffect =
-  typeof window !== 'undefined' ? react.useLayoutEffect : react.useEffect;
+var useEnhancedEffect = typeof window !== 'undefined' ? react.useLayoutEffect : react.useEffect;
 /**
  * https://github.com/facebook/react/issues/14099#issuecomment-440013892
  *
@@ -14,7 +13,7 @@ function useEventCallback(fn) {
     ref.current = fn;
   });
   return react.useCallback(function () {
-    return ref.current.apply(void 0, arguments);
+    return (ref.current).apply(void 0, arguments);
   }, []);
 }
 

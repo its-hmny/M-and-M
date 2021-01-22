@@ -19,7 +19,10 @@ function _extends() {
 }
 
 import React, { useCallback, useContext } from '../../../web_modules/react.js';
-import { Droppable, Draggable } from '../../../web_modules/react-beautiful-dnd.js';
+import {
+  Droppable,
+  Draggable,
+} from '../../../web_modules/react-beautiful-dnd.js';
 import { List } from '../../../web_modules/@material-ui/core.js';
 
 const DragListContext = React.createContext();
@@ -36,7 +39,7 @@ export const useDragList = () => {
 
 export const DraggableList = ({ id, list, disabled }) => {
   const renderList = useCallback(
-    components =>
+    (components) =>
       components.map((component, index) => {
         const id = `draggable-${component.props.id}`;
 
@@ -58,11 +61,11 @@ export const DraggableList = ({ id, list, disabled }) => {
                   isDragDisabled: disabled,
                 },
               },
-              component
-            )
+              component,
+            ),
         );
       }),
-    [disabled]
+    [disabled],
   );
 
   return React.createElement(
@@ -79,11 +82,11 @@ export const DraggableList = ({ id, list, disabled }) => {
           {
             ref: provided.innerRef,
           },
-          provided.droppableProps
+          provided.droppableProps,
         ),
         renderList(list),
-        provided.placeholder
+        provided.placeholder,
       );
-    }
+    },
   );
 };

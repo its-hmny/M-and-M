@@ -68,8 +68,8 @@ const CollapsableBox = ({
             variant: 'h6',
             component: 'h6',
           },
-          name
-        )
+          name,
+        ),
       ),
       React.createElement(
         Collapse,
@@ -89,11 +89,11 @@ const CollapsableBox = ({
               {
                 fieldsToSet: fieldsToSet,
               },
-              specificProps
-            )
-          )
-        )
-      )
+              specificProps,
+            ),
+          ),
+        ),
+      ),
     );
   /* If current component does not have modifiable fields the function will return a disabled listitem
      else the function will return a clickable listitem with a collapsable box */
@@ -103,7 +103,7 @@ const CollapsableBox = ({
     {
       className: InspectorElementStyle,
     },
-    ListComponent
+    ListComponent,
   );
 };
 

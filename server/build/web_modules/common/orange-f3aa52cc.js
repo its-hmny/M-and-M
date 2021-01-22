@@ -12,7 +12,7 @@ var red = {
   A100: '#ff8a80',
   A200: '#ff5252',
   A400: '#ff1744',
-  A700: '#d50000',
+  A700: '#d50000'
 };
 
 var pink = {
@@ -29,7 +29,7 @@ var pink = {
   A100: '#ff80ab',
   A200: '#ff4081',
   A400: '#f50057',
-  A700: '#c51162',
+  A700: '#c51162'
 };
 
 var green = {
@@ -46,7 +46,7 @@ var green = {
   A100: '#b9f6ca',
   A200: '#69f0ae',
   A400: '#00e676',
-  A700: '#00c853',
+  A700: '#00c853'
 };
 
 var orange = {
@@ -63,7 +63,7 @@ var orange = {
   A100: '#ffd180',
   A200: '#ffab40',
   A400: '#ff9100',
-  A700: '#ff6d00',
+  A700: '#ff6d00'
 };
 
 export { green as g, orange as o, pink as p, red as r };

@@ -24,7 +24,7 @@ import SaveButton from '../common/SaveButton.js';
 import * as ROUTES from '../routes.js';
 import CompSettings from './constants/ComponentProperties.json.proxy.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     position: 'relative',
     maxWidth: '100vw',
@@ -92,7 +92,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const appendNodeId = (nodeId, components) =>
-  components.map(component => {
+  components.map((component) => {
     const updatedComponent = { ...component, id: `${nodeId}-${component.id}` };
 
     if (updatedComponent.children) {
@@ -113,11 +113,15 @@ const App = () => {
 
   const { story, workingActivity, saveStory, setPathToValue } = useEditor();
 
-  const currentNode = story.nodes.find(node => node.id === workingActivity);
+  const currentNode = story.nodes.find((node) => node.id === workingActivity);
 
   const setNodeDestinations = (components, dest, specificPath) => {
     // Setup the node to point to itself onAdd
-    const destinationFrags = ['SelectFragment', 'AnswerFragment', 'AnswerFragmentImages'];
+    const destinationFrags = [
+      'SelectFragment',
+      'AnswerFragment',
+      'AnswerFragmentImages',
+    ];
 
     const buttonFrags = destinationFrags[0];
 
@@ -127,7 +131,7 @@ const App = () => {
       const basepath = [...(specificPath || ['components']), index];
 
       const option = CompSettings[comp.name].find(({ fragment }) =>
-        destinationFrags.includes(fragment)
+        destinationFrags.includes(fragment),
       );
 
       if (option) {
@@ -135,7 +139,12 @@ const App = () => {
           // Button case, simply set the story.nextNode object to itself
           const { specificPath, valToChange } = option.props;
 
-          setPathToValue([...basepath, ...(specificPath || [])], valToChange, dest, dest);
+          setPathToValue(
+            [...basepath, ...(specificPath || [])],
+            valToChange,
+            dest,
+            dest,
+          );
         } else if (choiceFrags.includes(option.fragment)) {
           // MultiAnsChoice and similar case, is needed to set the whole
           // destinaion object one level before in the object itself
@@ -159,7 +168,7 @@ const App = () => {
     });
   };
 
-  const addNode = template => {
+  const addNode = (template) => {
     setIsDialogOpen(false);
 
     const { nodes, ...others } = story;
@@ -202,7 +211,7 @@ const App = () => {
             onClick: () => history.push(ROUTES.HOME),
             size: 'medium',
           },
-          React.createElement(HomeIcon, null)
+          React.createElement(HomeIcon, null),
         ),
         React.createElement(
           Fab,
@@ -214,11 +223,11 @@ const App = () => {
           React.createElement(AddIcon, {
             className: classes.addIcon,
           }),
-          'Add Node'
+          'Add Node',
         ),
         React.createElement(SaveButton, {
           story: story,
-        })
+        }),
       ),
       React.createElement(
         Box,
@@ -231,7 +240,7 @@ const App = () => {
               {
                 onClick: () => setIsCaptionOpen(true),
               },
-              React.createElement(ExpandLessIcon, null)
+              React.createElement(ExpandLessIcon, null),
             )
           : React.createElement(
               Box,
@@ -243,20 +252,24 @@ const App = () => {
                 {
                   onClick: () => setIsCaptionOpen(false),
                 },
-                React.createElement(ExpandMoreIcon, null)
+                React.createElement(ExpandMoreIcon, null),
               ),
               React.createElement(
                 Typography,
                 null,
-                'Clicca 2 volte su un nodo per modificarlo'
+                'Clicca 2 volte su un nodo per modificarlo',
               ),
-              React.createElement(Typography, null, 'Trascina un nodo per spostarlo'),
               React.createElement(
                 Typography,
                 null,
-                'Per eliminare un nodo vai in Global - Delete node'
-              )
-            )
+                'Trascina un nodo per spostarlo',
+              ),
+              React.createElement(
+                Typography,
+                null,
+                'Per eliminare un nodo vai in Global - Delete node',
+              ),
+            ),
       ),
       React.createElement(
         Panel,
@@ -271,8 +284,8 @@ const App = () => {
           },
           React.createElement(Preview, {
             components: currentNode ? currentNode.components : [],
-          })
-        )
+          }),
+        ),
       ),
       React.createElement(GraphCanvas, null),
       React.createElement(
@@ -284,14 +297,14 @@ const App = () => {
             top: 0,
           },
         },
-        React.createElement(Inspector, null)
+        React.createElement(Inspector, null),
       ),
       React.createElement(TemplatesDialog, {
         open: isDialogOpen,
         onCancel: () => setIsDialogOpen(false),
         onConfirm: addNode,
-      })
-    )
+      }),
+    ),
   );
 };
 

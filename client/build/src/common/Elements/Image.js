@@ -19,7 +19,7 @@ const Image = ({ description, imgURL, style }) => {
       src: imgURL,
       alt: description,
       css: [base, style],
-    })
+    }),
   );
 };
 

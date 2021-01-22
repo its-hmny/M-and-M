@@ -55,7 +55,7 @@ const useStyles = makeStyles({
 });
 
 const buildElements = (components, styles) =>
-  components.map(component => {
+  components.map((component) => {
     const { id, name, style, styleId, children, ...props } = component;
 
     const Element = Elements[name];
@@ -68,8 +68,8 @@ const buildElements = (components, styles) =>
           style: style || styles[styleId],
           children: children && buildElements(children, styles),
         },
-        props
-      )
+        props,
+      ),
     );
   });
 
@@ -89,8 +89,8 @@ const Preview = ({ components, styles = {} }) => {
       {
         className: classes.smartphoneContent,
       },
-      components ? buildElements(components, styles) : []
-    )
+      components ? buildElements(components, styles) : [],
+    ),
   );
 };
 

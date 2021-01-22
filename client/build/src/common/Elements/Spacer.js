@@ -27,7 +27,7 @@ const Spacer = ({ style }) => {
           height: '100%',
         },
       ],
-    })
+    }),
   );
 };
 

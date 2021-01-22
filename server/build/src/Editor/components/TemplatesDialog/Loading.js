@@ -3,7 +3,7 @@ import { makeStyles } from '../../../../web_modules/@material-ui/core/styles.js'
 import CircularProgress from '../../../../web_modules/@material-ui/core/CircularProgress.js';
 import Typography from '../../../../web_modules/@material-ui/core/Typography.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -27,16 +27,16 @@ const Loading = () => {
         {
           variant: 'h6',
         },
-        'Loading templates...'
+        'Loading templates...',
       ),
       React.createElement(
         Typography,
         {
           variant: 'body1',
         },
-        'This should be a very short process'
-      )
-    )
+        'This should be a very short process',
+      ),
+    ),
   );
 };
 

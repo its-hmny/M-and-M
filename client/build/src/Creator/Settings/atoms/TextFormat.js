@@ -17,7 +17,7 @@ const props = {
 
 function TextFormat({ onChange, value }) {
   const [formats, setFormats] = useState(() => {
-    Object.keys(props).forEach(prop => {
+    Object.keys(props).forEach((prop) => {
       if (value[prop]) formats.push(value[prop]);
     });
   });
@@ -27,7 +27,7 @@ function TextFormat({ onChange, value }) {
     Object.entries(props).map(([prop, value]) =>
       onChange({
         [prop]: newFormats.includes(value) ? value : undefined,
-      })
+      }),
     );
   };
 
@@ -44,7 +44,7 @@ function TextFormat({ onChange, value }) {
         value: 'bold',
         'aria-label': 'bold',
       },
-      React.createElement(FormatBoldIcon, null)
+      React.createElement(FormatBoldIcon, null),
     ),
     React.createElement(
       ToggleButton,
@@ -52,7 +52,7 @@ function TextFormat({ onChange, value }) {
         value: 'italic',
         'aria-label': 'italic',
       },
-      React.createElement(FormatItalicIcon, null)
+      React.createElement(FormatItalicIcon, null),
     ),
     React.createElement(
       ToggleButton,
@@ -60,8 +60,8 @@ function TextFormat({ onChange, value }) {
         value: 'underline',
         'aria-label': 'underline',
       },
-      React.createElement(FormatUnderlinedIcon, null)
-    )
+      React.createElement(FormatUnderlinedIcon, null),
+    ),
   );
 }
 

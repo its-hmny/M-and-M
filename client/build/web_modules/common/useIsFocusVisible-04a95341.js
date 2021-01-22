@@ -18,7 +18,7 @@ var inputTypesWhitelist = {
   week: true,
   time: true,
   datetime: true,
-  'datetime-local': true,
+  'datetime-local': true
 };
 /**
  * Computes whether the given element should automatically trigger the
@@ -30,7 +30,7 @@ var inputTypesWhitelist = {
 
 function focusTriggersKeyboardModality(node) {
   var type = node.type,
-    tagName = node.tagName;
+      tagName = node.tagName;
 
   if (tagName === 'INPUT' && inputTypesWhitelist[type] && !node.readOnly) {
     return true;
@@ -54,6 +54,7 @@ function focusTriggersKeyboardModality(node) {
  * @param {KeyboardEvent} event
  */
 
+
 function handleKeyDown(event) {
   if (event.metaKey || event.altKey || event.ctrlKey) {
     return;
@@ -68,6 +69,7 @@ function handleKeyDown(event) {
  * element, and then clicks on a different element, focusing it with a
  * pointing device, while we still think we're in keyboard modality.
  */
+
 
 function handlePointerDown() {
   hadKeyboardEvent = false;
@@ -105,11 +107,13 @@ function isFocusVisible(event) {
   // no need for validFocusTarget check. the user does that by attaching it to
   // focusable events only
 
+
   return hadKeyboardEvent || focusTriggersKeyboardModality(target);
 }
 /**
  * Should be called if a blur event is fired on a focus-visible element
  */
+
 
 function handleBlurVisible() {
   // To detect a tab/window switch, we look for a blur event followed
@@ -135,7 +139,7 @@ function useIsFocusVisible() {
   return {
     isFocusVisible: isFocusVisible,
     onBlurVisible: handleBlurVisible,
-    ref: ref,
+    ref: ref
   };
 }
 

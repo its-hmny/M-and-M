@@ -9,7 +9,7 @@ import {
 import { useEditor } from '../../context/EditorContext.js';
 import DeleteIcon from '../../../../web_modules/@material-ui/icons/Delete.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     overflow: 'auto',
   },
@@ -50,7 +50,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
     ]);
   };
 
-  const deleteChoice = i => {
+  const deleteChoice = (i) => {
     messages.splice(i, 1);
     setPathToValue(path, 'messages', messages);
   };
@@ -84,7 +84,7 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
         onClick: addChoice,
         className: classNames.InspectorElement,
       },
-      'Add'
+      'Add',
     ),
     messages.map((message, i) => {
       return React.createElement(
@@ -107,19 +107,19 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
             value: message.text,
             className: classNames.InspectorElement,
             label: 'Message',
-            onChange: event =>
+            onChange: (event) =>
               setPathToValue(
                 path.concat('messages', i) || [],
                 'text',
-                event.target.value
+                event.target.value,
               ),
           }),
           React.createElement(TextField, {
             label: 'Minimum points',
             value: message.threshold,
             className: classNames.InspectorElement,
-            onChange: event => setNumberField(event.target.value, i),
-          })
+            onChange: (event) => setNumberField(event.target.value, i),
+          }),
         ),
         React.createElement(
           'div',
@@ -131,11 +131,11 @@ const AnswerFragment = ({ classNames, path, fragmentSpecificProps }) => {
             },
             React.createElement(DeleteIcon, {
               className: classes.deleteStyle,
-            })
-          )
-        )
+            }),
+          ),
+        ),
       );
-    })
+    }),
   );
 };
 

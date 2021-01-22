@@ -29,7 +29,7 @@ const Points = ({ messages, points, style, initialValue = 0 }) => {
   // reordered, and their positions change in the Inspector. Actually unbelievable.
   const message = [...messages]
     .sort((a, b) => b.threshold - a.threshold)
-    .find(message => points >= message.threshold);
+    .find((message) => points >= message.threshold);
 
   return jsx(
     'div',
@@ -43,7 +43,7 @@ const Points = ({ messages, points, style, initialValue = 0 }) => {
     jsx(Text, {
       text: message ? message.text : defaultMessage,
       style: style && style['Text'],
-    })
+    }),
   );
 };
 

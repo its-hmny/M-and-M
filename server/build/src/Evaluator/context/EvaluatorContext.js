@@ -34,14 +34,15 @@ export const EvaluatorProvider = ({ children }) => {
           storyId,
         },
       }),
-    [storyId]
+    [storyId],
   );
 
   useEffect(() => {
     // onMount load the story and the player log on the server
     const fetchAll = async () => {
       try {
-        const loadedStory = (await axios.get(`/stories/${storyId}`)).data.payload;
+        const loadedStory = (await axios.get(`/stories/${storyId}`)).data
+          .payload;
 
         setStory(loadedStory);
       } catch (err) {
@@ -59,15 +60,15 @@ export const EvaluatorProvider = ({ children }) => {
         playerId,
         patch,
       }),
-    [socket, storyId]
+    [socket, storyId],
   );
 
   const pushNotification = useCallback(
-    msg =>
+    (msg) =>
       enqueueSnackbar(msg, {
         variant: 'default',
       }),
-    [enqueueSnackbar]
+    [enqueueSnackbar],
   );
 
   useEffect(() => {
@@ -77,46 +78,50 @@ export const EvaluatorProvider = ({ children }) => {
       playerLog = { ...playerLog, ...patch }; // Merge the changes
 
       setPlayersLog(
-        playersLog.map(log => {
+        playersLog.map((log) => {
           if (log.id === playerLog.id) return playerLog;
           else return log;
-        })
+        }),
       );
     }; // Saves in the context the player position in the story
 
-    socket.on('update:position', data => {
+    socket.on('update:position', (data) => {
       const { story, senderId, payload } = data;
 
       if (story === storyId) {
-        let playerLog = playersLog.find(player => player.id === senderId);
+        let playerLog = playersLog.find((player) => player.id === senderId);
 
         if (playerLog) mergePlayerLog(playerLog, payload);
       }
     }); // Saves in the context the player responses and changes to the story's components
 
-    socket.on('update:stats', data => {
+    socket.on('update:stats', (data) => {
       const { story, senderId, payload } = data;
 
       if (story === storyId) {
-        const playerLog = playersLog.find(player => player.id === senderId);
+        const playerLog = playersLog.find((player) => player.id === senderId);
 
         if (playerLog) {
           // There's a new ending evaluation for that player
           const { name, id } = playerLog;
 
-          if (playerLog.pendingEvaluation.length < payload.pendingEvaluation.length)
+          if (
+            playerLog.pendingEvaluation.length <
+            payload.pendingEvaluation.length
+          )
             pushNotification(`New evaluation requested by ${name || id}`);
           mergePlayerLog(playerLog, payload);
         }
       }
     });
-    socket.on('chat-msg-recv', data => {
+    socket.on('chat-msg-recv', (data) => {
       const { story, senderId, receiverId, msg } = data;
 
       if (story === storyId) {
-        const playerId = senderId === `evaluator${storyId}` ? receiverId : senderId;
+        const playerId =
+          senderId === `evaluator${storyId}` ? receiverId : senderId;
 
-        const playerLog = playersLog.find(player => player.id === playerId);
+        const playerLog = playersLog.find((player) => player.id === playerId);
 
         if (playerLog) {
           const toSave = {
@@ -127,7 +132,9 @@ export const EvaluatorProvider = ({ children }) => {
           playerLog.chatLog = [...playerLog.chatLog, toSave]; // Maybe updatePlayerLog
 
           if (senderId !== `evaluator${storyId}`) {
-            pushNotification(`New message from ${playerLog.name || playerLog.id}`);
+            pushNotification(
+              `New message from ${playerLog.name || playerLog.id}`,
+            );
             playerLog.unreadMessages++;
           }
 
@@ -135,21 +142,21 @@ export const EvaluatorProvider = ({ children }) => {
         }
       }
     });
-    socket.on('update:eval', data => {
+    socket.on('update:eval', (data) => {
       const { story, playerId, newLog } = data;
 
       if (story === storyId) {
-        const playerLog = playersLog.find(player => player.id === playerId);
+        const playerLog = playersLog.find((player) => player.id === playerId);
 
         if (playerLog) mergePlayerLog(playerLog, newLog);
       }
     });
-    socket.on('add:player', data => {
+    socket.on('add:player', (data) => {
       const { story, payload } = data;
 
       if (story === storyId) setPlayersLog([...playersLog, payload]);
     });
-    socket.on('get:log', data => {
+    socket.on('get:log', (data) => {
       const { story, payload } = data;
 
       if (story === storyId && payload) {
@@ -157,11 +164,11 @@ export const EvaluatorProvider = ({ children }) => {
         setFocusedPlayer((payload[0] || {}).id);
       }
     });
-    socket.on('rm:player', data => {
+    socket.on('rm:player', (data) => {
       const { story, playerId } = data;
 
       if (story === storyId) {
-        const playerLog = playersLog.find(player => player.id === playerId);
+        const playerLog = playersLog.find((player) => player.id === playerId);
 
         if (playerLog) {
           playerLog.isDisconnected = true;
@@ -178,7 +185,7 @@ export const EvaluatorProvider = ({ children }) => {
     storyId,
     playersLog,
     pushNotification,
-    selectedPlayer: playersLog.find(player => player.id === focusedPlayer),
+    selectedPlayer: playersLog.find((player) => player.id === focusedPlayer),
     setFocusedPlayer,
     updatePlayerLog,
     socket,
@@ -189,7 +196,7 @@ export const EvaluatorProvider = ({ children }) => {
     {
       value: toProvide,
     },
-    children
+    children,
   );
 };
 export const useEvaluator = () => {

@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-const removePercent = value => Number(value.replace('%', '')); // Choices style object reference:
+const removePercent = (value) => Number(value.replace('%', '')); // Choices style object reference:
 // {
 //   Root: { /* root styles */ },
 //   Checkbox: { /* styles applied to Checkbox components */},
@@ -24,7 +24,7 @@ const removePercent = value => Number(value.replace('%', '')); // Choices style 
 function SingleAnsChoicesImagesSettings({ styleId }) {
   const { widthIcon } = useStyles(); // Choices styles
 
-  const { styles, updateStyle } = useStylesStore(state => ({
+  const { styles, updateStyle } = useStylesStore((state) => ({
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
@@ -35,7 +35,7 @@ function SingleAnsChoicesImagesSettings({ styleId }) {
         styleId: innerId,
         ...subStyle,
       },
-      styleId
+      styleId,
     );
 
   const onWidthChange = (_, newWidth) => {
@@ -58,7 +58,7 @@ function SingleAnsChoicesImagesSettings({ styleId }) {
         id: 'width-slider',
         gutterBottom: true,
       },
-      'Width and Height'
+      'Width and Height',
     ),
     React.createElement(
       Grid,
@@ -73,7 +73,7 @@ function SingleAnsChoicesImagesSettings({ styleId }) {
         },
         React.createElement(HeightIcon, {
           className: widthIcon,
-        })
+        }),
       ),
       React.createElement(
         Grid,
@@ -84,29 +84,29 @@ function SingleAnsChoicesImagesSettings({ styleId }) {
         React.createElement(Slider, {
           value: removePercent(styles[styleId]['Image'].width),
           onChange: onWidthChange,
-          getAriaValueText: value => `${value}%`,
+          getAriaValueText: (value) => `${value}%`,
           'aria-labelledby': 'width-slider',
-        })
-      )
+        }),
+      ),
     ),
     React.createElement('p', null, 'Edit Radio settings'),
     React.createElement(TextColorPicker, {
-      onChange: subStyle => onChange(subStyle, 'Radio'),
+      onChange: (subStyle) => onChange(subStyle, 'Radio'),
       value: styles[styleId]['Radio'],
     }),
     React.createElement(BackgroundColorPicker, {
-      onChange: subStyle => onChange(subStyle, 'Radio'),
+      onChange: (subStyle) => onChange(subStyle, 'Radio'),
       value: styles[styleId]['Radio'],
     }),
     React.createElement('p', null, 'Edit submit settings'),
     React.createElement(TextColorPicker, {
-      onChange: subStyle => onChange(subStyle, 'Button'),
+      onChange: (subStyle) => onChange(subStyle, 'Button'),
       value: styles[styleId]['Button'],
     }),
     React.createElement(BackgroundColorPicker, {
-      onChange: subStyle => onChange(subStyle, 'Button'),
+      onChange: (subStyle) => onChange(subStyle, 'Button'),
       value: styles[styleId]['Button'],
-    })
+    }),
   );
 }
 

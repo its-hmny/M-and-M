@@ -84,10 +84,10 @@ function MultiAnsChoicesImages({
   const correctAnswers = useMemo(
     () =>
       answers
-        .filter(answer => answer.value === ANSWER_VALUE.CORRECT)
-        .map(answer => answer.id)
+        .filter((answer) => answer.value === ANSWER_VALUE.CORRECT)
+        .map((answer) => answer.id)
         .sort(),
-    [answers]
+    [answers],
   );
 
   const isCorrect = useMemo(() => {
@@ -97,17 +97,19 @@ function MultiAnsChoicesImages({
       .sort()
       .every((answerId, index) => answerId === correctAnswers[index]);
 
-    return correctLength && allCorrect ? ANSWER_VALUE.CORRECT : ANSWER_VALUE.WRONG;
+    return correctLength && allCorrect
+      ? ANSWER_VALUE.CORRECT
+      : ANSWER_VALUE.WRONG;
   }, [correctAnswers, selectedAnswers]);
 
-  const handleSelected = event => {
+  const handleSelected = (event) => {
     // updated selectedAnswers according to user input
     const { id } = event.target;
 
     setSelectedAnswers(
       event.target.checked
         ? [...selectedAnswers, id]
-        : selectedAnswers.filter(answerId => answerId !== id)
+        : selectedAnswers.filter((answerId) => answerId !== id),
     );
   };
 
@@ -115,10 +117,17 @@ function MultiAnsChoicesImages({
     if (!withSubmit && correctAnswers.length === selectedAnswers.length) {
       onSubmit(
         isCorrect,
-        answers.filter(answer => selectedAnswers.includes(answer.id))
+        answers.filter((answer) => selectedAnswers.includes(answer.id)),
       );
     }
-  }, [withSubmit, onSubmit, isCorrect, correctAnswers, answers, selectedAnswers]);
+  }, [
+    withSubmit,
+    onSubmit,
+    isCorrect,
+    correctAnswers,
+    answers,
+    selectedAnswers,
+  ]);
   return jsx(
     'div',
     {
@@ -138,16 +147,16 @@ function MultiAnsChoicesImages({
             type: 'checkbox',
             id: id,
             name: name,
-            selected: selectedAnswers.find(answerId => answerId === id),
+            selected: selectedAnswers.find((answerId) => answerId === id),
             onChange: handleSelected,
           }),
           jsx('img', {
             src: imgURL,
             alt: alt || 'Alt',
           }),
-          jsx('span', null)
-        )
-      )
+          jsx('span', null),
+        ),
+      ),
     ),
     withSubmit &&
       jsx(Button, {
@@ -155,11 +164,11 @@ function MultiAnsChoicesImages({
         onClick: () =>
           onSubmit(
             isCorrect,
-            answers.filter(answer => selectedAnswers.includes(answer.id))
+            answers.filter((answer) => selectedAnswers.includes(answer.id)),
           ),
         style: style && style.Button,
         text: 'Conferma',
-      })
+      }),
   );
 }
 

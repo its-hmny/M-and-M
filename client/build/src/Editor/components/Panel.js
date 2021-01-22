@@ -30,7 +30,7 @@ const Panel = ({ open, position, style, onClose, children }) => {
       style: style,
       onExited: onClose,
     },
-    React.createElement('div', null, children)
+    React.createElement('div', null, children),
   );
 };
 

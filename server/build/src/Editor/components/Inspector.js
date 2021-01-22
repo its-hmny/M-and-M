@@ -1,10 +1,14 @@
 import React, { useState } from '../../../web_modules/react.js';
-import { Paper, Typography, makeStyles } from '../../../web_modules/@material-ui/core.js';
+import {
+  Paper,
+  Typography,
+  makeStyles,
+} from '../../../web_modules/@material-ui/core.js';
 import { useEditor } from '../context/EditorContext.js';
 import CollapsableBox from './CollapsableBox.js';
 import properties from '../constants/ComponentProperties.json.proxy.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   InspectorPaperStyle: {
     padding: 15,
     height: '100%',
@@ -36,16 +40,16 @@ const Inspector = ({ onClose }) => {
 
   const [opened, setOpened] = useState([]);
 
-  const toggleBox = boxId => {
-    const isOpen = opened.some(item => item === boxId);
+  const toggleBox = (boxId) => {
+    const isOpen = opened.some((item) => item === boxId);
 
     if (isOpen) {
-      setOpened(opened.filter(item => item !== boxId));
+      setOpened(opened.filter((item) => item !== boxId));
     } else {
       setOpened(
         opened.length >= MAX_CONCURRENTLY_OPENED
           ? [...opened.slice(1), boxId]
-          : [...opened, boxId]
+          : [...opened, boxId],
       );
     }
   }; // const getComponentName = node => {
@@ -73,7 +77,7 @@ const Inspector = ({ onClose }) => {
       React.createElement(CollapsableBox, {
         key: `${workingActivity}-Global`,
         name: 'Global',
-        isOpen: opened.some(item => item === `${workingActivity}-Global`),
+        isOpen: opened.some((item) => item === `${workingActivity}-Global`),
         onClick: () => toggleBox(`${workingActivity}-Global`),
         fieldsToSet: properties['Global'],
       });
@@ -83,7 +87,7 @@ const Inspector = ({ onClose }) => {
       React.createElement(CollapsableBox, {
         key: `${workingActivity}-Missions`,
         name: 'Missions',
-        isOpen: opened.some(item => item === `${workingActivity}-Missions`),
+        isOpen: opened.some((item) => item === `${workingActivity}-Missions`),
         onClick: () => toggleBox(`${workingActivity}-Missions`),
         fieldsToSet: properties['Missions'],
       });
@@ -98,7 +102,9 @@ const Inspector = ({ onClose }) => {
           React.createElement(CollapsableBox, {
             key: `${workingActivity}-${component.id}`,
             name: name,
-            isOpen: opened.some(item => item === `${workingActivity}-${component.id}`),
+            isOpen: opened.some(
+              (item) => item === `${workingActivity}-${component.id}`,
+            ),
             onClick: () => toggleBox(`${workingActivity}-${component.id}`),
             indentLevel: level,
             fieldsToSet: properties[name],
@@ -129,7 +135,7 @@ const Inspector = ({ onClose }) => {
         component: 'h4',
         className: DefaultTitleStyle,
       },
-      story.title
+      story.title,
     ),
     React.createElement(
       'div',
@@ -138,10 +144,10 @@ const Inspector = ({ onClose }) => {
       },
       workingActivity &&
         populateInspector(
-          story.nodes.find(node => node.id === workingActivity).components,
-          0
-        )
-    )
+          story.nodes.find((node) => node.id === workingActivity).components,
+          0,
+        ),
+    ),
   );
 };
 

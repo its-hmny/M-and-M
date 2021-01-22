@@ -1,8 +1,11 @@
 import React from '../../../../web_modules/react.js';
-import { TextField, makeStyles } from '../../../../web_modules/@material-ui/core.js';
+import {
+  TextField,
+  makeStyles,
+} from '../../../../web_modules/@material-ui/core.js';
 import { useEditor } from '../../context/EditorContext.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '25ch',
   },
@@ -14,7 +17,12 @@ const useStyles = makeStyles(theme => ({
 const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { root, inputRoot } = useStyles();
 
-  const { pathAlternative, valToChange, label, onChange } = fragmentSpecificProps;
+  const {
+    pathAlternative,
+    valToChange,
+    label,
+    onChange,
+  } = fragmentSpecificProps;
 
   const { getFromPath, setPathToValue } = useEditor(); //Additional field to modify objects or array
 
@@ -39,11 +47,11 @@ const TextFieldFragment = ({ classNames, path, fragmentSpecificProps }) => {
       value: value,
       variant: 'outlined',
       size: 'small',
-      onChange: event =>
+      onChange: (event) =>
         onChange !== undefined
           ? onChange(event)
           : setPathToValue(path, valToChange, event.target.value),
-    })
+    }),
   );
 };
 
