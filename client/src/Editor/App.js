@@ -17,7 +17,7 @@ import SaveButton from '../common/SaveButton';
 import * as ROUTES from '../routes';
 import CompSettings from './constants/ComponentProperties.json';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     position: 'relative',
     maxWidth: '100vw',
@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const appendNodeId = (nodeId, components) =>
-  components.map(component => {
+  components.map((component) => {
     const updatedComponent = { ...component, id: `${nodeId}-${component.id}` };
     if (updatedComponent.children) {
       updatedComponent.children = appendNodeId(nodeId, component.children);
@@ -101,11 +101,15 @@ const App = () => {
   const [isCaptionOpen, setIsCaptionOpen] = useState(true);
   const { story, workingActivity, saveStory, setPathToValue } = useEditor();
 
-  const currentNode = story.nodes.find(node => node.id === workingActivity);
+  const currentNode = story.nodes.find((node) => node.id === workingActivity);
 
   const setNodeDestinations = (components, dest, specificPath) => {
     // Setup the node to point to itself onAdd
-    const destinationFrags = ['SelectFragment', 'AnswerFragment', 'AnswerFragmentImages'];
+    const destinationFrags = [
+      'SelectFragment',
+      'AnswerFragment',
+      'AnswerFragmentImages',
+    ];
     const buttonFrags = destinationFrags[0];
     const choiceFrags = destinationFrags.slice(-2);
 
@@ -113,15 +117,19 @@ const App = () => {
       const basepath = [...(specificPath || ['components']), index];
 
       const option = CompSettings[comp.name].find(({ fragment }) =>
-        destinationFrags.includes(fragment)
+        destinationFrags.includes(fragment),
       );
 
       if (option) {
         if (buttonFrags.includes(option.fragment)) {
           // Button case, simply set the story.nextNode object to itself
-          const { specificPath, valToChange } = option.props;
-
-          setPathToValue([...basepath, ...(specificPath || [])], valToChange, dest, dest);
+          const { pathAlternative, valToChange } = option.props;
+          setPathToValue(
+            [...basepath, ...(pathAlternative || [])],
+            valToChange,
+            dest,
+            dest,
+          );
         } else if (choiceFrags.includes(option.fragment)) {
           // MultiAnsChoice and similar case, is needed to set the whole
           // destinaion object one level before in the object itself
@@ -138,7 +146,7 @@ const App = () => {
     });
   };
 
-  const addNode = template => {
+  const addNode = (template) => {
     setIsDialogOpen(false);
     const { nodes, ...others } = story;
     const nodeId = shortid.generate();
@@ -182,7 +190,9 @@ const App = () => {
               </Button>
               <Typography>Clicca 2 volte su un nodo per modificarlo</Typography>
               <Typography>Trascina un nodo per spostarlo</Typography>
-              <Typography>Per eliminare un nodo vai in Global - Delete node</Typography>
+              <Typography>
+                Per eliminare un nodo vai in Global - Delete node
+              </Typography>
             </Box>
           )}
         </Box>
