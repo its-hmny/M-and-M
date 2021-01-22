@@ -7,6 +7,7 @@ import React, {
 } from '../../../web_modules/react.js';
 import { useSnackbar } from '../../../web_modules/notistack.js';
 import axios, { useQuery } from '../../common/shared.js';
+import { SERVER_URL } from '../../common/constants.js';
 import io from '../../../web_modules/socket.io-client.js';
 import { useHistory } from '../../../web_modules/react-router-dom.js';
 import * as ROUTES from '../../routes.js';
@@ -28,7 +29,7 @@ export const EvaluatorProvider = ({ children }) => {
 
   const socket = useMemo(
     () =>
-      io('http://localhost:8000', {
+      io(SERVER_URL, {
         query: {
           type: 'evaluator',
           storyId,
