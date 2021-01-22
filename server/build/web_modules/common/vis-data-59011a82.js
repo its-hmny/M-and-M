@@ -996,8 +996,7 @@ var functionBind =
     var fn = aFunction(this);
     var partArgs = slice.call(arguments, 1);
 
-    var boundFunction = function bound() /* args... */
-    {
+    var boundFunction = function bound /* args... */() {
       var args = partArgs.concat(slice.call(arguments));
       return this instanceof boundFunction
         ? construct(fn, args.length, args)
