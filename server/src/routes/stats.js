@@ -1,5 +1,4 @@
 const io = require('../shared')();
-const http = require('http');
 
 // Array of playerLog object (see under) for each story
 let database = {};
