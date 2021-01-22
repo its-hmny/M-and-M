@@ -6,10 +6,14 @@ import {
   GetApp as GetAppIcon,
 } from '../../web_modules/@material-ui/icons.js';
 import { useEvaluator } from './context/EvaluatorContext.js';
-import { ActivePlayersList, ProgressGraph, WidgetArea } from './components/index.js';
+import {
+  ActivePlayersList,
+  ProgressGraph,
+  WidgetArea,
+} from './components/index.js';
 import * as ROUTES from '../routes.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     position: 'relative',
     width: '100vw',
@@ -66,7 +70,7 @@ const App = () => {
         // The current player has no team
         if (team === '') return list;
 
-        const playerTeam = list.find(item => item.name === team);
+        const playerTeam = list.find((item) => item.name === team);
 
         if (playerTeam) {
           playerTeam.score += score;
@@ -123,7 +127,7 @@ const App = () => {
           React.createElement(HomeIcon, {
             className: classes.navIcon,
           }),
-          'Home'
+          'Home',
         ),
         React.createElement(
           Fab,
@@ -135,12 +139,12 @@ const App = () => {
           React.createElement(GetAppIcon, {
             className: classes.navIcon,
           }),
-          'Download log'
-        )
+          'Download log',
+        ),
       ),
-      React.createElement(ProgressGraph, null)
+      React.createElement(ProgressGraph, null),
     ),
-    React.createElement(WidgetArea, null)
+    React.createElement(WidgetArea, null),
   );
 };
 

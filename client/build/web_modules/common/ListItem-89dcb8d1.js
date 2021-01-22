@@ -24,19 +24,19 @@ var styles = function styles(theme) {
       paddingTop: 8,
       paddingBottom: 8,
       '&$focusVisible': {
-        backgroundColor: theme.palette.action.selected,
+        backgroundColor: theme.palette.action.selected
       },
       '&$selected, &$selected:hover': {
-        backgroundColor: theme.palette.action.selected,
+        backgroundColor: theme.palette.action.selected
       },
       '&$disabled': {
-        opacity: 0.5,
-      },
+        opacity: 0.5
+      }
     },
 
     /* Styles applied to the `container` element if `children` includes `ListItemSecondaryAction`. */
     container: {
-      position: 'relative',
+      position: 'relative'
     },
 
     /* Pseudo-class applied to the `component`'s `focusVisibleClassName` prop if `button={true}`. */
@@ -45,12 +45,12 @@ var styles = function styles(theme) {
     /* Styles applied to the `component` element if dense. */
     dense: {
       paddingTop: 4,
-      paddingBottom: 4,
+      paddingBottom: 4
     },
 
     /* Styles applied to the `component` element if `alignItems="flex-start"`. */
     alignItemsFlexStart: {
-      alignItems: 'flex-start',
+      alignItems: 'flex-start'
     },
 
     /* Pseudo-class applied to the inner `component` element if `disabled={true}`. */
@@ -58,148 +58,109 @@ var styles = function styles(theme) {
 
     /* Styles applied to the inner `component` element if `divider={true}`. */
     divider: {
-      borderBottom: '1px solid '.concat(theme.palette.divider),
-      backgroundClip: 'padding-box',
+      borderBottom: "1px solid ".concat(theme.palette.divider),
+      backgroundClip: 'padding-box'
     },
 
     /* Styles applied to the inner `component` element if `disableGutters={false}`. */
     gutters: {
       paddingLeft: 16,
-      paddingRight: 16,
+      paddingRight: 16
     },
 
     /* Styles applied to the inner `component` element if `button={true}`. */
     button: {
       transition: theme.transitions.create('background-color', {
-        duration: theme.transitions.duration.shortest,
+        duration: theme.transitions.duration.shortest
       }),
       '&:hover': {
         textDecoration: 'none',
         backgroundColor: theme.palette.action.hover,
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
-          backgroundColor: 'transparent',
-        },
-      },
+          backgroundColor: 'transparent'
+        }
+      }
     },
 
     /* Styles applied to the `component` element if `children` includes `ListItemSecondaryAction`. */
     secondaryAction: {
       // Add some space to avoid collision as `ListItemSecondaryAction`
       // is absolutely positioned.
-      paddingRight: 48,
+      paddingRight: 48
     },
 
     /* Pseudo-class applied to the root element if `selected={true}`. */
-    selected: {},
+    selected: {}
   };
 };
-var useEnhancedEffect =
-  typeof window === 'undefined' ? react.useEffect : react.useLayoutEffect;
+var useEnhancedEffect = typeof window === 'undefined' ? react.useEffect : react.useLayoutEffect;
 /**
  * Uses an additional container component if `ListItemSecondaryAction` is the last child.
  */
 
-var ListItem = /*#__PURE__*/ react.forwardRef(function ListItem(props, ref) {
+var ListItem = /*#__PURE__*/react.forwardRef(function ListItem(props, ref) {
   var _props$alignItems = props.alignItems,
-    alignItems = _props$alignItems === void 0 ? 'center' : _props$alignItems,
-    _props$autoFocus = props.autoFocus,
-    autoFocus = _props$autoFocus === void 0 ? false : _props$autoFocus,
-    _props$button = props.button,
-    button = _props$button === void 0 ? false : _props$button,
-    childrenProp = props.children,
-    classes = props.classes,
-    className = props.className,
-    componentProp = props.component,
-    _props$ContainerCompo = props.ContainerComponent,
-    ContainerComponent = _props$ContainerCompo === void 0 ? 'li' : _props$ContainerCompo,
-    _props$ContainerProps = props.ContainerProps;
+      alignItems = _props$alignItems === void 0 ? 'center' : _props$alignItems,
+      _props$autoFocus = props.autoFocus,
+      autoFocus = _props$autoFocus === void 0 ? false : _props$autoFocus,
+      _props$button = props.button,
+      button = _props$button === void 0 ? false : _props$button,
+      childrenProp = props.children,
+      classes = props.classes,
+      className = props.className,
+      componentProp = props.component,
+      _props$ContainerCompo = props.ContainerComponent,
+      ContainerComponent = _props$ContainerCompo === void 0 ? 'li' : _props$ContainerCompo,
+      _props$ContainerProps = props.ContainerProps;
   _props$ContainerProps = _props$ContainerProps === void 0 ? {} : _props$ContainerProps;
 
   var ContainerClassName = _props$ContainerProps.className,
-    ContainerProps = _objectWithoutProperties(_props$ContainerProps, ['className']),
-    _props$dense = props.dense,
-    dense = _props$dense === void 0 ? false : _props$dense,
-    _props$disabled = props.disabled,
-    disabled = _props$disabled === void 0 ? false : _props$disabled,
-    _props$disableGutters = props.disableGutters,
-    disableGutters = _props$disableGutters === void 0 ? false : _props$disableGutters,
-    _props$divider = props.divider,
-    divider = _props$divider === void 0 ? false : _props$divider,
-    focusVisibleClassName = props.focusVisibleClassName,
-    _props$selected = props.selected,
-    selected = _props$selected === void 0 ? false : _props$selected,
-    other = _objectWithoutProperties(props, [
-      'alignItems',
-      'autoFocus',
-      'button',
-      'children',
-      'classes',
-      'className',
-      'component',
-      'ContainerComponent',
-      'ContainerProps',
-      'dense',
-      'disabled',
-      'disableGutters',
-      'divider',
-      'focusVisibleClassName',
-      'selected',
-    ]);
+      ContainerProps = _objectWithoutProperties(_props$ContainerProps, ["className"]),
+      _props$dense = props.dense,
+      dense = _props$dense === void 0 ? false : _props$dense,
+      _props$disabled = props.disabled,
+      disabled = _props$disabled === void 0 ? false : _props$disabled,
+      _props$disableGutters = props.disableGutters,
+      disableGutters = _props$disableGutters === void 0 ? false : _props$disableGutters,
+      _props$divider = props.divider,
+      divider = _props$divider === void 0 ? false : _props$divider,
+      focusVisibleClassName = props.focusVisibleClassName,
+      _props$selected = props.selected,
+      selected = _props$selected === void 0 ? false : _props$selected,
+      other = _objectWithoutProperties(props, ["alignItems", "autoFocus", "button", "children", "classes", "className", "component", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "divider", "focusVisibleClassName", "selected"]);
 
   var context = react.useContext(ListContext);
   var childContext = {
     dense: dense || context.dense || false,
-    alignItems: alignItems,
+    alignItems: alignItems
   };
   var listItemRef = react.useRef(null);
-  useEnhancedEffect(
-    function () {
-      if (autoFocus) {
-        if (listItemRef.current) {
-          listItemRef.current.focus();
-        }
+  useEnhancedEffect(function () {
+    if (autoFocus) {
+      if (listItemRef.current) {
+        listItemRef.current.focus();
       }
-    },
-    [autoFocus]
-  );
+    }
+  }, [autoFocus]);
   var children = react.Children.toArray(childrenProp);
-  var hasSecondaryAction =
-    children.length &&
-    isMuiElement(children[children.length - 1], ['ListItemSecondaryAction']);
+  var hasSecondaryAction = children.length && isMuiElement(children[children.length - 1], ['ListItemSecondaryAction']);
   var handleOwnRef = react.useCallback(function (instance) {
     // #StrictMode ready
     listItemRef.current = reactDom.findDOMNode(instance);
   }, []);
   var handleRef = useForkRef(handleOwnRef, ref);
 
-  var componentProps = _extends(
-    {
-      className: clsx(
-        classes.root,
-        className,
-        childContext.dense && classes.dense,
-        !disableGutters && classes.gutters,
-        divider && classes.divider,
-        disabled && classes.disabled,
-        button && classes.button,
-        alignItems !== 'center' && classes.alignItemsFlexStart,
-        hasSecondaryAction && classes.secondaryAction,
-        selected && classes.selected
-      ),
-      disabled: disabled,
-    },
-    other
-  );
+  var componentProps = _extends({
+    className: clsx(classes.root, className, childContext.dense && classes.dense, !disableGutters && classes.gutters, divider && classes.divider, disabled && classes.disabled, button && classes.button, alignItems !== "center" && classes.alignItemsFlexStart, hasSecondaryAction && classes.secondaryAction, selected && classes.selected),
+    disabled: disabled
+  }, other);
 
   var Component = componentProp || 'li';
 
   if (button) {
     componentProps.component = componentProp || 'div';
-    componentProps.focusVisibleClassName = clsx(
-      classes.focusVisible,
-      focusVisibleClassName
-    );
+    componentProps.focusVisibleClassName = clsx(classes.focusVisible, focusVisibleClassName);
     Component = ButtonBase;
   }
 
@@ -215,45 +176,22 @@ var ListItem = /*#__PURE__*/ react.forwardRef(function ListItem(props, ref) {
       }
     }
 
-    return /*#__PURE__*/ react.createElement(
-      ListContext.Provider,
-      {
-        value: childContext,
-      },
-      /*#__PURE__*/ react.createElement(
-        ContainerComponent,
-        _extends(
-          {
-            className: clsx(classes.container, ContainerClassName),
-            ref: handleRef,
-          },
-          ContainerProps
-        ),
-        /*#__PURE__*/ react.createElement(Component, componentProps, children),
-        children.pop()
-      )
-    );
+    return /*#__PURE__*/react.createElement(ListContext.Provider, {
+      value: childContext
+    }, /*#__PURE__*/react.createElement(ContainerComponent, _extends({
+      className: clsx(classes.container, ContainerClassName),
+      ref: handleRef
+    }, ContainerProps), /*#__PURE__*/react.createElement(Component, componentProps, children), children.pop()));
   }
 
-  return /*#__PURE__*/ react.createElement(
-    ListContext.Provider,
-    {
-      value: childContext,
-    },
-    /*#__PURE__*/ react.createElement(
-      Component,
-      _extends(
-        {
-          ref: handleRef,
-        },
-        componentProps
-      ),
-      children
-    )
-  );
+  return /*#__PURE__*/react.createElement(ListContext.Provider, {
+    value: childContext
+  }, /*#__PURE__*/react.createElement(Component, _extends({
+    ref: handleRef
+  }, componentProps), children));
 });
 var __pika_web_default_export_for_treeshaking__ = withStyles(styles, {
-  name: 'MuiListItem',
+  name: 'MuiListItem'
 })(ListItem);
 
 export { __pika_web_default_export_for_treeshaking__ as _ };

@@ -12,12 +12,12 @@ const useStyles = makeStyles({
   },
 });
 
-const removePercent = value => Number(value.replace('%', ''));
+const removePercent = (value) => Number(value.replace('%', ''));
 
 function ImageSettings({ styleId }) {
   const { widthIcon } = useStyles();
 
-  const { styles, updateStyle } = useStylesStore(state => ({
+  const { styles, updateStyle } = useStylesStore((state) => ({
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
@@ -38,7 +38,7 @@ function ImageSettings({ styleId }) {
         id: 'width-slider',
         gutterBottom: true,
       },
-      'Width'
+      'Width',
     ),
     React.createElement(
       Grid,
@@ -53,7 +53,7 @@ function ImageSettings({ styleId }) {
         },
         React.createElement(HeightIcon, {
           className: widthIcon,
-        })
+        }),
       ),
       React.createElement(
         Grid,
@@ -64,11 +64,11 @@ function ImageSettings({ styleId }) {
         React.createElement(Slider, {
           value: removePercent(styles[styleId].width),
           onChange: onWidthChange,
-          getAriaValueText: value => `${value}%`,
+          getAriaValueText: (value) => `${value}%`,
           'aria-labelledby': 'width-slider',
-        })
-      )
-    )
+        }),
+      ),
+    ),
   );
 }
 

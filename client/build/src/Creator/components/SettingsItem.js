@@ -42,7 +42,7 @@ import useTemplateStore from '../stores/template.js';
 import { useDragList } from './DraggableList.js';
 import StyleIdDialog from './StyleIdDialog.js';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   iconSmallHover: {
     fontSize: theme.typography.pxToRem(10),
     '&:hover': {},
@@ -62,16 +62,16 @@ const useStyles = makeStyles(theme => ({
     padding: `${theme.spacing(5)}px ${theme.spacing(2)}px`,
   },
   listItem: {
-    boxShadow: props => theme.shadows[props.isDragging ? 4 : 1],
+    boxShadow: (props) => theme.shadows[props.isDragging ? 4 : 1],
     backgroundColor: theme.palette.background.paper,
   },
   listItemContainer: {
     borderBottom: `${theme.spacing(0.25)}px solid transparent`,
     borderTop: `${theme.spacing(0.25)}px solid transparent`,
     // while editing, disable all pointer events on items different than the one being edited
-    pointerEvents: props => (props.isDragDisabled ? 'none' : 'initial'),
-    userSelect: props => (props.isDragDisabled ? 'none' : 'initial'),
-    opacity: props => (props.isDragDisabled ? 0.5 : 1),
+    pointerEvents: (props) => (props.isDragDisabled ? 'none' : 'initial'),
+    userSelect: (props) => (props.isDragDisabled ? 'none' : 'initial'),
+    opacity: (props) => (props.isDragDisabled ? 0.5 : 1),
   },
 }));
 
@@ -79,7 +79,10 @@ function getStyle(style, isDragging) {
   if (isDragging && style.transform) {
     const axisLockY =
       'translate(0px' +
-      style.transform.slice(style.transform.indexOf(','), style.transform.length);
+      style.transform.slice(
+        style.transform.indexOf(','),
+        style.transform.length,
+      );
 
     return { ...style, transform: axisLockY };
   }
@@ -99,21 +102,23 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
     isDragDisabled: !isEditing && isDragDisabled,
   });
 
-  const { changeStyleId, removeComponent } = useTemplateStore(state => ({
+  const { changeStyleId, removeComponent } = useTemplateStore((state) => ({
     changeStyleId: state.changeStyleId,
     removeComponent: state.removeComponent,
   }));
 
-  const { styleIds, addStyle, removeStyle, renameStyle } = useStylesStore(state => ({
-    styleIds: state.styleIds,
-    addStyle: state.addStyle,
-    removeStyle: state.removeStyle,
-    renameStyle: state.renameStyle,
-  }));
+  const { styleIds, addStyle, removeStyle, renameStyle } = useStylesStore(
+    (state) => ({
+      styleIds: state.styleIds,
+      addStyle: state.addStyle,
+      removeStyle: state.removeStyle,
+      renameStyle: state.renameStyle,
+    }),
+  );
 
   const { id: componentId, name: componentName, styleId } = component;
 
-  const handleStyleIdChanged = event => {
+  const handleStyleIdChanged = (event) => {
     changeStyleId({
       componentId,
       newStyleId: event.target.value,
@@ -158,7 +163,7 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
     });
   };
 
-  const handleComplete = newStyleId => {
+  const handleComplete = (newStyleId) => {
     setIsSaving(false);
     changeStyleId({
       componentId,
@@ -199,16 +204,16 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
                 edge: 'start',
                 'aria-label': 'move-component',
               },
-              provided.dragHandleProps
+              provided.dragHandleProps,
             ),
-            React.createElement(DragHandleIcon, null)
+            React.createElement(DragHandleIcon, null),
           ),
           React.createElement(
             Typography,
             {
               className: classes.componentName,
             },
-            componentName
+            componentName,
           ),
           React.createElement(
             TextField,
@@ -221,17 +226,17 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
               variant: 'outlined',
               size: 'small',
             },
-            styleIds[componentName].map(id =>
+            styleIds[componentName].map((id) =>
               React.createElement(
                 MenuItem,
                 {
                   key: id,
                   value: id,
                 },
-                id
-              )
-            )
-          )
+                id,
+              ),
+            ),
+          ),
         ),
       }),
       React.createElement(
@@ -244,7 +249,7 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
             'aria-label': 'delete-component',
             onClick: handleDelete,
           },
-          React.createElement(DeleteIcon, null)
+          React.createElement(DeleteIcon, null),
         ),
         isEditing
           ? React.createElement(
@@ -257,7 +262,7 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
                   'aria-label': 'discard',
                   onClick: handleDiscard,
                 },
-                React.createElement(CloseIcon, null)
+                React.createElement(CloseIcon, null),
               ),
               React.createElement(
                 IconButton,
@@ -266,8 +271,8 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
                   'aria-label': 'save',
                   onClick: handleSave,
                 },
-                React.createElement(DoneIcon, null)
-              )
+                React.createElement(DoneIcon, null),
+              ),
             )
           : React.createElement(
               IconButton,
@@ -276,9 +281,9 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
                 'aria-label': 'edit',
                 onClick: handleEdit,
               },
-              React.createElement(EditIcon, null)
-            )
-      )
+              React.createElement(EditIcon, null),
+            ),
+      ),
     ),
     React.createElement(
       Collapse,
@@ -291,14 +296,14 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
       React.createElement(SettingsComponent, {
         componentId: componentId,
         styleId: styleId,
-      })
+      }),
     ),
     React.createElement(StyleIdDialog, {
       open: isSaving,
       initialId: styleId,
       styleIds: styleIds,
       onComplete: handleComplete,
-    })
+    }),
   );
 };
 

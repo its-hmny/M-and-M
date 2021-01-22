@@ -1,11 +1,5 @@
 import { _ as _toConsumableArray } from './makeStyles-2e2fd3d5.js';
-import {
-  l as lighten,
-  j as darken,
-  f as fade,
-  a as _objectWithoutProperties,
-  e as _slicedToArray,
-} from './defaultTheme-b844222d.js';
+import { l as lighten, j as darken, f as fade, a as _objectWithoutProperties, e as _slicedToArray } from './defaultTheme-b844222d.js';
 import { _ as _extends } from './objectWithoutPropertiesLoose-2d09fd44.js';
 import { r as react } from './index-8732a38f.js';
 import './index-c103191b.js';
@@ -23,28 +17,24 @@ var styles = function styles(theme) {
     thumb: {
       '&$open': {
         '& $offset': {
-          transform: 'scale(1) translateY(-10px)',
-        },
-      },
+          transform: 'scale(1) translateY(-10px)'
+        }
+      }
     },
     open: {},
-    offset: _extends(
-      {
-        zIndex: 1,
-      },
-      theme.typography.body2,
-      {
-        fontSize: theme.typography.pxToRem(12),
-        lineHeight: 1.2,
-        transition: theme.transitions.create(['transform'], {
-          duration: theme.transitions.duration.shortest,
-        }),
-        top: -34,
-        transformOrigin: 'bottom center',
-        transform: 'scale(0)',
-        position: 'absolute',
-      }
-    ),
+    offset: _extends({
+      zIndex: 1
+    }, theme.typography.body2, {
+      fontSize: theme.typography.pxToRem(12),
+      lineHeight: 1.2,
+      transition: theme.transitions.create(['transform'], {
+        duration: theme.transitions.duration.shortest
+      }),
+      top: -34,
+      transformOrigin: 'bottom center',
+      transform: 'scale(0)',
+      position: 'absolute'
+    }),
     circle: {
       display: 'flex',
       alignItems: 'center',
@@ -53,63 +43,44 @@ var styles = function styles(theme) {
       height: 32,
       borderRadius: '50% 50% 50% 0',
       backgroundColor: 'currentColor',
-      transform: 'rotate(-45deg)',
+      transform: 'rotate(-45deg)'
     },
     label: {
       color: theme.palette.primary.contrastText,
-      transform: 'rotate(45deg)',
-    },
+      transform: 'rotate(45deg)'
+    }
   };
 };
 /**
  * @ignore - internal component.
  */
 
+
 function ValueLabel(props) {
   var children = props.children,
-    classes = props.classes,
-    className = props.className,
-    open = props.open,
-    value = props.value,
-    valueLabelDisplay = props.valueLabelDisplay;
+      classes = props.classes,
+      className = props.className,
+      open = props.open,
+      value = props.value,
+      valueLabelDisplay = props.valueLabelDisplay;
 
   if (valueLabelDisplay === 'off') {
     return children;
   }
 
-  return /*#__PURE__*/ react.cloneElement(
-    children,
-    {
-      className: clsx(
-        children.props.className,
-        (open || valueLabelDisplay === 'on') && classes.open,
-        classes.thumb
-      ),
-    },
-    /*#__PURE__*/ react.createElement(
-      'span',
-      {
-        className: clsx(classes.offset, className),
-      },
-      /*#__PURE__*/ react.createElement(
-        'span',
-        {
-          className: classes.circle,
-        },
-        /*#__PURE__*/ react.createElement(
-          'span',
-          {
-            className: classes.label,
-          },
-          value
-        )
-      )
-    )
-  );
+  return /*#__PURE__*/react.cloneElement(children, {
+    className: clsx(children.props.className, (open || valueLabelDisplay === 'on') && classes.open, classes.thumb)
+  }, /*#__PURE__*/react.createElement("span", {
+    className: clsx(classes.offset, className)
+  }, /*#__PURE__*/react.createElement("span", {
+    className: classes.circle
+  }, /*#__PURE__*/react.createElement("span", {
+    className: classes.label
+  }, value))));
 }
 
 var ValueLabel$1 = withStyles(styles, {
-  name: 'PrivateValueLabel',
+  name: 'PrivateValueLabel'
 })(ValueLabel);
 
 function asc(a, b) {
@@ -122,18 +93,18 @@ function clamp(value, min, max) {
 
 function findClosest(values, currentValue) {
   var _values$reduce = values.reduce(function (acc, value, index) {
-      var distance = Math.abs(currentValue - value);
+    var distance = Math.abs(currentValue - value);
 
-      if (acc === null || distance < acc.distance || distance === acc.distance) {
-        return {
-          distance: distance,
-          index: index,
-        };
-      }
+    if (acc === null || distance < acc.distance || distance === acc.distance) {
+      return {
+        distance: distance,
+        index: index
+      };
+    }
 
-      return acc;
-    }, null),
-    closestIndex = _values$reduce.index;
+    return acc;
+  }, null),
+      closestIndex = _values$reduce.index;
 
   return closestIndex;
 }
@@ -146,7 +117,7 @@ function trackFinger(event, touchId) {
       if (touch.identifier === touchId.current) {
         return {
           x: touch.clientX,
-          y: touch.clientY,
+          y: touch.clientY
         };
       }
     }
@@ -156,12 +127,12 @@ function trackFinger(event, touchId) {
 
   return {
     x: event.clientX,
-    y: event.clientY,
+    y: event.clientY
   };
 }
 
 function valueToPercent(value, min, max) {
-  return ((value - min) * 100) / (max - min);
+  return (value - min) * 100 / (max - min);
 }
 
 function percentToValue(percent, min, max) {
@@ -188,9 +159,9 @@ function roundValueToStep(value, step, min) {
 
 function setValueIndex(_ref) {
   var values = _ref.values,
-    source = _ref.source,
-    newValue = _ref.newValue,
-    index = _ref.index;
+      source = _ref.source,
+      newValue = _ref.newValue,
+      index = _ref.index;
 
   // Performance shortcut
   if (values[index] === newValue) {
@@ -204,16 +175,11 @@ function setValueIndex(_ref) {
 
 function focusThumb(_ref2) {
   var sliderRef = _ref2.sliderRef,
-    activeIndex = _ref2.activeIndex,
-    setActive = _ref2.setActive;
+      activeIndex = _ref2.activeIndex,
+      setActive = _ref2.setActive;
 
-  if (
-    !sliderRef.current.contains(document.activeElement) ||
-    Number(document.activeElement.getAttribute('data-index')) !== activeIndex
-  ) {
-    sliderRef.current
-      .querySelector('[role="slider"][data-index="'.concat(activeIndex, '"]'))
-      .focus();
+  if (!sliderRef.current.contains(document.activeElement) || Number(document.activeElement.getAttribute('data-index')) !== activeIndex) {
+    sliderRef.current.querySelector("[role=\"slider\"][data-index=\"".concat(activeIndex, "\"]")).focus();
   }
 
   if (setActive) {
@@ -225,39 +191,39 @@ var axisProps = {
   horizontal: {
     offset: function offset(percent) {
       return {
-        left: ''.concat(percent, '%'),
+        left: "".concat(percent, "%")
       };
     },
     leap: function leap(percent) {
       return {
-        width: ''.concat(percent, '%'),
+        width: "".concat(percent, "%")
       };
-    },
+    }
   },
   'horizontal-reverse': {
     offset: function offset(percent) {
       return {
-        right: ''.concat(percent, '%'),
+        right: "".concat(percent, "%")
       };
     },
     leap: function leap(percent) {
       return {
-        width: ''.concat(percent, '%'),
+        width: "".concat(percent, "%")
       };
-    },
+    }
   },
   vertical: {
     offset: function offset(percent) {
       return {
-        bottom: ''.concat(percent, '%'),
+        bottom: "".concat(percent, "%")
       };
     },
     leap: function leap(percent) {
       return {
-        height: ''.concat(percent, '%'),
+        height: "".concat(percent, "%")
       };
-    },
-  },
+    }
+  }
 };
 
 var Identity = function Identity(x) {
@@ -281,34 +247,33 @@ var styles$1 = function styles(theme) {
       '&$disabled': {
         pointerEvents: 'none',
         cursor: 'default',
-        color: theme.palette.grey[400],
+        color: theme.palette.grey[400]
       },
       '&$vertical': {
         width: 2,
         height: '100%',
-        padding: '0 13px',
+        padding: '0 13px'
       },
       // The primary input mechanism of the device includes a pointing device of limited accuracy.
       '@media (pointer: coarse)': {
         // Reach 42px touch target, about ~8mm on screen.
         padding: '20px 0',
         '&$vertical': {
-          padding: '0 20px',
-        },
+          padding: '0 20px'
+        }
       },
       '@media print': {
-        colorAdjust: 'exact',
-      },
+        colorAdjust: 'exact'
+      }
     },
 
     /* Styles applied to the root element if `color="primary"`. */
-    colorPrimary: {
-      // TODO v5: move the style here
+    colorPrimary: {// TODO v5: move the style here
     },
 
     /* Styles applied to the root element if `color="secondary"`. */
     colorSecondary: {
-      color: theme.palette.secondary.main,
+      color: theme.palette.secondary.main
     },
 
     /* Styles applied to the root element if `marks` is provided with at least one label. */
@@ -316,8 +281,8 @@ var styles$1 = function styles(theme) {
       marginBottom: 20,
       '&$vertical': {
         marginBottom: 'auto',
-        marginRight: 20,
-      },
+        marginRight: 20
+      }
     },
 
     /* Pseudo-class applied to the root element if `orientation="vertical"`. */
@@ -337,8 +302,8 @@ var styles$1 = function styles(theme) {
       opacity: 0.38,
       '$vertical &': {
         height: '100%',
-        width: 2,
-      },
+        width: 2
+      }
     },
 
     /* Styles applied to the track element. */
@@ -349,29 +314,26 @@ var styles$1 = function styles(theme) {
       borderRadius: 1,
       backgroundColor: 'currentColor',
       '$vertical &': {
-        width: 2,
-      },
+        width: 2
+      }
     },
 
     /* Styles applied to the track element if `track={false}`. */
     trackFalse: {
       '& $track': {
-        display: 'none',
-      },
+        display: 'none'
+      }
     },
 
     /* Styles applied to the track element if `track="inverted"`. */
     trackInverted: {
       '& $track': {
-        // Same logic as the LinearProgress track color
-        backgroundColor:
-          theme.palette.type === 'light'
-            ? lighten(theme.palette.primary.main, 0.62)
-            : darken(theme.palette.primary.main, 0.5),
+        backgroundColor: // Same logic as the LinearProgress track color
+        theme.palette.type === 'light' ? lighten(theme.palette.primary.main, 0.62) : darken(theme.palette.primary.main, 0.5)
       },
       '& $rail': {
-        opacity: 1,
-      },
+        opacity: 1
+      }
     },
 
     /* Styles applied to the thumb element. */
@@ -389,7 +351,7 @@ var styles$1 = function styles(theme) {
       alignItems: 'center',
       justifyContent: 'center',
       transition: theme.transitions.create(['box-shadow'], {
-        duration: theme.transitions.duration.shortest,
+        duration: theme.transitions.duration.shortest
       }),
       '&::after': {
         position: 'absolute',
@@ -399,16 +361,16 @@ var styles$1 = function styles(theme) {
         left: -15,
         top: -15,
         right: -15,
-        bottom: -15,
+        bottom: -15
       },
       '&$focusVisible,&:hover': {
-        boxShadow: '0px 0px 0px 8px '.concat(fade(theme.palette.primary.main, 0.16)),
+        boxShadow: "0px 0px 0px 8px ".concat(fade(theme.palette.primary.main, 0.16)),
         '@media (hover: none)': {
-          boxShadow: 'none',
-        },
+          boxShadow: 'none'
+        }
       },
       '&$active': {
-        boxShadow: '0px 0px 0px 14px '.concat(fade(theme.palette.primary.main, 0.16)),
+        boxShadow: "0px 0px 0px 14px ".concat(fade(theme.palette.primary.main, 0.16))
       },
       '&$disabled': {
         width: 8,
@@ -416,32 +378,31 @@ var styles$1 = function styles(theme) {
         marginLeft: -4,
         marginTop: -3,
         '&:hover': {
-          boxShadow: 'none',
-        },
+          boxShadow: 'none'
+        }
       },
       '$vertical &': {
         marginLeft: -5,
-        marginBottom: -6,
+        marginBottom: -6
       },
       '$vertical &$disabled': {
         marginLeft: -3,
-        marginBottom: -4,
-      },
+        marginBottom: -4
+      }
     },
 
     /* Styles applied to the thumb element if `color="primary"`. */
-    thumbColorPrimary: {
-      // TODO v5: move the style here
+    thumbColorPrimary: {// TODO v5: move the style here
     },
 
     /* Styles applied to the thumb element if `color="secondary"`. */
     thumbColorSecondary: {
       '&$focusVisible,&:hover': {
-        boxShadow: '0px 0px 0px 8px '.concat(fade(theme.palette.secondary.main, 0.16)),
+        boxShadow: "0px 0px 0px 8px ".concat(fade(theme.palette.secondary.main, 0.16))
       },
       '&$active': {
-        boxShadow: '0px 0px 0px 14px '.concat(fade(theme.palette.secondary.main, 0.16)),
-      },
+        boxShadow: "0px 0px 0px 14px ".concat(fade(theme.palette.secondary.main, 0.16))
+      }
     },
 
     /* Pseudo-class applied to the thumb element if it's active. */
@@ -453,7 +414,7 @@ var styles$1 = function styles(theme) {
     /* Styles applied to the thumb label element. */
     valueLabel: {
       // IE 11 centering bug, to remove from the customization demos once no longer supported
-      left: 'calc(-50% - 4px)',
+      left: 'calc(-50% - 4px)'
     },
 
     /* Styles applied to the mark element. */
@@ -462,13 +423,13 @@ var styles$1 = function styles(theme) {
       width: 2,
       height: 2,
       borderRadius: 1,
-      backgroundColor: 'currentColor',
+      backgroundColor: 'currentColor'
     },
 
     /* Styles applied to the mark element if active (depending on the value). */
     markActive: {
       backgroundColor: theme.palette.background.paper,
-      opacity: 0.8,
+      opacity: 0.8
     },
 
     /* Styles applied to the mark label element. */
@@ -481,95 +442,65 @@ var styles$1 = function styles(theme) {
       '$vertical &': {
         top: 'auto',
         left: 26,
-        transform: 'translateY(50%)',
+        transform: 'translateY(50%)'
       },
       '@media (pointer: coarse)': {
         top: 40,
         '$vertical &': {
-          left: 31,
-        },
-      },
+          left: 31
+        }
+      }
     }),
 
     /* Styles applied to the mark label element if active (depending on the value). */
     markLabelActive: {
-      color: theme.palette.text.primary,
-    },
+      color: theme.palette.text.primary
+    }
   };
 };
-var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
+var Slider = /*#__PURE__*/react.forwardRef(function Slider(props, ref) {
   var ariaLabel = props['aria-label'],
-    ariaLabelledby = props['aria-labelledby'],
-    ariaValuetext = props['aria-valuetext'],
-    classes = props.classes,
-    className = props.className,
-    _props$color = props.color,
-    color = _props$color === void 0 ? 'primary' : _props$color,
-    _props$component = props.component,
-    Component = _props$component === void 0 ? 'span' : _props$component,
-    defaultValue = props.defaultValue,
-    _props$disabled = props.disabled,
-    disabled = _props$disabled === void 0 ? false : _props$disabled,
-    getAriaLabel = props.getAriaLabel,
-    getAriaValueText = props.getAriaValueText,
-    _props$marks = props.marks,
-    marksProp = _props$marks === void 0 ? false : _props$marks,
-    _props$max = props.max,
-    max = _props$max === void 0 ? 100 : _props$max,
-    _props$min = props.min,
-    min = _props$min === void 0 ? 0 : _props$min,
-    name = props.name,
-    onChange = props.onChange,
-    onChangeCommitted = props.onChangeCommitted,
-    onMouseDown = props.onMouseDown,
-    _props$orientation = props.orientation,
-    orientation = _props$orientation === void 0 ? 'horizontal' : _props$orientation,
-    _props$scale = props.scale,
-    scale = _props$scale === void 0 ? Identity : _props$scale,
-    _props$step = props.step,
-    step = _props$step === void 0 ? 1 : _props$step,
-    _props$ThumbComponent = props.ThumbComponent,
-    ThumbComponent = _props$ThumbComponent === void 0 ? 'span' : _props$ThumbComponent,
-    _props$track = props.track,
-    track = _props$track === void 0 ? 'normal' : _props$track,
-    valueProp = props.value,
-    _props$ValueLabelComp = props.ValueLabelComponent,
-    ValueLabelComponent =
-      _props$ValueLabelComp === void 0 ? ValueLabel$1 : _props$ValueLabelComp,
-    _props$valueLabelDisp = props.valueLabelDisplay,
-    valueLabelDisplay = _props$valueLabelDisp === void 0 ? 'off' : _props$valueLabelDisp,
-    _props$valueLabelForm = props.valueLabelFormat,
-    valueLabelFormat =
-      _props$valueLabelForm === void 0 ? Identity : _props$valueLabelForm,
-    other = _objectWithoutProperties(props, [
-      'aria-label',
-      'aria-labelledby',
-      'aria-valuetext',
-      'classes',
-      'className',
-      'color',
-      'component',
-      'defaultValue',
-      'disabled',
-      'getAriaLabel',
-      'getAriaValueText',
-      'marks',
-      'max',
-      'min',
-      'name',
-      'onChange',
-      'onChangeCommitted',
-      'onMouseDown',
-      'orientation',
-      'scale',
-      'step',
-      'ThumbComponent',
-      'track',
-      'value',
-      'ValueLabelComponent',
-      'valueLabelDisplay',
-      'valueLabelFormat',
-    ]);
+      ariaLabelledby = props['aria-labelledby'],
+      ariaValuetext = props['aria-valuetext'],
+      classes = props.classes,
+      className = props.className,
+      _props$color = props.color,
+      color = _props$color === void 0 ? 'primary' : _props$color,
+      _props$component = props.component,
+      Component = _props$component === void 0 ? 'span' : _props$component,
+      defaultValue = props.defaultValue,
+      _props$disabled = props.disabled,
+      disabled = _props$disabled === void 0 ? false : _props$disabled,
+      getAriaLabel = props.getAriaLabel,
+      getAriaValueText = props.getAriaValueText,
+      _props$marks = props.marks,
+      marksProp = _props$marks === void 0 ? false : _props$marks,
+      _props$max = props.max,
+      max = _props$max === void 0 ? 100 : _props$max,
+      _props$min = props.min,
+      min = _props$min === void 0 ? 0 : _props$min,
+      name = props.name,
+      onChange = props.onChange,
+      onChangeCommitted = props.onChangeCommitted,
+      onMouseDown = props.onMouseDown,
+      _props$orientation = props.orientation,
+      orientation = _props$orientation === void 0 ? 'horizontal' : _props$orientation,
+      _props$scale = props.scale,
+      scale = _props$scale === void 0 ? Identity : _props$scale,
+      _props$step = props.step,
+      step = _props$step === void 0 ? 1 : _props$step,
+      _props$ThumbComponent = props.ThumbComponent,
+      ThumbComponent = _props$ThumbComponent === void 0 ? 'span' : _props$ThumbComponent,
+      _props$track = props.track,
+      track = _props$track === void 0 ? 'normal' : _props$track,
+      valueProp = props.value,
+      _props$ValueLabelComp = props.ValueLabelComponent,
+      ValueLabelComponent = _props$ValueLabelComp === void 0 ? ValueLabel$1 : _props$ValueLabelComp,
+      _props$valueLabelDisp = props.valueLabelDisplay,
+      valueLabelDisplay = _props$valueLabelDisp === void 0 ? 'off' : _props$valueLabelDisp,
+      _props$valueLabelForm = props.valueLabelFormat,
+      valueLabelFormat = _props$valueLabelForm === void 0 ? Identity : _props$valueLabelForm,
+      other = _objectWithoutProperties(props, ["aria-label", "aria-labelledby", "aria-valuetext", "classes", "className", "color", "component", "defaultValue", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "onMouseDown", "orientation", "scale", "step", "ThumbComponent", "track", "value", "ValueLabelComponent", "valueLabelDisplay", "valueLabelFormat"]);
 
   var theme = useTheme();
   var touchId = react.useRef(); // We can't use the :active browser pseudo-classes.
@@ -577,47 +508,41 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
   // - The active state isn't transfered when inversing a range slider.
 
   var _React$useState = react.useState(-1),
-    active = _React$useState[0],
-    setActive = _React$useState[1];
+      active = _React$useState[0],
+      setActive = _React$useState[1];
 
   var _React$useState2 = react.useState(-1),
-    open = _React$useState2[0],
-    setOpen = _React$useState2[1];
+      open = _React$useState2[0],
+      setOpen = _React$useState2[1];
 
   var _useControlled = useControlled({
-      controlled: valueProp,
-      default: defaultValue,
-      name: 'Slider',
-    }),
-    _useControlled2 = _slicedToArray(_useControlled, 2),
-    valueDerived = _useControlled2[0],
-    setValueState = _useControlled2[1];
+    controlled: valueProp,
+    default: defaultValue,
+    name: 'Slider'
+  }),
+      _useControlled2 = _slicedToArray(_useControlled, 2),
+      valueDerived = _useControlled2[0],
+      setValueState = _useControlled2[1];
 
   var range = Array.isArray(valueDerived);
   var values = range ? valueDerived.slice().sort(asc) : [valueDerived];
   values = values.map(function (value) {
     return clamp(value, min, max);
   });
-  var marks =
-    marksProp === true && step !== null
-      ? _toConsumableArray(Array(Math.floor((max - min) / step) + 1)).map(function (
-          _,
-          index
-        ) {
-          return {
-            value: min + step * index,
-          };
-        })
-      : marksProp || [];
+  var marks = marksProp === true && step !== null ? _toConsumableArray(Array(Math.floor((max - min) / step) + 1)).map(function (_, index) {
+    return {
+      value: min + step * index
+    };
+  }) : marksProp || [];
 
   var _useIsFocusVisible = useIsFocusVisible(),
-    isFocusVisible = _useIsFocusVisible.isFocusVisible,
-    onBlurVisible = _useIsFocusVisible.onBlurVisible,
-    focusVisibleRef = _useIsFocusVisible.ref;
+      isFocusVisible = _useIsFocusVisible.isFocusVisible,
+      onBlurVisible = _useIsFocusVisible.onBlurVisible,
+      focusVisibleRef = _useIsFocusVisible.ref;
 
   var _React$useState3 = react.useState(-1),
-    focusVisible = _React$useState3[0],
-    setFocusVisible = _React$useState3[1];
+      focusVisible = _React$useState3[0],
+      setFocusVisible = _React$useState3[1];
 
   var sliderRef = react.useRef();
   var handleFocusRef = useForkRef(focusVisibleRef, sliderRef);
@@ -706,6 +631,7 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
         return;
     } // Prevent scroll of the page
 
+
     event.preventDefault();
 
     if (step) {
@@ -720,11 +646,11 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
         values: values,
         source: valueDerived,
         newValue: newValue,
-        index: index,
+        index: index
       }).sort(asc);
       focusThumb({
         sliderRef: sliderRef,
-        activeIndex: newValue.indexOf(previousValue),
+        activeIndex: newValue.indexOf(previousValue)
       });
     }
 
@@ -742,23 +668,23 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
   var previousIndex = react.useRef();
   var axis = orientation;
 
-  if (isRtl && orientation !== 'vertical') {
+  if (isRtl && orientation !== "vertical") {
     axis += '-reverse';
   }
 
   var getFingerNewValue = function getFingerNewValue(_ref3) {
     var finger = _ref3.finger,
-      _ref3$move = _ref3.move,
-      move = _ref3$move === void 0 ? false : _ref3$move,
-      values2 = _ref3.values,
-      source = _ref3.source;
+        _ref3$move = _ref3.move,
+        move = _ref3$move === void 0 ? false : _ref3$move,
+        values2 = _ref3.values,
+        source = _ref3.source;
     var slider = sliderRef.current;
 
     var _slider$getBoundingCl = slider.getBoundingClientRect(),
-      width = _slider$getBoundingCl.width,
-      height = _slider$getBoundingCl.height,
-      bottom = _slider$getBoundingCl.bottom,
-      left = _slider$getBoundingCl.left;
+        width = _slider$getBoundingCl.width,
+        height = _slider$getBoundingCl.height,
+        bottom = _slider$getBoundingCl.bottom,
+        left = _slider$getBoundingCl.left;
 
     var percent;
 
@@ -800,7 +726,7 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
         values: values2,
         source: source,
         newValue: newValue,
-        index: activeIndex,
+        index: activeIndex
       }).sort(asc);
       activeIndex = newValue.indexOf(previousValue);
       previousIndex.current = activeIndex;
@@ -808,7 +734,7 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
 
     return {
       newValue: newValue,
-      activeIndex: activeIndex,
+      activeIndex: activeIndex
     };
   };
 
@@ -820,18 +746,18 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
     }
 
     var _getFingerNewValue = getFingerNewValue({
-        finger: finger,
-        move: true,
-        values: values,
-        source: valueDerived,
-      }),
-      newValue = _getFingerNewValue.newValue,
-      activeIndex = _getFingerNewValue.activeIndex;
+      finger: finger,
+      move: true,
+      values: values,
+      source: valueDerived
+    }),
+        newValue = _getFingerNewValue.newValue,
+        activeIndex = _getFingerNewValue.activeIndex;
 
     focusThumb({
       sliderRef: sliderRef,
       activeIndex: activeIndex,
-      setActive: setActive,
+      setActive: setActive
     });
     setValueState(newValue);
 
@@ -847,11 +773,11 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
     }
 
     var _getFingerNewValue2 = getFingerNewValue({
-        finger: finger,
-        values: values,
-        source: valueDerived,
-      }),
-      newValue = _getFingerNewValue2.newValue;
+      finger: finger,
+      values: values,
+      source: valueDerived
+    }),
+        newValue = _getFingerNewValue2.newValue;
 
     setActive(-1);
 
@@ -883,17 +809,17 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
     var finger = trackFinger(event, touchId);
 
     var _getFingerNewValue3 = getFingerNewValue({
-        finger: finger,
-        values: values,
-        source: valueDerived,
-      }),
-      newValue = _getFingerNewValue3.newValue,
-      activeIndex = _getFingerNewValue3.activeIndex;
+      finger: finger,
+      values: values,
+      source: valueDerived
+    }),
+        newValue = _getFingerNewValue3.newValue,
+        activeIndex = _getFingerNewValue3.activeIndex;
 
     focusThumb({
       sliderRef: sliderRef,
       activeIndex: activeIndex,
-      setActive: setActive,
+      setActive: setActive
     });
     setValueState(newValue);
 
@@ -905,21 +831,18 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
     doc.addEventListener('touchmove', handleTouchMove);
     doc.addEventListener('touchend', handleTouchEnd);
   });
-  react.useEffect(
-    function () {
-      var slider = sliderRef.current;
-      slider.addEventListener('touchstart', handleTouchStart);
-      var doc = ownerDocument(slider);
-      return function () {
-        slider.removeEventListener('touchstart', handleTouchStart);
-        doc.removeEventListener('mousemove', handleTouchMove);
-        doc.removeEventListener('mouseup', handleTouchEnd);
-        doc.removeEventListener('touchmove', handleTouchMove);
-        doc.removeEventListener('touchend', handleTouchEnd);
-      };
-    },
-    [handleTouchEnd, handleTouchMove, handleTouchStart]
-  );
+  react.useEffect(function () {
+    var slider = sliderRef.current;
+    slider.addEventListener('touchstart', handleTouchStart);
+    var doc = ownerDocument(slider);
+    return function () {
+      slider.removeEventListener('touchstart', handleTouchStart);
+      doc.removeEventListener('mousemove', handleTouchMove);
+      doc.removeEventListener('mouseup', handleTouchEnd);
+      doc.removeEventListener('touchmove', handleTouchMove);
+      doc.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [handleTouchEnd, handleTouchMove, handleTouchStart]);
   var handleMouseDown = useEventCallback(function (event) {
     if (onMouseDown) {
       onMouseDown(event);
@@ -929,17 +852,17 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
     var finger = trackFinger(event, touchId);
 
     var _getFingerNewValue4 = getFingerNewValue({
-        finger: finger,
-        values: values,
-        source: valueDerived,
-      }),
-      newValue = _getFingerNewValue4.newValue,
-      activeIndex = _getFingerNewValue4.activeIndex;
+      finger: finger,
+      values: values,
+      source: valueDerived
+    }),
+        newValue = _getFingerNewValue4.newValue,
+        activeIndex = _getFingerNewValue4.activeIndex;
 
     focusThumb({
       sliderRef: sliderRef,
       activeIndex: activeIndex,
-      setActive: setActive,
+      setActive: setActive
     });
     setValueState(newValue);
 
@@ -954,141 +877,81 @@ var Slider = /*#__PURE__*/ react.forwardRef(function Slider(props, ref) {
   var trackOffset = valueToPercent(range ? values[0] : min, min, max);
   var trackLeap = valueToPercent(values[values.length - 1], min, max) - trackOffset;
 
-  var trackStyle = _extends(
-    {},
-    axisProps[axis].offset(trackOffset),
-    axisProps[axis].leap(trackLeap)
-  );
+  var trackStyle = _extends({}, axisProps[axis].offset(trackOffset), axisProps[axis].leap(trackLeap));
 
-  return /*#__PURE__*/ react.createElement(
-    Component,
-    _extends(
-      {
-        ref: handleRef,
-        className: clsx(
-          classes.root,
-          classes['color'.concat(capitalize(color))],
-          className,
-          disabled && classes.disabled,
-          marks.length > 0 &&
-            marks.some(function (mark) {
-              return mark.label;
-            }) &&
-            classes.marked,
-          track === false && classes.trackFalse,
-          orientation === 'vertical' && classes.vertical,
-          track === 'inverted' && classes.trackInverted
-        ),
-        onMouseDown: handleMouseDown,
-      },
-      other
-    ),
-    /*#__PURE__*/ react.createElement('span', {
-      className: classes.rail,
-    }),
-    /*#__PURE__*/ react.createElement('span', {
-      className: classes.track,
-      style: trackStyle,
-    }),
-    /*#__PURE__*/ react.createElement('input', {
-      value: values.join(','),
-      name: name,
-      type: 'hidden',
-    }),
-    marks.map(function (mark, index) {
-      var percent = valueToPercent(mark.value, min, max);
-      var style = axisProps[axis].offset(percent);
-      var markActive;
+  return /*#__PURE__*/react.createElement(Component, _extends({
+    ref: handleRef,
+    className: clsx(classes.root, classes["color".concat(capitalize(color))], className, disabled && classes.disabled, marks.length > 0 && marks.some(function (mark) {
+      return mark.label;
+    }) && classes.marked, track === false && classes.trackFalse, orientation === 'vertical' && classes.vertical, track === 'inverted' && classes.trackInverted),
+    onMouseDown: handleMouseDown
+  }, other), /*#__PURE__*/react.createElement("span", {
+    className: classes.rail
+  }), /*#__PURE__*/react.createElement("span", {
+    className: classes.track,
+    style: trackStyle
+  }), /*#__PURE__*/react.createElement("input", {
+    value: values.join(','),
+    name: name,
+    type: "hidden"
+  }), marks.map(function (mark, index) {
+    var percent = valueToPercent(mark.value, min, max);
+    var style = axisProps[axis].offset(percent);
+    var markActive;
 
-      if (track === false) {
-        markActive = values.indexOf(mark.value) !== -1;
-      } else {
-        markActive =
-          (track === 'normal' &&
-            (range
-              ? mark.value >= values[0] && mark.value <= values[values.length - 1]
-              : mark.value <= values[0])) ||
-          (track === 'inverted' &&
-            (range
-              ? mark.value <= values[0] || mark.value >= values[values.length - 1]
-              : mark.value >= values[0]));
-      }
+    if (track === false) {
+      markActive = values.indexOf(mark.value) !== -1;
+    } else {
+      markActive = track === 'normal' && (range ? mark.value >= values[0] && mark.value <= values[values.length - 1] : mark.value <= values[0]) || track === 'inverted' && (range ? mark.value <= values[0] || mark.value >= values[values.length - 1] : mark.value >= values[0]);
+    }
 
-      return /*#__PURE__*/ react.createElement(
-        react.Fragment,
-        {
-          key: mark.value,
-        },
-        /*#__PURE__*/ react.createElement('span', {
-          style: style,
-          'data-index': index,
-          className: clsx(classes.mark, markActive && classes.markActive),
-        }),
-        mark.label != null
-          ? /*#__PURE__*/ react.createElement(
-              'span',
-              {
-                'aria-hidden': true,
-                'data-index': index,
-                style: style,
-                className: clsx(classes.markLabel, markActive && classes.markLabelActive),
-              },
-              mark.label
-            )
-          : null
-      );
-    }),
-    values.map(function (value, index) {
-      var percent = valueToPercent(value, min, max);
-      var style = axisProps[axis].offset(percent);
-      return /*#__PURE__*/ react.createElement(
-        ValueLabelComponent,
-        {
-          key: index,
-          valueLabelFormat: valueLabelFormat,
-          valueLabelDisplay: valueLabelDisplay,
-          className: classes.valueLabel,
-          value:
-            typeof valueLabelFormat === 'function'
-              ? valueLabelFormat(scale(value), index)
-              : valueLabelFormat,
-          index: index,
-          open: open === index || active === index || valueLabelDisplay === 'on',
-          disabled: disabled,
-        },
-        /*#__PURE__*/ react.createElement(ThumbComponent, {
-          className: clsx(
-            classes.thumb,
-            classes['thumbColor'.concat(capitalize(color))],
-            active === index && classes.active,
-            disabled && classes.disabled,
-            focusVisible === index && classes.focusVisible
-          ),
-          tabIndex: disabled ? null : 0,
-          role: 'slider',
-          style: style,
-          'data-index': index,
-          'aria-label': getAriaLabel ? getAriaLabel(index) : ariaLabel,
-          'aria-labelledby': ariaLabelledby,
-          'aria-orientation': orientation,
-          'aria-valuemax': scale(max),
-          'aria-valuemin': scale(min),
-          'aria-valuenow': scale(value),
-          'aria-valuetext': getAriaValueText
-            ? getAriaValueText(scale(value), index)
-            : ariaValuetext,
-          onKeyDown: handleKeyDown,
-          onFocus: handleFocus,
-          onBlur: handleBlur,
-          onMouseOver: handleMouseOver,
-          onMouseLeave: handleMouseLeave,
-        })
-      );
-    })
-  );
+    return /*#__PURE__*/react.createElement(react.Fragment, {
+      key: mark.value
+    }, /*#__PURE__*/react.createElement("span", {
+      style: style,
+      "data-index": index,
+      className: clsx(classes.mark, markActive && classes.markActive)
+    }), mark.label != null ? /*#__PURE__*/react.createElement("span", {
+      "aria-hidden": true,
+      "data-index": index,
+      style: style,
+      className: clsx(classes.markLabel, markActive && classes.markLabelActive)
+    }, mark.label) : null);
+  }), values.map(function (value, index) {
+    var percent = valueToPercent(value, min, max);
+    var style = axisProps[axis].offset(percent);
+    return /*#__PURE__*/react.createElement(ValueLabelComponent, {
+      key: index,
+      valueLabelFormat: valueLabelFormat,
+      valueLabelDisplay: valueLabelDisplay,
+      className: classes.valueLabel,
+      value: typeof valueLabelFormat === 'function' ? valueLabelFormat(scale(value), index) : valueLabelFormat,
+      index: index,
+      open: open === index || active === index || valueLabelDisplay === 'on',
+      disabled: disabled
+    }, /*#__PURE__*/react.createElement(ThumbComponent, {
+      className: clsx(classes.thumb, classes["thumbColor".concat(capitalize(color))], active === index && classes.active, disabled && classes.disabled, focusVisible === index && classes.focusVisible),
+      tabIndex: disabled ? null : 0,
+      role: "slider",
+      style: style,
+      "data-index": index,
+      "aria-label": getAriaLabel ? getAriaLabel(index) : ariaLabel,
+      "aria-labelledby": ariaLabelledby,
+      "aria-orientation": orientation,
+      "aria-valuemax": scale(max),
+      "aria-valuemin": scale(min),
+      "aria-valuenow": scale(value),
+      "aria-valuetext": getAriaValueText ? getAriaValueText(scale(value), index) : ariaValuetext,
+      onKeyDown: handleKeyDown,
+      onFocus: handleFocus,
+      onBlur: handleBlur,
+      onMouseOver: handleMouseOver,
+      onMouseLeave: handleMouseLeave
+    }));
+  }));
 });
 var __pika_web_default_export_for_treeshaking__ = withStyles(styles$1, {
-  name: 'MuiSlider',
+  name: 'MuiSlider'
 })(Slider);
 
 export { __pika_web_default_export_for_treeshaking__ as _ };
