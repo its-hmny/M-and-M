@@ -78,7 +78,7 @@ export const Options = {
     },
   },
 };
-export const getGraphFromStory = (story) => {
+export const getGraphFromStory = story => {
   if (!story)
     return {
       nodes: [],
@@ -90,18 +90,15 @@ export const getGraphFromStory = (story) => {
     edges: [],
   };
 
-  story.nodes.forEach((node) => {
-    graph.nodes = [
-      ...graph.nodes,
-      { ...node, label: node.name, mission: node.mission },
-    ];
+  story.nodes.forEach(node => {
+    graph.nodes = [...graph.nodes, { ...node, label: node.name, mission: node.mission }];
     setEdgesFromChildren(node.components, node.id, graph);
   });
   return graph;
 };
 
 const setEdgesFromChildren = (root, rootId, graph) => {
-  root.forEach((child) => {
+  root.forEach(child => {
     if (child.story && child.story.nextNode) {
       if (typeof child.story.nextNode === 'string') {
         graph.edges = [
@@ -130,19 +127,18 @@ const setEdgesFromChildren = (root, rootId, graph) => {
 };
 
 export const highlightPath = (graph, path) => {
-  const touchedNodes = path.map((node) => node.activityNodeId); // Al the reached node became triangles
+  const touchedNodes = path.map(node => node.activityNodeId); // Al the reached node became triangles
 
-  graph.nodes.forEach((node) => {
-    if (touchedNodes.find((id) => id === node.id)) node.shape = 'hexagon';
+  graph.nodes.forEach(node => {
+    if (touchedNodes.find(id => id === node.id)) node.shape = 'hexagon';
     else node.shape = 'dot';
   }); // Edge highlighting part
 
-  graph.edges.forEach((edge) => (edge.color = '#ffffff')); // Resets to default
+  graph.edges.forEach(edge => (edge.color = '#ffffff')); // Resets to default
 
   for (let prev = 0, next = 1; next < touchedNodes.length; prev++, next++) {
     const edgeToHighlight = graph.edges.find(
-      (edge) =>
-        edge.from === touchedNodes[prev] && edge.to === touchedNodes[next],
+      edge => edge.from === touchedNodes[prev] && edge.to === touchedNodes[next]
     );
 
     if (edgeToHighlight) edgeToHighlight.color = 'black';
@@ -150,13 +146,13 @@ export const highlightPath = (graph, path) => {
 
   return graph;
 };
-export const makeClusters = (network) => {
+export const makeClusters = network => {
   const missions = getMissions(network);
 
   if (missions.length !== 0) {
-    missions.forEach((mission) => {
+    missions.forEach(mission => {
       const options = {
-        joinCondition: (currentNodeOptions) => {
+        joinCondition: currentNodeOptions => {
           if (currentNodeOptions.mission === undefined) {
             return false;
           } else return currentNodeOptions.mission === mission;
@@ -177,10 +173,10 @@ export const makeClusters = (network) => {
 
   return missions;
 };
-export const openClusters = (network) => {
+export const openClusters = network => {
   const missions = getMissions(network);
 
-  missions.forEach((mission) => {
+  missions.forEach(mission => {
     if (network.isCluster(mission)) {
       network.openCluster(mission, {
         releaseFunction: (clusterPosition, containedNodesPositions) => {
@@ -199,7 +195,7 @@ export const openClusters = (network) => {
   }
 };
 
-const getMissions = (network) => {
+const getMissions = network => {
   const missions = [];
   /*Populating mission database 
     (there isn't a central db because it wasn't necessary)
@@ -207,7 +203,7 @@ const getMissions = (network) => {
   //Getting node data we set from network.body.nodes[i].options
 
   if (network !== undefined) {
-    network.body.data.nodes.forEach((node) => {
+    network.body.data.nodes.forEach(node => {
       if (!missions.includes(node.mission)) {
         missions.push(node.mission);
       }

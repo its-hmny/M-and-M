@@ -3,7 +3,7 @@ import { Button } from '../../../../web_modules/@material-ui/core.js';
 import { useEditor } from '../../context/EditorContext.js';
 
 const deleteEdges = (node, components, target) => {
-  return components.map((component) => {
+  return components.map(component => {
     if (component.story) {
       let updatedNextNode = component.story.nextNode;
 
@@ -13,7 +13,7 @@ const deleteEdges = (node, components, target) => {
             ...obj,
             [label]: value === target ? node.id : value,
           }),
-          {},
+          {}
         );
       } else if (updatedNextNode === target) {
         updatedNextNode = node.id;
@@ -30,7 +30,7 @@ const deleteEdges = (node, components, target) => {
   });
 };
 
-const ButtonFragment = (props) => {
+const ButtonFragment = props => {
   const { classNames, fragmentSpecificProps } = props;
 
   const { story, workingActivity, saveStory, setWorkingActivity } = useEditor();
@@ -38,8 +38,8 @@ const ButtonFragment = (props) => {
   const onClick = () => {
     let { nodes, ...others } = story;
 
-    nodes = nodes.filter((node) => node.id !== workingActivity);
-    nodes = nodes.map((node) => ({
+    nodes = nodes.filter(node => node.id !== workingActivity);
+    nodes = nodes.map(node => ({
       ...node,
       components: deleteEdges(node, node.components, workingActivity),
     }));
@@ -58,7 +58,7 @@ const ButtonFragment = (props) => {
       variant: 'contained',
       className: classNames.InspectorElement,
     },
-    fragmentSpecificProps.text,
+    fragmentSpecificProps.text
   );
 };
 

@@ -1,8 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useReducer,
-} from '../../../../web_modules/react.js';
+import { useCallback, useEffect, useReducer } from '../../../../web_modules/react.js';
 import axios from '../../../common/shared.js';
 
 const templatesFetchReducer = (state, action) => {

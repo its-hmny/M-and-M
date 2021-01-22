@@ -29,7 +29,7 @@ const TextAlignment = ({ value, onChange }) => {
         value: 'left',
         'aria-label': 'left',
       },
-      React.createElement(FormatAlignLeftIcon, null),
+      React.createElement(FormatAlignLeftIcon, null)
     ),
     React.createElement(
       ToggleButton,
@@ -37,7 +37,7 @@ const TextAlignment = ({ value, onChange }) => {
         value: 'right',
         'aria-label': 'right',
       },
-      React.createElement(FormatAlignRightIcon, null),
+      React.createElement(FormatAlignRightIcon, null)
     ),
     React.createElement(
       ToggleButton,
@@ -45,7 +45,7 @@ const TextAlignment = ({ value, onChange }) => {
         value: 'center',
         'aria-label': 'center',
       },
-      React.createElement(FormatAlignCenterIcon, null),
+      React.createElement(FormatAlignCenterIcon, null)
     ),
     React.createElement(
       ToggleButton,
@@ -53,8 +53,8 @@ const TextAlignment = ({ value, onChange }) => {
         value: 'justify',
         'aria-label': 'justify',
       },
-      React.createElement(FormatAlignJustifyIcon, null),
-    ),
+      React.createElement(FormatAlignJustifyIcon, null)
+    )
   );
 };
 

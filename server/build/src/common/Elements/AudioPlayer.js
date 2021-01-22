@@ -49,7 +49,7 @@ const AudioPlayer = ({ srcURL, style }) => {
     }
   };
 
-  const updateProgress = (time) => {
+  const updateProgress = time => {
     setWidth((time / audioref.audioEl.current.duration) * 100);
   };
 
@@ -68,8 +68,8 @@ const AudioPlayer = ({ srcURL, style }) => {
         src: srcURL,
         id: audioID,
         listenInterval: 1,
-        onListen: (time) => updateProgress(time),
-        ref: (element) => {
+        onListen: time => updateProgress(time),
+        ref: element => {
           audioref = element;
         },
         onEnded: () => {
@@ -90,9 +90,9 @@ const AudioPlayer = ({ srcURL, style }) => {
           className: 'play-pause icon-play',
           onClick: playpause,
         },
-        playing ? jsx(PauseIcon, null) : jsx(PlayArrowIcon, null),
-      ),
-    ),
+        playing ? jsx(PauseIcon, null) : jsx(PlayArrowIcon, null)
+      )
+    )
   );
 };
 

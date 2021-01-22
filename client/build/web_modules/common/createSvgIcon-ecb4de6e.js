@@ -34,7 +34,7 @@ function unsupportedProp(props, propName, componentName, location, propFullName)
   }
 }
 
-var utils = /*#__PURE__*/Object.freeze({
+var utils = /*#__PURE__*/ Object.freeze({
   __proto__: null,
   capitalize: capitalize,
   createChainedFunction: createChainedFunction,
@@ -51,106 +51,114 @@ var utils = /*#__PURE__*/Object.freeze({
   useEventCallback: useEventCallback,
   useForkRef: useForkRef,
   unstable_useId: useId,
-  useIsFocusVisible: useIsFocusVisible
+  useIsFocusVisible: useIsFocusVisible,
 });
 
 var interopRequireDefault = createCommonjsModule(function (module) {
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule
+      ? obj
+      : {
+          default: obj,
+        };
+  }
 
-module.exports = _interopRequireDefault;
+  module.exports = _interopRequireDefault;
 });
 
 var _typeof_1 = createCommonjsModule(function (module) {
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+  function _typeof(obj) {
+    '@babel/helpers - typeof';
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
+    if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+      module.exports = _typeof = function _typeof(obj) {
+        return typeof obj;
+      };
+    } else {
+      module.exports = _typeof = function _typeof(obj) {
+        return obj &&
+          typeof Symbol === 'function' &&
+          obj.constructor === Symbol &&
+          obj !== Symbol.prototype
+          ? 'symbol'
+          : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
   }
 
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
+  module.exports = _typeof;
 });
 
 var interopRequireWildcard = createCommonjsModule(function (module) {
-function _getRequireWildcardCache() {
-  if (typeof WeakMap !== "function") return null;
-  var cache = new WeakMap();
+  function _getRequireWildcardCache() {
+    if (typeof WeakMap !== 'function') return null;
+    var cache = new WeakMap();
 
-  _getRequireWildcardCache = function _getRequireWildcardCache() {
-    return cache;
-  };
-
-  return cache;
-}
-
-function _interopRequireWildcard(obj) {
-  if (obj && obj.__esModule) {
-    return obj;
-  }
-
-  if (obj === null || _typeof_1(obj) !== "object" && typeof obj !== "function") {
-    return {
-      "default": obj
+    _getRequireWildcardCache = function _getRequireWildcardCache() {
+      return cache;
     };
+
+    return cache;
   }
 
-  var cache = _getRequireWildcardCache();
+  function _interopRequireWildcard(obj) {
+    if (obj && obj.__esModule) {
+      return obj;
+    }
 
-  if (cache && cache.has(obj)) {
-    return cache.get(obj);
-  }
+    if (obj === null || (_typeof_1(obj) !== 'object' && typeof obj !== 'function')) {
+      return {
+        default: obj,
+      };
+    }
 
-  var newObj = {};
-  var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    var cache = _getRequireWildcardCache();
 
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+    if (cache && cache.has(obj)) {
+      return cache.get(obj);
+    }
 
-      if (desc && (desc.get || desc.set)) {
-        Object.defineProperty(newObj, key, desc);
-      } else {
-        newObj[key] = obj[key];
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor
+          ? Object.getOwnPropertyDescriptor(obj, key)
+          : null;
+
+        if (desc && (desc.get || desc.set)) {
+          Object.defineProperty(newObj, key, desc);
+        } else {
+          newObj[key] = obj[key];
+        }
       }
     }
+
+    newObj['default'] = obj;
+
+    if (cache) {
+      cache.set(obj, newObj);
+    }
+
+    return newObj;
   }
 
-  newObj["default"] = obj;
-
-  if (cache) {
-    cache.set(obj, newObj);
-  }
-
-  return newObj;
-}
-
-module.exports = _interopRequireWildcard;
+  module.exports = _interopRequireWildcard;
 });
 
 var createSvgIcon = createCommonjsModule(function (module, exports) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "default", {
-  enumerable: true,
-  get: function get() {
-    return utils.createSvgIcon;
-  }
-});
+  Object.defineProperty(exports, '__esModule', {
+    value: true,
+  });
+  Object.defineProperty(exports, 'default', {
+    enumerable: true,
+    get: function get() {
+      return utils.createSvgIcon;
+    },
+  });
 });
 
 export { interopRequireDefault as a, createSvgIcon as c, interopRequireWildcard as i };

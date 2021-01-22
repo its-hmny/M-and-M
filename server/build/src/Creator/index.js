@@ -12,7 +12,7 @@ const Creator = () => {
         horizontal: 'right',
       },
     },
-    React.createElement(App, null),
+    React.createElement(App, null)
   );
 };
 

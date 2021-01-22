@@ -8,13 +8,20 @@ import { S as SvgIcon } from './SvgIcon-eae2d21b.js';
 
 function createSvgIcon(path, displayName) {
   var Component = function Component(props, ref) {
-    return /*#__PURE__*/react.createElement(SvgIcon, _extends({
-      ref: ref
-    }, props), path);
+    return /*#__PURE__*/ react.createElement(
+      SvgIcon,
+      _extends(
+        {
+          ref: ref,
+        },
+        props
+      ),
+      path
+    );
   };
 
   Component.muiName = SvgIcon.muiName;
-  return /*#__PURE__*/react.memo( /*#__PURE__*/react.forwardRef(Component));
+  return /*#__PURE__*/ react.memo(/*#__PURE__*/ react.forwardRef(Component));
 }
 
 export { createSvgIcon as c };

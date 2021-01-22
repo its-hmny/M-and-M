@@ -1,19 +1,12 @@
-import React, {
-  useState,
-  useCallback,
-  useMemo,
-} from '../../../web_modules/react.js';
-import {
-  Container,
-  makeStyles,
-} from '../../../web_modules/@material-ui/core.js';
+import React, { useState, useCallback, useMemo } from '../../../web_modules/react.js';
+import { Container, makeStyles } from '../../../web_modules/@material-ui/core.js';
 import { DragDropContext } from '../../../web_modules/react-beautiful-dnd.js';
 import { DraggableList } from './DraggableList.js';
 import AddComponentButton from './AddComponentButton.js';
 import SettingsItem from './SettingsItem.js';
 import useTemplateStore from '../stores/template.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     maxHeight: `100vh`,
     display: 'flex',
@@ -32,13 +25,11 @@ function Inspector() {
 
   const [currentlyEditing, setCurrentlyEditing] = useState(0);
 
-  const { components, addComponent, reorderComponents } = useTemplateStore(
-    (state) => ({
-      components: state.components,
-      addComponent: state.addComponent,
-      reorderComponents: state.reorderComponents,
-    }),
-  );
+  const { components, addComponent, reorderComponents } = useTemplateStore(state => ({
+    components: state.components,
+    addComponent: state.addComponent,
+    reorderComponents: state.reorderComponents,
+  }));
 
   const inspectorDragId = 'inspector-top-list';
 
@@ -50,13 +41,13 @@ function Inspector() {
           id: objComponent.id,
           dragIndex: index,
           component: objComponent,
-          onEditing: (isEditing) =>
-            setCurrentlyEditing((currentlyEditing) =>
-              isEditing ? currentlyEditing + 1 : currentlyEditing - 1,
+          onEditing: isEditing =>
+            setCurrentlyEditing(currentlyEditing =>
+              isEditing ? currentlyEditing + 1 : currentlyEditing - 1
             ),
-        }),
+        })
       ),
-    [components],
+    [components]
   );
 
   const handleDragEnd = useCallback(
@@ -66,11 +57,11 @@ function Inspector() {
         reorderComponents(
           source.index,
           destination.index,
-          dragListId === inspectorDragId ? null : dragListId,
+          dragListId === inspectorDragId ? null : dragListId
         );
       }
     },
-    [reorderComponents],
+    [reorderComponents]
   );
 
   return React.createElement(
@@ -88,12 +79,12 @@ function Inspector() {
         id: inspectorDragId,
         list: settings,
         disabled: currentlyEditing > 0,
-      }),
+      })
     ),
     currentlyEditing === 0 &&
       React.createElement(AddComponentButton, {
         onClick: addComponent,
-      }),
+      })
   );
 }
 

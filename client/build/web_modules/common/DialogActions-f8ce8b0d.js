@@ -11,30 +11,36 @@ var styles = {
     alignItems: 'center',
     padding: 8,
     justifyContent: 'flex-end',
-    flex: '0 0 auto'
+    flex: '0 0 auto',
   },
 
   /* Styles applied to the root element if `disableSpacing={false}`. */
   spacing: {
     '& > :not(:first-child)': {
-      marginLeft: 8
-    }
-  }
+      marginLeft: 8,
+    },
+  },
 };
-var DialogActions = /*#__PURE__*/react.forwardRef(function DialogActions(props, ref) {
+var DialogActions = /*#__PURE__*/ react.forwardRef(function DialogActions(props, ref) {
   var _props$disableSpacing = props.disableSpacing,
-      disableSpacing = _props$disableSpacing === void 0 ? false : _props$disableSpacing,
-      classes = props.classes,
-      className = props.className,
-      other = _objectWithoutProperties(props, ["disableSpacing", "classes", "className"]);
+    disableSpacing = _props$disableSpacing === void 0 ? false : _props$disableSpacing,
+    classes = props.classes,
+    className = props.className,
+    other = _objectWithoutProperties(props, ['disableSpacing', 'classes', 'className']);
 
-  return /*#__PURE__*/react.createElement("div", _extends({
-    className: clsx(classes.root, className, !disableSpacing && classes.spacing),
-    ref: ref
-  }, other));
+  return /*#__PURE__*/ react.createElement(
+    'div',
+    _extends(
+      {
+        className: clsx(classes.root, className, !disableSpacing && classes.spacing),
+        ref: ref,
+      },
+      other
+    )
+  );
 });
 var __pika_web_default_export_for_treeshaking__ = withStyles(styles, {
-  name: 'MuiDialogActions'
+  name: 'MuiDialogActions',
 })(DialogActions);
 
 export { __pika_web_default_export_for_treeshaking__ as _ };

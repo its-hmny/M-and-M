@@ -23,7 +23,7 @@ import Form from './Form.js';
 import * as ROUTES from '../routes.js';
 import axios from '../common/shared.js';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   container: {
     height: '100vh',
     display: 'flex',
@@ -119,8 +119,8 @@ const App = () => {
     const update = { ...selected, [key]: value };
 
     setSelected(update);
-    setStories((stories) =>
-      stories.map((story) => (story.uuid === update.uuid ? update : story)),
+    setStories(stories =>
+      stories.map(story => (story.uuid === update.uuid ? update : story))
     );
 
     if (key !== 'title' && key !== 'description') {
@@ -128,7 +128,7 @@ const App = () => {
     }
   };
 
-  const saveChanges = async (update) => {
+  const saveChanges = async update => {
     try {
       await axios.patch(`stories/${update.uuid}`, update);
     } catch (err) {
@@ -153,14 +153,14 @@ const App = () => {
 
       const withUuid = { ...newStory, uuid: res.data.uuid };
 
-      setStories((stories) => [withUuid, ...stories]);
+      setStories(stories => [withUuid, ...stories]);
       setSelected(withUuid);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const duplicateStory = async (story) => {
+  const duplicateStory = async story => {
     const duplicate = { ...story, uuid: null, title: `${story.title} Copy` };
 
     try {
@@ -168,21 +168,16 @@ const App = () => {
         story: duplicate,
       });
 
-      setStories((stories) => [
-        ...stories,
-        { ...duplicate, uuid: res.data.uuid },
-      ]);
+      setStories(stories => [...stories, { ...duplicate, uuid: res.data.uuid }]);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const executeDeleteStory = async (toDelete) => {
+  const executeDeleteStory = async toDelete => {
     try {
       await axios.delete(`stories/${toDelete.uuid}`);
-      setStories((stories) =>
-        stories.filter((story) => story.uuid !== toDelete.uuid),
-      );
+      setStories(stories => stories.filter(story => story.uuid !== toDelete.uuid));
 
       if (selected && selected.uuid === toDelete.uuid) {
         setSelected(undefined);
@@ -223,9 +218,7 @@ const App = () => {
                 {
                   classes: {
                     container: `${classes.listItem} ${
-                      selected && selected.uuid === story.uuid
-                        ? classes.selected
-                        : ''
+                      selected && selected.uuid === story.uuid ? classes.selected : ''
                     }`,
                     secondaryAction: classes.listSecondary,
                     selected: classes.selected,
@@ -255,8 +248,8 @@ const App = () => {
                       {
                         onClick: () => duplicateStory(story),
                       },
-                      React.createElement(FileCopyIcon, null),
-                    ),
+                      React.createElement(FileCopyIcon, null)
+                    )
                   ),
                   React.createElement(
                     Tooltip,
@@ -268,12 +261,10 @@ const App = () => {
                       IconButton,
                       {
                         onClick: () =>
-                          dontAskAgain
-                            ? executeDeleteStory(story)
-                            : setToDelete(story),
+                          dontAskAgain ? executeDeleteStory(story) : setToDelete(story),
                       },
-                      React.createElement(DeleteIcon, null),
-                    ),
+                      React.createElement(DeleteIcon, null)
+                    )
                   ),
                   React.createElement(
                     Tooltip,
@@ -287,8 +278,8 @@ const App = () => {
                         component: Link,
                         to: `${ROUTES.EDITOR}?storyId=${story.uuid}`,
                       },
-                      React.createElement(EditIcon, null),
-                    ),
+                      React.createElement(EditIcon, null)
+                    )
                   ),
                   React.createElement(
                     Tooltip,
@@ -302,16 +293,15 @@ const App = () => {
                         component: Link,
                         to: `${ROUTES.EVALUATOR}?storyId=${story.uuid}`,
                       },
-                      React.createElement(AssessmentIcon, null),
-                    ),
-                  ),
-                ),
+                      React.createElement(AssessmentIcon, null)
+                    )
+                  )
+                )
               ),
-              index !== stories.length - 1 &&
-                React.createElement(Divider, null),
-            ),
-          ),
-        ),
+              index !== stories.length - 1 && React.createElement(Divider, null)
+            )
+          )
+        )
       ),
       React.createElement(
         'div',
@@ -322,8 +312,8 @@ const App = () => {
           React.createElement(Form, {
             story: selected,
             handleChange: handleChange,
-          }),
-      ),
+          })
+      )
     ),
     React.createElement(
       Fab,
@@ -332,18 +322,18 @@ const App = () => {
         className: classes.addButton,
         onClick: addStory,
       },
-      React.createElement(AddIcon, null),
+      React.createElement(AddIcon, null)
     ),
     !dontAskAgain &&
       React.createElement(AreYouSureDialog, {
         open: !!toDelete,
         onCancel: () => setToDelete(null),
-        onConfirm: (dontAskAgain) => {
+        onConfirm: dontAskAgain => {
           setDontAskAgain(dontAskAgain);
           executeDeleteStory(toDelete);
           setToDelete(null);
         },
-      }),
+      })
   );
 };
 

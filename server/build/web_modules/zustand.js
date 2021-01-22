@@ -17,7 +17,11 @@ function create(createState) {
 
   const getState = () => state;
 
-  const subscribeWithSelector = (listener, selector = getState, equalityFn = Object.is) => {
+  const subscribeWithSelector = (
+    listener,
+    selector = getState,
+    equalityFn = Object.is
+  ) => {
     let currentSlice = selector(state);
 
     function listenerToAdd() {
@@ -25,7 +29,7 @@ function create(createState) {
 
       if (!equalityFn(currentSlice, nextSlice)) {
         const previousSlice = currentSlice;
-        listener(currentSlice = nextSlice, previousSlice);
+        listener((currentSlice = nextSlice), previousSlice);
       }
     }
 
@@ -50,13 +54,14 @@ function create(createState) {
     setState,
     getState,
     subscribe,
-    destroy
+    destroy,
   };
   state = createState(setState, getState, api);
   return api;
 }
 
-const useIsoLayoutEffect = typeof window === 'undefined' ? react.useEffect : react.useLayoutEffect;
+const useIsoLayoutEffect =
+  typeof window === 'undefined' ? react.useEffect : react.useLayoutEffect;
 function create$1(createState) {
   const api = typeof createState === 'function' ? create(createState) : createState;
 
@@ -78,12 +83,16 @@ function create$1(createState) {
     // they change. We also want legitimate errors to be visible so we re-run
     // them if they errored in the subscriber.
 
-    if (stateRef.current !== state || selectorRef.current !== selector || equalityFnRef.current !== equalityFn || erroredRef.current) {
+    if (
+      stateRef.current !== state ||
+      selectorRef.current !== selector ||
+      equalityFnRef.current !== equalityFn ||
+      erroredRef.current
+    ) {
       // Using local variables to avoid mutations in the render phase.
       newStateSlice = selector(state);
       hasNewStateSlice = !equalityFn(currentSliceRef.current, newStateSlice);
     } // Syncing changes in useEffect.
-
 
     useIsoLayoutEffect(() => {
       if (hasNewStateSlice) {
