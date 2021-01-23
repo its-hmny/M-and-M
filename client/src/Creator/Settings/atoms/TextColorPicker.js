@@ -17,9 +17,17 @@ const useStyles = makeStyles(theme => ({
     height: 30,
     borderRadius: '50%',
     backgroundColor: props => props.color,
+    cursor: 'pointer',
   },
   input: {
-    display: 'none',
+    position: 'absolute',
+    margin: 0,
+    padding: 0,
+    top: 'calc(50% + 2px)',
+    left: 'calc(50% - 2px)',
+    width: 0,
+    height: 0,
+    visibility: 'hidden',
   },
 }));
 
@@ -62,15 +70,16 @@ function TextColorPicker({ onChange, value }) {
     <div>
       <div className={classes.colorContainer}>
         <InputLabel htmlFor={colorInputId}>Text Color</InputLabel>
-        <div className={classes.swatch} onClick={handleClick}></div>
-        <input
-          ref={inputRef}
-          type="color"
-          className={classes.input}
-          id={colorInputId}
-          value={rgbaToHex(color)}
-          onChange={handleChangeColor}
-        />
+        <div className={classes.swatch} onClick={handleClick}>
+          <input
+            ref={inputRef}
+            type="color"
+            className={classes.input}
+            id={colorInputId}
+            value={rgbaToHex(color)}
+            onChange={handleChangeColor}
+          />
+        </div>
       </div>
       <Typography id="opacity-slider">Color Opacity</Typography>
       <Slider
