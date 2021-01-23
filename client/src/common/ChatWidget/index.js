@@ -22,8 +22,8 @@ const ChatWidget = ({ automaticToggle, isOpen, setOpen, ...forwardProps }) => {
       fullScreenMode={false}
       autofocus={true}
       showTimeStamp={true}
-      launcherOpenLabel="Chat opened"
-      launcherClosedLabel="Chat closed"
+      launcherOpenLabel="Close Chat"
+      launcherCloseLabel="Open Chat"
       sendButtonAlt="Send"
       {...forwardProps}
     />

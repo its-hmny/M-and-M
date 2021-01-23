@@ -170,7 +170,7 @@ const useStylesStore = createStore(set => ({
       );
       state.styleIds[componentName] = updatedIds;
       state.styles[newId] = state.styles[oldId];
-      state.styles[oldId] = null;
+      state.styles[oldId] = undefined;
     });
   },
 }));

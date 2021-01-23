@@ -43,6 +43,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const inlineStyles = (styles, components) =>
+  components.map(component => ({
+    ...component,
+    style: styles[component.styleId],
+    children: component.children && inlineStyles(styles, component.children),
+  }));
+
 const App = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -52,10 +59,7 @@ const App = () => {
   const components = useTemplateStore(state => state.components);
   const saveTemplate = meta => {
     setIsSaving(false);
-    const styledComponents = components.map(component => ({
-      ...component,
-      style: styles[component.styleId],
-    }));
+    const styledComponents = inlineStyles(styles, components);
     axios // See common/shared.js (useAPI hook)
       .post('templates', { ...meta, components: styledComponents })
       .then(value => {
