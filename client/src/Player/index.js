@@ -252,7 +252,6 @@ const Player = () => {
           height: 100vh;
           overflow-y: auto;
           padding: 10px;
-          background-color: white;
           animation-name: fade;
           animation-duration: 2200ms;
 
