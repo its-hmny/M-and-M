@@ -168,9 +168,6 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
           }
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="delete-component" onClick={handleDelete}>
-            <DeleteIcon />
-          </IconButton>
           {isEditing ? (
             <>
               <IconButton edge="end" aria-label="discard" onClick={handleDiscard}>
@@ -181,9 +178,14 @@ const SettingsItem = ({ dragIndex, component, onEditing, subSettings }) => {
               </IconButton>
             </>
           ) : (
-            <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
-              <EditIcon />
-            </IconButton>
+            <>
+              <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
+                <EditIcon />
+              </IconButton>
+              <IconButton edge="end" aria-label="delete-component" onClick={handleDelete}>
+                <DeleteIcon />
+              </IconButton>
+            </>
           )}
         </ListItemSecondaryAction>
       </ListItem>
