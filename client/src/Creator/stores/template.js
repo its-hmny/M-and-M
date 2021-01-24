@@ -33,6 +33,12 @@ export const componentBuilders = {
     text: generateText('Button'),
     styleId: 'DefaultButton',
   }),
+  ButtonImage: () => ({
+    name: 'ButtonImage',
+    imgURL: 'https://lunawood.com/wp-content/uploads/2018/02/placeholder-image.png',
+    fallback: 'This is the default fallback',
+    styleId: 'DefaultButtonImage',
+  }),
   ButtonGroup: () => ({
     name: 'ButtonGroup',
     styleId: 'DefaultButtonGroup',

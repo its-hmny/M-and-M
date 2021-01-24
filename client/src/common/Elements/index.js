@@ -1,5 +1,6 @@
 export { default as AudioPlayer } from './AudioPlayer';
 export { default as Button } from './Button';
+export { default as ButtonImage } from './ButtonImage';
 export { default as ButtonGroup } from './ButtonGroup';
 export { default as SingleAnsChoices } from './SingleAnsChoices';
 export { default as MultiAnsChoices } from './MultiAnsChoices';

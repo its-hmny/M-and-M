@@ -22,7 +22,8 @@ const createStoryProps = (component, storyRuntime) => {
 
   switch (name) {
     case 'Button':
-      // Button has 1 story related prop: onClick
+    case 'ButtonImage':
+      // Button and ButtonImage have 1 story related prop: onClick
       return {
         onClick: () => storyRuntime.moveTo(storyProps.nextNode),
       };

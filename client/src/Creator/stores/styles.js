@@ -6,6 +6,7 @@ const useStylesStore = createStore(set => ({
   styleIds: {
     Text: ['DefaultText'],
     Button: ['DefaultButton'],
+    ButtonImage: ['DefaultButtonImage'],
     ButtonGroup: ['DefaultButtonGroup'],
     Radio: ['DefaultRadio'],
     Checkbox: ['Checkbox'],
@@ -59,6 +60,11 @@ const useStylesStore = createStore(set => ({
       color: 'rgba(0, 0, 0, 1.0)',
       backgroundColor: 'rgba(140, 206, 179, 1.0)',
     },
+    DefaultButtonImage: {
+      width: '100%',
+      color: 'rgba(0, 0, 0, 1.0)',
+      backgroundColor: 'rgba(255,255,255,1.0)',
+    },
     DefaultButtonGroup: {},
     DefaultTextArea: {
       color: 'rgba(0, 0, 0, 1.0)',
@@ -70,8 +76,8 @@ const useStylesStore = createStore(set => ({
     },
     DefaultImage: {
       width: '100%',
-      color: 'rgba(0, 0, 0, 1.0)',
-      backgroundColor: 'rgba(255,255,255,1.0)',
+      color: 'rgba(0, 0, 0, 0.0)',
+      backgroundColor: 'rgba(255,255,255,0.0)',
     },
     DefaultAudioPlayer: {
       color: 'rgba(0, 0, 0, 1.0)',

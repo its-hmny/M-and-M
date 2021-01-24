@@ -86,11 +86,25 @@ const useStyles = makeStyles(theme => ({
 
 const appendNodeId = (nodeId, components) =>
   components.map(component => {
-    const updatedComponent = { ...component, id: `${nodeId}-${component.id}` };
-    if (updatedComponent.children) {
-      updatedComponent.children = appendNodeId(nodeId, component.children);
+    let updatedComponent;
+    if (component.answers !== undefined) {
+      const answers = component.answers.map(answer => {
+        return { ...answer, id: `${nodeId}-${component.id}` };
+      });
+      updatedComponent = {
+        ...component,
+        id: `${nodeId}-${component.id}`,
+        answers: answers,
+      };
+      if (updatedComponent.children) {
+        updatedComponent.children = appendNodeId(nodeId, component.children);
+      }
+    } else {
+      updatedComponent = { ...component, id: `${nodeId}-${component.id}` };
+      if (updatedComponent.children) {
+        updatedComponent.children = appendNodeId(nodeId, component.children);
+      }
     }
-
     return updatedComponent;
   });
 
