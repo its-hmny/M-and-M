@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
+import shortid from 'shortid';
 import Button from './Button';
 
 /** renders a single choice component:
@@ -113,7 +114,7 @@ function SingleAnsChoicesImages({
       onSubmit(isCorrect, [answers.find(answer => answer.id === selectedAnswer)]);
     }
   }, [withSubmit, onSubmit, isCorrect, answers, selectedAnswer]);
-
+  console.log(answers);
   return (
     <div css={[base, style]} style={style['Root']}>
       <div>

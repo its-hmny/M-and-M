@@ -62,8 +62,6 @@ const useStylesStore = createStore(set => ({
     },
     DefaultButtonImage: {
       width: '100%',
-      color: 'rgba(0, 0, 0, 1.0)',
-      backgroundColor: 'rgba(255,255,255,1.0)',
     },
     DefaultButtonGroup: {},
     DefaultTextArea: {

@@ -12,11 +12,7 @@ const base = css`
 `;
 
 const ButtonImage = ({ description, imgURL, style, onClick }) => {
-  return (
-    <div>
-      <img src={imgURL} alt={description} css={[base, style]} onClick={onClick} />
-    </div>
-  );
+  return <img src={imgURL} alt={description} css={[base, style]} onClick={onClick} />;
 };
 
 export default ButtonImage;

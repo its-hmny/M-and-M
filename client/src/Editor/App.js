@@ -89,7 +89,7 @@ const appendNodeId = (nodeId, components) =>
     let updatedComponent;
     if (component.answers !== undefined) {
       const answers = component.answers.map(answer => {
-        return { ...answer, id: `${nodeId}-${component.id}` };
+        return { ...answer, id: `${nodeId}-${answer.id}` };
       });
       updatedComponent = {
         ...component,
