@@ -20,7 +20,6 @@ router.get('/', async (_, res) => {
     );
     res.status(200).send({ templates });
   } catch (err) {
-    console.error(err);
     res.statusCode = 500;
     res.status(500).send({ message: `Something went wrong while retrieving templates.` });
   }
@@ -38,7 +37,6 @@ router.post('/', async (req, res) => {
     await fs.writeFile(filePath, data);
     res.status(200).send({ message: `Template ${template.name} successfully added.` });
   } catch (err) {
-    console.error(err);
     res.statusCode = 500;
     res
       .status(500)

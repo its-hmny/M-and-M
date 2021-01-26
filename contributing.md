@@ -1,4 +1,3 @@
-! work in progress !
 # Client
 ## Adding new components
 Here's some help if you need to add a new component.

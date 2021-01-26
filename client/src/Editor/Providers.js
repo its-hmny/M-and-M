@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 
@@ -11,10 +11,10 @@ const Providers = ({ children }) => {
   const location = useLocation();
   const history = useHistory();
 
-  const [story, setStory] = React.useState();
-  const [loadedStory, setLoadedStory] = React.useState(false);
+  const [story, setStory] = useState();
+  const [loadedStory, setLoadedStory] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchStory = async () => {
       try {
         if (storyId !== undefined) {
@@ -23,7 +23,7 @@ const Providers = ({ children }) => {
           setStory(newStory);
           setLoadedStory(true);
         } else {
-          setLoadedStory(true);
+          history.push(ROUTES.NOTFOUND);
         }
       } catch (err) {
         console.error(err);
