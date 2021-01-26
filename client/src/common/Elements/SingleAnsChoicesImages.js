@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from 'react';
-import shortid from 'shortid';
 import Button from './Button';
 
 /** renders a single choice component:
