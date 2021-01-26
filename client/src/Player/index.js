@@ -152,8 +152,8 @@ const Player = () => {
       try {
         const res = await axios.get(`stories/${storyId}`);
         const newStory = res.data.payload;
+        document.title = newStory.title || document.title;
         setStory(newStory);
-        //setStatus('SUCCESS');
       } catch (err) {
         console.error(err);
         setStatus('FAILURE');
@@ -215,8 +215,6 @@ const Player = () => {
 
   // load components for this position whenever position changes
   useEffect(() => {
-    // if (currentNodeId) is insufficient because 0 means false -.-
-    // Stupid JS! I miss you Option<T>...sigh
     if (currentNodeId != null) {
       const { components } = story.nodes.find(node => node.id === currentNodeId);
       const content = buildViewContent(components, storyRuntime);
