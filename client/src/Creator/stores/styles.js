@@ -55,6 +55,7 @@ const useStylesStore = createStore(set => ({
       fontFamily: 'Arial',
       fontSize: '16px',
       color: 'rgba(0, 0, 0, 1.0)',
+      backgroundColor: 'rgba(0, 0, 0, 0.0)',
     },
     DefaultButton: {
       color: 'rgba(0, 0, 0, 1.0)',
@@ -106,7 +107,9 @@ const useStylesStore = createStore(set => ({
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
       Checkbox: {},
-
+      Outline: {
+        borderColor: 'rgba(140, 206, 179, 1.0)',
+      },
       Button: {
         color: 'rgba(0, 0, 0, 1.0)',
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
@@ -119,6 +122,9 @@ const useStylesStore = createStore(set => ({
       Checkbox: {
         color: 'rgba(0, 0, 0, 1.0)',
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
+      },
+      Outline: {
+        borderColor: 'rgba(140, 206, 179, 1.0)',
       },
       Button: {
         color: 'rgba(0, 0, 0, 1.0)',

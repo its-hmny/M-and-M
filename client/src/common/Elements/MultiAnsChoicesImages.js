@@ -44,16 +44,6 @@ const labelImg = css`
   cursor: pointer;
   border: 1px solid #000;
 
-  span {
-    position: absolute;
-    display: none;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 2px solid #f00;
-  }
-
   input[type='checkbox'] {
     position: absolute;
     opacity: 0;
@@ -68,6 +58,16 @@ const labelImg = css`
   [type='checkbox']:checked ~ span {
     display: block;
   }
+`;
+
+const span = css`
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #f00;
 `;
 
 const noop = () => {};
@@ -131,7 +131,7 @@ function MultiAnsChoicesImages({
               onChange={handleSelected}
             />
             <img src={imgURL} alt={alt || 'Alt'} />
-            <span></span>
+            <span css={[span, style['Outline']]}></span>
           </label>
         ))}
       </div>
