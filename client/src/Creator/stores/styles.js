@@ -89,6 +89,7 @@ const useStylesStore = createStore(set => ({
     },
     DefaultBackground: {
       backgroundImage: `url(${defaultBg})`,
+      opacity: 1,
     },
     DefaultCamera: {
       CameraButton: {
