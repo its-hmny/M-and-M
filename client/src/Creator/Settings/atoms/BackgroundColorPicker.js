@@ -47,13 +47,18 @@ const rgbaToHex = rgba => {
   return `#${red}${green}${blue}`;
 };
 
+const getOpacityFromRgba = rgba => {
+  return Number(rgba.slice(5, -1).split(',').slice(-1)[0].trim());
+};
+
 const backgroundColorInputId = shortid.generate();
 
 function BackgroundColorPicker({ onChange, value }) {
   const { backgroundColor } = value;
+
   const classes = useStyles({ color: backgroundColor });
 
-  const [bgOpacity, setBGOpacity] = useState(1.0);
+  const [bgOpacity, setBGOpacity] = useState(getOpacityFromRgba(backgroundColor));
   const inputRef = useRef();
 
   const handleChangeBackgroundColor = event => {

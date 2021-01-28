@@ -46,13 +46,17 @@ const rgbaToHex = rgba => {
   return `#${red}${green}${blue}`;
 };
 
+const getOpacityFromRgba = rgba => {
+  return Number(rgba.slice(5, -1).split(',').slice(-1)[0].trim());
+};
+
 const colorInputId = shortid.generate();
 
 function TextColorPicker({ onChange, value }) {
   const { color } = value;
   const classes = useStyles({ color });
 
-  const [textOpacity, setTextOpacity] = useState(1.0);
+  const [textOpacity, setTextOpacity] = useState(getOpacityFromRgba(color));
   const inputRef = useRef();
 
   const handleChangeColor = event => {
