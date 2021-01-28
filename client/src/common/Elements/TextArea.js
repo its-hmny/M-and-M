@@ -11,6 +11,14 @@ const base = css`
   border: 1px solid #ccc;
   box-shadow: inset 0 1px 3px #ddd;
   width: 95%;
+  button{
+    padding: 0.5rem 1rem;
+    border: none;
+
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 5px;
+  }
 `;
 
 const noop = () => {};
@@ -33,7 +41,9 @@ const TextArea = ({ label, rows, onSubmit = noop, initialValue = '', style }) =>
         onChange={evt => setValue(evt.target.value)}
       />
 
-      <button onClick={() => onSubmit(value)}>Invia risposta</button>
+      <button onClick={() => onSubmit(value)} style={style['Button']}>
+        Invia risposta
+      </button>
     </div>
   );
 };

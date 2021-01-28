@@ -41,6 +41,9 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
+  Inspector: {
+    paddingBottom: '10px',
+  },
 }));
 
 const inlineStyles = (styles, components) =>
@@ -88,7 +91,7 @@ const App = () => {
       </div>
       <Grid container className={classes.grid}>
         <Grid item xs={6}>
-          <Inspector />
+          <Inspector className={classes.Inspector} />
         </Grid>
         <Grid xs={6} item>
           <div className={classes.previewPanel}>

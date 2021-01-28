@@ -71,7 +71,7 @@ const Camera = ({ style, initialValue, onSendPhoto }) => {
       <Button
         onClick={handleClick}
         text={
-          <span css={cameraButtonText}>
+          <span css={[cameraButtonText, style['CameraButton']]}>
             <PhotoCamera />
             <span>{photoUrl ? 'Retake' : 'Take photo'}</span>
           </span>

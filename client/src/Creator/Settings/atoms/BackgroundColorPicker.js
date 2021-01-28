@@ -30,6 +30,9 @@ const useStyles = makeStyles(theme => ({
     height: 0,
     visibility: 'hidden',
   },
+  Container: {
+    paddingBottom: '20px',
+  },
 }));
 
 const hexToRgba = (hexColor, opacity) => {
@@ -73,7 +76,7 @@ function BackgroundColorPicker({ onChange, value }) {
   const handleClick = useCallback(() => inputRef.current.click(), []);
 
   return (
-    <div>
+    <div className={classes.Container}>
       <div className={classes.colorContainer}>
         <InputLabel htmlFor={backgroundColorInputId}>Background Color</InputLabel>
         <div className={classes.swatch} onClick={handleClick}>

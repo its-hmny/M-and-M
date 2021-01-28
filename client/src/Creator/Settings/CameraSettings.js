@@ -25,8 +25,12 @@ const CameraSettings = ({ styleId }) => {
     );
   return (
     <div>
-      <Typography variant="h4">Component</Typography>
+      <Typography variant="h4">Camera Button</Typography>
       <TextColorPicker
+        onChange={subStyle => onChange(subStyle, 'CameraButton')}
+        value={styles[styleId]['CameraButton']}
+      />
+      <BackgroundColorPicker
         onChange={subStyle => onChange(subStyle, 'CameraButton')}
         value={styles[styleId]['CameraButton']}
       />

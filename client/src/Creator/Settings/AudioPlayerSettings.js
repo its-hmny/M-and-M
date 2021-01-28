@@ -27,6 +27,7 @@ function AudioPlayerSettings({ styleId }) {
       },
       styleId
     );
+
   return (
     <div>
       <Typography variant="h4">Component</Typography>
