@@ -168,6 +168,13 @@
         "acceptedFileType": "audio/mp3",
         "buttonLabel": "Upload audio"
       }
+    },
+    {
+      "fragment": "CheckboxFragment",
+      "props": {
+        "valToChange": "autoplay",
+        "label": "Autoplay"
+      }
     }
   ],
   "TextArea": [

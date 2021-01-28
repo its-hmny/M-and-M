@@ -72,6 +72,10 @@ const useStylesStore = createStore(set => ({
     DefaultInput: {
       color: 'rgba(0, 0, 0, 1.0)',
       backgroundColor: 'rgba(255,255,255,1.0)',
+      Button: {
+        color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(255,255,255,1.0)',
+      },
     },
     DefaultImage: {
       width: '100%',
@@ -81,6 +85,12 @@ const useStylesStore = createStore(set => ({
     DefaultAudioPlayer: {
       color: 'rgba(0, 0, 0, 1.0)',
       backgroundColor: 'rgba(255,255,255,1.0)',
+      PlayButton: {
+        backgroundColor: 'rgba(255,255,255,0.0)',
+      },
+      ProgressBar: {
+        backgroundColor: 'rgba(5,21,240,1.0)',
+      },
     },
     DefaultSpacer: {
       backgroundColor: 'rgba(255,255,255,1.0)',

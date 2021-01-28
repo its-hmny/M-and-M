@@ -20,9 +20,6 @@ const base = css`
     font-size: 1rem;
     cursor: pointer;
     margin: 5px;
-    background-color: #555555;
-
-    color: white;
   }
 `;
 
@@ -44,7 +41,9 @@ const Input = ({ placeholder, onSubmit = noop, style, initialValue = '' }) => {
           required
         />
       </label>
-      <button onClick={() => onSubmit(answer)}>Invia risposta</button>
+      <button style={style['Button']} onClick={() => onSubmit(answer)}>
+        Invia risposta
+      </button>
     </div>
   );
 };

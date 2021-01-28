@@ -126,6 +126,7 @@ export const componentBuilders = {
   AudioPlayer: () => ({
     name: 'AudioPlayer',
     srcURL: 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3',
+    autoplay: false,
     styleId: 'DefaultAudioPlayer',
   }),
   Background: () => ({

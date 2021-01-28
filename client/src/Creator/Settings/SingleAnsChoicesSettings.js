@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Typography } from '@material-ui/core';
 import TextColorPicker from './atoms/TextColorPicker';
 import BackgroundColorPicker from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
@@ -28,7 +28,7 @@ function SingleAnsChoicesSettings({ styleId }) {
 
   return (
     <div>
-      <p>Edit radio settings</p>
+      <Typography variant="h4">Radio Button</Typography>
       <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'Radio')}
         value={styles[styleId]['Radio']}
@@ -37,7 +37,7 @@ function SingleAnsChoicesSettings({ styleId }) {
         onChange={subStyle => onChange(subStyle, 'Radio')}
         value={styles[styleId]['Radio']}
       />
-      <p>Edit submit settings</p>
+      <Typography variant="h4">Submit Button</Typography>
       <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'Button')}
         value={styles[styleId]['Button']}
