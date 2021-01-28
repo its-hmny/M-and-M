@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     width: 30,
     height: 30,
     borderRadius: '50%',
-    backgroundColor: props => props.color,
+    backgroundColor: props => rgbaToHex(props.color),
     cursor: 'pointer',
   },
   input: {

@@ -55,7 +55,7 @@ const useStylesStore = createStore(set => ({
       fontFamily: 'Arial',
       fontSize: '16px',
       color: 'rgba(0, 0, 0, 1.0)',
-      backgroundColor: 'rgba(0, 0, 0, 0.0)',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
     },
     DefaultButton: {
       color: 'rgba(0, 0, 0, 1.0)',
@@ -146,6 +146,7 @@ const useStylesStore = createStore(set => ({
         fontSize: 16,
         textAlign: 'center',
         color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(0, 0, 0, 0.0)',
       },
     },
   },
