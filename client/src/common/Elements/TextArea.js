@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import shortid from 'shortid';
 
 const base = css`
-  padding: 5rem 0;
   margin: 5px;
   border-radius: 5px;
   padding: 7px;
@@ -21,6 +20,13 @@ const buttonCSS = css`
   cursor: pointer;
   margin: 5px;
 `;
+
+const labelCSS = css`
+  padding: 5px;
+  margin-right: 6px;
+  margin: 5px;
+  width: 95%;
+`;
 const noop = () => {};
 const id = shortid.generate();
 const TextArea = ({ label, rows, onSubmit = noop, initialValue = '', style }) => {
@@ -29,7 +35,7 @@ const TextArea = ({ label, rows, onSubmit = noop, initialValue = '', style }) =>
   useEffect(() => setValue(initialValue), [initialValue]);
   return (
     <div>
-      <label htmlFor={id} css={{ color: style['color'] }}>
+      <label htmlFor={id} css={[labelCSS, style['Label']]}>
         {label}*
       </label>
       <textarea
@@ -38,7 +44,7 @@ const TextArea = ({ label, rows, onSubmit = noop, initialValue = '', style }) =>
         rows={rows}
         value={value}
         onChange={evt => setValue(evt.target.value)}
-        mandatory={true}
+        required
       />
 
       <button onClick={() => onSubmit(value)} css={[buttonCSS, style['Button']]}>

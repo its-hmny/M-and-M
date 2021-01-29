@@ -11,10 +11,10 @@ function InputSettings({ styleId }) {
     updateStyle: state.updateStyle,
   }));
   const onChange = subStyle => updateStyle({ styleId, ...subStyle });
-  const onChangeButton = subStyle =>
+  const onChangeSub = (subStyle, innerId) =>
     updateStyle(
       {
-        styleId: 'Button',
+        styleId: innerId,
         ...subStyle,
       },
       styleId
@@ -25,9 +25,12 @@ function InputSettings({ styleId }) {
       <TextColorPicker onChange={onChange} value={styles[styleId]} />
       <BackgroundColorPicker onChange={onChange} value={styles[styleId]} />
       <Typography variant="h4">Button</Typography>
-      <TextColorPicker onChange={onChangeButton} value={styles[styleId]['Button']} />
+      <TextColorPicker
+        onChange={subStyle => onChangeSub(subStyle, 'Button')}
+        value={styles[styleId]['Button']}
+      />
       <BackgroundColorPicker
-        onChange={onChangeButton}
+        onChange={subStyle => onChangeSub(subStyle, 'Button')}
         value={styles[styleId]['Button']}
       />
     </div>

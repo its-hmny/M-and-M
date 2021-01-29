@@ -72,6 +72,10 @@ const useStylesStore = createStore(set => ({
         color: 'rgba(255, 255, 255, 1.0)',
         backgroundColor: 'rgba(0,0,0,1.0)',
       },
+      Label: {
+        color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(255,255,255,1.0)',
+      },
     },
     DefaultInput: {
       color: 'rgba(0, 0, 0, 1.0)',

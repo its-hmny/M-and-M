@@ -11,23 +11,15 @@ function AudioPlayerSettings({ styleId }) {
     updateStyle: state.updateStyle,
   }));
   const onChange = subStyle => updateStyle({ styleId, ...subStyle });
-  const onChangeButton = subStyle =>
-    updateStyle(
-      {
-        styleId: 'PlayButton',
-        ...subStyle,
-      },
-      styleId
-    );
-  const onChangeProgressBar = subStyle =>
-    updateStyle(
-      {
-        styleId: 'ProgressBar',
-        ...subStyle,
-      },
-      styleId
-    );
 
+  const onChangeSub = (subStyle, innerId) =>
+    updateStyle(
+      {
+        styleId: innerId,
+        ...subStyle,
+      },
+      styleId
+    );
   return (
     <div>
       <Typography variant="h4">Component</Typography>
@@ -35,12 +27,12 @@ function AudioPlayerSettings({ styleId }) {
       <BackgroundColorPicker onChange={onChange} value={styles[styleId]} />
       <Typography variant="h4">Play Button</Typography>
       <BackgroundColorPicker
-        onChange={onChangeButton}
+        onChange={subStyle => onChangeSub(subStyle, 'PlayButton')}
         value={styles[styleId]['PlayButton']}
       />
       <Typography variant="h4">Progressbar</Typography>
       <BackgroundColorPicker
-        onChange={onChangeProgressBar}
+        onChange={subStyle => onChangeSub(subStyle, 'ProgressBar')}
         value={styles[styleId]['ProgressBar']}
       />
     </div>
