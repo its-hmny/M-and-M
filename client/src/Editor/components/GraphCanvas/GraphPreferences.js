@@ -195,9 +195,14 @@ const getMissions = network => {
 };
 
 export const cleanClusterEdges = (network, missions) => {
-  if (network !== undefined)
+  if (network !== undefined) {
     Object.entries(network.body.edges).forEach(([key, edge]) => {
-      if (key.includes('clusterEdge') && !missions.includes(edge.toId))
+      if (
+        key.includes('clusterEdge') &&
+        (!missions.includes(edge.toId) || !missions.includes(edge.fromId))
+      ) {
         edge.options.hidden = true;
+      }
     });
+  }
 };
