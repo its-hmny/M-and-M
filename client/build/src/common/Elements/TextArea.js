@@ -4,12 +4,27 @@ import { useEffect, useState } from '../../../web_modules/react.js';
 import shortid from '../../../web_modules/shortid.js';
 
 const base = css`
-  5rem 0;
   margin: 5px;
   border-radius: 5px;
   padding: 7px;
   border: 1px solid #ccc;
   box-shadow: inset 0 1px 3px #ddd;
+  width: 95%;
+`;
+
+const buttonCSS = css`
+  padding: 0.5rem 1rem;
+  border: none;
+
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 5px;
+`;
+
+const labelCSS = css`
+  padding: 5px;
+  margin-right: 6px;
+  margin: 5px;
   width: 95%;
 `;
 
@@ -34,11 +49,10 @@ const TextArea = ({
       'label',
       {
         htmlFor: id,
-        css: {
-          color: style['color'],
-        },
+        css: [labelCSS, style['Label']],
       },
       label,
+      '*',
     ),
     jsx('textarea', {
       id: id,
@@ -46,11 +60,13 @@ const TextArea = ({
       rows: rows,
       value: value,
       onChange: (evt) => setValue(evt.target.value),
+      required: true,
     }),
     jsx(
       'button',
       {
         onClick: () => onSubmit(value),
+        css: [buttonCSS, style['Button']],
       },
       'Invia risposta',
     ),

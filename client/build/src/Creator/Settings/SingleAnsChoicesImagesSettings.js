@@ -1,20 +1,8 @@
 import React from '../../../web_modules/react.js';
-import { makeStyles } from '../../../web_modules/@material-ui/core/styles.js';
+import { Typography } from '../../../web_modules/@material-ui/core.js';
 import TextColorPicker from './atoms/TextColorPicker.js';
 import BackgroundColorPicker from './atoms/BackgroundColorPicker.js';
-import useStylesStore from '../stores/styles.js';
-import Slider from '../../../web_modules/@material-ui/core/Slider.js';
-import Grid from '../../../web_modules/@material-ui/core/Grid.js';
-import Typography from '../../../web_modules/@material-ui/core/Typography.js';
-import { Height as HeightIcon } from '../../../web_modules/@material-ui/icons.js';
-
-const useStyles = makeStyles({
-  widthIcon: {
-    transform: 'rotate(90deg)',
-  },
-});
-
-const removePercent = (value) => Number(value.replace('%', '')); // Choices style object reference:
+import useStylesStore from '../stores/styles.js'; // Choices style object reference:
 // {
 //   Root: { /* root styles */ },
 //   Checkbox: { /* styles applied to Checkbox components */},
@@ -22,8 +10,7 @@ const removePercent = (value) => Number(value.replace('%', '')); // Choices styl
 // }
 
 function SingleAnsChoicesImagesSettings({ styleId }) {
-  const { widthIcon } = useStyles(); // Choices styles
-
+  // Choices styles
   const { styles, updateStyle } = useStylesStore((state) => ({
     styles: state.styles,
     updateStyle: state.updateStyle,
@@ -38,58 +25,16 @@ function SingleAnsChoicesImagesSettings({ styleId }) {
       styleId,
     );
 
-  const onWidthChange = (_, newWidth) => {
-    updateStyle({
-      styleId,
-      Image: {
-        height: `${newWidth}%`,
-        width: `${newWidth}%`,
-      },
-    });
-  };
-
   return React.createElement(
     'div',
     null,
-    React.createElement('p', null, 'Edit Image settings'),
     React.createElement(
       Typography,
       {
-        id: 'width-slider',
-        gutterBottom: true,
+        variant: 'h4',
       },
-      'Width and Height',
+      'Border',
     ),
-    React.createElement(
-      Grid,
-      {
-        container: true,
-        spacing: 2,
-      },
-      React.createElement(
-        Grid,
-        {
-          item: true,
-        },
-        React.createElement(HeightIcon, {
-          className: widthIcon,
-        }),
-      ),
-      React.createElement(
-        Grid,
-        {
-          item: true,
-          xs: true,
-        },
-        React.createElement(Slider, {
-          value: removePercent(styles[styleId]['Image'].width),
-          onChange: onWidthChange,
-          getAriaValueText: (value) => `${value}%`,
-          'aria-labelledby': 'width-slider',
-        }),
-      ),
-    ),
-    React.createElement('p', null, 'Edit Radio settings'),
     React.createElement(TextColorPicker, {
       onChange: (subStyle) => onChange(subStyle, 'Radio'),
       value: styles[styleId]['Radio'],
@@ -98,7 +43,13 @@ function SingleAnsChoicesImagesSettings({ styleId }) {
       onChange: (subStyle) => onChange(subStyle, 'Radio'),
       value: styles[styleId]['Radio'],
     }),
-    React.createElement('p', null, 'Edit submit settings'),
+    React.createElement(
+      Typography,
+      {
+        variant: 'h4',
+      },
+      'Submit Button',
+    ),
     React.createElement(TextColorPicker, {
       onChange: (subStyle) => onChange(subStyle, 'Button'),
       value: styles[styleId]['Button'],
