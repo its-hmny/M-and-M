@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Typography } from '@material-ui/core';
-import TextColorPicker from './atoms/TextColorPicker';
+
 import BackgroundColorPicker from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
 
