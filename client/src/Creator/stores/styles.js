@@ -117,7 +117,7 @@ const useStylesStore = createStore(set => ({
     },
     DefaultSingleAnsChoicesImages: {
       Root: {},
-      Image: { width: '100%', height: '50%' },
+      Image: { width: '100%' },
       Radio: {
         color: 'rgba(0, 0, 0, 1.0)',
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
@@ -133,7 +133,7 @@ const useStylesStore = createStore(set => ({
     },
     DefaultMultiAnsChoicesImages: {
       Root: {},
-      Image: { width: '100%', height: '50%' },
+      Image: { width: '100%' },
       Radio: {},
       Checkbox: {
         color: 'rgba(0, 0, 0, 1.0)',
