@@ -23,7 +23,6 @@ function AudioPlayerSettings({ styleId }) {
   return (
     <div>
       <Typography variant="h4">Component</Typography>
-      <TextColorPicker onChange={onChange} value={styles[styleId]} />
       <BackgroundColorPicker onChange={onChange} value={styles[styleId]} />
       <Typography variant="h4">Play Button</Typography>
       <BackgroundColorPicker
