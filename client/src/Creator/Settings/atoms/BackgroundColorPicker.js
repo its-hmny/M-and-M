@@ -17,10 +17,21 @@ const useStyles = makeStyles(theme => ({
     width: 30,
     height: 30,
     borderRadius: '50%',
-    backgroundColor: props => props.color,
+    backgroundColor: props => rgbaToHex(props.color),
+    cursor: 'pointer',
   },
   input: {
-    display: 'none',
+    position: 'absolute',
+    margin: 0,
+    padding: 0,
+    top: 'calc(50% + 2px)',
+    left: 'calc(50% - 2px)',
+    width: 0,
+    height: 0,
+    visibility: 'hidden',
+  },
+  Container: {
+    paddingBottom: '20px',
   },
 }));
 
@@ -39,13 +50,18 @@ const rgbaToHex = rgba => {
   return `#${red}${green}${blue}`;
 };
 
+const getOpacityFromRgba = rgba => {
+  return Number(rgba.slice(5, -1).split(',').slice(-1)[0].trim());
+};
+
 const backgroundColorInputId = shortid.generate();
 
 function BackgroundColorPicker({ onChange, value }) {
   const { backgroundColor } = value;
+
   const classes = useStyles({ color: backgroundColor });
 
-  const [bgOpacity, setBGOpacity] = useState(1.0);
+  const [bgOpacity, setBGOpacity] = useState(getOpacityFromRgba(backgroundColor));
   const inputRef = useRef();
 
   const handleChangeBackgroundColor = event => {
@@ -60,18 +76,19 @@ function BackgroundColorPicker({ onChange, value }) {
   const handleClick = useCallback(() => inputRef.current.click(), []);
 
   return (
-    <div>
+    <div className={classes.Container}>
       <div className={classes.colorContainer}>
         <InputLabel htmlFor={backgroundColorInputId}>Background Color</InputLabel>
-        <div className={classes.swatch} onClick={handleClick}></div>
-        <input
-          ref={inputRef}
-          type="color"
-          className={classes.input}
-          id={backgroundColorInputId}
-          value={rgbaToHex(backgroundColor)}
-          onChange={handleChangeBackgroundColor}
-        />
+        <div className={classes.swatch} onClick={handleClick}>
+          <input
+            ref={inputRef}
+            type="color"
+            className={classes.input}
+            id={backgroundColorInputId}
+            value={rgbaToHex(backgroundColor)}
+            onChange={handleChangeBackgroundColor}
+          />
+        </div>
       </div>
       <Typography id="opacity-slider">Background Color Opacity</Typography>
       <Slider

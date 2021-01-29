@@ -113,7 +113,7 @@ function SingleAnsChoicesImages({
       onSubmit(isCorrect, [answers.find(answer => answer.id === selectedAnswer)]);
     }
   }, [withSubmit, onSubmit, isCorrect, answers, selectedAnswer]);
-
+  console.log(answers);
   return (
     <div css={[base, style]} style={style['Root']}>
       <div>

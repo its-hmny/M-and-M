@@ -12,11 +12,7 @@ const base = css`
 `;
 
 const Image = ({ description, imgURL, style }) => {
-  return (
-    <div>
-      <img src={imgURL} alt={description} css={[base, style]} />
-    </div>
-  );
+  return <img src={imgURL} alt={description} css={[base, style]} />;
 };
 
 export default Image;

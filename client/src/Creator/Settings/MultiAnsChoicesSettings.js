@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Typography } from '@material-ui/core';
 import TextColorPicker from './atoms/TextColorPicker';
 import BackgroundColorPicker from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
@@ -28,12 +28,20 @@ function MultiAnsChoicesSettings({ styleId }) {
 
   return (
     <div>
-      <p>Edit checkbox settings</p>
+      <Typography variant="h4">Checkbox</Typography>
       <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'Checkbox')}
         value={styles[styleId]['Checkbox']}
       />
-      <p>Edit submit settings</p>
+      <BackgroundColorPicker
+        onChange={subStyle => onChange(subStyle, 'Checkbox')}
+        value={styles[styleId]['Checkbox']}
+      />
+      <Typography variant="h4">Submit Button</Typography>
+      <TextColorPicker
+        onChange={subStyle => onChange(subStyle, 'Button')}
+        value={styles[styleId]['Button']}
+      />
       <BackgroundColorPicker
         onChange={subStyle => onChange(subStyle, 'Button')}
         value={styles[styleId]['Button']}

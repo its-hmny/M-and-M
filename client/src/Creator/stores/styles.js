@@ -6,6 +6,7 @@ const useStylesStore = createStore(set => ({
   styleIds: {
     Text: ['DefaultText'],
     Button: ['DefaultButton'],
+    ButtonImage: ['DefaultButtonImage'],
     ButtonGroup: ['DefaultButtonGroup'],
     Radio: ['DefaultRadio'],
     Checkbox: ['Checkbox'],
@@ -54,28 +55,50 @@ const useStylesStore = createStore(set => ({
       fontFamily: 'Arial',
       fontSize: '16px',
       color: 'rgba(0, 0, 0, 1.0)',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
     },
     DefaultButton: {
       color: 'rgba(0, 0, 0, 1.0)',
       backgroundColor: 'rgba(140, 206, 179, 1.0)',
     },
+    DefaultButtonImage: {
+      width: '100%',
+    },
     DefaultButtonGroup: {},
     DefaultTextArea: {
       color: 'rgba(0, 0, 0, 1.0)',
       backgroundColor: 'rgba(255,255,255,1.0)',
+      Button: {
+        color: 'rgba(255, 255, 255, 1.0)',
+        backgroundColor: 'rgba(0,0,0,1.0)',
+      },
+      Label: {
+        color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(255,255,255,1.0)',
+      },
     },
     DefaultInput: {
       color: 'rgba(0, 0, 0, 1.0)',
       backgroundColor: 'rgba(255,255,255,1.0)',
+      Button: {
+        color: 'rgba(255, 255, 255, 1.0)',
+        backgroundColor: 'rgba(0,0,0,1.0)',
+      },
     },
     DefaultImage: {
       width: '100%',
-      color: 'rgba(0, 0, 0, 1.0)',
-      backgroundColor: 'rgba(255,255,255,1.0)',
+      color: 'rgba(0, 0, 0, 0.0)',
+      backgroundColor: 'rgba(255,255,255,0.0)',
     },
     DefaultAudioPlayer: {
       color: 'rgba(0, 0, 0, 1.0)',
       backgroundColor: 'rgba(255,255,255,1.0)',
+      PlayButton: {
+        backgroundColor: 'rgba(255,255,255,0.0)',
+      },
+      ProgressBar: {
+        backgroundColor: 'rgba(5,21,240,1.0)',
+      },
     },
     DefaultSpacer: {
       backgroundColor: 'rgba(255,255,255,1.0)',
@@ -84,10 +107,12 @@ const useStylesStore = createStore(set => ({
     },
     DefaultBackground: {
       backgroundImage: `url(${defaultBg})`,
+      opacity: 1,
     },
     DefaultCamera: {
       CameraButton: {
         color: 'rgba(0, 0, 0, 1.0)',
+        backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
       Button: {
         color: 'rgba(0, 0, 0, 1.0)',
@@ -102,7 +127,9 @@ const useStylesStore = createStore(set => ({
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
       Checkbox: {},
-
+      Outline: {
+        borderColor: 'rgba(140, 206, 179, 1.0)',
+      },
       Button: {
         color: 'rgba(0, 0, 0, 1.0)',
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
@@ -116,6 +143,9 @@ const useStylesStore = createStore(set => ({
         color: 'rgba(0, 0, 0, 1.0)',
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
       },
+      Outline: {
+        borderColor: 'rgba(140, 206, 179, 1.0)',
+      },
       Button: {
         color: 'rgba(0, 0, 0, 1.0)',
         backgroundColor: 'rgba(140, 206, 179, 1.0)',
@@ -126,13 +156,16 @@ const useStylesStore = createStore(set => ({
       height: '20%',
     },
     DefaultPoints: {
+      backgroundColor: 'rgba(0, 0, 0, 0.0)',
       Points: {
-        fontSize: 30,
+        fontFamily: 'Arial',
+        fontSize: '30px',
         textAlign: 'center',
         color: 'rgba(0, 0, 0, 1.0)',
       },
       Text: {
-        fontSize: 16,
+        fontFamily: 'Arial',
+        fontSize: '16px',
         textAlign: 'center',
         color: 'rgba(0, 0, 0, 1.0)',
       },
@@ -170,7 +203,7 @@ const useStylesStore = createStore(set => ({
       );
       state.styleIds[componentName] = updatedIds;
       state.styles[newId] = state.styles[oldId];
-      state.styles[oldId] = null;
+      state.styles[oldId] = undefined;
     });
   },
 }));

@@ -17,7 +17,7 @@ export const Options = {
     borderWidthSelected: 2.5,
 
     font: {
-      size: 15,
+      size: 20,
       color: 'white',
       background: 'none',
       align: 'center',
@@ -137,6 +137,10 @@ export const makeClusters = network => {
         },
         clusterNodeProperties: {
           id: mission,
+          font: {
+            color: 'black',
+            size: '40',
+          },
           borderWidth: 3,
           shape: 'database',
           label: mission,

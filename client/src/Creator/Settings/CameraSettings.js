@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Typography } from '@material-ui/core';
 import TextColorPicker from './atoms/TextColorPicker';
 import BackgroundColorPicker from './atoms/BackgroundColorPicker';
 import useStylesStore from '../stores/styles';
@@ -25,11 +25,16 @@ const CameraSettings = ({ styleId }) => {
     );
   return (
     <div>
+      <Typography variant="h4">Camera Button</Typography>
       <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'CameraButton')}
         value={styles[styleId]['CameraButton']}
       />
-      <p>Edit submit Button settings</p>
+      <BackgroundColorPicker
+        onChange={subStyle => onChange(subStyle, 'CameraButton')}
+        value={styles[styleId]['CameraButton']}
+      />
+      <Typography variant="h4">Submit Button</Typography>
       <TextColorPicker
         onChange={subStyle => onChange(subStyle, 'Button')}
         value={styles[styleId]['Button']}

@@ -1,4 +1,3 @@
-! work in progress !
 # Client
 ## Adding new components
 Here's some help if you need to add a new component.
@@ -24,6 +23,6 @@ ex:
 		})
 		```
 ### Creating the editor part
-- combine fragments from `Editor/components/EditorFragments`
+- combine fragments from `Editor/components/EditorFragments`, add a new one if needed
 - edit `Editor/constants/ComponentProperties.json`
-- import file in `Editor/components/EditorFragments/index.js` and add to export
+- import file in `Editor/components/EditorFragments/index.js` and add to export if a new fragment has been added

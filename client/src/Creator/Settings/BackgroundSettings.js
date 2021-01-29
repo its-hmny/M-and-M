@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Camera as CameraIcon } from '@material-ui/icons';
-
+import OpacitySlider from './atoms/OpacitySlider';
 import useStylesStore from '../stores/styles';
 import axios from '../../common/shared';
 import { SERVER_URL } from '../../common/constants';
@@ -22,7 +22,7 @@ const BackgroundSettings = ({ styleId }) => {
     styles: state.styles,
     updateStyle: state.updateStyle,
   }));
-
+  const onChange = subStyle => updateStyle({ styleId, ...subStyle });
   const upload = async file => {
     const formData = new FormData();
     formData.append('file', file);
@@ -67,6 +67,7 @@ const BackgroundSettings = ({ styleId }) => {
         }}
       />
       <Typography>{outcome}</Typography>
+      <OpacitySlider onChange={onChange} value={styles[styleId]} />
     </div>
   );
 };

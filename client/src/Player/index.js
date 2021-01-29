@@ -22,7 +22,8 @@ const createStoryProps = (component, storyRuntime) => {
 
   switch (name) {
     case 'Button':
-      // Button has 1 story related prop: onClick
+    case 'ButtonImage':
+      // Button and ButtonImage have 1 story related prop: onClick
       return {
         onClick: () => storyRuntime.moveTo(storyProps.nextNode),
       };
@@ -151,8 +152,8 @@ const Player = () => {
       try {
         const res = await axios.get(`stories/${storyId}`);
         const newStory = res.data.payload;
+        document.title = newStory.title || document.title;
         setStory(newStory);
-        //setStatus('SUCCESS');
       } catch (err) {
         console.error(err);
         setStatus('FAILURE');
@@ -214,8 +215,6 @@ const Player = () => {
 
   // load components for this position whenever position changes
   useEffect(() => {
-    // if (currentNodeId) is insufficient because 0 means false -.-
-    // Stupid JS! I miss you Option<T>...sigh
     if (currentNodeId != null) {
       const { components } = story.nodes.find(node => node.id === currentNodeId);
       const content = buildViewContent(components, storyRuntime);
@@ -252,7 +251,6 @@ const Player = () => {
           height: 100vh;
           overflow-y: auto;
           padding: 10px;
-          background-color: white;
           animation-name: fade;
           animation-duration: 2200ms;
 

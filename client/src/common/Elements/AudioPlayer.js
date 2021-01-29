@@ -8,10 +8,7 @@ import shortid from 'shortid';
 
 const base = css`
   .player {
-    margin: 5px;
     box-shadow: 1px 2px #bdbdbd;
-
-    background-color: #e0e0e0;
   }
 
   .progress {
@@ -29,10 +26,12 @@ const base = css`
   .icon-play {
   }
 `;
+
 const audioID = shortid.generate();
-const AudioPlayer = ({ srcURL, style }) => {
-  const [playing, setPlaying] = React.useState(false);
+const AudioPlayer = ({ srcURL, style, autoplay }) => {
+  const [playing, setPlaying] = React.useState(autoplay);
   const [width, setWidth] = React.useState(0);
+
   var audioref;
 
   const playpause = () => {
@@ -64,13 +63,15 @@ const AudioPlayer = ({ srcURL, style }) => {
           onEnded={() => {
             setPlaying(false);
           }}
+          autoPlay={autoplay}
         />
 
-        <div style={{ backgroundColor: 'lightblue', width: width + '%', height: 4 }} />
+        <div style={{ width: width + '%', height: 4, ...style['ProgressBar'] }} />
         <button
           aria-label={playing ? 'Pause audio player' : 'Play audio player'}
           className="play-pause icon-play"
           onClick={playpause}
+          style={style['PlayButton']}
         >
           {playing ? <PauseIcon /> : <PlayArrowIcon />}
         </button>

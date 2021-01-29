@@ -16,10 +16,18 @@ const useStyles = makeStyles(theme => ({
     width: 30,
     height: 30,
     borderRadius: '50%',
-    backgroundColor: props => props.color,
+    backgroundColor: props => rgbaToHex(props.color),
+    cursor: 'pointer',
   },
   input: {
-    display: 'none',
+    position: 'absolute',
+    margin: 0,
+    padding: 0,
+    top: 'calc(50% + 2px)',
+    left: 'calc(50% - 2px)',
+    width: 0,
+    height: 0,
+    visibility: 'hidden',
   },
 }));
 
@@ -38,13 +46,17 @@ const rgbaToHex = rgba => {
   return `#${red}${green}${blue}`;
 };
 
+const getOpacityFromRgba = rgba => {
+  return Number(rgba.slice(5, -1).split(',').slice(-1)[0].trim());
+};
+
 const colorInputId = shortid.generate();
 
 function TextColorPicker({ onChange, value }) {
   const { color } = value;
   const classes = useStyles({ color });
 
-  const [textOpacity, setTextOpacity] = useState(1.0);
+  const [textOpacity, setTextOpacity] = useState(getOpacityFromRgba(color));
   const inputRef = useRef();
 
   const handleChangeColor = event => {
@@ -62,15 +74,16 @@ function TextColorPicker({ onChange, value }) {
     <div>
       <div className={classes.colorContainer}>
         <InputLabel htmlFor={colorInputId}>Text Color</InputLabel>
-        <div className={classes.swatch} onClick={handleClick}></div>
-        <input
-          ref={inputRef}
-          type="color"
-          className={classes.input}
-          id={colorInputId}
-          value={rgbaToHex(color)}
-          onChange={handleChangeColor}
-        />
+        <div className={classes.swatch} onClick={handleClick}>
+          <input
+            ref={inputRef}
+            type="color"
+            className={classes.input}
+            id={colorInputId}
+            value={rgbaToHex(color)}
+            onChange={handleChangeColor}
+          />
+        </div>
       </div>
       <Typography id="opacity-slider">Color Opacity</Typography>
       <Slider

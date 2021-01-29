@@ -75,6 +75,33 @@
       }
     }
   ],
+  "ButtonImage": [
+    {
+      "fragment": "TextFieldFragment",
+      "props": {
+        "valToChange": "description",
+        "label": "Image description"
+      }
+    },
+    {
+      "fragment": "SelectFragment",
+      "props": {
+        "pathAlternative": ["story"],
+        "valToChange": "nextNode",
+        "label": "Destination",
+        "data": "id",
+        "dataName": "name"
+      }
+    },
+    {
+      "fragment": "FilePickerFragment",
+      "props": {
+        "valToChange": "imgURL",
+        "acceptedFileType": "image/*",
+        "buttonLabel": "Upload image"
+      }
+    }
+  ],
   "Text": [
     {
       "fragment": "TextFieldFragment",
@@ -140,6 +167,13 @@
         "valToChange": "srcURL",
         "acceptedFileType": "audio/mp3",
         "buttonLabel": "Upload audio"
+      }
+    },
+    {
+      "fragment": "CheckboxFragment",
+      "props": {
+        "valToChange": "autoplay",
+        "label": "Autoplay"
       }
     }
   ],
