@@ -4,34 +4,33 @@ import { useEffect, useState } from 'react';
 import shortid from 'shortid';
 
 const base = css`
-  5rem 0;
+  padding: 5rem 0;
   margin: 5px;
   border-radius: 5px;
   padding: 7px;
   border: 1px solid #ccc;
   box-shadow: inset 0 1px 3px #ddd;
   width: 95%;
-  button{
-    padding: 0.5rem 1rem;
-    border: none;
-
-    font-size: 1rem;
-    cursor: pointer;
-    margin: 5px;
-  }
 `;
 
+const buttonCSS = css`
+  padding: 0.5rem 1rem;
+  border: none;
+
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 5px;
+`;
 const noop = () => {};
 const id = shortid.generate();
 const TextArea = ({ label, rows, onSubmit = noop, initialValue = '', style }) => {
   const [value, setValue] = useState('');
 
   useEffect(() => setValue(initialValue), [initialValue]);
-
   return (
     <div>
       <label htmlFor={id} css={{ color: style['color'] }}>
-        {label}
+        {label}*
       </label>
       <textarea
         id={id}
@@ -39,9 +38,10 @@ const TextArea = ({ label, rows, onSubmit = noop, initialValue = '', style }) =>
         rows={rows}
         value={value}
         onChange={evt => setValue(evt.target.value)}
+        mandatory={true}
       />
 
-      <button onClick={() => onSubmit(value)} style={style['Button']}>
+      <button onClick={() => onSubmit(value)} css={[buttonCSS, style['Button']]}>
         Invia risposta
       </button>
     </div>
