@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { useSnackbar } from 'notistack';
+import { Typography } from '@material-ui/core';
 import axios, { useQuery } from '../../common/shared';
 import { SERVER_URL } from '../../common/constants';
 
@@ -16,6 +17,7 @@ export const EvaluatorProvider = ({ children }) => {
   const [focusedPlayer, setFocusedPlayer] = useState(undefined);
   const [playersLog, setPlayersLog] = useState([]);
   const [story, setStory] = useState(undefined);
+  const [loadedStory, setLoadedStory] = useState(false);
 
   const socket = useMemo(
     () => io(SERVER_URL, { query: { type: 'evaluator', storyId } }),
@@ -28,6 +30,7 @@ export const EvaluatorProvider = ({ children }) => {
       try {
         const loadedStory = (await axios.get(`/stories/${storyId}`)).data.payload;
         setStory(loadedStory);
+        setLoadedStory(true);
       } catch (err) {
         history.push(ROUTES.NOTFOUND);
       }
@@ -136,6 +139,10 @@ export const EvaluatorProvider = ({ children }) => {
     // This has to be checked
     return () => socket.removeAllListeners();
   }, [socket, playersLog, storyId, pushNotification]);
+
+  if (!loadedStory) {
+    return <Typography>Loading...</Typography>;
+  }
 
   const toProvide = {
     story,
