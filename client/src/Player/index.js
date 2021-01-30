@@ -201,13 +201,12 @@ const Player = () => {
         });
       },
       updateScore: points => {
-        setScore(score => score + points);
-        socket.emit('update:score', {
+        socket.emit('update:eval', {
           story: storyId,
-          senderId: ids.player,
-          receiverId: ids.evaluator,
-          payload: { score },
+          playerId: ids.player,
+          patch: { score: score + points },
         });
+        setScore(score + points);
       },
     }),
     [socket, currentNodeId, ids, score, storyId, story]
