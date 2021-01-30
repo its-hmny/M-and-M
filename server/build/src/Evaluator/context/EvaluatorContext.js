@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from '../../../web_modules/react.js';
 import { useSnackbar } from '../../../web_modules/notistack.js';
+import { Typography } from '../../../web_modules/@material-ui/core.js';
 import axios, { useQuery } from '../../common/shared.js';
 import { SERVER_URL } from '../../common/constants.js';
 import io from '../../../web_modules/socket.io-client.js';
@@ -27,6 +28,8 @@ export const EvaluatorProvider = ({ children }) => {
 
   const [story, setStory] = useState(undefined);
 
+  const [loadedStory, setLoadedStory] = useState(false);
+
   const socket = useMemo(
     () =>
       io(SERVER_URL, {
@@ -46,6 +49,7 @@ export const EvaluatorProvider = ({ children }) => {
           .payload;
 
         setStory(loadedStory);
+        setLoadedStory(true);
       } catch (err) {
         history.push(ROUTES.NOTFOUND);
       }
@@ -180,6 +184,10 @@ export const EvaluatorProvider = ({ children }) => {
 
     return () => socket.removeAllListeners();
   }, [socket, playersLog, storyId, pushNotification]);
+
+  if (!loadedStory) {
+    return React.createElement(Typography, null, 'Loading...');
+  }
 
   const toProvide = {
     story,
