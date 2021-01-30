@@ -6,8 +6,6 @@ const base = css`
   margin-left: auto;
   margin-right: auto;
   max-width: 100%;
-  width: 50%;
-  height: 50%;
   padding: 5 5px;
 `;
 
