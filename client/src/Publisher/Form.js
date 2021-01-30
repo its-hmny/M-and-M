@@ -12,8 +12,10 @@ import {
   Button,
 } from '@material-ui/core';
 import QRCode from 'qrcode.react';
-import logo from '../assets/logo.png';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import { useHistory } from 'react-router-dom';
+
+import logo from '../assets/logo.png';
 import { CLIENT_URL } from '../common/constants';
 
 import SaveButton from '../common/SaveButton';
@@ -62,6 +64,7 @@ const useStyles = makeStyles(theme => ({
 
 const Form = ({ story, handleChange }) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const handleChecks = (propName, value, isOn) => {
     handleChange(
@@ -228,6 +231,8 @@ const Form = ({ story, handleChange }) => {
               width: 44,
               excavate: true,
             }}
+            style={{ cursor: 'pointer' }}
+            onClick={() => history.push(`/player?storyId=${story.uuid}`)}
           />
           <Button
             variant="contained"
