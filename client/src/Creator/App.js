@@ -65,10 +65,7 @@ const App = () => {
     const styledComponents = inlineStyles(styles, components);
     axios // See common/shared.js (useAPI hook)
       .post('templates', { ...meta, components: styledComponents })
-      .then(value => {
-        console.log('saved template ', value);
-        enqueueSnackbar('Saved your template!', { variant: 'success' });
-      })
+      .then(_ => enqueueSnackbar('Saved your template!', { variant: 'success' }))
       .catch(err => {
         console.error(err);
         enqueueSnackbar('Something went wrong...', { variant: 'error' });

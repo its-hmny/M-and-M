@@ -24,7 +24,7 @@ const FilePickerFragment = props => {
     axios
       .delete(`resources/${oldResourceId}`)
       .then(response => console.log(response.data))
-      .catch(error => console.log(error));
+      .catch(error => console.warn(error));
 
     axios
       .put('resources/', formData, {

@@ -40,7 +40,7 @@ const BackgroundSettings = ({ styleId }) => {
       });
       setOutcome('File uploaded successfully!');
     } catch (err) {
-      console.log(err.data);
+      console.warn(err.data);
       setOutcome('Error occured while loading!');
     }
   };

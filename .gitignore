@@ -22,5 +22,4 @@ client/.npm_cache
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-# :)
-paolo.txt 
+yarn.lock
