@@ -142,11 +142,10 @@ const GraphCanvas = () => {
   //   [saveStory, story]
   // );
 
-  const events = useMemo(() => ({ doubleClick, zoom, deselectNode }), [
-    doubleClick,
-    zoom,
-    deselectNode,
-  ]);
+  const events = useMemo(
+    () => ({ doubleClick, zoom, deselectNode }),
+    [doubleClick, zoom, deselectNode]
+  );
 
   const getNetwork = useCallback(network => (networkRef.current = network), []);
 

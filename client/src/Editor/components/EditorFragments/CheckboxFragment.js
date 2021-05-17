@@ -7,13 +7,8 @@ import { Checkbox, FormControlLabel } from '@material-ui/core';
 */
 
 const CheckboxFragment = ({ classNames, path, fragmentSpecificProps }) => {
-  const {
-    pathAlternative,
-    valToChange,
-    label,
-    onChange,
-    truthValues,
-  } = fragmentSpecificProps;
+  const { pathAlternative, valToChange, label, onChange, truthValues } =
+    fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
   path = pathAlternative ? path.concat(pathAlternative || []) : path || [];
   const value = getFromPath(path)[valToChange];

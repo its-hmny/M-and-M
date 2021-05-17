@@ -13,13 +13,8 @@ const useStyles = makeStyles(theme => ({
 
 const InputFragment = ({ classNames, path, fragmentSpecificProps }) => {
   const { root, inputRoot } = useStyles();
-  const {
-    valToChange,
-    label,
-    onChange,
-    pointsPath,
-    pointsValToChange,
-  } = fragmentSpecificProps;
+  const { valToChange, label, onChange, pointsPath, pointsValToChange } =
+    fragmentSpecificProps;
   const { getFromPath, setPathToValue } = useEditor();
   path = path || [];
   const value = getFromPath(path)[valToChange];

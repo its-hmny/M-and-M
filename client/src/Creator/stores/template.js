@@ -263,8 +263,7 @@ const useTemplateStore = createStore(set => ({
     {
       id: shortid.generate(),
       name: 'Text',
-      text:
-        "Use the drag handle on the left to reorder components, while you're not editing. After you've saved a style, you can use it on other elements of the same type while in the same session. Once you're done, save the node type with the bottom left button. You'll then be able to use it in the Editor with personalized content!",
+      text: "Use the drag handle on the left to reorder components, while you're not editing. After you've saved a style, you can use it on other elements of the same type while in the same session. Once you're done, save the node type with the bottom left button. You'll then be able to use it in the Editor with personalized content!",
       styleId: 'DefaultText',
     },
     {

@@ -18,11 +18,10 @@ const SaveDialog = ({ open, onCancel, onSave }) => {
   const classes = useStyles();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const handleComplete = useCallback(() => onSave({ name, description }), [
-    name,
-    description,
-    onSave,
-  ]);
+  const handleComplete = useCallback(
+    () => onSave({ name, description }),
+    [name, description, onSave]
+  );
   const handleEnter = useCallback(
     evt => {
       if (name && evt.key === 'Enter') {
